@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import MainIndex from '@/views/MainIndex'
+import MainLibrary from '@/views/MainLibrary'
 
 Vue.use(VueRouter)
 
@@ -9,6 +10,11 @@ Vue.use(VueRouter)
     path: '/',
     name: 'MainIndex',
     component: MainIndex
+  },
+  {
+    path: '/mainlibrary',
+    name: 'MainLibrary',
+    component: MainLibrary
   },
   // {
     // path: '/about',

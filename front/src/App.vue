@@ -1,11 +1,14 @@
 <template>
   <v-app>
 
-    <!-- <NavBar/> -->
+    <NavBar/>
 
-    <v-main>
+    <v-main style="margin-top: 64px;">
+      <router-view>
 
-      <MainIndex/>
+      </router-view>
+
+      <!-- <MainIndex/> -->
 
 
     </v-main>
@@ -13,15 +16,15 @@
 </template>
 
 <script>
-// import NavBar from '@/components/NavBar';
-import MainIndex from '@/views/MainIndex';
+import NavBar from '@/components/NavBar';
+// import MainIndex from '@/views/MainIndex';
 
 export default {
   name: 'App',
 
   components: {
-    MainIndex,
-    // NavBar,
+    // MainIndex,
+    NavBar,
   },
 
   data: () => ({
