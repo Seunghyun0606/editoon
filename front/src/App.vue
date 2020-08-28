@@ -1,6 +1,7 @@
 <template>
   <v-app>
 
+    <!-- <NavBar/> -->
 
     <v-main>
 
@@ -12,6 +13,7 @@
 </template>
 
 <script>
+// import NavBar from '@/components/NavBar';
 import MainIndex from '@/views/MainIndex';
 
 export default {
@@ -19,6 +21,7 @@ export default {
 
   components: {
     MainIndex,
+    // NavBar,
   },
 
   data: () => ({
