@@ -2,7 +2,11 @@
 
 <div>
   
-  <img class="test" :src="require('@/assets/mockupGif.gif')" alt="">
+  <!-- <img class="test" :src="require('@/assets/mockupGif.gif')" alt=""> -->
+  <img class="test ani1" :src="require('@/assets/1.jpg')" alt="">
+  <img class="test ani2" :src="require('@/assets/2.jpg')" alt="">
+  <img class="test ani3" :src="require('@/assets/3.jpg')" alt="">
+  <div class="test1"></div>
   <v-container style="height: 100vh; " class="mx-auto">
     <v-row style="height: 80%; text-align: center;" class="align-content-center">
       <v-col class="test2 ">
@@ -11,7 +15,7 @@
 
     </v-row>
     <!-- 1안, 눌러서 나오기 -->
-    <!-- <v-row>
+    <v-row>
       <v-col style="text-align: end;">
         
       <v-speed-dial
@@ -61,10 +65,10 @@
         </v-btn>
       </v-speed-dial>
       </v-col>
-    </v-row> -->
+    </v-row>
 
     <!-- 2안, 처음부터 3개 -->
-    <v-row style="text-align: end;">
+    <!-- <v-row style="text-align: end;">
       <v-col>
         <v-btn
           fab
@@ -101,13 +105,8 @@
         </v-btn>
 
       </v-col>
-    </v-row>
+    </v-row> -->
   </v-container>
-
-
-
-
-
 
 
 </div>
@@ -188,9 +187,19 @@ computed: {
   height: 100vw; */
   width: 100vw;
   height: 100vh;
-  opacity: 0.3;
+  /* opacity: 0.3; */
   position: absolute;
   z-index: 0;
+}
+
+.test1 {
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.2;
+  position: absolute;
+  z-index: 5;
+  background-color: white;
+
 }
 
 .test2 {
@@ -199,5 +208,56 @@ computed: {
   z-index: 10;  
   
 }
+
+.ani1 {
+  /* opacity: 0.5; */
+  /* animation: 7s infinite; */
+    animation-duration: 8s;
+    animation-timing-function: ease;
+    animation-delay: 0s;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+    animation-fill-mode: none;
+    animation-play-state: running;
+    animation-name: fading;
+
+
+  /* animation-direction: normal;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-play-state: running;
+  animation-timing-function: ease; */
+
+
+}
+
+.ani2 {
+    /* animation: 7s infinite; */
+    animation-duration: 8s;
+    animation-timing-function: ease;
+    animation-delay: 4s;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+    animation-fill-mode: none;
+    /* animation-play-state: running; */
+    animation-name: fading;
+
+}
+
+.ani3 {
+
+    /* animation: 7s infinite; */
+    animation-duration: 8s;
+    animation-timing-function: ease;
+    animation-delay: 4s;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+    animation-fill-mode: none;
+    /* animation-play-state: running; */
+    animation-name: fading;
+
+}
+
+
 
 </style>

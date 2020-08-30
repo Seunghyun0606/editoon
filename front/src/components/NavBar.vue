@@ -1,10 +1,10 @@
 <template>
   <v-app-bar
     absolute
-    color="#fcb69f"
+    color="#000"
     dark
-    src="https://picsum.photos/1920/1080?random"
   >
+    <!-- src="https://picsum.photos/1920/1080?random" -->
     <!-- shrink-on-scroll -->
     <!-- scroll-target="#scrolling-techniques-2" -->
     <!-- <template v-slot:img="{ props }">
