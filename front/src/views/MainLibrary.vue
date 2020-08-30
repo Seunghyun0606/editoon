@@ -71,6 +71,10 @@ export default {
     }
   },
   methods: {
+    isIndex() {
+      this.$store.commit('isIndex', false)
+    },
+
     sortBy(prop) {
       if (prop === "all_book") {
         this.sortCriteria = "전체 책";
@@ -82,6 +86,9 @@ export default {
       this.sortedBy = prop;
       this.books.sort((a, b) => (a[prop] > b[prop] ? -1 : 1));
     },
+  },
+  created() {
+    this.isIndex()
   }
 
 }

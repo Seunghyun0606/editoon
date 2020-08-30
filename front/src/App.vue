@@ -1,9 +1,9 @@
 <template>
   <v-app>
+    <NavBar v-if="!isIndex" />
 
-     <NavBar v-if="isIndex" />
 
-    <v-main>
+    <v-main :class="[ isIndex ? '' : navMargin ]">
       <router-view>
 
       </router-view>
@@ -21,6 +21,11 @@ import NavBar from '@/components/NavBar';
 
 export default {
   name: 'App',
+  computed: {
+    isIndex() {
+      return this.$store.state.isIndex
+    }
+  },
 
   components: {
     // MainIndex,
@@ -29,13 +34,17 @@ export default {
 
   data() {
     return {
-      isIndex: false,
+      navMargin: 'nav-margin'
     }
   }
 };
 </script>
 
 <style>
+
+.nav-margin {
+  margin-top: 64px;
+}
 
 .container {
   margin: 0;

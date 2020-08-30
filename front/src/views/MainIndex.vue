@@ -231,9 +231,16 @@ computed: {
 },
 
 methods: {
+  isIndex() {
+    this.$store.commit('isIndex', true)
+  },
   clickLogin() {
     this.dialog = true
-  }
+  },
+
+},
+created() {
+  this.isIndex()
 }
 
 }
