@@ -1,9 +1,9 @@
 <template>
   <v-app>
 
-    <NavBar/>
+     <NavBar v-if="isIndex" />
 
-    <v-main style="margin-top: 64px;">
+    <v-main>
       <router-view>
 
       </router-view>
@@ -27,9 +27,11 @@ export default {
     NavBar,
   },
 
-  data: () => ({
-    //
-  }),
+  data() {
+    return {
+      isIndex: false,
+    }
+  }
 };
 </script>
 
