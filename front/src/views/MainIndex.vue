@@ -45,53 +45,11 @@
               dark
             ></v-text-field>
 
-            <!-- <div v-if="loginErr.usernameErr && !loginErr.emailErr && !loginErr.passwordErr" class="mt-2">
-              <v-alert
-                dense
-                outlined
-                type="error"
-              >
-                아이디를 입력하세요.
-              </v-alert>
-            </div> -->
-            <!-- <v-text-field
-              v-model="loginData.email"
-              label="EMAIL"
-              
-              required
-              clearable
-              dark
-            ></v-text-field> -->
-            <!-- <div v-if="!loginErr.usernameErr && loginErr.emailErr && !loginErr.passwordErr" class="mt-2">
-              <v-alert
-                dense
-                outlined
-                type="error"
-              >
-                이메일를 입력하세요.
-              </v-alert>
-            </div> -->
-            <!-- <div v-if="!loginErr.usernameErr && !loginErr.emailErr && loginErr.passwordErr" class="mt-2">
-              <v-alert
-                dense
-                outlined
-                type="error"
-              >
-                비밀번호를 입력하세요.
-              </v-alert>
-            </div> -->
-            <!-- <div v-if="loginErr.usernameErr && loginErr.passwordErr" class="mt-2">
-              <v-alert
-                dense
-                outlined
-                type="error"
-              >
-                잘못된 아이디거나 잘못된 비밀번호입니다.
-              </v-alert>
-            </div> -->
-            <div>
-              <v-btn class='primary pull-right' @click="login(loginData)" style="width: 30%;">
-                <strong>접속하기!</strong></v-btn>
+            <div style="height: 100px; width: 100px; border: 1px solid white; border-radius: 70%; color: white" class="d-flex justify-center mx-auto">
+              <div class="align-self-center">
+                Click Me!
+
+              </div>
             </div>
           </form>
 
