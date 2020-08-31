@@ -24,20 +24,18 @@
 
         </v-row>
       </v-col>
-      <v-col cols=5 style="background-color: rgba(0, 0, 0, 0.4); z-index: 10; height: 100vh;">
+      <v-col cols=3 style="background-color: rgba(0, 0, 0, 0.8); z-index: 10; height: 100vh;">
         <v-row style="height: 100%" class="align-content-center">
-          <v-col class="main-index-txt">
-            대충로그인 들어갈 예정
+          <!-- <v-col class="main-index-txt"> -->
+          <!-- </v-col> -->
 
-          </v-col>
         </v-row>
-
       </v-col>
     </v-row>
 
   <!-- 1번안 -->
-  <!-- <v-container style="height: 100vh; text-align: center; padding-top: 12%; " class="mx-auto"> -->
-    <!-- <v-row class="">
+  <!-- <v-container style="height: 100vh; text-align: center; padding-top: 12%; " class="mx-auto">
+    <v-row class="">
       <v-col class="main-index-txt">
         우리 가족 서재
       </v-col>
@@ -247,6 +245,11 @@ created() {
 </script>
 
 <style>
+
+.test-box {
+  border: 1px solid white;
+  color: white;
+}
 
 .background {
   background-image: url('/assets/mockupGif.gif');
