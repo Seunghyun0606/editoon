@@ -2,10 +2,10 @@
 
 <div>
   
-  <!-- <img class="test" :src="require('@/assets/mockupGif.gif')" alt=""> -->
-  <img class="test ani1" :src="require('@/assets/1.jpg')" alt="">
+  <img class="test" :src="require('@/assets/testGif.gif')" alt="">
+  <!-- <img class="test ani1" :src="require('@/assets/1.jpg')" alt="">
   <img class="test ani2" :src="require('@/assets/2.jpg')" alt="">
-  <img class="test ani3" :src="require('@/assets/3.jpg')" alt="">
+  <img class="test ani3" :src="require('@/assets/3.jpg')" alt=""> -->
   <div class="test1"></div>
   <!-- 2번안 -->
   <v-container fluid style="height: 100vh; " class="">
