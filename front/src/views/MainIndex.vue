@@ -8,7 +8,7 @@
   <img class="test ani3" :src="require('@/assets/3.jpg')" alt=""> -->
   <div class="test1"></div>
   <!-- 2번안 -->
-  <v-container fluid style="height: 100vh; " class="">
+  <!-- <v-container fluid style="height: 100vh; " class="">
     <v-row style="text-align: center;">
       <v-col class="align-self-center">
         <v-row>
@@ -24,10 +24,9 @@
 
         </v-row>
       </v-col>
+
       <v-col cols=3 style="background-color: rgba(0, 0, 0, 0.7); z-index: 10; height: 100vh;">
         <v-row style="height: 100%" class="align-content-center">
-          <!-- <v-col class="main-index-txt"> -->
-          <!-- </v-col> -->
           <form form action="" style="margin-top: 0.2vh;" class="mx-auto">
             <v-text-field
               v-model="loginData.username"
@@ -57,10 +56,10 @@
 
         </v-row>
       </v-col>
-    </v-row>
+    </v-row> -->
 
   <!-- 1번안 -->
-  <!-- <v-container style="height: 100vh; text-align: center; padding-top: 12%; " class="mx-auto">
+  <v-container style="height: 100vh; text-align: center; padding-top: 12%; " class="mx-auto">
     <v-row class="">
       <v-col class="main-index-txt">
         우리 가족 서재
@@ -73,7 +72,7 @@
       </v-col>
     </v-row>
     <v-row class="justify-center">
-      <v-col @click.stop="clickLogin" style="flex-grow: 0; flex-basis: 8%;" class="btn-login">
+      <v-col @click.stop="clickLogin" style="flex-grow: 0; flex-basis: 8%; color: white; border: 1px solid white; border-radius: 70%; z-index: 10; width: 100px; height: 100px;" class="align-self-center">
         Login
       </v-col>
     </v-row>
@@ -85,16 +84,43 @@
 
       <v-container fluid style="height: 80vh;">
         <v-row style="height: 100%; text-align: center; background-color: rgba(0, 0, 0, 0.8)">
-          <v-col cols=6>
+          <v-col cols=7>
             <img style="height: 100%; width: 100%;" :src="require('@/assets/mockupGif.gif')" alt="">
           </v-col >
-          <v-col cols=6 class="main-index-txt align-self-center">
-            대충 로그인 UI 들어갈 예정
+          <v-col cols=5 class="main-index-txt align-self-center">
+
+            <form action="" style="margin-top: 0.2vh;">
+              <v-text-field
+                v-model="loginData.username"
+                label="USER NAME"
+                required
+                clearable
+                dark
+                style="width: 70%;"
+                class="mx-auto"
+              ></v-text-field>
+              <v-text-field
+                v-model="loginData.password"
+                label="PASSWORD"
+                type="password"
+                required
+                clearable
+                dark
+                style="width: 70%;"
+                class="mx-auto"
+              ></v-text-field>
+              <div>
+                <v-btn class='primary pull-right' @click="login(loginData)" style="width: 30%;">
+                  <strong>접속하기!</strong></v-btn>
+              </div>
+            </form>
+
+
           </v-col>
         </v-row>
 
       </v-container>
-    </v-dialog> -->
+    </v-dialog>
 
     <!-- <LoginModal :dialog="dialog" /> -->
 
@@ -229,12 +255,12 @@ export default {
     return {
       dialog: false,
 
-
       loginData: {
         username: "",
         email: "",
         password: "",
       },
+
       direction: 'top',
       fab: false,
       fling: false,
