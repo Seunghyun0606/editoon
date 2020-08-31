@@ -24,10 +24,78 @@
 
         </v-row>
       </v-col>
-      <v-col cols=3 style="background-color: rgba(0, 0, 0, 0.8); z-index: 10; height: 100vh;">
+      <v-col cols=3 style="background-color: rgba(0, 0, 0, 0.7); z-index: 10; height: 100vh;">
         <v-row style="height: 100%" class="align-content-center">
           <!-- <v-col class="main-index-txt"> -->
           <!-- </v-col> -->
+          <form form action="" style="margin-top: 0.2vh;" class="mx-auto">
+            <v-text-field
+              v-model="loginData.username"
+              label="USER NAME"
+              required
+              clearable
+              dark
+            ></v-text-field>
+            <v-text-field
+              v-model="loginData.password"
+              label="PASSWORD"
+              type="password"
+              required
+              clearable
+              dark
+            ></v-text-field>
+
+            <!-- <div v-if="loginErr.usernameErr && !loginErr.emailErr && !loginErr.passwordErr" class="mt-2">
+              <v-alert
+                dense
+                outlined
+                type="error"
+              >
+                아이디를 입력하세요.
+              </v-alert>
+            </div> -->
+            <!-- <v-text-field
+              v-model="loginData.email"
+              label="EMAIL"
+              
+              required
+              clearable
+              dark
+            ></v-text-field> -->
+            <!-- <div v-if="!loginErr.usernameErr && loginErr.emailErr && !loginErr.passwordErr" class="mt-2">
+              <v-alert
+                dense
+                outlined
+                type="error"
+              >
+                이메일를 입력하세요.
+              </v-alert>
+            </div> -->
+            <!-- <div v-if="!loginErr.usernameErr && !loginErr.emailErr && loginErr.passwordErr" class="mt-2">
+              <v-alert
+                dense
+                outlined
+                type="error"
+              >
+                비밀번호를 입력하세요.
+              </v-alert>
+            </div> -->
+            <!-- <div v-if="loginErr.usernameErr && loginErr.passwordErr" class="mt-2">
+              <v-alert
+                dense
+                outlined
+                type="error"
+              >
+                잘못된 아이디거나 잘못된 비밀번호입니다.
+              </v-alert>
+            </div> -->
+            <div>
+              <v-btn class='primary pull-right' @click="login(loginData)" style="width: 30%;">
+                <strong>접속하기!</strong></v-btn>
+            </div>
+          </form>
+
+
 
         </v-row>
       </v-col>
@@ -203,6 +271,12 @@ export default {
     return {
       dialog: false,
 
+
+      loginData: {
+        username: "",
+        email: "",
+        password: "",
+      },
       direction: 'top',
       fab: false,
       fling: false,
@@ -276,6 +350,7 @@ created() {
   background-color: black;
 
 }
+
 
 .main-index-txt {
   /* position: absolute; */
