@@ -6,7 +6,7 @@
     <img class="test ani3" :src="require('@/assets/3.jpg')" alt="">-->
     <!-- <div class="test1"></div> -->
 
-    <v-container fluid style="height: 100vh; padding-top: 15vh;">
+    <v-container fluid style="height: 100vh;">
       <v-row style="height: 80%;">
         <v-col md="5" sm="12" style="padding: 3vh 6vw;">
           <v-row>
@@ -262,9 +262,10 @@ export default {
   /* background-size: 100vw;
   height: 100vw; */
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh + 64px);
   /* opacity: 0.3; */
   position: absolute;
+  top: -64px;
   z-index: 0;
 }
 

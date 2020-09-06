@@ -21,7 +21,7 @@
     <v-tabs align-with-title>
       <v-tab router-link to="/">Index</v-tab>
       <v-tab router-link to="/mainlibrary">Get started</v-tab>
-      <v-tab router-link to="/mainlibrary">Best arts</v-tab>
+      <v-tab router-link to="/abs">Best arts</v-tab>
       <!-- <v-tab router-link to="/Profile">Profile</v-tab> -->
       <!-- <v-tab router-link to="/Lolbody">Lolbody</v-tab> -->
 
