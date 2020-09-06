@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <NavBar v-if="true"/>
+    <NavBar/>
      <!-- v-if="!isIndex"  -->
     <!-- :class="[ isIndex ? '' : navMargin ]" -->
     <v-main>
@@ -8,7 +8,6 @@
 
       </router-view>
 
-      <!-- <MainIndex/> -->
 
 
     </v-main>

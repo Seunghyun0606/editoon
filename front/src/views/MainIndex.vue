@@ -124,50 +124,6 @@
     </v-row>-->
 
     <!-- 클릭시, 로그인 버튼 -->
-    <!-- <v-dialog
-        v-model="dialog"
-        max-width="60%"
-      >
-
-        <v-container fluid style="height: 80vh;">
-          <v-row style="height: 100%; text-align: center; background-color: rgba(0, 0, 0, 0.8)">
-            <v-col cols=7>
-              <img style="height: 100%; width: 100%;" :src="require('@/assets/mockupGif.gif')" alt="">
-            </v-col >
-            <v-col cols=5 class="main-index-txt align-self-center">
-
-              <form action="" style="margin-top: 0.2vh;">
-                <v-text-field
-                  v-model="loginData.username"
-                  label="USER NAME"
-                  required
-                  clearable
-                  dark
-                  style="width: 70%;"
-                  class="mx-auto"
-                ></v-text-field>
-                <v-text-field
-                  v-model="loginData.password"
-                  label="PASSWORD"
-                  type="password"
-                  required
-                  clearable
-                  dark
-                  style="width: 70%;"
-                  class="mx-auto"
-                ></v-text-field>
-                <div>
-                  <v-btn class='primary pull-right' @click="login(loginData)" style="width: 30%;">
-                    <strong>접속하기!</strong></v-btn>
-                </div>
-              </form>
-
-
-            </v-col>
-          </v-row>
-
-        </v-container>
-    </v-dialog>-->
 
     <!-- <LoginModal :dialog="dialog" /> -->
 
@@ -205,32 +161,10 @@ export default {
         password: "",
       },
 
-      direction: "top",
-      fab: false,
-      fling: false,
-      hover: false,
-      tabs: null,
-      top: false,
-      right: false,
-      bottom: false,
-      left: false,
-      transition: "slide-y-reverse-transition",
     };
   },
 
   computed: {
-    activeFab() {
-      switch (this.tabs) {
-        case "one":
-          return { class: "purple", icon: "account_circle" };
-        case "two":
-          return { class: "red", icon: "edit" };
-        case "three":
-          return { class: "green", icon: "keyboard_arrow_up" };
-        default:
-          return {};
-      }
-    },
   },
 
   methods: {
