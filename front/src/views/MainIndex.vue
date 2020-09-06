@@ -68,6 +68,34 @@
       </v-row>
     </v-container>
 
+
+    <!-- main 세번재 페이지 -->
+    <v-container fluid class="px-10" style="height: 100vh;">
+      <v-row style="height: 30vh; text-align: center;" class="align-center">
+        <v-col class="main-index-txt">
+          대표작품들을 감상해보세요
+        </v-col>
+      </v-row>
+      <v-row class="justify-space-around">
+        <v-col class="mx-2">
+          <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt="">
+        </v-col>
+        <v-col class="mx-2">
+          <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt="">
+        </v-col>
+        <v-col class="mx-2">
+          <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt="">
+        </v-col>
+        <v-col class="mx-2">
+          <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt="">
+        </v-col>
+        <v-col class="mx-2">
+          <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt="">
+        </v-col>
+      </v-row>
+
+    </v-container>
+
     <!-- 1번안 -->
     <!-- <v-container fluid style="height: 100vh; text-align: center; padding-top:64px; " class="mx-auto">
       <v-row class="justify-center">
