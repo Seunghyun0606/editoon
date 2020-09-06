@@ -1,9 +1,9 @@
 <template>
   <v-app-bar
     absolute
-    color="#000"
-    dark
+    color="transparent"
     class="px-10"
+    flat
   >
     <!-- src="https://picsum.photos/1920/1080?random" -->
     <!-- shrink-on-scroll -->
