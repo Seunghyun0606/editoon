@@ -2,82 +2,102 @@
 
 <div>
   
-  <img class="test" :src="require('@/assets/testGif.gif')" alt="">
+  <img class="test" :src="require('@/assets/test_main_back.jpeg')" alt="">
   <!-- <img class="test ani1" :src="require('@/assets/1.jpg')" alt="">
   <img class="test ani2" :src="require('@/assets/2.jpg')" alt="">
   <img class="test ani3" :src="require('@/assets/3.jpg')" alt=""> -->
-  <div class="test1"></div>
-  <!-- 2번안 -->
-  <!-- <v-container fluid style="height: 100vh; " class="">
-    <v-row style="text-align: center;">
-      <v-col class="align-self-center">
-        <v-row>
-          <v-col class="main-index-txt">
-            우리가족서재
+  <!-- <div class="test1"></div> -->
 
+  <v-container fluid style="height: 100vh; padding-top: 15vh;">
+    <v-row style="height: 80%;">
+
+      <v-col md="5" sm="12" style="padding: 3vh 6vw;">
+        <v-row>
+          <v-col class="main-index-txt text-sm-center text-md-left" >
+            Start your webtoon experience
           </v-col>
         </v-row>
+        
         <v-row>
-          <v-col style="flex-grow: 0; flex-basis: 70%;" class="mx-auto sub-index-txt">
-            대충 설명이란것 대충 설명이란것 대충 설명이란것 대충 설명이란것 대충 설명이란것 대충 설명이란것 대충 설명이란것 
+          <v-col class="sub-index-txt my-5 text-sm-center text-md-left">
+            대충 설명들어갈 예정
           </v-col>
-
         </v-row>
+
+        <v-row style="width: 150px;" class="mx-sm-auto mx-md-0">
+          <v-col style="z-index: 10;  background-color: blue; text-align:center; padding: 10px; color:white; border-radius: 5px;" class="align-self-center; " >
+            Get Started
+          </v-col>
+        </v-row>
+        <v-row style="width: 150px;" class="my-5 mx-sm-auto mx-md-0">
+          <v-col style="z-index: 10;  background-color: blue; text-align:center; padding: 10px; color:white; border-radius: 5px;" class="align-self-center;" >
+            Look around
+          </v-col>
+        </v-row>
+
       </v-col>
 
-      <v-col cols=3 style="background-color: rgba(0, 0, 0, 0.7); z-index: 10; height: 100vh;">
-        <v-row style="height: 100%" class="align-content-center">
-          <form form action="" style="margin-top: 0.2vh;" class="mx-auto">
-            <v-text-field
-              v-model="loginData.username"
-              label="USER NAME"
-              required
-              clearable
-              dark
-            ></v-text-field>
-            <v-text-field
-              v-model="loginData.password"
-              label="PASSWORD"
-              type="password"
-              required
-              clearable
-              dark
-            ></v-text-field>
 
-            <div style="height: 100px; width: 100px; border: 1px solid white; border-radius: 70%; color: white" class="d-flex justify-center mx-auto">
-              <div class="align-self-center">
-                Click Me!
+      <v-col md="7" sm="6" class="mx-sm-auto" style="z-index: 10; position: relative;  align-self: center; ">
+        <img :src="require('@/assets/test_main_right.jpg')" style="width: 100%;" alt="">
+      </v-col>
+    </v-row>
 
-              </div>
-            </div>
-          </form>
+  </v-container>
 
-
-
+  <!-- main 두번째 페이지 -->
+  <v-container class="mx-auto" style="height: 100vh; z-index:10;">
+    <v-row class="align-content-center" style="height: 100vh;">
+      <v-col style="padding: 0rem;">  
+        <img style="height: 70vh;" :src="require('@/assets/main_second.jpg')" alt="">
+      </v-col>
+      <v-col style="padding: 3rem;">
+        <v-row>
+          <v-col class="main-index-txt">
+            대충 소개 제목
+          </v-col>
         </v-row>
+
+        <v-row>
+          <v-col class="sub-index-txt">
+            대충 소개 내용대충대충 소개 내용대충대충 소개 내용대충대충 소개 내용대충대충 소개 내용대충
+            대충 소개 내용대충
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
+  </v-container>
+
+  <!-- 1번안 -->
+  <!-- <v-container fluid style="height: 100vh; text-align: center; padding-top:64px; " class="mx-auto">
+    <v-row class="justify-center">
+      <v-col cols=5>
+        <v-row class="">
+          <v-col class="main-index-txt">
+            우리 가족 서재
+          </v-col>
+        </v-row>
+        <v-row class="justify-center">
+          <v-col style="flex-grow: 0; flex-basis: 70%;" class="my-6 sub-index-txt">
+            대충 여기에 설명이 들어갈 거란 뜻
+            대충 여기에 설명이 들어갈 거란 뜻대충 여기에 설명이 들어갈 거란 뜻대충 여기에 설명이 들어갈 거란 뜻대충 여기에 설명이 들어갈 거란 뜻
+          </v-col>
+        </v-row>
+        <v-row class="justify-center">
+          <v-col @click.stop="clickLogin" style="flex-grow: 0; flex-basis: 8%; color: white; border: 1px solid white; border-radius: 70%; z-index: 10; width: 100px; height: 100px;" class="align-self-center">
+            Login
+          </v-col>
+        </v-row>
+
+      </v-col>
+      <v-col cols=7>
+        <img style="z-index: 10; position: relative; height: 100%;" :src="require('@/assets/test_main_right.jpg')" alt="">
       </v-col>
     </v-row> -->
 
-  <!-- 1번안 -->
-  <v-container style="height: 100vh; text-align: center; padding-top: 12%; " class="mx-auto">
-    <v-row class="">
-      <v-col class="main-index-txt">
-        우리 가족 서재
-      </v-col>
-    </v-row>
-    <v-row class="justify-center">
-      <v-col style="flex-grow: 0; flex-basis: 70%;" class="my-6 sub-index-txt">
-        대충 여기에 설명이 들어갈 거란 뜻
-        대충 여기에 설명이 들어갈 거란 뜻대충 여기에 설명이 들어갈 거란 뜻대충 여기에 설명이 들어갈 거란 뜻대충 여기에 설명이 들어갈 거란 뜻
-      </v-col>
-    </v-row>
-    <v-row class="justify-center">
-      <v-col @click.stop="clickLogin" style="flex-grow: 0; flex-basis: 8%; color: white; border: 1px solid white; border-radius: 70%; z-index: 10; width: 100px; height: 100px;" class="align-self-center">
-        Login
-      </v-col>
-    </v-row>
 
-    <v-dialog
+    <!-- 클릭시, 로그인 버튼 -->
+    <!-- <v-dialog
       v-model="dialog"
       max-width="60%"
     >
@@ -120,109 +140,11 @@
         </v-row>
 
       </v-container>
-    </v-dialog>
+    </v-dialog> -->
 
     <!-- <LoginModal :dialog="dialog" /> -->
 
-
-
-
-
-
-
-    <!-- 1안, 눌러서 나오기 -->
-    <!-- <v-row>
-      <v-col style="text-align: end;">
-        
-      <v-speed-dial
-        v-model="fab"
-        :top="top"
-        :bottom="bottom"
-        :right="right"
-        :left="left"
-        :direction="direction"
-        :open-on-hover="hover"
-        :transition="transition"
-      >
-        <template v-slot:activator>
-          <v-btn
-            v-model="fab"
-            color="blue darken-2"
-            dark
-            fab
-          >
-            <v-icon v-if="fab">mdi-close</v-icon>
-            <v-icon v-else>mdi-account-circle</v-icon>
-          </v-btn>
-        </template>
-        <v-btn
-          fab
-          dark
-          small
-          color="green"
-        >
-          <v-icon>mdi-pencil</v-icon>
-        </v-btn>
-        <v-btn
-          fab
-          dark
-          small
-          color="indigo"
-        >
-          <v-icon>mdi-plus</v-icon>
-        </v-btn>
-        <v-btn
-          fab
-          dark
-          small
-          color="red"
-        >
-          <v-icon>mdi-delete</v-icon>
-        </v-btn>
-      </v-speed-dial>
-      </v-col>
-    </v-row> -->
-
-    <!-- 2안, 처음부터 3개 -->
-    <!-- <v-row style="text-align: end;">
-      <v-col>
-        <v-btn
-          fab
-          dark
-          small
-          color="green"
-        >
-          <v-icon>mdi-pencil</v-icon>
-        </v-btn>
-      </v-col>
-    </v-row>
-    <v-row style="text-align: end;" class="py-2">
-      <v-col>
-        <v-btn
-          fab
-          dark
-          small
-          color="indigo"
-        >
-          <v-icon>mdi-plus</v-icon>
-        </v-btn>
-      </v-col>
-    </v-row>
-    <v-row style="text-align: end;">
-      <v-col>
-        
-        <v-btn
-          fab
-          dark
-          small
-          color="red"
-        >
-          <v-icon>mdi-delete</v-icon>
-        </v-btn>
-
-      </v-col>
-    </v-row> -->
-  </v-container>
+  <!-- </v-container> -->
 
 
 </div>
@@ -337,8 +259,8 @@ created() {
 
 
 .main-index-txt {
-  /* position: absolute; */
-  color: white;
+  position: relative;
+  color: black;
   font-weight: 900;
   font-size: 50px;
   z-index: 10;  
@@ -346,7 +268,7 @@ created() {
 }
 
 .sub-index-txt {
-  color: white;
+  color: black;
   font-size: 30px;
   z-index: 10;
 }

@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <NavBar v-if="!isIndex" />
-
-
-    <v-main :class="[ isIndex ? '' : navMargin ]">
+    <NavBar v-if="true"/>
+     <!-- v-if="!isIndex"  -->
+    <!-- :class="[ isIndex ? '' : navMargin ]" -->
+    <v-main>
       <router-view>
 
       </router-view>
