@@ -20,8 +20,8 @@
     <!-- <v-toolbar-title>Title</v-toolbar-title> -->
     <v-tabs align-with-title>
       <v-tab router-link to="/">Index</v-tab>
-      <v-tab router-link to="/webtoonindex">Get started</v-tab>
-      <v-tab router-link to="/abs">Best arts</v-tab>
+      <v-tab router-link to="/abs">Get started</v-tab>
+      <v-tab router-link to="/webtoonindex">Best arts</v-tab>
       <!-- <v-tab router-link to="/Profile">Profile</v-tab> -->
       <!-- <v-tab router-link to="/Lolbody">Lolbody</v-tab> -->
 

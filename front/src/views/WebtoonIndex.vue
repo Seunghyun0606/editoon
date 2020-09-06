@@ -1,28 +1,33 @@
 <template>
-  <v-container class="mx-auto">
-    <WebtoonSort
-      :categoryTitle="categoryTitle"
-      :sortCriteria="sortCriteria"
-      @all_book="sortBy('all_book')"
-      @someone_book="sortBy('someone_book')"
-      @release_date="sortBy('release_date')"
-    ></WebtoonSort>
+  <section>
+    <WebtoonIndexCarro/>
+    <v-container class="mx-auto">
+      <WebtoonSort
+        :categoryTitle="categoryTitle"
+        :sortCriteria="sortCriteria"
+        @all_book="sortBy('all_book')"
+        @someone_book="sortBy('someone_book')"
+        @release_date="sortBy('release_date')"
+      ></WebtoonSort>
 
-    <WebtoonGrid :books="books" :imageURL="imageURL" />
+      <WebtoonGrid :books="books" :imageURL="imageURL" />
 
-  </v-container>
+    </v-container>
+  </section>
 </template>
 
 <script>
 import WebtoonGrid from '@/components/webtoonindex/WebtoonGrid'
 import WebtoonSort from '@/components/webtoonindex/WebtoonSort'
+import WebtoonIndexCarro from '@/components/webtoonindex/WebtoonIndexCarro'
 
 
 export default {
-  name: 'MainLibrary',
+  name: 'WebtoonIndex',
   components: {
     WebtoonGrid,
     WebtoonSort,
+    WebtoonIndexCarro,
   },
   data() {
     return {
