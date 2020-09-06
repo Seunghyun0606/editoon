@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     isIndex: false,
     loginDialog: false,
+    signUpDialog: false,
   },
   mutations: {
     isIndex(state, check) {

@@ -15,7 +15,7 @@
 
             <form action="" style="margin-top: 0.2vh;">
               <v-text-field
-                v-model="loginData.username"
+                v-model="signUpData.username"
                 label="USER NAME"
                 required
                 clearable
@@ -24,7 +24,7 @@
                 class="mx-auto"
               ></v-text-field>
               <v-text-field
-                v-model="loginData.password"
+                v-model="signUpData.password"
                 label="PASSWORD"
                 type="password"
                 required
@@ -51,7 +51,7 @@
 // import { mapState } from 'vuex'
 
 export default {
-  name: "LoginModal",
+  name: "SignUpModal",
   computed: {
     // modal을 이용할때, v-model을 사용하는 것이 편하기도하고, 실제로 v-dialog에 v-model에
     // emit 이벤트로 click.outside 의 경우 false를 보내서 v-model에 보내준다.
@@ -61,17 +61,17 @@ export default {
     // https://vuex.vuejs.org/kr/guide/forms.html 참고.
     loginDialog: {
       get() {
-        return this.$store.state.loginDialog
+        return this.$store.state.signUpDialog
       },
       set (val) {
-        this.$store.state.loginDialog = val
+        this.$store.state.signUpDialog = val
       }
     }
 
   },
   data() {
     return {
-      loginData: {
+      signUpData: {
         username: "",
         email: "",
         password: "",
@@ -81,7 +81,7 @@ export default {
   },
   methods: {
     clickOut() {
-      this.$store.state.loginDialog = false
+      this.$store.state.signUpDialog = false
     }
   },
 }

@@ -16,30 +16,29 @@
 
     <v-spacer></v-spacer>
     <v-tabs right hide-slider optional>
-      <v-tab >Sign Up</v-tab>
+      <v-tab @click="clickSingUp()">Sign Up</v-tab>
       <v-tab @click="clickLogin()">Log in</v-tab>
 
     </v-tabs>
 
-    <LoginModal /> 
+    <LoginModal/> 
+    <SignUpModal/>
   </v-app-bar>
 </template>
 
 
 <script>
 import LoginModal from '@/components/login/LoginModal'
-import { mapState } from 'vuex'
+import SignUpModal from '@/components/login/SignUpModal'
 
 
 export default {
   name: 'NavBar',
   components: {
-    LoginModal
+    LoginModal,
+    SignUpModal,
   },
   computed: {
-    ...mapState([
-      'loginDialog'
-    ]),
   },
   data() {
     return {
@@ -49,6 +48,9 @@ export default {
   methods: {
     clickLogin() {
       this.$store.state.loginDialog = true
+    },
+    clickSingUp() {
+      this.$store.state.signUpDialog = true
     }
   }
 
