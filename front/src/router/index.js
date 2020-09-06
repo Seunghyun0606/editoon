@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import MainIndex from '@/views/MainIndex'
-import MainLibrary from '@/views/MainLibrary'
+import WebtoonIndex from '@/views/WebtoonIndex'
 
 Vue.use(VueRouter)
 
@@ -12,9 +12,9 @@ Vue.use(VueRouter)
     component: MainIndex
   },
   {
-    path: '/mainlibrary',
-    name: 'MainLibrary',
-    component: MainLibrary
+    path: '/webtoonindex',
+    name: 'WebtoonIndex',
+    component: WebtoonIndex
   },
   // {
     // path: '/about',

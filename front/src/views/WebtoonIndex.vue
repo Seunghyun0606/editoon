@@ -1,28 +1,28 @@
 <template>
   <v-container class="mx-auto">
-    <MainLibraryListSort
+    <WebtoonSort
       :categoryTitle="categoryTitle"
       :sortCriteria="sortCriteria"
       @all_book="sortBy('all_book')"
       @someone_book="sortBy('someone_book')"
       @release_date="sortBy('release_date')"
-    ></MainLibraryListSort>
+    ></WebtoonSort>
 
-    <MainLibraryListGrid :books="books" :imageURL="imageURL" />
+    <WebtoonGrid :books="books" :imageURL="imageURL" />
 
   </v-container>
 </template>
 
 <script>
-import MainLibraryListGrid from '@/components/mainlibrary/MainLibraryListGrid'
-import MainLibraryListSort from '@/components/mainlibrary/MainLibraryListSort'
+import WebtoonGrid from '@/components/webtoonindex/WebtoonGrid'
+import WebtoonSort from '@/components/webtoonindex/WebtoonSort'
 
 
 export default {
   name: 'MainLibrary',
   components: {
-    MainLibraryListGrid,
-    MainLibraryListSort,
+    WebtoonGrid,
+    WebtoonSort,
   },
   data() {
     return {
