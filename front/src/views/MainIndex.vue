@@ -17,18 +17,21 @@
             <v-col class="sub-index-txt my-5 text-sm-center text-md-left">대충 설명들어갈 예정</v-col>
           </v-row>
 
-          <v-row style="width: 150px;" class="mx-sm-auto mx-md-0">
+          <v-row style="width: 150px; height: 200px;" class="mx-sm-auto mx-md-auto">
+            <v-col
+              style="z-index: 10; background-color: blue; text-align:center; padding: 10px; color:white; border-radius: 5px;"
+              class="align-self-center"
+            >
+              Get Started
+            </v-col>
+          </v-row>
+          <!-- <v-row style="width: 150px;" class="my-5 mx-sm-auto mx-md-0">
             <v-col
               style="z-index: 10;  background-color: blue; text-align:center; padding: 10px; color:white; border-radius: 5px;"
               class="align-self-center;"
-            >Get Started</v-col>
-          </v-row>
-          <v-row style="width: 150px;" class="my-5 mx-sm-auto mx-md-0">
-            <v-col
-              style="z-index: 10;  background-color: blue; text-align:center; padding: 10px; color:white; border-radius: 5px;"
-              class="align-self-center;"
-            >Look around</v-col>
-          </v-row>
+            >Look around
+            </v-col>
+          </v-row> -->
         </v-col>
 
         <v-col
@@ -96,51 +99,8 @@
 
     </v-container>
 
-    <!-- 1번안 -->
-    <!-- <v-container fluid style="height: 100vh; text-align: center; padding-top:64px; " class="mx-auto">
-      <v-row class="justify-center">
-        <v-col cols=5>
-          <v-row class="">
-            <v-col class="main-index-txt">
-              우리 가족 서재
-            </v-col>
-          </v-row>
-          <v-row class="justify-center">
-            <v-col style="flex-grow: 0; flex-basis: 70%;" class="my-6 sub-index-txt">
-              대충 여기에 설명이 들어갈 거란 뜻
-              대충 여기에 설명이 들어갈 거란 뜻대충 여기에 설명이 들어갈 거란 뜻대충 여기에 설명이 들어갈 거란 뜻대충 여기에 설명이 들어갈 거란 뜻
-            </v-col>
-          </v-row>
-          <v-row class="justify-center">
-            <v-col @click.stop="clickLogin" style="flex-grow: 0; flex-basis: 8%; color: white; border: 1px solid white; border-radius: 70%; z-index: 10; width: 100px; height: 100px;" class="align-self-center">
-              Login
-            </v-col>
-          </v-row>
-
-        </v-col>
-        <v-col cols=7>
-          <img style="z-index: 10; position: relative; height: 100%;" :src="require('@/assets/test_main_right.jpg')" alt="">
-        </v-col>
-    </v-row>-->
-
-    <!-- 클릭시, 로그인 버튼 -->
-
-    <!-- <LoginModal :dialog="dialog" /> -->
-
-    <!-- </v-container> -->
   </div>
 
-  <!-- <div >
-    <div>
-      <div class="test" :style="{ backgroundImage: 'url(\'' + require(`@/assets/mockupGif.gif`) + '\')'}"></div>
-      <img class="test" :src="require('@/assets/mockupGif.gif')" alt="">
-
-    </div>
-
-    <div class="test2 mx-auto">
-      test
-    </div>
-  </div>-->
 </template>
 
 <script>
