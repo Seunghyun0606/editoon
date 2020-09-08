@@ -13,9 +13,10 @@
       <!-- v-model 로 걸면 v-list-item 클릭했을때, 그 값을 바꿔준다. -->
       <v-list-item-group
         color="red"
+        @change="listNum"
       >
         <div v-for="(title, index) in title" :key="index">
-          <v-list-item @input="input">
+          <v-list-item >
             <v-list-item-content>
               <v-list-item-title> {{ title }} </v-list-item-title>
             </v-list-item-content>
@@ -39,6 +40,7 @@ export default {
   name: "MyPageLeftNav",
   data() {
     return {
+      test: '',
       title: [
         '내가 좋아하는 툰',
         '내가 쓴 글',
@@ -54,9 +56,10 @@ export default {
   },
   methods: {
 
-    input(pay) {
-      console.log(pay)
-    }
+    listNum(pay) {
+      this.$emit('listNum', pay)
+    },
+
   }
 
 

@@ -3,13 +3,14 @@
   <v-container class="ma-10 pa-10">
     <v-row>
       <v-col>
-        <MyPageLeftNav/>
+        <MyPageLeftNav @listNum='listNum' />
 
       </v-col>
       <v-col cols=8>
-        <MyPageInfo v-if="false"/>
+        <MyPageInfo v-if="listNumber === 2"/>
 
         <MyPageFavortoonSort
+          v-if="listNumber !== 2"
           :categoryTitle="categoryTitle"
           :sortCriteria="sortCriteria"
           @all_book="sortBy('all_book')"
@@ -18,8 +19,8 @@
         
         />
 
-        <MyPageFavortoon :books="books"/>
-        <MyPageMytoon v-if="false"/>
+        <MyPageFavortoon v-if="listNumber == 0" :books="books"/>
+        <MyPageMytoon v-else-if="listNumber == 1" :books="books"/>
 
       </v-col>
     </v-row>
@@ -46,6 +47,7 @@ export default {
   },
   data() {
     return {
+      listNumber: 2,
       books: [
         {
           title: 'abc',
@@ -69,6 +71,9 @@ export default {
     }
   },
   methods: {
+    listNum(pay) {
+      this.listNumber = pay
+    },
     sortBy(prop) {
       if (prop === "all_book") {
         this.sortCriteria = "전체 책";
