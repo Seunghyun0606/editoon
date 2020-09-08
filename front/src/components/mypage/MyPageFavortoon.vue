@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs12 sm6 md4 lg2 v-for="book in books" :key="book.id">
+    <v-flex xs12 sm6 md4 lg3 v-for="book in books" :key="book.id">
       <v-card hover class="ma-3" min-height="300" @click="reviewBook(book.id)">
         <v-layout column align-center fill-height class="text-center">
           <v-img src="https://picsum.photos/1920/1080?random"></v-img>
@@ -14,7 +14,7 @@
 
 <script>
   export default {
-  name: "MyPageMytoon",
+  name: "MyPageFavortoon",
   props: {
       books: Array,
       imageURL: String,

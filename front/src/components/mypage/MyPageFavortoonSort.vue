@@ -18,7 +18,7 @@
               @click="sortBy('all_book')"
             >
               <v-icon left>mdi-account-heart</v-icon>
-              <span class="caption text-lowercase">전체 책</span>
+              <span class="caption text-lowercase">전체</span>
             </v-btn>
           </template>
           <span>전체 책</span>
@@ -34,7 +34,7 @@
               @click="sortBy('someone_book')"
             >
               <v-icon left>mdi-star</v-icon>
-              <span class="caption text-lowercase">아빠 책</span>
+              <span class="caption text-lowercase">여행</span>
             </v-btn>
           </template>
           <span>아빠 책</span>
@@ -49,7 +49,7 @@
               @click="sortBy('release_date')"
             >
               <v-icon left>mdi-calendar</v-icon>
-              <span class="caption text-lowercase">시간 순</span>
+              <span class="caption text-lowercase">시간</span>
             </v-btn>
           </template>
           <span>시간 순</span>
@@ -61,7 +61,7 @@
 
 <script>
   export default {
-    name: "MainLibraryListSort",
+    name: "MyPageFavortoonSort",
     props: {
       categoryTitle: String,
       sortCriteria: String,
