@@ -6,6 +6,24 @@
         내 정보 수정
       </v-col>
     </v-row>
+    <v-row class="mt-10">
+      <v-col>
+        <v-avatar>
+          <img
+            src="https://cdn.vuetifyjs.com/images/john.jpg"
+            alt="John"
+          >
+        </v-avatar>
+      </v-col>
+      <v-col cols=10>
+        <v-file-input
+          accept="image/png, image/jpeg, image/bmp"
+          placeholder="Pick an avatar"
+          prepend-icon="mdi-camera"
+          label="Avatar"
+        ></v-file-input>
+      </v-col>
+    </v-row>
 
     <v-form
       ref="form"

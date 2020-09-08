@@ -20,9 +20,10 @@
       imageURL: String,
   },
   data() {
-      return {
-      };
-    },
+    return {
+      
+    }
+  },
   methods: {
     reviewBook(bookId) {
       this.$router.push(`reviewbook/${bookId}`)
