@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import MainIndex from '@/views/MainIndex'
 import WebtoonIndex from '@/views/WebtoonIndex'
+import MyPage from '@/views/MyPage'
+
 
 Vue.use(VueRouter)
 
@@ -15,6 +17,11 @@ Vue.use(VueRouter)
     path: '/webtoonindex',
     name: 'WebtoonIndex',
     component: WebtoonIndex
+  },
+  {
+    path: '/mypage',
+    name: 'MyPage',
+    component: MyPage
   },
   // {
     // path: '/about',

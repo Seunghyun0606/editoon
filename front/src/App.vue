@@ -3,8 +3,8 @@
     <NavBar/>
      <!-- v-if="!isIndex"  -->
     <!-- :class="[ isIndex ? '' : navMargin ]" -->
-    <v-main>
-      <router-view style="margin-top: 64px;">
+    <v-main style="margin-top: 64px;">
+      <router-view>
 
       </router-view>
 
