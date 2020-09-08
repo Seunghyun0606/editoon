@@ -46,7 +46,12 @@ export default {
       ],
 
     }
-  }
+  },
+  computed: {
+    titleNums() {
+      return this.title.length
+    }
+  },
 
 
 }

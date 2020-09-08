@@ -1,6 +1,6 @@
 <template>
 
-  <v-container>
+  <v-container class="ma-10 pa-10">
     <v-row>
       <v-col>
         <MyPageLeftNav/>
@@ -8,7 +8,7 @@
       </v-col>
       <v-col cols=8>
 
-        abcd
+        <MyPageInfo/>
 
       </v-col>
     </v-row>
@@ -18,22 +18,20 @@
 
 <script>
 import MyPageLeftNav from '@/components/mypage/MyPageLeftNav'
+import MyPageInfo from '@/components/mypage/MyPageInfo'
 
 
 export default {
   name: "MyPage",
   components: {
     MyPageLeftNav,
+    MyPageInfo,
   },
   data() {
     return {
     }
   },
-  computed: {
-    titleNums() {
-      return this.title.length
-    }
-  },
+
 
 }
 </script>
