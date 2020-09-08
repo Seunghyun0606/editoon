@@ -1,6 +1,15 @@
 # front
 
+- vue
+- vue-router
+- vuex
+- vuetify
+- toast-ui/vue-image-editor
+
+
+
 ## Project setup
+
 ```
 yarn install
 ```
