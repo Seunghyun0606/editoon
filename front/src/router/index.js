@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import MainIndex from '@/views/MainIndex'
 import WebtoonIndex from '@/views/WebtoonIndex'
 import MyPage from '@/views/MyPage'
+import PhotoEditor from '@/views/PhotoEditor'
 
 
 Vue.use(VueRouter)
@@ -22,6 +23,11 @@ Vue.use(VueRouter)
     path: '/mypage',
     name: 'MyPage',
     component: MyPage
+  },
+  {
+    path: '/photoeditor',
+    name: 'PhotoEditor',
+    component: PhotoEditor
   },
   // {
     // path: '/about',

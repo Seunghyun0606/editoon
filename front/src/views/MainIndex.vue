@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img class="test" :src="require('@/assets/test_main_back.jpeg')" alt />
+    <img class="test" :src="require('@/assets/1-4.jpg')" alt />
     <!-- <img class="test ani1" :src="require('@/assets/1.jpg')" alt="">
     <img class="test ani2" :src="require('@/assets/2.jpg')" alt="">
     <img class="test ani3" :src="require('@/assets/3.jpg')" alt="">-->
@@ -46,7 +46,8 @@
     </v-container>
 
     <!-- main 두번째 페이지 -->
-    <v-container fluid class="px-10" style="height: 100vh; z-index:10;">
+    <!-- backgroundImage: 'url(\'' + require(`@/assets/1-3.png`) + '\')', -->
+    <v-container fluid class="px-10" :style="{ height: '100vh', zIndex: 10 }">
       <v-row class="align-content-center justify-center" style="height: 100%;">
         <v-col md="6" cols="10" class="mx-md-10 mx-sm-0 mx-xs-0 pa-0">
           <img style="width: 100%;" :src="require('@/assets/main_second.jpg')" alt />
