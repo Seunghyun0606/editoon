@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img class="test" :src="require('@/assets/1-4.jpg')" alt />
+    <img class="test" :src="require('@/assets/bg2.jpg')" alt />
     <!-- <img class="test ani1" :src="require('@/assets/1.jpg')" alt="">
     <img class="test ani2" :src="require('@/assets/2.jpg')" alt="">
     <img class="test ani3" :src="require('@/assets/3.jpg')" alt="">-->
@@ -10,19 +10,27 @@
       <v-row style="height: 80%;">
         <v-col md="5" sm="12" style="padding: 3vh 6vw;">
           <v-row>
-            <v-col class="main-index-txt text-sm-center text-md-left">Start your webtoon experience</v-col>
+            <v-col class="white--text main-index-txt text-sm-center text-md-left">
+              <h1 class="block-effect" style="--td: 1.2s">
+                <div class="block-reveal white--text" style="--bc: #fff263; --d: .1s;">
+                  <strong>Editoon</strong>
+                </div>
+                <div class="block-reveal white--text" style="--bc: #ffbb63; --d: .5s">
+                  <strong>Just do it</strong>
+                </div>
+              </h1>
+            </v-col>
           </v-row>
 
           <v-row>
-            <v-col class="sub-index-txt my-5 text-sm-center text-md-left">대충 설명들어갈 예정</v-col>
+            <v-col
+              class="sub-index-txt my-5 text-sm-center text-md-left"
+            >Start your webtoon experience</v-col>
           </v-row>
 
           <v-row style="width: 150px; height: 200px;" class="mx-sm-auto mx-md-auto">
-            <v-col
-              style="z-index: 10; background-color: blue; text-align:center; padding: 10px; color:white; border-radius: 5px;"
-              class="align-self-center"
-            >
-              Get Started
+            <v-col style="z-index: 10;">
+              <v-btn x-large color="rgb(23, 46, 252)" class="white--text">Get Started</v-btn>
             </v-col>
           </v-row>
           <!-- <v-row style="width: 150px;" class="my-5 mx-sm-auto mx-md-0">
@@ -31,16 +39,16 @@
               class="align-self-center;"
             >Look around
             </v-col>
-          </v-row> -->
+          </v-row>-->
         </v-col>
 
         <v-col
           md="7"
           sm="6"
-          class="mx-sm-auto"
+          class="mx-sm-auto p-3"
           style="z-index: 10; position: relative;  align-self: center; "
         >
-          <img :src="require('@/assets/test_main_right.jpg')" style="width: 100%;" alt />
+          <!-- <img :src="require('@/assets/main_img.png')" style="width: 85%;" alt /> -->
         </v-col>
       </v-row>
     </v-container>
@@ -52,7 +60,6 @@
         <v-col md="6" cols="10" class="mx-md-10 mx-sm-0 mx-xs-0 pa-0">
           <img style="width: 100%;" :src="require('@/assets/main_second.jpg')" alt />
         </v-col>
-
 
         <v-col md="4" lg="4" cols="10" class="pa-0">
           <v-row>
@@ -72,36 +79,30 @@
       </v-row>
     </v-container>
 
-
     <!-- main 세번재 페이지 -->
     <v-container fluid class="px-10" style="height: 100vh;">
       <v-row style="height: 30vh; text-align: center;" class="align-center">
-        <v-col class="main-index-txt">
-          대표작품들을 감상해보세요
-        </v-col>
+        <v-col class="main-index-txt">대표작품들을 감상해보세요</v-col>
       </v-row>
       <v-row class="justify-space-around">
         <v-col class="mx-2">
-          <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt="">
+          <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt />
         </v-col>
         <v-col class="mx-2">
-          <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt="">
+          <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt />
         </v-col>
         <v-col class="mx-2">
-          <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt="">
+          <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt />
         </v-col>
         <v-col class="mx-2">
-          <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt="">
+          <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt />
         </v-col>
         <v-col class="mx-2">
-          <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt="">
+          <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt />
         </v-col>
       </v-row>
-
     </v-container>
-
   </div>
-
 </template>
 
 <script>
@@ -121,12 +122,10 @@ export default {
         email: "",
         password: "",
       },
-
     };
   },
 
-  computed: {
-  },
+  computed: {},
 
   methods: {
     isIndex() {
@@ -241,5 +240,92 @@ export default {
   animation-fill-mode: none;
   /* animation-play-state: running; */
   animation-name: fading;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* other */
+.info {
+  margin: 20px 0;
+  text-align: center;
+}
+
+p {
+  color: #2e2e2e;
+  margin-bottom: 20px;
+}
+
+/* block-$ */
+.block-effect {
+  font-size: calc(8px + 6vw);
+}
+
+.block-reveal {
+  --t: calc(var(--td) + var(--d));
+
+  color: transparent;
+  padding: 4px;
+
+  position: relative;
+  overflow: hidden;
+
+  animation: revealBlock 0s var(--t) forwards;
+}
+
+.block-reveal::after {
+  content: "";
+
+  width: 0%;
+  height: 100%;
+  padding-bottom: 4px;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  background: var(--bc);
+  animation: revealingIn var(--td) var(--d) forwards,
+    revealingOut var(--td) var(--t) forwards;
+}
+
+/* animations */
+@keyframes revealBlock {
+  100% {
+    color: #0f0f0f;
+  }
+}
+
+@keyframes revealingIn {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes revealingOut {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.abs-site-link {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  color: hsla(0, 0%, 0%, 0.6);
+  font-size: 16px;
 }
 </style>
