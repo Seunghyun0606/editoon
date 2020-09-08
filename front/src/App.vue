@@ -4,9 +4,8 @@
      <!-- v-if="!isIndex"  -->
     <!-- :class="[ isIndex ? '' : navMargin ]" -->
     <v-main style="margin-top: 64px;">
-      <router-view>
 
-      </router-view>
+      <router-view></router-view>
 
 
 

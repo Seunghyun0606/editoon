@@ -9,7 +9,20 @@
         @someone_book="sortBy('someone_book')"
         @release_date="sortBy('release_date')"
       ></WebtoonSort> -->
-
+      <div style="float: right">
+        대충 버튼?
+      </div>
+      <div class="text-h4 mt-16">
+        오늘의 웹툰
+      </div>
+      <WebtoonGrid :books="books" :imageURL="imageURL" />
+      <div class="text-h4 mt-16">
+        인기 웹툰
+      </div>
+      <WebtoonGrid :books="books" :imageURL="imageURL" />
+      <div class="text-h4 mt-16">
+        여행 웹툰
+      </div>
       <WebtoonGrid :books="books" :imageURL="imageURL" />
 
     </v-container>
@@ -35,18 +48,6 @@ export default {
       categoryTitle: '카테고리타이틀',
       sortCriteria: '조건',
       books: [
-        {
-          title: 'abc',
-          time: '1234',
-        },
-        {
-          title: 'abc',
-          time: '1234',
-        },
-        {
-          title: 'abc',
-          time: '1234',
-        },
         {
           title: 'abc',
           time: '1234',

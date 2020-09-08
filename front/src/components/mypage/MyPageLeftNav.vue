@@ -3,7 +3,7 @@
     max-width="200"
     outlined
   >
-    <div style="height: 80px;">
+    <div style="height: 80px; padding-top: 15%; text-align: center;">
       임의 상자
     </div>
     <v-divider class="ma-0"></v-divider>
@@ -15,7 +15,7 @@
         color="red"
       >
         <div v-for="(title, index) in title" :key="index">
-          <v-list-item>
+          <v-list-item @input="input">
             <v-list-item-content>
               <v-list-item-title> {{ title }} </v-list-item-title>
             </v-list-item-content>
@@ -52,6 +52,12 @@ export default {
       return this.title.length
     }
   },
+  methods: {
+
+    input(pay) {
+      console.log(pay)
+    }
+  }
 
 
 }

@@ -7,7 +7,6 @@
 
       </v-col>
       <v-col cols=8>
-
         <MyPageInfo v-if="false"/>
 
         <MyPageFavortoonSort

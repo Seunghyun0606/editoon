@@ -2,9 +2,8 @@
   <v-carousel
     delimiter-icon="mdi-minus"
     dark
-    continuous="true"
     style="max-width: 100vw; width: 100vw;"
-    cycle="true"
+    cycle
     interval="2000"
   >
     <v-carousel-item
