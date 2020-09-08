@@ -16,14 +16,14 @@
         오늘의 웹툰
       </div>
       <WebtoonGrid :books="books" :imageURL="imageURL" />
-      <div class="text-h4 mt-16">
+      <!-- <div class="text-h4 mt-16">
         인기 웹툰
       </div>
       <WebtoonGrid :books="books" :imageURL="imageURL" />
       <div class="text-h4 mt-16">
         여행 웹툰
       </div>
-      <WebtoonGrid :books="books" :imageURL="imageURL" />
+      <WebtoonGrid :books="books" :imageURL="imageURL" /> -->
 
     </v-container>
   </section>

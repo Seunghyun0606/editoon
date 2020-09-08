@@ -20,14 +20,27 @@ export default {
     return {
       useDefaultUI: true,
       options: { // for tui-image-editor component's "options" prop
-        cssMaxWidth: 700,
-        cssMaxHeight: 500
+        includeUI: {
+          cssMaxWidth: 700,
+          cssMaxHeight: 500
+        }
       }
-    };
-  }
+    }
+  },
 }
 </script>
 
 <style>
+
+/* .tui-image-editor-container {
+  width: 50% !important;
+  float: right;
+} */
+
+.tui-image-editor-header-logo {
+  display: none !important;
+}
+
+
 
 </style>
