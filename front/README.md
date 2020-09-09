@@ -5,6 +5,7 @@
 - vuex
 - vuetify
 - toast-ui/vue-image-editor
+- vue-compare-image
 
 
 

@@ -99,7 +99,8 @@
           </v-row>
         </v-col>
         <v-col md="6" cols="10" class="mx-md-10 mx-sm-0 mx-xs-0 pa-0">
-          <img style="width: 100%;" :src="require('@/assets/main_second.jpg')" alt />
+          <!-- <img style="width: 100%;" :src="require('@/assets/main_second.jpg')" alt /> -->
+          <VueCompareImage :leftImage="require('@/assets/1-1.jpg')" :rightImage="require('@/assets/1-2.jpg')" />
         </v-col>
       </v-row>
     </v-container>
@@ -132,11 +133,15 @@
 
 <script>
 // import LoginModal from '@/components/login/LoginModal'
+import VueCompareImage from 'vue-compare-image';
+
+
 
 export default {
   name: "Index",
   components: {
     // LoginModal
+    VueCompareImage,
   },
   data() {
     return {
