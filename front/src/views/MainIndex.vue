@@ -158,8 +158,8 @@ export default {
   computed: {},
 
   methods: {
-    isIndex() {
-      this.$store.commit("isIndex", true);
+    isNotEditor() {
+      this.$store.commit("isNotEditor", true);
     },
     clickLogin() {
       this.dialog = true;
@@ -169,7 +169,7 @@ export default {
     }
   },
   created() {
-    this.isIndex();
+    this.isNotEditor();
   },
 };
 </script>

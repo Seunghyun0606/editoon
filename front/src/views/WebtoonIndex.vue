@@ -1,5 +1,5 @@
 <template>
-  <section class="mb-16">
+  <section class="">
     <WebtoonIndexCarro/>
     <v-container class="mx-auto">
       <!-- <WebtoonSort
@@ -114,8 +114,8 @@ export default {
     }
   },
   methods: {
-    isIndex() {
-      this.$store.commit('isIndex', false)
+    isNotEditor() {
+      this.$store.commit('isNotEditor', true)
     },
 
     sortBy(prop) {
@@ -131,7 +131,7 @@ export default {
     },
   },
   created() {
-    this.isIndex()
+    this.isNotEditor()
   }
 
 }

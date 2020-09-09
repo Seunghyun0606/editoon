@@ -27,6 +27,14 @@ export default {
       }
     }
   },
+  methods: {
+    isNotEditor() {
+      this.$store.commit("isNotEditor", false);
+    },
+  },
+  created() {
+    this.isNotEditor()
+  }
 }
 </script>
 

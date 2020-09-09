@@ -10,25 +10,29 @@
 
 
     </v-main>
+    <Footer v-if="isNotEditor" class="mt-16" />
+
   </v-app>
 </template>
 
 <script>
 import NavBar from '@/components/NavBar';
+import Footer from '@/components/Footer';
 // import MainIndex from '@/views/MainIndex';
 
 export default {
   name: 'App',
-  computed: {
-    isIndex() {
-      return this.$store.state.isIndex
-    }
-  },
-
   components: {
     // MainIndex,
     NavBar,
+    Footer
   },
+  computed: {
+    isNotEditor() {
+      return this.$store.state.isNotEditor
+    }
+  },
+
 
   data() {
     return {
