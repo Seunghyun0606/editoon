@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="mb-16">
     <WebtoonIndexCarro/>
     <v-container class="mx-auto">
       <!-- <WebtoonSort
@@ -16,14 +16,51 @@
         오늘의 웹툰
       </div>
       <WebtoonGrid :books="books" :imageURL="imageURL" />
-      <!-- <div class="text-h4 mt-16">
-        인기 웹툰
+      <div style="background-color: blue; height: 200px;" class="my-16">
       </div>
+      <div class="d-flex">
+        <div class="mr-auto text-h5">
+          장르별 보기
+        </div>
+        <v-btn
+          color='primary'
+          tile
+          class="mr-4"
+        >
+          좋아요 순
+        </v-btn>
+        <v-btn
+          color="primary"
+          tile
+          class="mr-4"
+        >
+          시간 순
+        </v-btn>
+        <div style="width: 300px;">
+          <v-text-field
+            class="pa-0"
+            label="Search"
+            placeholder="작품 검색하기"
+            append-icon="mdi-magnify"
+          ></v-text-field>
+
+        </div>
+
+      </div>
+      <v-tabs class="my-2">
+        <v-tab>
+          일상
+        </v-tab>
+        <v-tab>
+          여행
+        </v-tab>
+        <v-tab>
+          공포
+        </v-tab>
+      </v-tabs>
+
       <WebtoonGrid :books="books" :imageURL="imageURL" />
-      <div class="text-h4 mt-16">
-        여행 웹툰
-      </div>
-      <WebtoonGrid :books="books" :imageURL="imageURL" /> -->
+      <WebtoonGrid :books="books" :imageURL="imageURL" />
 
     </v-container>
   </section>
