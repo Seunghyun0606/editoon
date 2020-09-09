@@ -30,7 +30,7 @@
 
           <v-row style="width: 150px; height: 200px;" class="mx-sm-auto mx-md-auto">
             <v-col style="z-index: 10;">
-              <v-btn x-large color="rgb(23, 46, 252)" class="white--text">Get Started</v-btn>
+              <v-btn x-large color="rgb(23, 46, 252)" class="white--text mt-16" @click="getStated">Get Started</v-btn>
             </v-col>
           </v-row>
           <!-- <v-row style="width: 150px;" class="my-5 mx-sm-auto mx-md-0">
@@ -159,6 +159,9 @@ export default {
     clickLogin() {
       this.dialog = true;
     },
+    getStated() {
+      this.$router.push('photoeditor')
+    }
   },
   created() {
     this.isIndex();
