@@ -53,12 +53,12 @@
       </v-row>
     </v-container>
 
-    <!-- main 두번째 페이지 -->
+    <!-- main 2 페이지 -->
     <!-- backgroundImage: 'url(\'' + require(`@/assets/1-3.png`) + '\')', -->
     <v-container fluid class="px-10" :style="{ height: '100vh', zIndex: 10 }">
       <v-row class="align-content-center justify-center" style="height: 100%;">
         <v-col md="6" cols="10" class="mx-md-10 mx-sm-0 mx-xs-0 pa-0">
-          <img style="width: 100%;" :src="require('@/assets/main_second.jpg')" alt />
+          <img style="width: 100%;" :src="require('@/assets/main_img.png')" alt />
         </v-col>
 
         <v-col md="4" lg="4" cols="10" class="pa-0">
@@ -79,7 +79,32 @@
       </v-row>
     </v-container>
 
-    <!-- main 세번재 페이지 -->
+    <!-- main 3 페이지 -->
+    <!-- backgroundImage: 'url(\'' + require(`@/assets/1-3.png`) + '\')', -->
+    <v-container fluid class="px-10" :style="{ height: '100vh', zIndex: 10 }">
+      <v-row class="align-content-center justify-center" style="height: 100%;">
+        <v-col md="4" lg="4" cols="10" class="pa-0">
+          <v-row>
+            <v-col class="main-index-txt">대충 소개 제목</v-col>
+          </v-row>
+
+          <v-row>
+            <v-col style="font-size: 1rem;">
+              대충 소개 내용 대충대충 소개2 내용대충대충3 소개 내용대충대충 소개 내용대충대충 소개 내용대충
+              1대충 소개 내용대충대충 소개 내용 대충대충 소개2 내용대충대충3 소개 내용대충대충 소개 내용대충대충 소개 내용대충
+              1대충 소개 내용대충대충 소개 내용 대충대충 소개2 내용대충대충3 소개 내용대충대충 소개 내용대충대충 소개 내용대충
+              1대충 소개 내용대충대충 소개 내용 대충대충 소개2 내용대충대충3 소개 내용대충대충 소개 내용대충대충 소개 내용대충
+              1대충 소개 내용대충
+            </v-col>
+          </v-row>
+        </v-col>
+        <v-col md="6" cols="10" class="mx-md-10 mx-sm-0 mx-xs-0 pa-0">
+          <img style="width: 100%;" :src="require('@/assets/main_second.jpg')" alt />
+        </v-col>
+      </v-row>
+    </v-container>
+
+    <!-- main 4 페이지 -->
     <v-container fluid class="px-10" style="height: 100vh;">
       <v-row style="height: 30vh; text-align: center;" class="align-center">
         <v-col class="main-index-txt">대표작품들을 감상해보세요</v-col>
