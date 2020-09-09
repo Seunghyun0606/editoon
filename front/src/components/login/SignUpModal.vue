@@ -1,19 +1,17 @@
 <template>
   <v-row justify="center">
-
-    <v-dialog
-      v-model="loginDialog"
-      max-width="60%"
-    >
-
+    <v-dialog v-model="loginDialog" max-width="60%">
       <v-container fluid style="height: 80vh;">
         <v-row style="height: 100%; text-align: center; background-color: rgba(0, 0, 0, 0.8)">
-          <v-col cols=7>
-            <img style="height: 100%; width: 100%;" :src="require('@/assets/test_main_right.jpg')" alt="">
-          </v-col >
-          <v-col cols=5 class="main-index-txt align-self-center">
-
-            <form action="" style="margin-top: 0.2vh;">
+          <v-col cols="7">
+            <img
+              style="height: 100%; width: 100%;"
+              :src="require('@/assets/account_signup.png')"
+              alt
+            />
+          </v-col>
+          <v-col cols="5" class="main-index-txt align-self-center">
+            <form action style="margin-top: 0.2vh;">
               <v-text-field
                 v-model="signUpData.username"
                 label="USER NAME"
@@ -34,16 +32,15 @@
                 class="mx-auto"
               ></v-text-field>
               <div>
-                <v-btn class='primary pull-right' @click="clickOut()" style="width: 30%;">
-                  <strong>접속하기!</strong></v-btn>
+                <v-btn class="primary pull-right" @click="clickOut()" style="width: 30%;">
+                  <strong>접속하기!</strong>
+                </v-btn>
               </div>
             </form>
           </v-col>
         </v-row>
-
       </v-container>
     </v-dialog>
-
   </v-row>
 </template>
 
@@ -61,13 +58,12 @@ export default {
     // https://vuex.vuejs.org/kr/guide/forms.html 참고.
     loginDialog: {
       get() {
-        return this.$store.state.signUpDialog
+        return this.$store.state.signUpDialog;
       },
-      set (val) {
-        this.$store.state.signUpDialog = val
-      }
-    }
-
+      set(val) {
+        this.$store.state.signUpDialog = val;
+      },
+    },
   },
   data() {
     return {
@@ -76,17 +72,15 @@ export default {
         email: "",
         password: "",
       },
-
-    }
+    };
   },
   methods: {
     clickOut() {
-      this.$store.state.signUpDialog = false
-    }
+      this.$store.state.signUpDialog = false;
+    },
   },
-}
+};
 </script>
 
 <style>
-
 </style>
