@@ -3,14 +3,14 @@
   <v-container class="ma-10 pa-10">
     <v-row>
       <v-col>
-        <MyPageLeftNav @listNum='listNum' />
+        <MyPageLeftNav  @listNum='listNum' />
 
       </v-col>
       <v-col cols=8>
         <MyPageInfo v-if="listNumber === 2"/>
 
         <MyPageFavortoonSort
-          v-if="listNumber !== 2"
+          v-if="listNumber !== 2 && listNumber !== undefined"
           :categoryTitle="categoryTitle"
           :sortCriteria="sortCriteria"
           @all_book="sortBy('all_book')"
@@ -47,7 +47,7 @@ export default {
   },
   data() {
     return {
-      listNumber: 2,
+      listNumber: 0,
       books: [
         {
           title: 'abc',

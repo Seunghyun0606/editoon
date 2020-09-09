@@ -37,7 +37,7 @@
               <span class="caption text-lowercase">여행</span>
             </v-btn>
           </template>
-          <span>아빠 책</span>
+          <span>여행 책</span>
         </v-tooltip>
         <v-tooltip top>
           <template v-slot:activator="{on}">

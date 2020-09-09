@@ -6,6 +6,7 @@
         내 정보 수정
       </v-col>
     </v-row>
+
     <v-row class="mt-10">
       <v-col>
         <v-avatar>
@@ -25,6 +26,13 @@
       </v-col>
     </v-row>
 
+    <v-text-field
+      value="abcdedf@gamil.com"
+      label="e-mail"
+      readonly
+    ></v-text-field>
+
+
     <v-form
       ref="form"
       v-model="valid"
@@ -38,35 +46,14 @@
         required
       ></v-text-field>
 
-      <v-text-field
+      <!-- <v-text-field
         v-model="password"
         :rules="passwordRules"
         label="Password"
         type="password"
         required
-      ></v-text-field>
+      ></v-text-field> -->
 
-      <v-text-field
-        v-model="email"
-        :rules="emailRules"
-        label="E-mail"
-        required
-      ></v-text-field>
-
-      <!-- <v-select
-        v-model="select"
-        :items="items"
-        :rules="[v => !!v || 'Item is required']"
-        label="Item"
-        required
-      ></v-select> -->
-
-      <!-- <v-checkbox
-        v-model="checkbox"
-        :rules="[v => !!v || 'You must agree to continue!']"
-        label="Do you agree?"
-        required
-      ></v-checkbox> -->
 
       <v-btn
         :disabled="!valid"
@@ -76,31 +63,39 @@
       >
         변경하기
       </v-btn>
-<!-- 
-      <v-btn
-        color="error"
-        class="mr-4"
-        @click="reset"
-      >
-        Reset Form
-      </v-btn>
 
       <v-btn
         color="warning"
-        @click="resetValidation"
+        class="mr-4"
+        @click="changePassword"
       >
-        Reset Validation
-      </v-btn> -->
+        비밀번호 변경
+      </v-btn>
+
+      <v-btn
+        color="error"
+        class="mr-4"
+        
+      >
+        탈퇴하기
+      </v-btn>
+
+
     </v-form>
-  
+    <MyPageChangePassword/>
   
   </v-container>  
 
 </template>
 
 <script>
+import MyPageChangePassword from '@/components/mypage/MyPageChangePassword'
+
 export default {
   name: "MyPageInfo",
+  components: {
+    MyPageChangePassword
+  },
   data() {
     return {
       valid: true,
@@ -119,14 +114,7 @@ export default {
         v => !!v || 'Password is required',
         v => (v && v.length <= 10) || 'Password must be less than 10 characters',
       ],
-      select: null,
-      items: [
-        'Item 1',
-        'Item 2',
-        'Item 3',
-        'Item 4',
-      ],
-      checkbox: false,
+
     }
 
   },
@@ -140,7 +128,11 @@ export default {
     resetValidation () {
       this.$refs.form.resetValidation()
     },
+    changePassword() {
+      this.$store.state.changePasswordDialog = true
+    }
   },
+
 }
 </script>
 
