@@ -1,4 +1,4 @@
-package com.nokk.editoon.editoon.service;
+package com.nokk.editoon.account.service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
