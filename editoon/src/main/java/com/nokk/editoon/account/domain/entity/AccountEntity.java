@@ -40,9 +40,6 @@ public class AccountEntity implements Persistable<String> {
 	@Column(nullable = false, name = "account_role")
 	private Role role;
 
-	@Column(nullable = false, name = "account_login_check")
-	private boolean loginCheck;
-	
 	@Column(nullable = false, name = "account_image")
 	private String image;
 	
