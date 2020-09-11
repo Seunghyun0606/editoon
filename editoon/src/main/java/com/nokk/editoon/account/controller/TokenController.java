@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nokk.editoon.account.service.ITokenService;
 import com.nokk.editoon.domain.SuccessResponse;
-import com.nokk.editoon.editoon.service.ITokenService;
 
 import io.swagger.annotations.ApiOperation;
 

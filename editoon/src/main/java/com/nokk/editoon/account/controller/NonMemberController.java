@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nokk.editoon.account.domain.dto.AccountSignUpDTO;
+import com.nokk.editoon.account.service.INonMemberService;
 import com.nokk.editoon.domain.SuccessResponse;
-import com.nokk.editoon.editoon.service.INonMemberService;
 
 import io.swagger.annotations.ApiOperation;
 
