@@ -1,4 +1,4 @@
-package com.nokk.editoon.editoon.service;
+package com.nokk.editoon.account.service;
 
 import java.util.ArrayList;
 import java.util.List;
