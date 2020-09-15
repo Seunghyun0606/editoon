@@ -119,7 +119,7 @@
           <VueCompareImage :leftImage="require('@/assets/1-1.jpg')" :rightImage="require('@/assets/1-2.jpg')" />
         </v-col>
       </v-row>
-      <div @click="scrollDown(3 )" class="mx-auto d-flex justify-center main-scroll-down" style="background-color: rgba(255, 255, 255, 0.4); border-radius: 50%; height: 40px; width: 40px; position: relative;">
+      <div @click="scrollDown(3)" class="mx-auto d-flex justify-center main-scroll-down" style="background-color: rgba(255, 255, 255, 0.4); border-radius: 50%; height: 40px; width: 40px; position: relative;">
         <v-icon style="color: white; font-size: 36px;">
           mdi-chevron-down
         </v-icon>
@@ -129,7 +129,7 @@
     <!-- main 4 페이지 -->
     <img :src="require('@/assets/1-2.jpg')" class="main-background-last" alt />
 
-    <v-container fluid class="px-10" :style="{ height: '100vh', zIndex: 10, position: 'relative' }">
+    <v-container fluid class="px-10" :style="{ height: '90vh', zIndex: 10, position: 'relative' }">
       <v-row style="height: 30vh; text-align: center;" class="align-center">
         <v-col class="main-index-txt">대표작품들을 감상해보세요</v-col>
       </v-row>
@@ -151,6 +151,11 @@
         </v-col>
       </v-row>
     </v-container>
+    <div @click="scrollDown(0)" class="mx-auto d-flex justify-center main-scroll-down" style="background-color: rgba(255, 255, 255, 0.4); border-radius: 50%; height: 40px; width: 40px; position: relative;">
+      <v-icon style="color: white; font-size: 36px;">
+        mdi-chevron-up
+      </v-icon>
+    </div>
   </div>
 </template>
 
