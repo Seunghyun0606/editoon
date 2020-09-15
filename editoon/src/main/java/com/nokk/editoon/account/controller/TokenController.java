@@ -39,9 +39,7 @@ public class TokenController {
 			result.result = "fail";
 		}
 		response = new ResponseEntity<>(result, HttpStatus.OK);
-
 		return response;
-
 	}
 
 	// newAccessTokenByRefreshToken

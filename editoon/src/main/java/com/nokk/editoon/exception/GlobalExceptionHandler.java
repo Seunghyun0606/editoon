@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
 		final ExceptionResponse result = new ExceptionResponse();
 		
 		result.code = ErrorCode.Unauthorized_Account.getCode();
-		result.message = ErrorCode.Unauthorized_Account.getMessage() + " : " + e.getMessage();
+		result.msg = ErrorCode.Unauthorized_Account.getMessage() + " : " + e.getMessage();
 		result.status = ErrorCode.Unauthorized_Account.getStatus();
 		response = new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
 //		httpConnection.postRequest(e, ErrorCode.Unauthorized_Account.getMessage(), e.getMessage());
@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
 		final ExceptionResponse result = new ExceptionResponse();
 		
 		result.code = ErrorCode.ExpiredToken.getCode();
-		result.message = ErrorCode.ExpiredToken.getMessage() + " : " + e.getMessage();
+		result.msg = ErrorCode.ExpiredToken.getMessage() + " : " + e.getMessage();
 		result.status = ErrorCode.ExpiredToken.getStatus();
 		response = new ResponseEntity<>(result, HttpStatus.NOT_ACCEPTABLE);
 		
@@ -57,7 +57,7 @@ public class GlobalExceptionHandler {
 		final ExceptionResponse result = new ExceptionResponse();
 		
 		result.code = ErrorCode.Unknown.getCode();
-		result.message = ErrorCode.Unknown.getMessage() + " : " + e.getMessage();
+		result.msg = ErrorCode.Unknown.getMessage() + " : " + e.getMessage();
 		result.status = ErrorCode.Unknown.getStatus();
 		response = new ResponseEntity<>(result, HttpStatus.SERVICE_UNAVAILABLE);
 		
@@ -73,7 +73,7 @@ public class GlobalExceptionHandler {
 		final ExceptionResponse result = new ExceptionResponse();
 		
 		result.code = ErrorCode.InternalServer.getCode();
-		result.message = ErrorCode.InternalServer.getMessage() + " : " + e.getMessage();
+		result.msg = ErrorCode.InternalServer.getMessage() + " : " + e.getMessage();
 		result.status = ErrorCode.InternalServer.getStatus();
 		response = new ResponseEntity<>(result, HttpStatus.SERVICE_UNAVAILABLE);
 		
