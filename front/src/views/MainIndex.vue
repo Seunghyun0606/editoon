@@ -8,7 +8,7 @@
 
     <v-container fluid style="height: calc(100vh - 64px); padding-top: 15px;">
       <v-row style="height: 90%;">
-        <v-col md="5" sm="12" style="padding: 3vh 6vw;">
+        <v-col style="padding: 3vh 6vw;">
           <v-row>
             <v-col class="white--text main-index-txt text-sm-center text-md-left">
               <h1 class="block-effect" style="--td: 1.2s">
@@ -28,7 +28,7 @@
             >Start your webtoon experience</v-col>
           </v-row>
 
-          <v-row style="width: 150px; height: 200px;" class="mx-sm-auto mx-md-auto">
+          <v-row style="width: 150px; height: 200px;" class="mx-sm-auto mx-md-0 mx-lg-0">
             <v-col style="z-index: 10;">
               <v-btn x-large color="rgb(23, 46, 252)" class="white--text mt-16" @click="getStated">Get Started</v-btn>
             </v-col>
@@ -51,7 +51,7 @@
           <img :src="require('@/assets/main_img.png')" style="width: 85%;" alt />
         </v-col> -->
       </v-row>
-      <div @click="scrollDown(1)" class="mx-auto d-flex justify-center main-scroll-down" style="background-color: rgba(255, 255, 255, 0.4); border-radius: 50%; height: 40px; width: 40px; position: relative;">
+      <div @click="scrollDown(1)" class="mx-auto d-flex justify-center main-scroll-down">
         <v-icon style="color: white; font-size: 36px;">
           mdi-chevron-down
         </v-icon>
@@ -85,7 +85,7 @@
           </v-row>
         </v-col>
       </v-row>
-      <div @click="scrollDown(2)" class="mx-auto d-flex justify-center main-scroll-down" style="background-color: rgba(255, 255, 255, 0.4); border-radius: 50%; height: 40px; width: 40px; position: relative;">
+      <div @click="scrollDown(2)" class="mx-auto d-flex justify-center main-scroll-down">
         <v-icon style="color: white; font-size: 36px;">
           mdi-chevron-down
         </v-icon>
@@ -119,7 +119,7 @@
           <VueCompareImage :leftImage="require('@/assets/1-1.jpg')" :rightImage="require('@/assets/1-2.jpg')" />
         </v-col>
       </v-row>
-      <div @click="scrollDown(3)" class="mx-auto d-flex justify-center main-scroll-down" style="background-color: rgba(255, 255, 255, 0.4); border-radius: 50%; height: 40px; width: 40px; position: relative;">
+      <div @click="scrollDown(3)" class="mx-auto d-flex justify-center main-scroll-down">
         <v-icon style="color: white; font-size: 36px;">
           mdi-chevron-down
         </v-icon>
@@ -151,11 +151,17 @@
         </v-col>
       </v-row>
     </v-container>
-    <div @click="scrollDown(0)" class="mx-auto d-flex justify-center main-scroll-down" style="background-color: rgba(255, 255, 255, 0.4); border-radius: 50%; height: 40px; width: 40px; position: relative;">
+    <div @click="scrollDown(0)" class="mx-auto d-flex justify-center main-scroll-down">
       <v-icon style="color: white; font-size: 36px;">
         mdi-chevron-up
       </v-icon>
     </div>
+    <div v-show="viewPortHeight/2 <= current" @click="scrollDown(0)">
+      <v-icon class="main-scroll-up" style="z-index: 9999; background-color: black; width: 40px; height: 40px; border-radius: 50%; color: white; font-size: 36px; position: fixed; bottom: 50px; right: 50px;">
+        mdi-chevron-up
+      </v-icon>
+    </div>
+    
   </div>
 </template>
 
@@ -180,12 +186,32 @@ export default {
         email: "",
         password: "",
       },
+      current: 0,
     };
   },
+  // watch: {
+  //   current: {
+  //     immediate: true,
+  //     handler() {
+  //       this.current = document.documentElement.scrollTop
 
-  computed: {},
+  //     }
+  //   }
+  // },
+
+
+  computed: {
+    viewPortHeight() {
+      return window.innerHeight
+    },
+  },
 
   methods: {
+    currentScrollPlace() {
+      // IE 는 scrollY값이 없어서 cross browsing을 위해서 두개 추가.
+      this.current = document.documentElement.scrollTop
+
+    },
     isNotEditor() {
       this.$store.commit("isNotEditor", true);
     },
@@ -196,7 +222,7 @@ export default {
       this.$router.push('photoeditor')
     },
     scrollDown(page) {
-      var y = window.innerHeight
+      var y = this.viewPortHeight
       y *= page
       window.scrollTo({top: y, left:0, behavior: 'smooth'})
     }
@@ -204,14 +230,31 @@ export default {
   created() {
     this.isNotEditor();
   },
+  // 계속해서 scroll이 변하는 것을 추적하기 위함.
+  mounted() {
+    window.addEventListener('scroll', this.currentScrollPlace);
+
+  },
+  destroy() {
+     window.removeEventListener('scroll', this.currentScrollPlace)
+  },
 };
 </script>
 
 <style>
 
-/* .main-scroll-down {
+.main-scroll-up:hover {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.4) !important;
+}
 
-} */
+.main-scroll-down {
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  position: relative;
+}
 
 .main-scroll-down:hover {
   cursor: pointer;
