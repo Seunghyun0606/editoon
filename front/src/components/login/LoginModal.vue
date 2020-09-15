@@ -11,10 +11,14 @@
             />
           </v-col>
           <v-col cols="5" class="main-index-txt align-self-center">
+            <div style="color: white;">
+              로그인
+            </div>
             <form action style="margin-top: 0.2vh;">
               <v-text-field
-                v-model="loginData.username"
-                label="USER NAME"
+                v-model="loginData.email"
+                label="E-mail"
+                :rules='[rules.email]'
                 required
                 clearable
                 dark
@@ -23,8 +27,9 @@
               ></v-text-field>
               <v-text-field
                 v-model="loginData.password"
-                label="PASSWORD"
+                label="password"
                 type="password"
+                :rules='[rules.password, rules.lengthCheck(10)]'
                 required
                 clearable
                 dark
@@ -32,7 +37,7 @@
                 class="mx-auto"
               ></v-text-field>
               <div>
-                <v-btn class="primary" @click="clickOut()" style="width: 30%;">
+                <v-btn class="primary" @click="login()" style="width: 30%;">
                   <strong>접속하기!</strong>
                 </v-btn>
               </div>
@@ -68,15 +73,23 @@ export default {
   data() {
     return {
       loginData: {
-        username: "",
         email: "",
         password: "",
       },
+      rules: {
+        email: v => !!(v || '').match(/@/) || '이메일 형식이 아닙니다.',
+        lengthCheck: len => v => (v || '').length >= len || `${len}자 이상이어야합니다. 현재 ${v.length}자 입니다.`,
+        password: v => !!(v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/) ||
+          '숫자, 영어 대소문자, 특수문자가 포함되어야합니다.',
+      },
+
     };
   },
   methods: {
-    clickOut() {
+    login() {
+      // 받아온 값이랑, 데이터 비교해야함.
       this.$store.state.loginDialog = false;
+      // this.$store.dispatch('login', loginData)
     },
   },
 };
