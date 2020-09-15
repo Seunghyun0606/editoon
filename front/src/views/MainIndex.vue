@@ -146,13 +146,7 @@ export default {
   data() {
     return {
       dialog: false,
-
-      loginData: {
-        username: "",
-        email: "",
-        password: "",
-      },
-    };
+    }
   },
 
   computed: {},

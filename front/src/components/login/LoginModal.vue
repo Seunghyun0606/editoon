@@ -32,7 +32,7 @@
                 class="mx-auto"
               ></v-text-field>
               <div>
-                <v-btn class="primary pull-right" @click="clickOut()" style="width: 30%;">
+                <v-btn class="primary" @click="clickOut()" style="width: 30%;">
                   <strong>접속하기!</strong>
                 </v-btn>
               </div>
