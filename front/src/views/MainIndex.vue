@@ -6,7 +6,7 @@
     <img class="test ani3" :src="require('@/assets/3.jpg')" alt="">-->
     <!-- <div class="test1"></div> -->
 
-    <v-container fluid style="height: 100vh; padding-top: 15px;">
+    <v-container fluid style="height: calc(100vh - 64px); padding-top: 15px;">
       <v-row style="height: 80%;">
         <v-col md="5" sm="12" style="padding: 3vh 6vw;">
           <v-row>
@@ -42,15 +42,20 @@
           </v-row>-->
         </v-col>
 
-        <v-col
+        <!-- <v-col
           md="7"
           sm="6"
           class="mx-sm-auto p-3"
           style="z-index: 10; position: relative;  align-self: center; "
         >
-          <!-- <img :src="require('@/assets/main_img.png')" style="width: 85%;" alt /> -->
-        </v-col>
+          <img :src="require('@/assets/main_img.png')" style="width: 85%;" alt />
+        </v-col> -->
       </v-row>
+      <div class="mx-auto d-flex justify-center main-scroll-down" style="background-color: rgba(255, 255, 255, 0.4); border-radius: 50%; height: 40px; width: 40px; position: relative;">
+        <v-icon style="color: white; font-size: 36px;">
+          mdi-chevron-down
+        </v-icon>
+      </div>
     </v-container>
 
     <!-- main 2 페이지 -->
@@ -175,6 +180,16 @@ export default {
 </script>
 
 <style>
+
+/* .main-scroll-down {
+
+} */
+
+.main-scroll-down:hover {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.3) !important;
+}
+
 .test-box {
   border: 1px solid white;
   color: white;
@@ -189,7 +204,7 @@ export default {
   /* background-size: 100vw;
   height: 100vw; */
   width: 100vw;
-  height: calc(100vh + 64px);
+  height: calc(100vh);
   /* opacity: 0.3; */
   position: absolute;
   top: -64px;
@@ -354,11 +369,11 @@ p {
   }
 }
 
-.abs-site-link {
+/* .abs-site-link {
   position: fixed;
   bottom: 20px;
   left: 20px;
   color: hsla(0, 0%, 0%, 0.6);
   font-size: 16px;
-}
+} */
 </style>
