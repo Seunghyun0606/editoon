@@ -25,78 +25,63 @@ public class NonMemberController {
 	@Autowired
 	private INonMemberService nonMemberService;
 
-	
-	@ApiOperation(value = "signUp", httpMethod = "POST", notes = "Hello this is signUp")
-	@PostMapping("/signUp")
-	public ResponseEntity signUp(@RequestBody(required = true) AccountSignUpDTO accountSignUpDTO) {
-		ResponseEntity response = null;
-		final SuccessResponse result = new SuccessResponse();
-		boolean ret = nonMemberService.signUp(accountSignUpDTO);
-		if (ret) {
-			result.status = true;
-			result.result = "success";
-			response = new ResponseEntity<>(result, HttpStatus.OK);
-		} else {
-			response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-		}
-
-		return response;
-	}
-
-//	@ApiOperation(value = "email duplicated check", httpMethod = "POST", notes = "Hello this is email duplicated check")
-//	@PostMapping("/email")
-//	public ResponseEntity emailCheck(@RequestBody Map<String, String> map) {
-//		ResponseEntity response = null;
-//		final SuccessResponse result = new SuccessResponse();
-//		boolean ret = 	
-//		result.status = true;
-//		if (ret) {
-//			result.result = "success";
-//		} else {
-//			result.result ="fail";
-//		}
-//		response = new ResponseEntity<>(result, HttpStatus.OK);
-//		return response;
-//	}
-
-	@ApiOperation(value = "email auth send", httpMethod = "POST", notes = "Hello this is email authentication(SEND)")
+	@ApiOperation(value = "email auth send", httpMethod = "GET", notes = "Hello this is email authentication(SEND)")
 	@GetMapping("/email/authSend/{email}")
-	public ResponseEntity emailAuth(@PathVariable(name = "email") String email) {
-		System.out.println(email);
+	public ResponseEntity emailAuthSend(@PathVariable(name = "email") String email) {
 		ResponseEntity response = null;
 		final SuccessResponse result = new SuccessResponse();
-		
+		System.out.println(email);
 		// 회원가입 입력 email에 대한 중복 체크.
 		boolean emailDuplicationCheck = nonMemberService.emailCheck(email);
 		if (emailDuplicationCheck) {
 			result.status = true;
 			result.result = "success";
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 		} else {
 			result.status = true;
 			result.result = "fail";
 			response = new ResponseEntity<>(result, HttpStatus.OK);
 			return response;
 		}
-		
-		
-		boolean ret = nonMemberService.emailAuthSend(email);
-		response = new ResponseEntity<>(result, HttpStatus.OK);
+		System.out.println("여기까진 가능");
+		// email 인증번호 송신
+		nonMemberService.emailAuthSend(email);
 
 		return response;
 	}
-
+	
 	@ApiOperation(value = "email auth check", httpMethod = "POST", notes = "Hello this is email authentication(CHECK)")
 	@PostMapping("/email/authCheck")
 	public ResponseEntity emailAuthCheck(@RequestBody Map<String, String> map) {
 		ResponseEntity response = null;
 		final SuccessResponse result = new SuccessResponse();
-		boolean ret = nonMemberService.emailAuthCheck(map.get("email"), map.get("authNum"));
+
+		// Input Data
+		String email = map.get("email");
+		String authNum = map.get("authNum");
+		// 인증번호 검증
+		boolean ret = nonMemberService.emailAuthCheck(email, authNum);
 		result.status = true;
 		if (ret) {
 			result.result = "success";
 		} else {
 			result.result = "fail";
 		}
+		response = new ResponseEntity<>(result, HttpStatus.OK);
+
+		return response;
+	}
+	
+	@ApiOperation(value = "signUp", httpMethod = "POST", notes = "Hello this is signUp")
+	@PostMapping("/signUp")
+	public ResponseEntity signUp(@RequestBody(required = true) AccountSignUpDTO accountSignUpDTO) {
+		ResponseEntity response = null;
+		final SuccessResponse result = new SuccessResponse();
+		
+		nonMemberService.signUp(accountSignUpDTO);
+		
+		result.status = true;
+		result.result = "success";
 		response = new ResponseEntity<>(result, HttpStatus.OK);
 
 		return response;
