@@ -4,6 +4,7 @@
 - vue-router
 - vuex
 - vuetify
+- axios
 - toast-ui/vue-image-editor (MIT)
 - vue-compare-image (MIT)
 
