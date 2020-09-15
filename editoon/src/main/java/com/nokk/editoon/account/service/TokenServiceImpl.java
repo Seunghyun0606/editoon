@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,9 +15,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import com.nokk.editoon.account.repository.AccountRepo;
 import com.nokk.editoon.domain.Token;
 import com.nokk.editoon.exception.ExpiredTokenException;
+import com.nokk.editoon.exception.InternalServerException;
 import com.nokk.editoon.exception.UnAuthorizationException;
 import com.nokk.editoon.exception.UnknownException;
 import com.nokk.editoon.util.JwtTokenUtil;
@@ -28,9 +27,6 @@ import io.jsonwebtoken.MalformedJwtException;
 
 @Service
 public class TokenServiceImpl implements ITokenService{
-
-	@Autowired
-	private AccountRepo accountRepo;
 
 	@Autowired
 	RedisTemplate<String, Object> redisTemplate;
@@ -54,7 +50,7 @@ public class TokenServiceImpl implements ITokenService{
 	 * header 에 함께 보낸 email 값과 토큰의 값이 같은지? 권한은 어떤지? 이런 부분들에 대한 추가적인 검증이 필요할것으로 생각됨
 	 */
 	@Override
-	public boolean newAccessTokenByAccessToken(String accessToken) {
+	public void newAccessTokenByAccessToken(String accessToken) {
 		boolean ret = false;
 		try {
 			Map<String, Object> parseInfo = jtu.getUserParseInfo(accessToken);
@@ -97,11 +93,11 @@ public class TokenServiceImpl implements ITokenService{
 			throw new ExpiredTokenException("AccessToken " + accessToken);
 		} catch (MalformedJwtException e) {
 			throw new UnAuthorizationException(accessToken);
+		} catch (Exception e) {
+			throw new InternalServerException("newAccessTokenByAccessToken Internal Server Exception \n" + "detail Exception Info :" + e.getMessage());
 		}
 		
-		if(ret) {
-			return true;
-		} else {
+		if(!ret) {
 			throw new UnknownException("newAccessTokenByAccessToken");
 		}
 		
@@ -113,7 +109,7 @@ public class TokenServiceImpl implements ITokenService{
 	}
 
 	@Override
-	public boolean newAccessTokenByRefreshToken(String refreshToken) {
+	public void newAccessTokenByRefreshToken(String refreshToken) {
 		boolean ret = false;
 		
 		try {
@@ -154,68 +150,13 @@ public class TokenServiceImpl implements ITokenService{
 			throw new ExpiredTokenException("RefreshToken" + refreshToken);
 		} catch (MalformedJwtException e) {
 			throw new UnAuthorizationException(refreshToken);
+		} catch (Exception e) {
+			throw new InternalServerException("newAccessTokenByRefreshToken Internal Server Exception \n" + "detail Exception Info :" + e.getMessage());
 		}
 		
-		if(ret) {
-			return true;
-		} else {
+		if(!ret) {
 			throw new UnknownException("newAccessTokenByRefreshToken");
 		}
 	}
 
-	@Override
-	public boolean newRefreshTokenByRefreshToken(String refreshToken) {
-		boolean ret = false;
-		
-		try {
-			String email = jwtTokenUtil.getUsernameFromToken(refreshToken);
-
-			ValueOperations<String, Object> vop = redisTemplate.opsForValue();
-			Token token = (Token) vop.get(email);
-			if(token != null) {
-				String redisRefreshToken = token.getToken();
-				if (refreshToken.equals(redisRefreshToken)) {
-					
-					Map<String, Object> parseInfo = jtu.getUserParseInfo(redisRefreshToken);
-					List<String> rs = (List) parseInfo.get("role");
-					List<GrantedAuthority> tmp = new ArrayList<>();
-					for (String a : rs) {
-						tmp.add(new SimpleGrantedAuthority(a));
-					}
-					
-					final String newRefreshToken = jwtTokenUtil.generateRefreshToken(email, tmp);
-					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-					
-					Calendar refrestTokenCal = Calendar.getInstance();
-					refrestTokenCal.add(Calendar.DATE, 30);
-					
-					String newRefreshTokenExpirationDate = simpleDateFormat.format(refrestTokenCal.getTime());
-					
-					Token newToken = new Token();
-					newToken.setEmail(email);
-					newToken.setToken(newRefreshToken);
-					vop.set(email, newToken); // 일주일
-					redisTemplate.expire(email, 60 * 60 * 24 * 31, TimeUnit.SECONDS); // 한달
-					
-					response.addHeader("RefreshToken", "Bearer " + newRefreshToken);
-					response.addHeader("RefreshTokenExpiraionDate", newRefreshTokenExpirationDate);
-					ret = true;
-				} else {
-					throw new UnAuthorizationException(email);
-				}
-			}else {
-				throw new UnAuthorizationException(email);
-			}
-		} catch (ExpiredJwtException e) {
-			throw new ExpiredTokenException("RefreshToken" + refreshToken);
-		} catch (MalformedJwtException e) {
-			throw new UnAuthorizationException(refreshToken);
-		}
-		
-		if(ret) {
-			return true;
-		} else {
-			throw new UnknownException("newRefreshTokenByRefreshToken");
-		}
-	}
 }
