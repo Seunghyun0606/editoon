@@ -51,7 +51,7 @@
           <img :src="require('@/assets/main_img.png')" style="width: 85%;" alt />
         </v-col> -->
       </v-row>
-      <div class="mx-auto d-flex justify-center main-scroll-down" style="background-color: rgba(255, 255, 255, 0.4); border-radius: 50%; height: 40px; width: 40px; position: relative;">
+      <div @click="scrollDown(1)" class="mx-auto d-flex justify-center main-scroll-down" style="background-color: rgba(255, 255, 255, 0.4); border-radius: 50%; height: 40px; width: 40px; position: relative;">
         <v-icon style="color: white; font-size: 36px;">
           mdi-chevron-down
         </v-icon>
@@ -85,7 +85,7 @@
           </v-row>
         </v-col>
       </v-row>
-      <div class="mx-auto d-flex justify-center main-scroll-down" style="background-color: rgba(255, 255, 255, 0.4); border-radius: 50%; height: 40px; width: 40px; position: relative;">
+      <div @click="scrollDown(2)" class="mx-auto d-flex justify-center main-scroll-down" style="background-color: rgba(255, 255, 255, 0.4); border-radius: 50%; height: 40px; width: 40px; position: relative;">
         <v-icon style="color: white; font-size: 36px;">
           mdi-chevron-down
         </v-icon>
@@ -119,7 +119,7 @@
           <VueCompareImage :leftImage="require('@/assets/1-1.jpg')" :rightImage="require('@/assets/1-2.jpg')" />
         </v-col>
       </v-row>
-      <div class="mx-auto d-flex justify-center main-scroll-down" style="background-color: rgba(255, 255, 255, 0.4); border-radius: 50%; height: 40px; width: 40px; position: relative;">
+      <div @click="scrollDown(3 )" class="mx-auto d-flex justify-center main-scroll-down" style="background-color: rgba(255, 255, 255, 0.4); border-radius: 50%; height: 40px; width: 40px; position: relative;">
         <v-icon style="color: white; font-size: 36px;">
           mdi-chevron-down
         </v-icon>
@@ -189,6 +189,11 @@ export default {
     },
     getStated() {
       this.$router.push('photoeditor')
+    },
+    scrollDown(page) {
+      var y = window.innerHeight
+      y *= page
+      window.scrollTo({top: y, left:0, behavior: 'smooth'})
     }
   },
   created() {
@@ -265,18 +270,6 @@ export default {
   z-index: 10;
 }
 
-.btn-login {
-  color: white;
-  font-size: 20px;
-  z-index: 10;
-  border: 0.1px solid white;
-  border-radius: 20px;
-}
-
-.btn-login:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  cursor: pointer;
-}
 
 .ani1 {
   /* opacity: 0.5; */
