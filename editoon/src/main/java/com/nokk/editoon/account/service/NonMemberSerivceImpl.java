@@ -22,6 +22,8 @@ import com.nokk.editoon.domain.Token;
 import com.nokk.editoon.exception.InternalServerException;
 import com.nokk.editoon.util.JwtTokenUtil;
 
+import io.lettuce.core.RedisConnectionException;
+
 @Service
 public class NonMemberSerivceImpl implements INonMemberService{
 
@@ -41,7 +43,7 @@ public class NonMemberSerivceImpl implements INonMemberService{
 	private JavaMailSender mailSender;
 	
 	@Override
-	public boolean signUp(AccountSignUpDTO accountSignUpDTO) {
+	public void signUp(AccountSignUpDTO accountSignUpDTO) {
 		BCryptPasswordEncoder bcryptPasswordEncoder = new BCryptPasswordEncoder(10);
 		accountSignUpDTO.setPassword(bcryptPasswordEncoder.encode(accountSignUpDTO.getPassword()));
 
@@ -52,8 +54,6 @@ public class NonMemberSerivceImpl implements INonMemberService{
 									.role(Role.USER)
 									.build()
 						);
-		
-		return true;
 	}
 
 	@Override
@@ -67,13 +67,12 @@ public class NonMemberSerivceImpl implements INonMemberService{
 	}
 
 	@Override
-	public boolean emailAuthSend(String email) {
+	public void emailAuthSend(String email) {
 		Random random = new Random();
 		int randNum = random.nextInt(3829375) + 293817;
-
-		String setfrom = "Test";
+		String setfrom = "Editoon";
 		String tomail = email;
-		String title = "Note 회원가입 인증 이메일 입니다.";
+		String title = "[Editoon] 회원가입 인증 이메일 입니다.";
 		String content = System.getProperty("line.separator") + System.getProperty("line.separator") + " 인증 코드입니다 : "
 				+ randNum;
 
@@ -84,10 +83,7 @@ public class NonMemberSerivceImpl implements INonMemberService{
 			mimeMessageHelper.setTo(tomail);
 			mimeMessageHelper.setSubject(title);
 			mimeMessageHelper.setText(content);
-			
-			System.out.println("========== mailSender.send() 전 ==========");
 			mailSender.send(mimeMessage);
-			System.out.println("========== mailSender.send() 후 ==========");
 
 			/*
 			 * redis save part
@@ -102,9 +98,8 @@ public class NonMemberSerivceImpl implements INonMemberService{
 			ValueOperations<String, Object> vop = redisTemplate.opsForValue();
 			vop.set(key, token);
 			redisTemplate.expire(key, 60 * 5, TimeUnit.SECONDS); // 5분
-			return true;
 		} catch (Exception e) {
-			throw new InternalServerException("emailAuthSend");
+			throw new InternalServerException("emailAuthSend Internal Server Exception \n" + "detail Exception Info :" + e.getMessage());
 		}
 	}
 
@@ -113,15 +108,20 @@ public class NonMemberSerivceImpl implements INonMemberService{
 		/*
 		 * redis 에서 가져와서 같은 값인지 검증하는 부분
 		 */
-		ValueOperations<String, Object> vop = redisTemplate.opsForValue();
-		String key = email + "-auth";
-
-		Token token = (Token) vop.get(key);
-		if (token != null) {
-			String value = jwtTokenUtil.getEmailAuthNumFromToken(token.getToken());
-			if (authNum.equals(value)) {
-				return true;
+		try {
+			ValueOperations<String, Object> vop = redisTemplate.opsForValue();
+			String key = email + "-auth";
+			
+			Token token = (Token) vop.get(key);
+			if (token != null) {
+				String value = jwtTokenUtil.getEmailAuthNumFromToken(token.getToken());
+				if (authNum.equals(value)) {
+					return true;
+				}
 			}
+			
+		} catch(Exception e) {
+			throw new InternalServerException("emailAuthCheck Internal Server Exception \n" + "detail Exception Info :" + e.getMessage());
 		}
 		
 		return false;
