@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img class="test" :src="require('@/assets/bg2.jpg')" alt />
+    <img class="main-background-first" :src="require('@/assets/bg2.jpg')" alt />
     <!-- <img class="test ani1" :src="require('@/assets/1.jpg')" alt="">
     <img class="test ani2" :src="require('@/assets/2.jpg')" alt="">
     <img class="test ani3" :src="require('@/assets/3.jpg')" alt="">-->
@@ -60,7 +60,10 @@
 
     <!-- main 2 페이지 -->
     <!-- backgroundImage: 'url(\'' + require(`@/assets/1-3.png`) + '\')', -->
-    <v-container fluid class="px-10" :style="{ height: '100vh', zIndex: 10 }">
+
+    <img :src="require('@/assets/1-1.jpg')" class="main-background" alt />
+
+    <v-container fluid class="px-10" :style="{ height: '100vh', zIndex: 10, position: 'relative' }">
       <v-row class="align-content-center justify-center" style="height: 100%;">
         <v-col md="6" cols="10" class="mx-md-10 mx-sm-0 mx-xs-0 pa-0">
           <img style="width: 100%;" :src="require('@/assets/main_img.png')" alt />
@@ -86,7 +89,9 @@
 
     <!-- main 3 페이지 -->
     <!-- backgroundImage: 'url(\'' + require(`@/assets/1-3.png`) + '\')', -->
-    <v-container fluid class="px-10" :style="{ height: '100vh', zIndex: 10 }">
+    <img :src="require('@/assets/1-3.jpg')" class="main-background" alt />
+
+    <v-container fluid class="px-10" :style="{ height: '100vh', zIndex: 10, position: 'relative' }">
       <v-row class="align-content-center justify-center" style="height: 100%;">
         <v-col md="4" lg="4" cols="10" class="pa-0">
           <v-row>
@@ -111,7 +116,9 @@
     </v-container>
 
     <!-- main 4 페이지 -->
-    <v-container fluid class="px-10" style="height: 100vh;">
+    <img :src="require('@/assets/1-2.jpg')" class="main-background-last" alt />
+
+    <v-container fluid class="px-10" :style="{ height: '100vh', zIndex: 10, position: 'relative' }">
       <v-row style="height: 30vh; text-align: center;" class="align-center">
         <v-col class="main-index-txt">대표작품들을 감상해보세요</v-col>
       </v-row>
@@ -200,14 +207,27 @@ export default {
   /* background-repeat: no-repeat; */
 }
 
-.test {
+.main-background-first {
   /* background-size: 100vw;
   height: 100vw; */
   width: 100vw;
-  height: calc(100vh);
+  height: 100vh;
   /* opacity: 0.3; */
   position: absolute;
   top: -64px;
+  z-index: 0;
+}
+
+.main-background {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: 0;
+}
+.main-background-last {
+  width: 100vw;
+  /* height: 100vh; */
+  position: absolute;
   z-index: 0;
 }
 
