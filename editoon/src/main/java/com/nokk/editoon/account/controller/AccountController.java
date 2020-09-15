@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiOperation;
 public class AccountController {
 	@Autowired
 	private IAccountService accountService;
-
+	
 	// 받아야하는것 - access token , id, pw , new pw, new name + header에 Email
 	@ApiOperation(value = "accountModify", httpMethod = "POST", notes = "Hello this is accountModify")
 	@PostMapping("/v1/modify")

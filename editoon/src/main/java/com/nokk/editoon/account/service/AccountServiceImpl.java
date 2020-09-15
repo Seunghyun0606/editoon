@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import com.nokk.editoon.account.domain.dto.AccountDTO;
 import com.nokk.editoon.account.domain.entity.AccountEntity;
@@ -17,6 +18,7 @@ import com.nokk.editoon.account.repository.AccountRepo;
 import com.nokk.editoon.domain.Token;
 import com.nokk.editoon.util.JwtTokenUtil;
 
+@Service
 public class AccountServiceImpl implements IAccountService{
 
 	@Autowired
