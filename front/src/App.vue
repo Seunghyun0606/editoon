@@ -28,9 +28,13 @@ export default {
     Footer
   },
   computed: {
+    isIndex() {
+      return this.$store.state.isIndex
+    },
     isNotEditor() {
       return this.$store.state.isNotEditor
-    }
+    },
+
   },
 
 

@@ -114,6 +114,9 @@ export default {
     }
   },
   methods: {
+    isIndex() {
+      this.$store.commit('isIndex', false)
+    },
     isNotEditor() {
       this.$store.commit('isNotEditor', true)
     },
@@ -131,6 +134,7 @@ export default {
     },
   },
   created() {
+    this.isIndex()
     this.isNotEditor()
   }
 

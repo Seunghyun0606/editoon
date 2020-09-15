@@ -233,9 +233,10 @@ export default {
 
   methods: {
     currentScrollPlace() {
-      // IE 는 scrollY값이 없어서 cross browsing을 위해서 두개 추가.
       this.current = document.documentElement.scrollTop
-
+    },
+    isIndex() {
+      this.$store.commit('isIndex', true)
     },
     isNotEditor() {
       this.$store.commit("isNotEditor", true);
@@ -253,6 +254,7 @@ export default {
     }
   },
   created() {
+    this.isIndex()
     this.isNotEditor();
   },
   // 계속해서 scroll이 변하는 것을 추적하기 위함.
