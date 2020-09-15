@@ -1,14 +1,14 @@
 <template>
   <div>
-    <img class="test" :src="require('@/assets/bg2.jpg')" alt />
+    <img class="main-background-first" :src="require('@/assets/bg2.jpg')" alt />
     <!-- <img class="test ani1" :src="require('@/assets/1.jpg')" alt="">
     <img class="test ani2" :src="require('@/assets/2.jpg')" alt="">
     <img class="test ani3" :src="require('@/assets/3.jpg')" alt="">-->
     <!-- <div class="test1"></div> -->
 
-    <v-container fluid style="height: 100vh; padding-top: 15px;">
-      <v-row style="height: 80%;">
-        <v-col md="5" sm="12" style="padding: 3vh 6vw;">
+    <v-container fluid style="height: calc(100vh - 64px); padding-top: 15px;">
+      <v-row style="height: 90%;">
+        <v-col style="padding: 3vh 6vw;">
           <v-row>
             <v-col class="white--text main-index-txt text-sm-center text-md-left">
               <h1 class="block-effect" style="--td: 1.2s">
@@ -28,7 +28,7 @@
             >Start your webtoon experience</v-col>
           </v-row>
 
-          <v-row style="width: 150px; height: 200px;" class="mx-sm-auto mx-md-auto">
+          <v-row style="width: 150px; height: 200px;" class="mx-sm-auto mx-md-0 mx-lg-0">
             <v-col style="z-index: 10;">
               <v-btn x-large color="rgb(23, 46, 252)" class="white--text mt-16" @click="getStated">Get Started</v-btn>
             </v-col>
@@ -42,21 +42,29 @@
           </v-row>-->
         </v-col>
 
-        <v-col
+        <!-- <v-col
           md="7"
           sm="6"
           class="mx-sm-auto p-3"
           style="z-index: 10; position: relative;  align-self: center; "
         >
-          <!-- <img :src="require('@/assets/main_img.png')" style="width: 85%;" alt /> -->
-        </v-col>
+          <img :src="require('@/assets/main_img.png')" style="width: 85%;" alt />
+        </v-col> -->
       </v-row>
+      <div @click="scrollDown(1)" class="mx-auto d-flex justify-center main-scroll-down">
+        <v-icon style="color: white; font-size: 36px;">
+          mdi-chevron-down
+        </v-icon>
+      </div>
     </v-container>
 
     <!-- main 2 페이지 -->
     <!-- backgroundImage: 'url(\'' + require(`@/assets/1-3.png`) + '\')', -->
-    <v-container fluid class="px-10" :style="{ height: '100vh', zIndex: 10 }">
-      <v-row class="align-content-center justify-center" style="height: 100%;">
+
+    <img :src="require('@/assets/1-1.jpg')" class="main-background" alt />
+
+    <v-container fluid class="px-10" :style="{ height: '100vh', zIndex: 10, position: 'relative' }">
+      <v-row class="align-content-center justify-center" style="height: 90%;">
         <v-col md="6" cols="10" class="mx-md-10 mx-sm-0 mx-xs-0 pa-0">
           <img style="width: 100%;" :src="require('@/assets/main_img.png')" alt />
         </v-col>
@@ -77,12 +85,20 @@
           </v-row>
         </v-col>
       </v-row>
+      <div @click="scrollDown(2)" class="mx-auto d-flex justify-center main-scroll-down">
+        <v-icon style="color: white; font-size: 36px;">
+          mdi-chevron-down
+        </v-icon>
+      </div>
+
     </v-container>
 
     <!-- main 3 페이지 -->
     <!-- backgroundImage: 'url(\'' + require(`@/assets/1-3.png`) + '\')', -->
-    <v-container fluid class="px-10" :style="{ height: '100vh', zIndex: 10 }">
-      <v-row class="align-content-center justify-center" style="height: 100%;">
+    <img :src="require('@/assets/1-3.jpg')" class="main-background" alt />
+
+    <v-container fluid class="px-10" :style="{ height: '100vh', zIndex: 10, position: 'relative' }">
+      <v-row class="align-content-center justify-center" style="height: 90%;">
         <v-col md="4" lg="4" cols="10" class="pa-0">
           <v-row>
             <v-col class="main-index-txt">대충 소개 제목</v-col>
@@ -103,10 +119,17 @@
           <VueCompareImage :leftImage="require('@/assets/1-1.jpg')" :rightImage="require('@/assets/1-2.jpg')" />
         </v-col>
       </v-row>
+      <div @click="scrollDown(3)" class="mx-auto d-flex justify-center main-scroll-down">
+        <v-icon style="color: white; font-size: 36px;">
+          mdi-chevron-down
+        </v-icon>
+      </div>
     </v-container>
 
     <!-- main 4 페이지 -->
-    <v-container fluid class="px-10" style="height: 100vh;">
+    <img :src="require('@/assets/1-2.jpg')" class="main-background-last" alt />
+
+    <v-container fluid class="px-10" :style="{ height: '90vh', zIndex: 10, position: 'relative' }">
       <v-row style="height: 30vh; text-align: center;" class="align-center">
         <v-col class="main-index-txt">대표작품들을 감상해보세요</v-col>
       </v-row>
@@ -128,6 +151,17 @@
         </v-col>
       </v-row>
     </v-container>
+    <div @click="scrollDown(0)" class="mx-auto d-flex justify-center main-scroll-down">
+      <v-icon style="color: white; font-size: 36px;">
+        mdi-chevron-up
+      </v-icon>
+    </div>
+    <div v-show="viewPortHeight/2 <= current" @click="scrollDown(0)">
+      <v-icon class="main-scroll-up" style="z-index: 9999; background-color: black; width: 40px; height: 40px; border-radius: 50%; color: white; font-size: 36px; position: fixed; bottom: 50px; right: 50px;">
+        mdi-chevron-up
+      </v-icon>
+    </div>
+    
   </div>
 </template>
 
@@ -146,12 +180,38 @@ export default {
   data() {
     return {
       dialog: false,
-    }
+
+      loginData: {
+        username: "",
+        email: "",
+        password: "",
+      },
+      current: 0,
+    };
+  },
+  // watch: {
+  //   current: {
+  //     immediate: true,
+  //     handler() {
+  //       this.current = document.documentElement.scrollTop
+
+  //     }
+  //   }
+  // },
+
+
+  computed: {
+    viewPortHeight() {
+      return window.innerHeight
+    },
   },
 
-  computed: {},
-
   methods: {
+    currentScrollPlace() {
+      // IE 는 scrollY값이 없어서 cross browsing을 위해서 두개 추가.
+      this.current = document.documentElement.scrollTop
+
+    },
     isNotEditor() {
       this.$store.commit("isNotEditor", true);
     },
@@ -160,15 +220,47 @@ export default {
     },
     getStated() {
       this.$router.push('photoeditor')
+    },
+    scrollDown(page) {
+      var y = this.viewPortHeight
+      y *= page
+      window.scrollTo({top: y, left:0, behavior: 'smooth'})
     }
   },
   created() {
     this.isNotEditor();
   },
+  // 계속해서 scroll이 변하는 것을 추적하기 위함.
+  mounted() {
+    window.addEventListener('scroll', this.currentScrollPlace);
+
+  },
+  destroy() {
+     window.removeEventListener('scroll', this.currentScrollPlace)
+  },
 };
 </script>
 
 <style>
+
+.main-scroll-up:hover {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.main-scroll-down {
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  position: relative;
+}
+
+.main-scroll-down:hover {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.3) !important;
+}
+
 .test-box {
   border: 1px solid white;
   color: white;
@@ -179,14 +271,27 @@ export default {
   /* background-repeat: no-repeat; */
 }
 
-.test {
+.main-background-first {
   /* background-size: 100vw;
   height: 100vw; */
   width: 100vw;
-  height: calc(100vh + 64px);
+  height: 100vh;
   /* opacity: 0.3; */
   position: absolute;
   top: -64px;
+  z-index: 0;
+}
+
+.main-background {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: 0;
+}
+.main-background-last {
+  width: 100vw;
+  /* height: 100vh; */
+  position: absolute;
   z-index: 0;
 }
 
@@ -213,18 +318,6 @@ export default {
   z-index: 10;
 }
 
-.btn-login {
-  color: white;
-  font-size: 20px;
-  z-index: 10;
-  border: 0.1px solid white;
-  border-radius: 20px;
-}
-
-.btn-login:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  cursor: pointer;
-}
 
 .ani1 {
   /* opacity: 0.5; */
@@ -348,11 +441,11 @@ p {
   }
 }
 
-.abs-site-link {
+/* .abs-site-link {
   position: fixed;
   bottom: 20px;
   left: 20px;
   color: hsla(0, 0%, 0%, 0.6);
   font-size: 16px;
-}
+} */
 </style>
