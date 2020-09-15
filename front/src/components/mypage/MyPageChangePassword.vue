@@ -33,10 +33,10 @@
                 style="width: 70%;"
                 class="mx-auto"
               ></v-text-field>
-              <v-btn class='warning pull-right mr-4' @click="clickOut()" style="width: 30%;">
+              <v-btn class='warning mr-4' @click="clickOut()" style="width: 30%;">
                 <strong>비밀번호변경하기</strong>
               </v-btn>
-              <v-btn class='pull-right' @click="clickOut()" style="width: 30%;">
+              <v-btn class='' @click="clickOut()" style="width: 30%;">
                 <strong>돌아가기</strong>
               </v-btn>
             </form>
