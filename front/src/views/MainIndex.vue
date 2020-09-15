@@ -7,7 +7,7 @@
     <!-- <div class="test1"></div> -->
 
     <v-container fluid style="height: calc(100vh - 64px); padding-top: 15px;">
-      <v-row style="height: 80%;">
+      <v-row style="height: 90%;">
         <v-col md="5" sm="12" style="padding: 3vh 6vw;">
           <v-row>
             <v-col class="white--text main-index-txt text-sm-center text-md-left">
@@ -64,7 +64,7 @@
     <img :src="require('@/assets/1-1.jpg')" class="main-background" alt />
 
     <v-container fluid class="px-10" :style="{ height: '100vh', zIndex: 10, position: 'relative' }">
-      <v-row class="align-content-center justify-center" style="height: 100%;">
+      <v-row class="align-content-center justify-center" style="height: 90%;">
         <v-col md="6" cols="10" class="mx-md-10 mx-sm-0 mx-xs-0 pa-0">
           <img style="width: 100%;" :src="require('@/assets/main_img.png')" alt />
         </v-col>
@@ -85,6 +85,12 @@
           </v-row>
         </v-col>
       </v-row>
+      <div class="mx-auto d-flex justify-center main-scroll-down" style="background-color: rgba(255, 255, 255, 0.4); border-radius: 50%; height: 40px; width: 40px; position: relative;">
+        <v-icon style="color: white; font-size: 36px;">
+          mdi-chevron-down
+        </v-icon>
+      </div>
+
     </v-container>
 
     <!-- main 3 페이지 -->
@@ -92,7 +98,7 @@
     <img :src="require('@/assets/1-3.jpg')" class="main-background" alt />
 
     <v-container fluid class="px-10" :style="{ height: '100vh', zIndex: 10, position: 'relative' }">
-      <v-row class="align-content-center justify-center" style="height: 100%;">
+      <v-row class="align-content-center justify-center" style="height: 90%;">
         <v-col md="4" lg="4" cols="10" class="pa-0">
           <v-row>
             <v-col class="main-index-txt">대충 소개 제목</v-col>
@@ -113,6 +119,11 @@
           <VueCompareImage :leftImage="require('@/assets/1-1.jpg')" :rightImage="require('@/assets/1-2.jpg')" />
         </v-col>
       </v-row>
+      <div class="mx-auto d-flex justify-center main-scroll-down" style="background-color: rgba(255, 255, 255, 0.4); border-radius: 50%; height: 40px; width: 40px; position: relative;">
+        <v-icon style="color: white; font-size: 36px;">
+          mdi-chevron-down
+        </v-icon>
+      </div>
     </v-container>
 
     <!-- main 4 페이지 -->
