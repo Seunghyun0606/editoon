@@ -3,14 +3,14 @@
     <NavBar/>
      <!-- v-if="!isIndex"  -->
     <!-- :class="[ isIndex ? '' : navMargin ]" -->
-    <v-main style="margin-top: 64px;">
+    <v-main :class="[ isIndex ? '' : navMargin ]">
 
       <router-view></router-view>
 
 
 
     </v-main>
-    <Footer v-if="isNotEditor" class="mt-16" />
+    <Footer v-if="isNotEditor"/>
 
   </v-app>
 </template>
