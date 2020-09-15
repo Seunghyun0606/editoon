@@ -22,7 +22,8 @@ import com.nokk.editoon.domain.Token;
 import com.nokk.editoon.exception.InternalServerException;
 import com.nokk.editoon.util.JwtTokenUtil;
 
-import io.lettuce.core.RedisConnectionException;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 
 @Service
 public class NonMemberSerivceImpl implements INonMemberService{
@@ -120,6 +121,10 @@ public class NonMemberSerivceImpl implements INonMemberService{
 				}
 			}
 			
+		}catch (ExpiredJwtException e) {
+			return false;
+		} catch (MalformedJwtException e) {
+			return false;
 		} catch(Exception e) {
 			throw new InternalServerException("emailAuthCheck Internal Server Exception \n" + "detail Exception Info :" + e.getMessage());
 		}

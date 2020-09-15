@@ -17,7 +17,58 @@ import com.nokk.editoon.account.service.INonMemberService;
 import com.nokk.editoon.domain.SuccessResponse;
 
 import io.swagger.annotations.ApiOperation;
+/*
+NonMemberController(회원가입)
 
+Function
+
+1. Email 중복 확인 및 인증 코드 전송
+    - Method : GET
+    - URI : localhost:8080/editoon/nonmember/email/authSend/{email}
+        - ex. [localhost:8080/editoon](http://localhost:8080/editoon)/nonmember/email/authSend/dkdlrnf0@gmail.com
+    - Input : email
+    - Output
+        - 경우 1. 이미 가입된 이메일인 경우
+            - HttpStatus : 200
+            - result : fail
+        - 경우 2. 가입 가능한 이메일인 경우 & 인증 코드 정상 송신
+            - HttpStatus : 200
+            - result : success
+        - 경우 3. 가입 가능한 이메일인 경우 & 인증 코드 송신 불가 | DB 등 Server내 오작동
+            - HttpStatus : 500
+
+2. Email 인증 코드 확인
+    - Method : POST
+    - URI : [localhost:8080/editoon/nonmember/email/authCheck](http://localhost:8080/editoon/nonmember/email/authCheck)
+    - Input :
+        - Content-Type : application/json
+        - email
+        - authNum
+    - Output
+        - 경우 1. 인증 성공
+            - HttpStatus : 200
+            - result : success
+        - 경우 2. 인증 실패
+            - HttpStatus : 200
+            - result : fail
+        - 경우 3. Redis 등 Server 내 오작동
+            - HttpStatus : 500
+
+3. 회원가입
+    - Method : POST
+    - URI : [localhost:8080/editoon/nonmember/](http://localhost:8080/editoon/nonmember/email/authCheck)signUp
+    - Input :
+        - Content-Type : application/json
+        - email
+        - name
+        - password
+    - Output
+        - 경우 1. 회원가입 성공
+            - HttpStatus : 200
+            - result : success
+        - 경우 2. DB 등 Server 내 오작동
+            - HttpStatus : 500
+ */
 @RequestMapping("/nonmember")
 @RestController
 public class NonMemberController {
@@ -30,7 +81,6 @@ public class NonMemberController {
 	public ResponseEntity emailAuthSend(@PathVariable(name = "email") String email) {
 		ResponseEntity response = null;
 		final SuccessResponse result = new SuccessResponse();
-		System.out.println(email);
 		// 회원가입 입력 email에 대한 중복 체크.
 		boolean emailDuplicationCheck = nonMemberService.emailCheck(email);
 		if (emailDuplicationCheck) {
@@ -43,7 +93,6 @@ public class NonMemberController {
 			response = new ResponseEntity<>(result, HttpStatus.OK);
 			return response;
 		}
-		System.out.println("여기까진 가능");
 		// email 인증번호 송신
 		nonMemberService.emailAuthSend(email);
 
