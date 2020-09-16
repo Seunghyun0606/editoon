@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.WebUtils;
 
 import com.nokk.editoon.util.JwtTokenUtil;
 
@@ -39,8 +40,9 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 		 */
 		// 1. redis에 저장된 refresh token 을 삭제시켜줌
 
-		String accessToken = request.getHeader("Authorization").substring(7);
-		
+//		String accessToken = request.getHeader("Authorization").substring(7);
+		String accessToken = WebUtils.getCookie(request, "access-token").getValue();
+
 		String email = null;
 		boolean check = false;
 

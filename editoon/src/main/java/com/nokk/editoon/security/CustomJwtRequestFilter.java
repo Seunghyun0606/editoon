@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.WebUtils;
 
 import com.nokk.editoon.util.JwtTokenUtil;
 
@@ -45,8 +46,8 @@ public class CustomJwtRequestFilter extends OncePerRequestFilter {
 		logger.info("JwtRequestFilter Entered...");
 		logger.info("[JwtRequestFilter] requestUrl : " + request.getRequestURI());
 
-		String token = request.getHeader("Authorization");
-
+//		String token = request.getHeader("Authorization");
+		String token = WebUtils.getCookie(request, "access-token").getValue();
 		String email = null;
 		String accessToken = null;
 		if (token != null && token.startsWith("Bearer ")) {
