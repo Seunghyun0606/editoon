@@ -77,7 +77,7 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 				if(c != null) {
 					c.setDomain("localhost");
 					c.setHttpOnly(true);
-					c.setPath("editoon");
+					c.setPath("/editoon");
 					c.setMaxAge(0);
 					response.addCookie(c);
 				}
