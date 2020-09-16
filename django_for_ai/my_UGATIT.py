@@ -624,6 +624,7 @@ class UGATIT(object) :
 
         if could_load :
             print(" [*] Load SUCCESS")
+            print(test_A_files, self.dataset_name, self.file_name)
         else :
             print(" [!] Load failed...")
 

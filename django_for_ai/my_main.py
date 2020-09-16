@@ -1,4 +1,4 @@
-from UGATIT import UGATIT
+from my_UGATIT import UGATIT
 import argparse
 from utils import *
 
