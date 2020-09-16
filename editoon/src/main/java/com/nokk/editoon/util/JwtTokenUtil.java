@@ -25,7 +25,7 @@ public class JwtTokenUtil implements Serializable {
     // public static final long JWT_ACCESS_TOKEN_VALIDITY = 10; //1분
     public static final long JWT_REFRESH_TOKEN_VALIDITY = 24 * 60 * 60 * 31; //한달
 //    public static final long JWT_REFRESH_TOKEN_VALIDITY = 60; // 1분
-    public static final long JWT_EMAILAUTH_TOKEN_VALIDITY = 60;
+    public static final long JWT_EMAILAUTH_TOKEN_VALIDITY = 3 * 60;
     
     
     @Value("${jwt.secret}")

@@ -1,7 +1,5 @@
 package com.nokk.editoon.account.controller;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +24,6 @@ public class AccountController {
 	@Autowired
 	private IAccountService accountService;
 	
-	// 받아야하는것 - access token , id, pw , new pw, new name + header에 Email
 	@ApiOperation(value = "accountModify", httpMethod = "POST", notes = "Hello this is accountModify")
 	@PostMapping("/v1/modify")
 	public ResponseEntity accountModify(HttpServletRequest request,
