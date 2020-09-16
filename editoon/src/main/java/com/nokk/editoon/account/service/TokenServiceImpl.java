@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,15 +41,6 @@ public class TokenServiceImpl implements ITokenService{
 	@Autowired
 	private HttpServletResponse response;
 
-	/*
-	 * AccessToken 으로 AccessToken 을 갱신하는 방법을 사용한 이유 : Session sliding 방식을 도입하며
-	 * access token 을 사용하고 있을 때 최대한 refreshtoken 에 대한 접근을 줄이고 보안성을 높이기위함. 사용자는 30분
-	 * 이상 사용하지 않은 경우에만 refresh token을 서버에 전달한다.
-	 * 
-	 * 
-	 * 후에 조금 더 보안을 높이기 위해 interceptor에서 검증에 대한 부분을 추가시켜주는게 좋을 것 같음. 추가해야하는 부분 ->
-	 * header 에 함께 보낸 email 값과 토큰의 값이 같은지? 권한은 어떤지? 이런 부분들에 대한 추가적인 검증이 필요할것으로 생각됨
-	 */
 	@Override
 	public void newAccessTokenByAccessToken(String accessToken) {
 		boolean ret = false;
@@ -79,9 +71,26 @@ public class TokenServiceImpl implements ITokenService{
 					newAccessTokenCal.add(Calendar.MINUTE, 30);
 					String newAccessTokenExpirationDate = simpleDateFormat.format(newAccessTokenCal.getTime());
 
+					Cookie accessCookie = new Cookie("access-token", newAccessToken);
+					accessCookie.setMaxAge(30 * 60); // 30분
+					accessCookie.setHttpOnly(true);
+					accessCookie.setDomain("localhost");
+					accessCookie.setPath("/editoon");
+//					accessCookie.setSecure(true);
+					response.addCookie(accessCookie); 
+					
+					
+					Cookie accessCookieExpirationDate = new Cookie("access-token-expiration-date", newAccessTokenExpirationDate);
+					accessCookieExpirationDate.setMaxAge(30 * 60);
+					accessCookieExpirationDate.setHttpOnly(true);
+					accessCookieExpirationDate.setDomain("localhost");
+					accessCookieExpirationDate.setPath("/editoon");
+//					accessCookieExpirationDate.setSecure(true);
+					response.addCookie(accessCookieExpirationDate);
+					
 					// response.setHeader("Access-Control-Expose-Headers", "Authorization, AccessTokenExpiraionDate");
-					response.addHeader("Authorization", "Bearer " + newAccessToken);
-					response.addHeader("AccessTokenExpiraionDate", newAccessTokenExpirationDate);
+//					response.addHeader("Authorization", "Bearer " + newAccessToken);
+//					response.addHeader("AccessTokenExpiraionDate", newAccessTokenExpirationDate);
 					ret = true;
 				}else {
 					throw new UnAuthorizationException(emailFromAccessToken);
@@ -136,8 +145,25 @@ public class TokenServiceImpl implements ITokenService{
 					accessTokenCal.add(Calendar.MINUTE, 30);
 					String newAccessTokenExpirationDate = simpleDateFormat.format(accessTokenCal.getTime());
 					
-					response.addHeader("Authorization", "Bearer " + newAccessToken);
-					response.addHeader("AccessTokenExpiraionDate", newAccessTokenExpirationDate);
+					Cookie accessCookie = new Cookie("access-token", newAccessToken);
+					accessCookie.setMaxAge(30 * 60); // 30분
+					accessCookie.setHttpOnly(true);
+					accessCookie.setDomain("localhost");
+					accessCookie.setPath("/editoon");
+//					accessCookie.setSecure(true);
+					response.addCookie(accessCookie); 
+					
+					
+					Cookie accessCookieExpirationDate = new Cookie("access-token-expiration-date", newAccessTokenExpirationDate);
+					accessCookieExpirationDate.setMaxAge(30 * 60);
+					accessCookieExpirationDate.setHttpOnly(true);
+					accessCookieExpirationDate.setDomain("localhost");
+					accessCookieExpirationDate.setPath("/editoon");
+//					accessCookieExpirationDate.setSecure(true);
+					response.addCookie(accessCookieExpirationDate);
+					
+//					response.addHeader("Authorization", "Bearer " + newAccessToken);
+//					response.addHeader("AccessTokenExpiraionDate", newAccessTokenExpirationDate);
 					ret = true;
 					//
 				} else {
