@@ -1,6 +1,22 @@
 package com.nokk.editoon.account.controller;
 
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.nokk.editoon.account.domain.dto.AccountDTO;
+import com.nokk.editoon.account.domain.dto.PrimitiveAccountDTO;
+import com.nokk.editoon.account.service.IAccountService;
+import com.nokk.editoon.domain.SuccessResponse;
+
+import io.swagger.annotations.ApiOperation;
 /*
 ### 3. 회원관리(로그인, 로그아웃, 정보수정 등)
 
@@ -121,22 +137,6 @@ import java.util.Map;
     → 로그인이 되어있는데 삭제가 안되는 경우는 없고 삭제가 안된다면 db문제라고 생각합니다.
  */
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.nokk.editoon.account.domain.dto.AccountDTO;
-import com.nokk.editoon.account.domain.dto.PrimitiveAccountDTO;
-import com.nokk.editoon.account.service.IAccountService;
-import com.nokk.editoon.domain.SuccessResponse;
-
-import io.swagger.annotations.ApiOperation;
 
 @RequestMapping("/account")
 @RestController
