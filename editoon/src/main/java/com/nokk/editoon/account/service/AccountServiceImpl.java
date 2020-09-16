@@ -32,12 +32,6 @@ public class AccountServiceImpl implements IAccountService {
 	@Autowired
 	JwtTokenUtil jtu;
 
-	@Autowired
-	private HttpServletResponse response;
-
-	@Autowired
-	private HttpServletRequest request;
-
 	/*
 	 * 반면 사용자가 접속을 뜸하게 하는 경우에도 RefreshToken의 만료 기간의 늘어나기 때문에, 핸드폰이 탈취되는 등의 경우에 지속적인
 	 * 이용이 가능 할 수 있습니다. 이를 막는 방법으로 인증이 확실히 요구되는 경우 비밀번호를 한번 더 묻는다거나, 비밀번호 변경 등의 이벤트가
@@ -67,7 +61,8 @@ public class AccountServiceImpl implements IAccountService {
 		try {
 			int ret = -1;
 			ret = accountRepo.updateAccountName(primitiveAccountDTO.getEmail(), primitiveAccountDTO.getName());
-			if (ret == -1)
+			System.out.println(ret);
+			if (ret != 1)
 				throw new InternalServerException("saveAccountName \n" + "detail Exception Info : maybe check mariaDB");
 		} catch (Exception e) {
 			throw new InternalServerException("saveAccountName \n" + "detail Exception Info :" + e.getMessage());
@@ -84,7 +79,7 @@ public class AccountServiceImpl implements IAccountService {
 
 			ret = accountRepo.updateAccountPassword(accountDTO.getEmail(), accountDTO.getPassword());
 			System.out.println(ret);
-			if (ret == -1)
+			if (ret != 1)
 				throw new InternalServerException("saveAccountPassword \n" + "detail Exception Info : maybe check mariaDB" );
 		} catch (Exception e) {
 			throw new InternalServerException("saveAccountPassword \n" + "detail Exception Info :" + e.getMessage());
@@ -95,12 +90,15 @@ public class AccountServiceImpl implements IAccountService {
 	@Override
 	public void deleteAccount(String email) {
 		try {
-			accountRepo.deleteAccount(email); // 여기서 에러 나면 false 출력하게 어떻게?
+			int ret = -1;
+			ret = accountRepo.deleteAccount(email); // 여기서 에러 나면 false 출력하게 어떻게?
 			
 			ValueOperations<String, Object> vop = redisTemplate.opsForValue();
 			Token token = (Token) vop.get(email);
 			if (token != null)
 				redisTemplate.expire(email, 1, TimeUnit.MILLISECONDS);
+			if(ret != 1)
+				throw new InternalServerException("deleteAccount \n" + "detail Exception Info : maybe check mariaDB" );
 		} catch (Exception e) {
 			throw new InternalServerException("deleteAccount \n" + "detail Exception Info :" + e.getMessage());
 		}

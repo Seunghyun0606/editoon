@@ -54,11 +54,11 @@ public class CustomJwtRequestFilter extends OncePerRequestFilter {
 			chain.doFilter(request, response);
 		}else {
 			String token = cookie.getValue();
-			
+			System.out.println(token);
 			String email = null;
 			String accessToken = null;
-			if (token != null && token.startsWith("Bearer ")) {
-				accessToken = token.substring(7);
+			if (token != null) {
+				accessToken = token;
 				try {
 					email = jwtTokenUtil.getUsernameFromToken(accessToken);
 				} catch (IllegalArgumentException e) {
@@ -71,9 +71,6 @@ public class CustomJwtRequestFilter extends OncePerRequestFilter {
 					logger.warn("MalformedJwtException");
 					response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 				}
-			} else {
-				logger.warn("JWT Token does not begin with Bearer String");
-//			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			}
 			
 			if (email == null) {
