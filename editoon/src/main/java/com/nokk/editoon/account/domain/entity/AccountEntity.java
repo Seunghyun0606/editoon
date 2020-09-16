@@ -40,7 +40,7 @@ public class AccountEntity implements Persistable<String> {
 	@Column(nullable = false, name = "account_role")
 	private Role role;
 
-	@Column(nullable = false, name = "account_image")
+	@Column(name = "account_image")
 	private String image;
 	
 	public String getRoleKey() {
