@@ -1,12 +1,13 @@
 <template>
   <div>
-    <img class="main-background-first" :src="require('@/assets/bg2.jpg')" alt />
+    <!-- <div class="main-background-first" :style="{backgroundImage: 'url(\'' + require(`@/assets/bg2.jpg`) + '\')', backgroundAttachment: 'fixed', backgroundSize: 'cover'}"></div> -->
+    <!-- <img class="main-background-first" :src="require('@/assets/bg2.jpg')" alt /> -->
     <!-- <img class="test ani1" :src="require('@/assets/1.jpg')" alt="">
     <img class="test ani2" :src="require('@/assets/2.jpg')" alt="">
     <img class="test ani3" :src="require('@/assets/3.jpg')" alt="">-->
     <!-- <div class="test1"></div> -->
 
-    <v-container fluid style="height: calc(100vh - 64px); padding-top: 15px;">
+    <v-container fluid class="main-background-first pt-16" :style="[mainBackgroundImage.one]">
       <v-row style="height: 90%;">
         <v-col style="padding: 3vh 6vw;">
           <v-row>
@@ -61,9 +62,13 @@
     <!-- main 2 페이지 -->
     <!-- backgroundImage: 'url(\'' + require(`@/assets/1-3.png`) + '\')', -->
 
-    <img :src="require('@/assets/1-1.jpg')" class="main-background" alt />
+    <!-- <img :src="require('@/assets/1-1.jpg')" class="main-background" alt /> -->
+    <!-- <v-parallax
+      :src="require('@/assets/1-1.jpg')"
+      class="main-background"
+    ></v-parallax> -->
 
-    <v-container fluid class="px-10" :style="{ height: '100vh', zIndex: 10, position: 'relative' }">
+    <v-container fluid class="px-10 main-background" :style="mainBackgroundImage.two">
       <v-row class="align-content-center justify-center" style="height: 90%;">
         <v-col md="6" cols="10" class="mx-md-10 mx-sm-0 mx-xs-0 pa-0">
           <img style="width: 100%;" :src="require('@/assets/main_img.png')" alt />
@@ -95,9 +100,9 @@
 
     <!-- main 3 페이지 -->
     <!-- backgroundImage: 'url(\'' + require(`@/assets/1-3.png`) + '\')', -->
-    <img :src="require('@/assets/1-3.jpg')" class="main-background" alt />
+    <!-- <img :src="require('@/assets/1-3.jpg')" class="main-background" alt /> -->
 
-    <v-container fluid class="px-10" :style="{ height: '100vh', zIndex: 10, position: 'relative' }">
+    <v-container fluid class="px-10 main-background" :style="mainBackgroundImage.three">
       <v-row class="align-content-center justify-center" style="height: 90%;">
         <v-col md="4" lg="4" cols="10" class="pa-0">
           <v-row>
@@ -127,35 +132,41 @@
     </v-container>
 
     <!-- main 4 페이지 -->
-    <img :src="require('@/assets/1-2.jpg')" class="main-background-last" alt />
+    <!-- <img :src="require('@/assets/1-2.jpg')" class="main-background-last" alt /> -->
 
-    <v-container fluid class="px-10" :style="{ height: '90vh', zIndex: 10, position: 'relative' }">
-      <v-row style="height: 30vh; text-align: center;" class="align-center">
-        <v-col class="main-index-txt">대표작품들을 감상해보세요</v-col>
+    <v-container fluid class="px-10 main-background-last" :style="[mainBackgroundImage.four]" >
+      
+      <v-row style="height: 90%;">
+        <v-col>
+          <v-row style="height: 30vh; text-align: center;" class="align-center">
+            <v-col class="main-index-txt">대표작품들을 감상해보세요</v-col>
+          </v-row>
+          <v-row class="justify-space-around">
+            <v-col class="mx-2">
+              <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt />
+            </v-col>
+            <v-col class="mx-2">
+              <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt />
+            </v-col>
+            <v-col class="mx-2">
+              <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt />
+            </v-col>
+            <v-col class="mx-2">
+              <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt />
+            </v-col>
+            <v-col class="mx-2">
+              <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt />
+            </v-col>
+          </v-row>
+
+        </v-col>
       </v-row>
-      <v-row class="justify-space-around">
-        <v-col class="mx-2">
-          <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt />
-        </v-col>
-        <v-col class="mx-2">
-          <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt />
-        </v-col>
-        <v-col class="mx-2">
-          <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt />
-        </v-col>
-        <v-col class="mx-2">
-          <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt />
-        </v-col>
-        <v-col class="mx-2">
-          <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt />
-        </v-col>
-      </v-row>
+      <div @click="scrollDown(0)" class="mx-auto main-scroll-down d-flex justify-center" >
+        <v-icon style="color: black; font-size: 36px;">
+          mdi-chevron-up
+        </v-icon>
+      </div>
     </v-container>
-    <div @click="scrollDown(0)" class="mx-auto d-flex justify-center main-scroll-down">
-      <v-icon style="color: white; font-size: 36px;">
-        mdi-chevron-up
-      </v-icon>
-    </div>
     <div v-show="viewPortHeight/2 <= current" @click="scrollDown(0)">
       <v-icon class="main-scroll-up" style="z-index: 9999; background-color: black; width: 40px; height: 40px; border-radius: 50%; color: white; font-size: 36px; position: fixed; bottom: 50px; right: 50px;">
         mdi-chevron-up
@@ -187,6 +198,20 @@ export default {
         password: "",
       },
       current: 0,
+      mainBackgroundImage: {
+        one: {
+          backgroundImage: 'url(\'' + require(`@/assets/bg2.jpg`) + '\')'
+        },
+        two: {
+          backgroundImage: 'url(\'' + require(`@/assets/1-1.jpg`) + '\')'
+        },
+        three: {
+          backgroundImage: 'url(\'' + require(`@/assets/1-3.jpg`) + '\')'
+        },
+        four: {
+          backgroundImage: 'url(\'' + require(`@/assets/1-2.jpg`) + '\')'
+        },
+      }
     };
   },
   // watch: {
@@ -208,9 +233,10 @@ export default {
 
   methods: {
     currentScrollPlace() {
-      // IE 는 scrollY값이 없어서 cross browsing을 위해서 두개 추가.
       this.current = document.documentElement.scrollTop
-
+    },
+    isIndex() {
+      this.$store.commit('isIndex', true)
     },
     isNotEditor() {
       this.$store.commit("isNotEditor", true);
@@ -228,6 +254,7 @@ export default {
     }
   },
   created() {
+    this.isIndex()
     this.isNotEditor();
   },
   // 계속해서 scroll이 변하는 것을 추적하기 위함.
@@ -242,6 +269,10 @@ export default {
 </script>
 
 <style>
+
+.check {
+  margin-top: 0 !important;
+}
 
 .main-scroll-up:hover {
   cursor: pointer;
@@ -266,33 +297,21 @@ export default {
   color: white;
 }
 
-.background {
-  background-image: url("/assets/mockupGif.gif");
-  /* background-repeat: no-repeat; */
-}
-
 .main-background-first {
-  /* background-size: 100vw;
-  height: 100vw; */
-  width: 100vw;
   height: 100vh;
-  /* opacity: 0.3; */
-  position: absolute;
-  top: -64px;
-  z-index: 0;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 .main-background {
-  width: 100vw;
   height: 100vh;
-  position: absolute;
-  z-index: 0;
+  background-attachment: fixed;
+  background-size: cover;
 }
 .main-background-last {
-  width: 100vw;
-  /* height: 100vh; */
-  position: absolute;
-  z-index: 0;
+  height: 100vh;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 .test1 {

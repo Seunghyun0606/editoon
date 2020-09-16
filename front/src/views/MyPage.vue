@@ -85,12 +85,16 @@ export default {
       this.sortedBy = prop;
       this.books.sort((a, b) => (a[prop] > b[prop] ? -1 : 1));
     },
+    isIndex() {
+      this.$store.commit('isIndex', false)
+    },
     isNotEditor() {
       this.$store.commit("isNotEditor", true);
     },
 
   },
   created() {
+    this.isIndex()
     this.isNotEditor()
   }
 
