@@ -126,7 +126,9 @@ public class NonMemberController {
 	public ResponseEntity signUp(@RequestBody(required = true) AccountSignUpDTO accountSignUpDTO) {
 		ResponseEntity response = null;
 		final SuccessResponse result = new SuccessResponse();
-		
+		System.out.println(accountSignUpDTO.getEmail());
+		System.out.println(accountSignUpDTO.getName());
+		System.out.println(accountSignUpDTO.getPassword());
 		nonMemberService.signUp(accountSignUpDTO);
 		
 		result.status = true;

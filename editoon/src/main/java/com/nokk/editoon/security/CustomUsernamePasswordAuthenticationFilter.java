@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -114,7 +115,13 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 		String accessTokenExpirationDate = simpleDateFormat.format(accessTokenCal.getTime()); 
 		String refreshTokenExpirationDate = simpleDateFormat.format(refrestTokenCal.getTime()); 
 
-		
+		/*
+		 * 쿠키로 생성해 줘야 하는 부분 
+		 * 1. AccessToken
+		 * 2. RefreshToken
+		 * 3. AccessTokenExpirationDate
+		 * 4. RefreshTokenExpirationDate
+		 */
 		ValueOperations<String, Object> vop = redisTemplate.opsForValue();
 		Token token = new Token();
 		token.setEmail(email);
@@ -126,22 +133,46 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 		// refresh token 의 값을 이용해서 access token 갱신
 		// 그럼 쿠키에 담긴 access token 의 expire은 refresh token 과 같이 하는건지?
 
-//		Cookie accessCookie = new Cookie("access-token", accessToken);
-//		accessCookie.setMaxAge(10 * 60); // 10분
-//		accessCookie.setPath("/");
-//		response.addCookie(accessCookie); // path 설정 / 기간 설정
+		Cookie accessCookie = new Cookie("access-token", accessToken);
+		accessCookie.setMaxAge(30 * 60); // 30분
+		accessCookie.setHttpOnly(true);
+		accessCookie.setDomain("localhost");
+		accessCookie.setPath("/editoon");
+//		accessCookie.setSecure(true);
+		response.addCookie(accessCookie); 
 //	
-//		Cookie refreshCookie = new Cookie("refresh-token", refreshToken);
-//		refreshCookie.setMaxAge(60 * 60 * 24 * 31); // 한달
-//		refreshCookie.setPath("/");
-//		response.addCookie(refreshCookie);
+		Cookie refreshCookie = new Cookie("refresh-token", refreshToken);
+		refreshCookie.setMaxAge(24 * 60 * 60 * 31); // 31일
+		refreshCookie.setHttpOnly(true);
+		refreshCookie.setDomain("localhost");
+		refreshCookie.setPath("/editoon");
+//		refreshCookie.setSecure(true);
+		response.addCookie(refreshCookie);
+		
+		Cookie accessCookieExpirationDate = new Cookie("access-token-expiration-date", accessTokenExpirationDate);
+		accessCookieExpirationDate.setMaxAge(30 * 60);
+		accessCookieExpirationDate.setHttpOnly(true);
+		accessCookieExpirationDate.setDomain("localhost");
+		accessCookieExpirationDate.setPath("/editoon");
+//		accessCookieExpirationDate.setSecure(true);
+		response.addCookie(accessCookieExpirationDate);
+		
+		Cookie refreshCookieExpirationDate = new Cookie("refresh-token-expiration-date", refreshTokenExpirationDate);
+		refreshCookieExpirationDate.setMaxAge(24 * 60 * 60 * 31);
+		refreshCookieExpirationDate.setHttpOnly(true);
+		refreshCookieExpirationDate.setDomain("localhost");
+		refreshCookieExpirationDate.setPath("/editoon");
+//		refreshCookieExpirationDate.setSecure(true);
+		response.addCookie(refreshCookieExpirationDate);
 		// jwt
+		
+		
 
-		response.setHeader("Access-Control-Expose-Headers", "Authorization, RefreshToken, AccessTokenExpiraionDate, RefreshTokenExpiraionDate");
-		response.addHeader("Authorization", "Bearer " + accessToken);
-		response.addHeader("RefreshToken", "Bearer " + refreshToken);
-		response.addHeader("AccessTokenExpiraionDate", accessTokenExpirationDate);
-		response.addHeader("RefreshTokenExpiraionDate", refreshTokenExpirationDate);
+//		response.setHeader("Access-Control-Expose-Headers", "Authorization, RefreshToken, AccessTokenExpiraionDate, RefreshTokenExpiraionDate");
+//		response.addHeader("Authorization", "Bearer " + accessToken);
+//		response.addHeader("RefreshToken", "Bearer " + refreshToken);
+//		response.addHeader("AccessTokenExpiraionDate", accessTokenExpirationDate);
+//		response.addHeader("RefreshTokenExpiraionDate", refreshTokenExpirationDate);
 	}
 
 	@Override
