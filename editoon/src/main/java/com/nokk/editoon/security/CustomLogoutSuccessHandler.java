@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,6 +13,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.WebUtils;
 
@@ -39,10 +42,9 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 		 * 토큰은 어떻게 할 수 없기 때문에 해당 토큰을 사용하지 못하도록 처리해야한다.
 		 */
 		// 1. redis에 저장된 refresh token 을 삭제시켜줌
-
+		Cookie cookie = WebUtils.getCookie(request, "access-token");
 //		String accessToken = request.getHeader("Authorization").substring(7);
 		String accessToken = WebUtils.getCookie(request, "access-token").getValue();
-
 		String email = null;
 		boolean check = false;
 
@@ -62,6 +64,24 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 				redisTemplate.opsForValue().set(accessToken, true);
 				redisTemplate.expire(accessToken, 10 * 60, TimeUnit.SECONDS);
 			}
+			
+			Cookie[] cookies = new Cookie[5];
+			cookies[0] = WebUtils.getCookie(request, "access-token");
+			cookies[1] = WebUtils.getCookie(request, "refresh-token");
+			cookies[2] = WebUtils.getCookie(request, "access-token-expiration-date");
+			cookies[3] = WebUtils.getCookie(request, "XSRF-TOKEN");
+			cookies[4] = WebUtils.getCookie(request, "refresh-token-expiration-date");
+			
+			for(Cookie c : cookies) {
+				if(c != null) {
+					c.setDomain("localhost");
+					c.setHttpOnly(true);
+					c.setPath("editoon");
+					c.setMaxAge(0);
+					response.addCookie(c);
+				}
+			}
+			
 			response.setStatus(HttpStatus.OK.value());
 		}
 	}

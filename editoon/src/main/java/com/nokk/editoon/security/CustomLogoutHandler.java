@@ -15,5 +15,4 @@ public class CustomLogoutHandler implements LogoutHandler{
 		//verify 
 		
 	}
-
 }
