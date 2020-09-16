@@ -157,13 +157,13 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 //		accessCookieExpirationDate.setSecure(true);
 		response.addCookie(accessCookieExpirationDate);
 		
-		Cookie refreshCookieExpirationDate = new Cookie("refresh-token-expiration-date", refreshTokenExpirationDate);
-		refreshCookieExpirationDate.setMaxAge(24 * 60 * 60 * 31);
-		refreshCookieExpirationDate.setHttpOnly(true);
-		refreshCookieExpirationDate.setDomain("localhost");
-		refreshCookieExpirationDate.setPath("/editoon");
-//		refreshCookieExpirationDate.setSecure(true);
-		response.addCookie(refreshCookieExpirationDate);
+//		Cookie refreshCookieExpirationDate = new Cookie("refresh-token-expiration-date", refreshTokenExpirationDate);
+//		refreshCookieExpirationDate.setMaxAge(24 * 60 * 60 * 31);
+//		refreshCookieExpirationDate.setHttpOnly(true);
+//		refreshCookieExpirationDate.setDomain("localhost");
+//		refreshCookieExpirationDate.setPath("/editoon");
+////		refreshCookieExpirationDate.setSecure(true);
+//		response.addCookie(refreshCookieExpirationDate);
 		// jwt
 		
 		

@@ -1,5 +1,6 @@
 package com.nokk.editoon.account.controller;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.WebUtils;
 
 import com.nokk.editoon.account.service.ITokenService;
 import com.nokk.editoon.domain.SuccessResponse;
+import com.nokk.editoon.exception.UnAuthorizationException;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -61,35 +64,47 @@ public class TokenController {
 
 	// newAccessTokenByAccessToken
 	@ApiOperation(value = "newAccessTokenByAccessToken", httpMethod = "POST", notes = "Hello this is newAccessTokenByAccessToken")
-	@PostMapping("/v2/newATBA")
+	@PostMapping("/newATBA")
 	public ResponseEntity newAccessTokenByAccessToken(HttpServletRequest request) {
 		ResponseEntity response = null;
 		final SuccessResponse result = new SuccessResponse();
 
-		String accessToken = request.getHeader("Authorization").substring(7); // 7글자 이상일경우만 조사하도록 변경
-		tokenService.newAccessTokenByAccessToken(accessToken);
-		
-		result.status = true;
-		result.result = "success";
-		response = new ResponseEntity<>(result, HttpStatus.OK);
-		return response;
+		Cookie cookie = WebUtils.getCookie(request, "access-token");
+		if (cookie == null) {
+			throw new UnAuthorizationException("UnAuthorization : Access Token Cookie is null");
+		}else {
+			String accessToken = cookie.getValue();
+//			String accessToken = request.getHeader("Authorization").substring(7); // 7글자 이상일경우만 조사하도록 변경
+			tokenService.newAccessTokenByAccessToken(accessToken);
+			
+			result.status = true;
+			result.result = "success";
+			response = new ResponseEntity<>(result, HttpStatus.OK);
+			return response;
+		}
 	}
 
 	// newAccessTokenByRefreshToken
 	@ApiOperation(value = "newAccessTokenByRefreshToken", httpMethod = "POST", notes = "Hello this is newAccessTokenByRefreshToken")
-	@PostMapping("/v2/newATBR")
+	@PostMapping("/newATBR")
 	public ResponseEntity newAccessTokenByRefreshToken(HttpServletRequest request) {
 		ResponseEntity response = null;
 		final SuccessResponse result = new SuccessResponse();
 
-		String refreshToken = request.getHeader("RefreshToken").substring(7);
-		tokenService.newAccessTokenByRefreshToken(refreshToken);
-		
-		result.status = true;
-		result.result = "success";
-		response = new ResponseEntity<>(result, HttpStatus.OK);
-
-		return response;
+		Cookie cookie = WebUtils.getCookie(request, "refresh-token");
+		if (cookie == null) {
+			throw new UnAuthorizationException("UnAuthorization : Refresh Token Cookie is null");
+		}else{
+			String refreshToken = cookie.getValue();
+//			String refreshToken = request.getHeader("RefreshToken").substring(7);
+			tokenService.newAccessTokenByRefreshToken(refreshToken);
+			
+			result.status = true;
+			result.result = "success";
+			response = new ResponseEntity<>(result, HttpStatus.OK);
+			
+			return response;
+		}
 
 	}
 }

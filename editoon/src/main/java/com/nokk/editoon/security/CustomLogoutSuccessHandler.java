@@ -65,12 +65,12 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 				redisTemplate.expire(accessToken, 10 * 60, TimeUnit.SECONDS);
 			}
 			
-			Cookie[] cookies = new Cookie[5];
+			Cookie[] cookies = new Cookie[4];
 			cookies[0] = WebUtils.getCookie(request, "access-token");
 			cookies[1] = WebUtils.getCookie(request, "refresh-token");
 			cookies[2] = WebUtils.getCookie(request, "access-token-expiration-date");
 			cookies[3] = WebUtils.getCookie(request, "XSRF-TOKEN");
-			cookies[4] = WebUtils.getCookie(request, "refresh-token-expiration-date");
+//			cookies[4] = WebUtils.getCookie(request, "refresh-token-expiration-date");
 			
 			for(Cookie c : cookies) {
 				if(c != null) {
