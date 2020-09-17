@@ -71,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.csrf()
 //			.ignoringAntMatchers("/nonmember/**")
-			.csrfTokenRepository(new CookieCsrfTokenRepository());
+			.csrfTokenRepository(getCookieCsrfTokenRepository());
 		
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
@@ -137,6 +137,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
 		repository.setHeaderName("X-XSRF-TOKEN");
 		return repository;
+	}
+	
+	@Bean
+	public CookieCsrfTokenRepository getCookieCsrfTokenRepository() {
+		CookieCsrfTokenRepository cookieCsrfTokenRepository = new CookieCsrfTokenRepository();
+		cookieCsrfTokenRepository.setCookieDomain("localhost");
+		return cookieCsrfTokenRepository;
 	}
 
 }
