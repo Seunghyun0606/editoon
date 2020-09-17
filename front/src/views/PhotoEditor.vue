@@ -1,6 +1,23 @@
 <template>
+    <v-container fluid>
+      <v-row style="height: calc(100vh - 64px); border-top: 1px solid black;">
+        <v-col cols="2" style="border-right: 1px solid black; ">
+          프레임
+        </v-col>
+        <v-col cols="4">
+          webtoon 들어갈 공간.
+        </v-col>
+        <v-col cols="6">
+          <tui-image-editor :include-ui="useDefaultUI" :options="options"></tui-image-editor>
 
-  <tui-image-editor :include-ui="useDefaultUI" :options="options"></tui-image-editor>
+        </v-col>
+
+      </v-row>
+
+    </v-container>
+
+
+
 
 </template>
 
@@ -44,10 +61,10 @@ export default {
 
 <style>
 
-/* .tui-image-editor-container {
-  width: 50% !important;
-  float: right;
-} */
+.tui-image-editor-container {
+  /* width: 50% !important; */
+
+}
 
 .tui-image-editor-header-logo {
   display: none !important;
