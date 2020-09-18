@@ -1,11 +1,13 @@
 package com.nokk.editoon.interceptor;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.util.WebUtils;
 
 import com.nokk.editoon.exception.ExpiredTokenException;
 import com.nokk.editoon.exception.UnAuthorizationException;
@@ -24,8 +26,13 @@ public class VerifyAccountInterceptor implements HandlerInterceptor{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		System.out.println("v1 handler");
-		String email = request.getHeader("Email");
-		String token = request.getHeader("Authorization").substring(7);
+		String email = request.getHeader("email");
+		
+		Cookie cookie = WebUtils.getCookie(request, "access-token");
+		if (cookie == null) {
+			throw new UnAuthorizationException("UnAuthorization : Access Token Cookie is null ****" + email + "******");
+		}
+		String token = cookie.getValue();
 		String emailByToken = "";
 		
 		try {
