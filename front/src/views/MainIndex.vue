@@ -1,12 +1,5 @@
 <template>
   <div>
-    <!-- <div class="main-background-first" :style="{backgroundImage: 'url(\'' + require(`@/assets/bg2.jpg`) + '\')', backgroundAttachment: 'fixed', backgroundSize: 'cover'}"></div> -->
-    <!-- <img class="main-background-first" :src="require('@/assets/bg2.jpg')" alt /> -->
-    <!-- <img class="test ani1" :src="require('@/assets/1.jpg')" alt="">
-    <img class="test ani2" :src="require('@/assets/2.jpg')" alt="">
-    <img class="test ani3" :src="require('@/assets/3.jpg')" alt="">-->
-    <!-- <div class="test1"></div> -->
-
     <v-container
       fluid
       class="main-background-first pt-16"
@@ -17,9 +10,6 @@
         <v-col style="padding: 3vh 6vw;">
           <v-row>
             <v-col class="text-center main-index-txt">
-              <!-- <v-col
-              class="text-center white--text main-index-txt text-sm-center text-md-left"
-            > -->
               <div class="text">
                 <span>E</span>
                 <span>D</span>
@@ -29,29 +19,8 @@
                 <span>O</span>
                 <span>N</span>
               </div>
-              <!-- <h1 class="d-inline-block block-effect" style="--td: 1.2s">
-                <div
-                  class="block-reveal white--text"
-                  style="--bc: #fff263; --d: .1s;"
-                >
-                  <strong>Editoon</strong>
-                </div>
-                <div
-                  class="text-center block-reveal white--text text-md-left"
-                  style="--bc: #ffbb63; --d: .5s"
-                >
-                  <strong>Just do it</strong>
-                </div>
-              </h1> -->
             </v-col>
           </v-row>
-          <!-- 
-          <v-row>
-            <v-col
-              class="text-center sub-index-txt my-5 text-sm-center text-md-left"
-              >Start your webtoon experience</v-col
-            >
-          </v-row> -->
 
           <!-- <v-row>
             <v-col align="center">
@@ -64,23 +33,7 @@
               >
             </v-col>
           </v-row> -->
-          <!-- <v-row style="width: 150px;" class="my-5 mx-sm-auto mx-md-0">
-            <v-col
-              style="z-index: 10;  background-color: blue; text-align:center; padding: 10px; color:white; border-radius: 5px;"
-              class="align-self-center;"
-            >Look around
-            </v-col>
-          </v-row>-->
         </v-col>
-
-        <!-- <v-col
-          md="7"
-          sm="6"
-          class="mx-sm-auto p-3"
-          style="z-index: 10; position: relative;  align-self: center; "
-        >
-          <img :src="require('@/assets/main_img.png')" style="width: 85%;" alt />
-        </v-col>-->
       </v-row>
       <div
         @click="scrollDown(1)"
@@ -90,46 +43,46 @@
       </div>
     </v-container>
 
-    <!-- main 2 페이지 -->
-    <!-- backgroundImage: 'url(\'' + require(`@/assets/1-3.png`) + '\')', -->
-
-    <!-- <img :src="require('@/assets/1-1.jpg')" class="main-background" alt /> -->
-    <!-- <v-parallax
-      :src="require('@/assets/1-1.jpg')"
-      class="main-background"
-    ></v-parallax>-->
-
     <v-container
       fluid
       class="px-10 main-background"
       :style="mainBackgroundImage.two"
     >
-      <v-row class="align-content-center justify-center" style="height: 90%;">
-        <v-col md="6" cols="10" class="mx-md-10 mx-sm-0 mx-xs-0 pa-0">
-          <img
-            style="width: 100%;"
-            :src="require('@/assets/main_img.png')"
-            alt
-          />
-        </v-col>
-
+      <v-row
+        class="align-content-center justify-center d-flex"
+        style="height: 90%;"
+      >
         <v-col md="4" lg="4" cols="10" class="pa-0">
           <v-row>
-            <v-col class="main-index-txt">대충 소개 제목</v-col>
+            <v-col class="main-index-txt">사진에서 만화로 빠르고 쉽게!</v-col>
           </v-row>
 
           <v-row>
-            <v-col style="font-size: 1rem;">
-              대충 소개 내용 대충대충 소개2 내용대충대충3 소개 내용대충대충 소개
-              내용대충대충 소개 내용대충 1대충 소개 내용대충대충 소개 내용
-              대충대충 소개2 내용대충대충3 소개 내용대충대충 소개 내용대충대충
-              소개 내용대충 1대충 소개 내용대충대충 소개 내용 대충대충 소개2
-              내용대충대충3 소개 내용대충대충 소개 내용대충대충 소개 내용대충
-              1대충 소개 내용대충대충 소개 내용 대충대충 소개2 내용대충대충3
-              소개 내용대충대충 소개 내용대충대충 소개 내용대충 1대충 소개
-              내용대충
+            <v-col style="font-size: 1.7rem;">
+              <div>
+                한 번만 클릭하면 몇 초만에 사진에서 만화로 바꿀 수 있습니다.
+                지금 당장, 당신의 셀피를 만화로 만들어 보세요!
+              </div>
+              <div>
+                A single click of our Editoon, you'll go from photo to cartoon
+                in seconds. Make your selfie into a cartoon right now!!
+              </div>
             </v-col>
           </v-row>
+        </v-col>
+        <v-col
+          justify-center
+          md="6"
+          cols="10"
+          class="mx-md-10 mx-sm-0 mx-xs-0 mx-lg-5 pa-0"
+        >
+          <!-- <img style="width: 100%;" :src="require('@/assets/main_second.jpg')" alt /> -->
+
+          <VueCompareImage
+            class="justify-center"
+            :leftImage="require('@/assets/iu.jpg')"
+            :rightImage="require('@/assets/iu_cartoon.jpg')"
+          />
         </v-col>
       </v-row>
       <div
@@ -141,8 +94,6 @@
     </v-container>
 
     <!-- main 3 페이지 -->
-    <!-- backgroundImage: 'url(\'' + require(`@/assets/1-3.png`) + '\')', -->
-    <!-- <img :src="require('@/assets/1-3.jpg')" class="main-background" alt /> -->
 
     <v-container
       fluid
@@ -150,32 +101,35 @@
       :style="mainBackgroundImage.three"
     >
       <v-row class="align-content-center justify-center" style="height: 90%;">
+        <v-col md="6" cols="10" class="mx-md-10 mx-sm-0 mx-xs-0 pa-0">
+          <img
+            style="width: 100%;"
+            :src="require('@/assets/webtoon.png')"
+            alt
+          />
+        </v-col>
+
         <v-col md="4" lg="4" cols="10" class="pa-0">
           <v-row>
-            <v-col class="main-index-txt">대충 소개 제목</v-col>
+            <v-col class="main-index-txt">사진을 웹툰으로!</v-col>
           </v-row>
 
           <v-row>
-            <v-col style="font-size: 1rem;">
-              대충 소개 내용 대충대충 소개2 내용대충대충3 소개 내용대충대충 소개
-              내용대충대충 소개 내용대충 1대충 소개 내용대충대충 소개 내용
-              대충대충 소개2 내용대충대충3 소개 내용대충대충 소개 내용대충대충
-              소개 내용대충 1대충 소개 내용대충대충 소개 내용 대충대충 소개2
-              내용대충대충3 소개 내용대충대충 소개 내용대충대충 소개 내용대충
-              1대충 소개 내용대충대충 소개 내용 대충대충 소개2 내용대충대충3
-              소개 내용대충대충 소개 내용대충대충 소개 내용대충 1대충 소개
-              내용대충
+            <v-col style="font-size: 1.7rem;">
+              <div>
+                빠르고 간단하게, 몇번의 클릭만으로 웹툰을 만들어보세요. 간단한
+                배치와 말풍선을 추가하여 꾸밀수있습니다!
+              </div>
+              <div>
+                Quickly and simply, create a webtoon with just a few clicks. you
+                can decorate it by adding simple arrangements and speech
+                bubbles!
+              </div>
             </v-col>
           </v-row>
         </v-col>
-        <v-col md="6" cols="10" class="mx-md-10 mx-sm-0 mx-xs-0 pa-0">
-          <!-- <img style="width: 100%;" :src="require('@/assets/main_second.jpg')" alt /> -->
-          <VueCompareImage
-            :leftImage="require('@/assets/1-1.jpg')"
-            :rightImage="require('@/assets/1-2.jpg')"
-          />
-        </v-col>
       </v-row>
+
       <div
         @click="scrollDown(3)"
         class="mx-auto d-flex justify-center main-scroll-down"
@@ -284,7 +238,7 @@ export default {
           backgroundImage: "url('" + require(`@/assets/simple2.jpg`) + "')",
         },
         four: {
-          backgroundImage: "url('" + require(`@/assets/simple6.jpg`) + "')",
+          backgroundImage: "url('" + require(`@/assets/simple11.gif`) + "')",
         },
       },
     };
