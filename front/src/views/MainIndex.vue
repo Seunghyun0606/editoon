@@ -50,7 +50,7 @@
     >
       <v-row
         class="align-content-center justify-center d-flex"
-        style="height: 90%;"
+        style="height: 90%; width: 100%"
       >
         <v-col md="4" lg="4" cols="10" class="pa-0">
           <v-row>
@@ -58,7 +58,7 @@
           </v-row>
 
           <v-row>
-            <v-col style="font-size: 1.7rem;">
+            <v-col style="font-size: 1.7em;">
               <div>
                 한 번만 클릭하면 몇 초만에 사진에서 만화로 바꿀 수 있습니다.
                 지금 당장, 당신의 셀피를 만화로 만들어 보세요!
@@ -75,11 +75,12 @@
           md="6"
           cols="10"
           class="mx-md-10 mx-sm-0 mx-xs-0 mx-lg-5 pa-0"
+          style="height: 60vh;"
         >
           <!-- <img style="width: 100%;" :src="require('@/assets/main_second.jpg')" alt /> -->
 
           <VueCompareImage
-            class="justify-center"
+            style="height: 100%;"
             :leftImage="require('@/assets/iu.jpg')"
             :rightImage="require('@/assets/iu_cartoon.jpg')"
           />
