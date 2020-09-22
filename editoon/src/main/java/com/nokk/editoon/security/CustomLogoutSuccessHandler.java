@@ -18,6 +18,7 @@ import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.WebUtils;
 
+import com.nokk.editoon.exception.UnknownException;
 import com.nokk.editoon.util.JwtTokenUtil;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -58,7 +59,7 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 		} catch (ExpiredJwtException e) {
 			email = e.getClaims().getSubject();
 		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
+			throw new UnknownException("이 토큰은 추적해야 합니다.");
 		} finally {
 			if (!check) {
 				redisTemplate.opsForValue().set(accessToken, true);
@@ -76,7 +77,7 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 				if(c != null) {
 					c.setDomain("localhost");
 					c.setHttpOnly(true);
-					c.setPath("editoon");
+					c.setPath("/editoon");
 					c.setMaxAge(0);
 					response.addCookie(c);
 				}

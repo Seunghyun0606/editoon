@@ -1,11 +1,13 @@
 package com.nokk.editoon.account.service;
 
 import com.nokk.editoon.account.domain.dto.AccountDTO;
+import com.nokk.editoon.account.domain.dto.PrimitiveAccountDTO;
 
 public interface IAccountService {
 	public boolean validAccountCheck(String email, String password);
 
-	public boolean saveAccount(AccountDTO accountDTO);
+	public void saveAccountName(PrimitiveAccountDTO primitiveAccountDTO);
+	public void saveAccountPassword(AccountDTO accountDTO);
 
-	public boolean deleteAccount(String email, int no);
+	public void deleteAccount(String email);
 }

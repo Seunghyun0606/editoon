@@ -11,13 +11,14 @@
 	<groupId>com.nokk</groupId>
 	<artifactId>editoon</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>editoon</name>
 	<description>editoon api server</description>
 
 	<properties>
 		<java.version>1.8</java.version>
 		<!-- docker image prefix -->
-		<!-- <docker.image.prefix>docker-spring</docker.image.prefix> -->
+		<docker.image.prefix>editoon</docker.image.prefix>
 	</properties>
 
 	<dependencies>
