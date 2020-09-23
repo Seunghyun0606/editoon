@@ -17,8 +17,6 @@
             <img :src="image.image" style="height: inherit; width: inherit;" alt="">
 
           </VueDragResize>
-            <!-- v-on:resizing="resize"
-            v-on:dragging="resize" -->
         </v-col>
 
 
@@ -138,7 +136,8 @@ export default {
     isNotEditor() {
       this.$store.commit("isNotEditor", false);
     },
-    // 파일 업로드시, preview만 클릭하면 올라갈 수 있도록 만듬.
+
+// 파일 업로드시, preview만 클릭하면 올라갈 수 있도록 만듬.
     dropZoneImageMoveToEditor(file_list) {
       console.log(file_list)
 
@@ -170,6 +169,8 @@ export default {
       this.$refs.imageEditor.invoke('loadImageFromFile', file)
 
     },
+
+    // 에디터 이미지를 캔버스로 이동
     btnEditorImageToCanvas() {
       const dataURL = this.$refs.imageEditor.invoke('toDataURL')  // base64 data
       const imageData = {
@@ -179,9 +180,13 @@ export default {
       this.images.push(imageData)
 
     },
+    
+    // 캔버스 추가
     btnAddCanvasHeight() {
       this.webtoonCanvasHeight = this.webtoonCanvasHeight*2
     },
+
+    // 캔버스의 이미지가 눌러졌을때, 다른 이미지는 활성화 취소
     canvasImageOnActivated(idx) {
       for ( let i = 0; i < this.images.length; i++ ) {
         if ( i === idx ) {
@@ -191,6 +196,8 @@ export default {
         this.images[i].isActive = false
       }
     },
+
+    //캔버스 사이즈 변경시, 캔버스 안의 이미지가 안옮겨지는 버그 수정
     resizeCanvasWidth(e) {
       if (e) {
         const canvas_width = e.target.document.querySelector('#webtoonCanvas').clientWidth
@@ -207,6 +214,7 @@ export default {
     this.isNotEditor()
   },
   mounted() {
+    // 버튼위치 변경
     const editorHeader = document.querySelector('.tui-image-editor-header')
     const editorBtnSet = document.querySelector('#editorBtnSet')
     editorHeader.appendChild(editorBtnSet)
