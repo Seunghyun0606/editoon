@@ -231,10 +231,15 @@ export default {
   border: 1px solid black;
 }
 
+.dropzone-custom-content {
+  margin-top: 45px;
+}
 .dropzone-custom-title {
-  margin-top: 0;
-  /* color: #00b782; */
   color: rgba(255, 255, 255, 1);
+  font-weight: bold;
+  margin: 0;
+  font-size: 1.1rem
+  
 }
 
 .subtitle {
