@@ -139,7 +139,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 //		accessCookie.setDomain("j3b308.p.ssafy.io");
 		accessCookie.setDomain("localhost");
 		accessCookie.setPath("/editoon");
-		accessCookie.setSecure(true);
+//		accessCookie.setSecure(true);
 		accessCookie.setHttpOnly(true);
 		response.addCookie(accessCookie); 
 //	
@@ -149,7 +149,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 //		refreshCookie.setDomain("j3b308.p.ssafy.io");
 		accessCookie.setDomain("localhost");
 		refreshCookie.setPath("/editoon");
-		refreshCookie.setSecure(true);
+//		refreshCookie.setSecure(true);
 		accessCookie.setHttpOnly(true);
 		response.addCookie(refreshCookie);
 		
