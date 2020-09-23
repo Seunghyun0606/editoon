@@ -155,15 +155,21 @@ export default {
 
     // 사실상 preview에서 클릭해서 넣을 수 있기 때문에 필요없음.
     btnDropZoneImageMoveToEditor() {
-      let files = this.$refs.myVueDropzone.getAcceptedFiles()
+      const files = this.$refs.myVueDropzone.getAcceptedFiles()
       // console.log(1)
       // console.log(a)
       // this.image = files[0].dataURL
-      let file = files[0]
+      const file = files[0]
       this.$refs.imageEditor.invoke('loadImageFromFile', file)
 
     },
     btnEditorImageToCanvas() {
+      const dataURL = this.$refs.imageEditor.invoke('toDataURL')  // base64 data
+      const imageData = {
+        image: dataURL,
+        isActive: false,
+      }
+      this.images.push(imageData)
 
     },
     btnAddCanvasHeight() {
