@@ -7,24 +7,24 @@
             :parentW="webtoonCanvasWidth"
             :w="200"
             :h="200"
-            v-on:resizing="resize"
-            v-on:dragging="resize"
             :parentLimitation="true"
           >
           </VueDragResize>
+            <!-- v-on:resizing="resize"
+            v-on:dragging="resize" -->
         </v-col>
 
 
         <v-col cols="6">
           <v-row style="height: 70vh; width: 90%;" class="mx-auto">
-            <tui-image-editor :include-ui="useDefaultUI" :options="options"></tui-image-editor>
+            <tui-image-editor ref="imageEditor" :include-ui="useDefaultUI" :options="options"></tui-image-editor>
 
           </v-row>
 
           <v-row>
             <vue2Dropzone
-              @vdropzone-files-added="urlCheck"
-              id="a"
+              @vdropzone-files-added="dropZoneImageMoveToEditor"
+              id="dropZone"
               ref="myVueDropzone"
               style=" width: 90%; position: relative;
                 height: 25vh;
@@ -126,6 +126,28 @@ export default {
     },
     isNotEditor() {
       this.$store.commit("isNotEditor", false);
+    },
+    // 파일 업로드시, preview만 클릭하면 올라갈 수 있도록 만듬.
+    dropZoneImageMoveToEditor(file_list) {
+      console.log(file_list)
+
+      const dz_preview = document.querySelectorAll('.dz-preview')
+
+      // const temp2 = document.querySelectorAll('.dz-image > img')
+
+      // temp1[0].addEventListener('click', function(e) {
+        //   console.log(e)
+      // })
+
+      for ( let idx = 0; idx < file_list.length; idx++) {
+        dz_preview[idx + this.previewCount].addEventListener('click', e => {
+          this.$refs.imageEditor.invoke('loadImageFromFile', file_list[idx])
+          e
+        })
+      }
+      // 여러번 올렸을경우, dz_preview의 인덱스가 달라지기때문
+      this.previewCount += file_list.length
+
     },
   },
   created() {
