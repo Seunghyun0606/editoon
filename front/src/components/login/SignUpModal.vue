@@ -15,6 +15,7 @@
             <v-form
               ref="form"
               style="margin-top: 0.2vh;"
+              v-model="valid"
             >
 
               <!-- 이메일 확인 -->
@@ -22,7 +23,7 @@
                 v-model="signUpData.email"
                 label="e-mail"
                 :rules="[rules.email]"
-                :readonly="validation.validateCode"
+                :readonly="validation.codeValidate"
                 required
                 clearable                
                 dark
@@ -32,11 +33,23 @@
 
               <!-- 이메일 코드인증 -->
               <v-text-field
-                v-if="validation.sendEmail"
+                v-if="signUpValidation.isSendEmail"
                 v-model="signUpData.code"
                 label="Security Code"
                 :rules="[rules.lengthCheck(6)]"
-                :readonly="validation.validateCode"
+                :readonly="validation.codeValidate"
+                required
+                clearable
+                dark
+                style="width: 70%;"
+                class="mx-auto"
+                
+              ></v-text-field>
+              <!-- 이름 -->
+              <v-text-field
+                v-if="signUpValidation.codeValidate"
+                v-model="signUpData.name"
+                label="Name"
                 required
                 clearable
                 dark
@@ -47,7 +60,7 @@
               
               <!-- 패스워드 검증 -->
               <v-text-field
-                v-if="validation.validateCode"
+                v-if="signUpValidation.codeValidate"
                 v-model="signUpData.password"
                 label="password"
                 type="password"
@@ -59,7 +72,7 @@
                 class="mx-auto"
               ></v-text-field>
               <v-text-field
-                v-if="validation.validateCode"
+                v-if="signUpValidation.codeValidate"
                 v-model="validation.passwordCheck"
                 label="password 확인"
                 type="password"
@@ -70,15 +83,16 @@
                 style="width: 70%;"
                 class="mx-auto"
               ></v-text-field>
-              <div v-if="!validation.validateCode">
-                <v-btn v-if="!validation.sendEmail" slot="" class="primary" @click="sendEmail()" style="" >
+              <div v-if="!signUpValidation.codeValidate">
+
+                <v-btn :disabled="!valid" v-if="!signUpValidation.isSendEmail" slot="" class="primary" @click="signUpSendEmail()" style="" >
                   <strong>인증 메일 보내기!</strong>
                 </v-btn>
                 <div v-else>
                   <v-btn class="primary" @click="sendEmail()" style="">
                     <strong>재전송</strong>
                   </v-btn>
-                  <v-btn class="primary ml-5" @click="verificateCode()" style="">
+                  <v-btn :disabled="!valid" class="primary ml-5" @click="signUpVerificateCode()" style="">
                     <strong>확인</strong>
                   </v-btn>
 
@@ -86,7 +100,7 @@
 
               </div>
               <div v-else>
-                <v-btn class="primary " @click="signUp()" style="">
+                <v-btn :disabled="!valid" class="primary " @click="signUp()" style="">
                   <strong>가입하기!</strong>
                 </v-btn>
 
@@ -101,7 +115,7 @@
 </template>
 
 <script>
-// import { mapState } from 'vuex'
+import { mapState } from 'vuex'
 // import axios from 'axios'
 
 export default {
@@ -118,78 +132,89 @@ export default {
         return this.$store.state.signUpDialog;
       },
       set(val) {
-        this.$store.state.signUpDialog = val;
-        this.init()
+        console.log(val)
+        this.$store.commit('signUpInit', val)
+        this.resetValidation()
       },
     },
+    ...mapState(['signUpValidation'])
 
+  },
+  watch: {
   },
   data() {
     return {
+      valid: true,
       signUpData: {
         email: "",
+        name: "",
         password: "",
         code: "",
       },
       validation: {
         passwordCheck: "",
-        sendEmail: false,
-        validateCode: false,
       },
-      verificationCode: "",
       rules: {
         email: v => !!(v || '').match(/@/) || '이메일 형식이 아닙니다.',
         lengthCheck: len => v => (v || '').length >= len || `${len}자 이상이어야합니다. 현재 ${v.length}자 입니다.`,
         password: v => !!(v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/) ||
           '숫자, 영어 대소문자, 특수문자가 포함되어야합니다.',
         // required: v => !!v || 'This field is required',
-        passwordCheck: v => !!( v === this.validation.password ) || '비밀번호가 맞지 않습니다.',
+        passwordCheck: v => !!( v === this.signUpData.password ) || '비밀번호가 맞지 않습니다.',
       },  
     };
   },
   methods: {
-    signUp() {
-      this.$store.state.signUpDialog = false;
-      // this.$store.dispatch('signUp', this.signUpData)
-    },
     resetValidation () {
-      this.$refs.form.reset()
+      this.signUpData.email =  ""
+      this.signUpData.name =  ""
+      this.signUpData.password =  ""
+      this.signUpData.code =  ""
+
     },
-    verificateCode() {
-      if ( this.verificateCode === this.signUpData.code ) {
-        this.validation.validateCode = true
+
+    // signUp 순서. Email -> Code 보내기 -> 이름, 비밀번호, 메일 보내기
+    signUpSendEmail() {
+      
+      // this.validation.isSendEmail = true
+      this.$store.dispatch('signUpSendValidationEmail', this.signUpData.email)
+      // async 써서 이메일 중복인지 검사하고 나서 isSendEmail 넘겨줘야할거같네. 필요없음, 백에서 검증할거임.
+      // 일단은 로딩창 생각해야하니 나중에 알아보자.
+  
+    },
+    signUpVerificateCode() {
+      this.$store.dispatch('signUpEmailVerificateCode', {
+          'email': this.signUpData.email,
+          'authNum': this.signUpData.code
+        }
+      )
+    },
+    signUp() {
+      const isSignUp = this.$store.dispatch('signUp', this.signUpData)
+      if ( isSignUp ) {
+        this.$store.commit('signUpInit', !!isSignUp)
+        this.resetValidation()
       }
       else {
-        // validation할까?
-        alert('틀립니다')
-        this.validation.validateCode = false
+        console.log(1234)
+
       }
-      this.validation.validateCode = true
-
     },
-    sendEmail() {
 
-      this.validation.sendEmail = true
-      // this.$store.dispatch('sendValidationEmail', this.signUpData.email)
-      // 여기서 처리할지 store에서 처리할지 고민해봐야할듯.
-      // axios.get('backend/email', '?')
-      //   .then(res => {
-      //     return res
-      //   })
-      //   .catch(err => {
-      //     return err
-      //   })
-    },
-    init() {
-      this.resetValidation()
-      this.validation.sendEmail = false
-      this.validation.validateCode = false
-      
-    }
   },
 
 };
 </script>
 
 <style>
+
+/* button.primary.theme--light.v-btn.v-btn--contained.v-size--default {
+  background-color: white !important;
+} */
+
+button.primary.theme--light.v-btn.v-btn--contained.v-btn--disabled.v-size--default {
+  background-color: #B71C1C !important;
+  color: white !important;
+}
+
 </style>
