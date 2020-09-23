@@ -128,12 +128,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return filter;
 	}
 
-//	@Bean
-//	public CookieCsrfTokenRepository getCookieCsrfTokenRepository() {
-//		CookieCsrfTokenRepository cookieCsrfTokenRepository = new CookieCsrfTokenRepository();
-//		cookieCsrfTokenRepository.setCookieDomain("j3b308.p.ssafy.io");
-//		cookieCsrfTokenRepository.setCookieHttpOnly(false);
-//		return cookieCsrfTokenRepository;
-//	}
+	@Bean
+	public CookieCsrfTokenRepository getCookieCsrfTokenRepository() {
+		CookieCsrfTokenRepository cookieCsrfTokenRepository = new CookieCsrfTokenRepository();
+		cookieCsrfTokenRepository.setCookieDomain("localhost");
+		cookieCsrfTokenRepository.setCookieHttpOnly(true);
+		return cookieCsrfTokenRepository;
+	}
 
 }

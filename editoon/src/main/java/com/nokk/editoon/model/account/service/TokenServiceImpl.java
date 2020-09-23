@@ -76,7 +76,7 @@ public class TokenServiceImpl implements ITokenService{
 					accessCookie.setHttpOnly(true);
 					accessCookie.setDomain("localhost");
 					accessCookie.setPath("/editoon");
-					accessCookie.setSecure(true);
+//					accessCookie.setSecure(true);
 					accessCookie.setHttpOnly(true);
 					response.addCookie(accessCookie); 
 					
@@ -151,7 +151,7 @@ public class TokenServiceImpl implements ITokenService{
 					accessCookie.setHttpOnly(true);
 					accessCookie.setDomain("localhost");
 					accessCookie.setPath("/editoon");
-					accessCookie.setSecure(true);
+//					accessCookie.setSecure(true);
 					accessCookie.setHttpOnly(true);
 					response.addCookie(accessCookie); 
 					
