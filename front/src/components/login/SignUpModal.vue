@@ -15,6 +15,7 @@
             <v-form
               ref="form"
               style="margin-top: 0.2vh;"
+              v-model="valid"
             >
 
               <!-- 이메일 확인 -->
@@ -84,14 +85,14 @@
               ></v-text-field>
               <div v-if="!signUpValidation.codeValidate">
 
-                <v-btn v-if="!signUpValidation.isSendEmail" slot="" class="primary" @click="signUpSendEmail()" style="" >
+                <v-btn :disabled="!valid" v-if="!signUpValidation.isSendEmail" slot="" class="primary" @click="signUpSendEmail()" style="" >
                   <strong>인증 메일 보내기!</strong>
                 </v-btn>
                 <div v-else>
                   <v-btn class="primary" @click="sendEmail()" style="">
                     <strong>재전송</strong>
                   </v-btn>
-                  <v-btn class="primary ml-5" @click="signUpVerificateCode()" style="">
+                  <v-btn :disabled="!valid" class="primary ml-5" @click="signUpVerificateCode()" style="">
                     <strong>확인</strong>
                   </v-btn>
 
@@ -99,7 +100,7 @@
 
               </div>
               <div v-else>
-                <v-btn class="primary " @click="signUp()" style="">
+                <v-btn :disabled="!valid" class="primary " @click="signUp()" style="">
                   <strong>가입하기!</strong>
                 </v-btn>
 
@@ -143,6 +144,7 @@ export default {
   },
   data() {
     return {
+      valid: true,
       signUpData: {
         email: "",
         name: "",
@@ -151,8 +153,6 @@ export default {
       },
       validation: {
         passwordCheck: "",
-        isSendEmail: false,
-        codeValidate: false,
       },
       rules: {
         email: v => !!(v || '').match(/@/) || '이메일 형식이 아닙니다.',
@@ -166,13 +166,17 @@ export default {
   },
   methods: {
     resetValidation () {
-      this.$refs.form.reset()
+      this.signUpData.email =  ""
+      this.signUpData.name =  ""
+      this.signUpData.password =  ""
+      this.signUpData.code =  ""
+
     },
 
     // signUp 순서. Email -> Code 보내기 -> 이름, 비밀번호, 메일 보내기
     signUpSendEmail() {
       
-      this.validation.isSendEmail = true
+      // this.validation.isSendEmail = true
       this.$store.dispatch('signUpSendValidationEmail', this.signUpData.email)
       // async 써서 이메일 중복인지 검사하고 나서 isSendEmail 넘겨줘야할거같네. 필요없음, 백에서 검증할거임.
       // 일단은 로딩창 생각해야하니 나중에 알아보자.
@@ -203,4 +207,14 @@ export default {
 </script>
 
 <style>
+
+/* button.primary.theme--light.v-btn.v-btn--contained.v-size--default {
+  background-color: white !important;
+} */
+
+button.primary.theme--light.v-btn.v-btn--contained.v-btn--disabled.v-size--default {
+  background-color: #B71C1C !important;
+  color: white !important;
+}
+
 </style>
