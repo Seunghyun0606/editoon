@@ -3,9 +3,6 @@ package com.nokk.editoon.model.account.service;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -14,10 +11,12 @@ import org.springframework.stereotype.Service;
 
 import com.nokk.editoon.domain.Token;
 import com.nokk.editoon.exception.InternalServerException;
+import com.nokk.editoon.exception.UnknownException;
 import com.nokk.editoon.model.account.dto.AccountDTO;
 import com.nokk.editoon.model.account.dto.PrimitiveAccountDTO;
 import com.nokk.editoon.model.account.entity.AccountEntity;
 import com.nokk.editoon.model.account.repository.AccountRepo;
+import com.nokk.editoon.model.editoon.repository.EditoonRepo;
 import com.nokk.editoon.util.JwtTokenUtil;
 
 @Service
@@ -31,6 +30,9 @@ public class AccountServiceImpl implements IAccountService {
 
 	@Autowired
 	JwtTokenUtil jtu;
+	
+	@Autowired
+	private EditoonRepo editoonRepo;
 
 	/*
 	 * 반면 사용자가 접속을 뜸하게 하는 경우에도 RefreshToken의 만료 기간의 늘어나기 때문에, 핸드폰이 탈취되는 등의 경우에 지속적인
@@ -89,6 +91,15 @@ public class AccountServiceImpl implements IAccountService {
 	public void deleteAccount(String email) {
 		try {
 			int ret = -1;
+			int accountNo = -1;
+
+			Optional<AccountEntity> optional = accountRepo.findAccountByEmail(email);
+			if(optional.isPresent()) {
+				accountNo = optional.get().getNo();
+			} else {
+				throw new UnknownException(email + "is not exist. maybe check mariadb.");
+			}
+			
 			ret = accountRepo.deleteAccount(email); // 여기서 에러 나면 false 출력하게 어떻게?
 			
 			ValueOperations<String, Object> vop = redisTemplate.opsForValue();
@@ -97,6 +108,9 @@ public class AccountServiceImpl implements IAccountService {
 				redisTemplate.expire(email, 1, TimeUnit.MILLISECONDS);
 			if(ret != 1)
 				throw new InternalServerException("deleteAccount \n" + "detail Exception Info : maybe check mariaDB" );
+			
+			editoonRepo.removeEditoon(accountNo);
+			
 		} catch (Exception e) {
 			throw new InternalServerException("deleteAccount \n" + "detail Exception Info :" + e.getMessage());
 		}
