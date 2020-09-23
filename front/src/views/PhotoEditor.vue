@@ -1,7 +1,7 @@
 <template>
     <v-container fluid style="height: 100%; background-color: rgba(0, 0,0, 0.88)">
       <v-row style="justify-content: space-between;">
-        <v-col cols="5" id="webtoonCanvas" class="mx-auto my-16 webtoon-canvas-css" :style="{ height: webtoonCanvasHeight+'px' }">
+        <v-col v-resize="resizeCanvasWidth" cols="5" id="webtoonCanvas" class="mx-auto my-16 webtoon-canvas-css" :style="{ height: webtoonCanvasHeight+'px' }">
           <VueDragResize
             v-for="(image, idx) in images"
             :key="idx"
@@ -190,9 +190,16 @@ export default {
         }
         this.images[i].isActive = false
       }
-
     },
+    resizeCanvasWidth(e) {
+      if (e) {
+        const canvas_width = e.target.document.querySelector('#webtoonCanvas').clientWidth
+        // console.log(canvas_width)
+        this.webtoonCanvasWidth = canvas_width
 
+      }
+
+    }
 
   },
   created() {
