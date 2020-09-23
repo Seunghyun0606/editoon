@@ -1,6 +1,6 @@
 <template>
-    <v-container fluid style="height: calc(100%-64px); background-color: rgba(0, 0,0, 0.88)">
-      <v-row style="height: calc(100vh - 64px);  justify-content: space-between;">
+    <v-container fluid style="height: 100%; background-color: rgba(0, 0,0, 0.88)">
+      <v-row style="justify-content: space-between;">
         <v-col cols="5" id="webtoonCanvas" class="mx-auto my-16 webtoon-canvas-css" :style="{ height: webtoonCanvasHeight+'px' }">
           <VueDragResize
             :parentH="webtoonCanvasHeight"
