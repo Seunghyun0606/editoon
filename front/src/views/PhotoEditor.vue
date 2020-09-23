@@ -152,7 +152,15 @@ export default {
       // 여러번 올렸을경우, dz_preview의 인덱스가 달라지기때문
       this.previewCount += file_list.length
     },
+
+    // 사실상 preview에서 클릭해서 넣을 수 있기 때문에 필요없음.
     btnDropZoneImageMoveToEditor() {
+      let files = this.$refs.myVueDropzone.getAcceptedFiles()
+      // console.log(1)
+      // console.log(a)
+      // this.image = files[0].dataURL
+      let file = files[0]
+      this.$refs.imageEditor.invoke('loadImageFromFile', file)
 
     },
     btnEditorImageToCanvas() {
