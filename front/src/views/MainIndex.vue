@@ -328,6 +328,18 @@ export default {
   height: 100vh;
   background-attachment: fixed;
   background-size: cover;
+  position:  relative;
+}
+
+.main-background-first::after {
+  background-color: black !important;
+  opacity: 0.3;
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: calc(100%);
+  top: 0;
+  left: 0;
 }
 
 .main-background {
@@ -335,6 +347,7 @@ export default {
   background-attachment: fixed;
   background-size: cover;
 }
+
 .main-background-last {
   height: 100vh;
   background-attachment: fixed;
@@ -405,14 +418,6 @@ export default {
   animation-fill-mode: none;
   /* animation-play-state: running; */
   animation-name: fading;
-}
-
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
 }
 
 /* other */
