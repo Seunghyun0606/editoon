@@ -1,4 +1,4 @@
-package com.nokk.editoon.account.service;
+package com.nokk.editoon.model.account.service;
 
 import java.util.Optional;
 import java.util.Random;
@@ -14,12 +14,12 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.nokk.editoon.account.domain.dto.AccountSignUpDTO;
-import com.nokk.editoon.account.domain.entity.AccountEntity;
-import com.nokk.editoon.account.repository.AccountRepo;
 import com.nokk.editoon.domain.Role;
 import com.nokk.editoon.domain.Token;
 import com.nokk.editoon.exception.InternalServerException;
+import com.nokk.editoon.model.account.dto.AccountSignUpDTO;
+import com.nokk.editoon.model.account.entity.AccountEntity;
+import com.nokk.editoon.model.account.repository.AccountRepo;
 import com.nokk.editoon.util.JwtTokenUtil;
 
 import io.jsonwebtoken.ExpiredJwtException;

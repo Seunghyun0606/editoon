@@ -1,6 +1,6 @@
-package com.nokk.editoon.account.service;
+package com.nokk.editoon.model.account.service;
 
-import com.nokk.editoon.account.domain.dto.AccountSignUpDTO;
+import com.nokk.editoon.model.account.dto.AccountSignUpDTO;
 
 public interface INonMemberService {
 	// signUp process

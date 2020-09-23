@@ -1,7 +1,7 @@
-package com.nokk.editoon.account.service;
+package com.nokk.editoon.model.account.service;
 
-import com.nokk.editoon.account.domain.dto.AccountDTO;
-import com.nokk.editoon.account.domain.dto.PrimitiveAccountDTO;
+import com.nokk.editoon.model.account.dto.AccountDTO;
+import com.nokk.editoon.model.account.dto.PrimitiveAccountDTO;
 
 public interface IAccountService {
 	public boolean validAccountCheck(String email, String password);

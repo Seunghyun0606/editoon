@@ -1,4 +1,4 @@
-package com.nokk.editoon.account.service;
+package com.nokk.editoon.model.account.service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -76,17 +76,18 @@ public class TokenServiceImpl implements ITokenService{
 					accessCookie.setHttpOnly(true);
 					accessCookie.setDomain("localhost");
 					accessCookie.setPath("/editoon");
-//					accessCookie.setSecure(true);
+					accessCookie.setSecure(true);
+					accessCookie.setHttpOnly(true);
 					response.addCookie(accessCookie); 
 					
 					
-					Cookie accessCookieExpirationDate = new Cookie("access-token-expiration-date", newAccessTokenExpirationDate);
-					accessCookieExpirationDate.setMaxAge(30 * 60);
-					accessCookieExpirationDate.setHttpOnly(true);
-					accessCookieExpirationDate.setDomain("localhost");
-					accessCookieExpirationDate.setPath("/editoon");
-//					accessCookieExpirationDate.setSecure(true);
-					response.addCookie(accessCookieExpirationDate);
+//					Cookie accessCookieExpirationDate = new Cookie("access-token-expiration-date", newAccessTokenExpirationDate);
+//					accessCookieExpirationDate.setMaxAge(30 * 60);
+//					accessCookieExpirationDate.setHttpOnly(true);
+//					accessCookieExpirationDate.setDomain("localhost");
+//					accessCookieExpirationDate.setPath("/editoon");
+////					accessCookieExpirationDate.setSecure(true);
+//					response.addCookie(accessCookieExpirationDate);
 					
 					// response.setHeader("Access-Control-Expose-Headers", "Authorization, AccessTokenExpiraionDate");
 //					response.addHeader("Authorization", "Bearer " + newAccessToken);
@@ -150,17 +151,18 @@ public class TokenServiceImpl implements ITokenService{
 					accessCookie.setHttpOnly(true);
 					accessCookie.setDomain("localhost");
 					accessCookie.setPath("/editoon");
-//					accessCookie.setSecure(true);
+					accessCookie.setSecure(true);
+					accessCookie.setHttpOnly(true);
 					response.addCookie(accessCookie); 
 					
 					
-					Cookie accessCookieExpirationDate = new Cookie("access-token-expiration-date", newAccessTokenExpirationDate);
-					accessCookieExpirationDate.setMaxAge(30 * 60);
-					accessCookieExpirationDate.setHttpOnly(true);
-					accessCookieExpirationDate.setDomain("localhost");
-					accessCookieExpirationDate.setPath("/editoon");
-//					accessCookieExpirationDate.setSecure(true);
-					response.addCookie(accessCookieExpirationDate);
+//					Cookie accessCookieExpirationDate = new Cookie("access-token-expiration-date", newAccessTokenExpirationDate);
+//					accessCookieExpirationDate.setMaxAge(30 * 60);
+//					accessCookieExpirationDate.setHttpOnly(true);
+//					accessCookieExpirationDate.setDomain("localhost");
+//					accessCookieExpirationDate.setPath("/editoon");
+////					accessCookieExpirationDate.setSecure(true);
+//					response.addCookie(accessCookieExpirationDate);
 					
 //					response.addHeader("Authorization", "Bearer " + newAccessToken);
 //					response.addHeader("AccessTokenExpiraionDate", newAccessTokenExpirationDate);

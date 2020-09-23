@@ -1,4 +1,4 @@
-package com.nokk.editoon.account.service;
+package com.nokk.editoon.model.account.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.nokk.editoon.account.domain.entity.AccountEntity;
-import com.nokk.editoon.account.repository.AccountRepo;
+import com.nokk.editoon.model.account.entity.AccountEntity;
+import com.nokk.editoon.model.account.repository.AccountRepo;
 
 @Service
 public class CustomAccountDetailService implements UserDetailsService {

@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.nokk.editoon.account.repository.AccountRepo;
+import com.nokk.editoon.model.account.repository.AccountRepo;
 import com.nokk.editoon.util.JwtTokenUtil;
 
 @Component

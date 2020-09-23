@@ -1,4 +1,4 @@
-package com.nokk.editoon.account.service;
+package com.nokk.editoon.model.account.service;
 
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -12,12 +12,12 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.nokk.editoon.account.domain.dto.AccountDTO;
-import com.nokk.editoon.account.domain.dto.PrimitiveAccountDTO;
-import com.nokk.editoon.account.domain.entity.AccountEntity;
-import com.nokk.editoon.account.repository.AccountRepo;
 import com.nokk.editoon.domain.Token;
 import com.nokk.editoon.exception.InternalServerException;
+import com.nokk.editoon.model.account.dto.AccountDTO;
+import com.nokk.editoon.model.account.dto.PrimitiveAccountDTO;
+import com.nokk.editoon.model.account.entity.AccountEntity;
+import com.nokk.editoon.model.account.repository.AccountRepo;
 import com.nokk.editoon.util.JwtTokenUtil;
 
 @Service
@@ -61,7 +61,6 @@ public class AccountServiceImpl implements IAccountService {
 		try {
 			int ret = -1;
 			ret = accountRepo.updateAccountName(primitiveAccountDTO.getEmail(), primitiveAccountDTO.getName());
-			System.out.println(ret);
 			if (ret != 1)
 				throw new InternalServerException("saveAccountName \n" + "detail Exception Info : maybe check mariaDB");
 		} catch (Exception e) {
@@ -78,7 +77,6 @@ public class AccountServiceImpl implements IAccountService {
 			accountDTO.setPassword(bcryptPasswordEncoder.encode(accountDTO.getPassword()));
 
 			ret = accountRepo.updateAccountPassword(accountDTO.getEmail(), accountDTO.getPassword());
-			System.out.println(ret);
 			if (ret != 1)
 				throw new InternalServerException("saveAccountPassword \n" + "detail Exception Info : maybe check mariaDB" );
 		} catch (Exception e) {

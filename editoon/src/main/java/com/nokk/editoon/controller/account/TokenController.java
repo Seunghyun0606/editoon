@@ -1,4 +1,4 @@
-package com.nokk.editoon.account.controller;
+package com.nokk.editoon.controller.account;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.WebUtils;
 
-import com.nokk.editoon.account.service.ITokenService;
 import com.nokk.editoon.domain.SuccessResponse;
 import com.nokk.editoon.exception.UnAuthorizationException;
+import com.nokk.editoon.model.account.service.ITokenService;
 
 import io.swagger.annotations.ApiOperation;
 
