@@ -41,12 +41,15 @@
                 <div class="subtitle">...or click to select a file from your computer</div>
               </div>
             </vue2Dropzone>
+            <div id='editorBtnSet'>
+              <v-btn @click="btnDropZoneImageMoveToEditor">에디터로보내기</v-btn>
+              <v-btn @click="btnEditorImageToCanvas">캔버스로보내기</v-btn>
+              <v-btn @click="btnAddCanvasHeight">캔버스늘리기</v-btn>
+
+            </div>
           </v-row>
-
         </v-col>
-
       </v-row>
-
     </v-container>
 
 
@@ -148,12 +151,28 @@ export default {
       }
       // 여러번 올렸을경우, dz_preview의 인덱스가 달라지기때문
       this.previewCount += file_list.length
+    },
+    btnDropZoneImageMoveToEditor() {
 
     },
+    btnEditorImageToCanvas() {
+
+    },
+    btnAddCanvasHeight() {
+
+    },
+
+
   },
   created() {
     this.isIndex()
     this.isNotEditor()
+  },
+  mounted() {
+    const editorHeader = document.querySelector('.tui-image-editor-header')
+    const editorBtnSet = document.querySelector('#editorBtnSet')
+    editorHeader.appendChild(editorBtnSet)
+
   }
 }
 </script>
