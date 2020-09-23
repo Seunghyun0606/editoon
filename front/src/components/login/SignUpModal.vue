@@ -22,7 +22,7 @@
                 v-model="signUpData.email"
                 label="e-mail"
                 :rules="[rules.email]"
-                :readonly="validation.validateCode"
+                :readonly="validation.codeValidate"
                 required
                 clearable                
                 dark
@@ -32,11 +32,11 @@
 
               <!-- 이메일 코드인증 -->
               <v-text-field
-                v-if="validation.sendEmail"
+                v-if="validation.isSendEmail"
                 v-model="signUpData.code"
                 label="Security Code"
                 :rules="[rules.lengthCheck(6)]"
-                :readonly="validation.validateCode"
+                :readonly="validation.codeValidate"
                 required
                 clearable
                 dark
@@ -47,7 +47,7 @@
               
               <!-- 패스워드 검증 -->
               <v-text-field
-                v-if="validation.validateCode"
+                v-if="validation.codeValidate"
                 v-model="signUpData.password"
                 label="password"
                 type="password"
@@ -59,7 +59,7 @@
                 class="mx-auto"
               ></v-text-field>
               <v-text-field
-                v-if="validation.validateCode"
+                v-if="validation.codeValidate"
                 v-model="validation.passwordCheck"
                 label="password 확인"
                 type="password"
@@ -70,8 +70,9 @@
                 style="width: 70%;"
                 class="mx-auto"
               ></v-text-field>
-              <div v-if="!validation.validateCode">
-                <v-btn v-if="!validation.sendEmail" slot="" class="primary" @click="sendEmail()" style="" >
+              <div v-if="!validation.codeValidate">
+
+                <v-btn v-if="!validation.isSendEmail" slot="" class="primary" @click="sendEmail()" style="" >
                   <strong>인증 메일 보내기!</strong>
                 </v-btn>
                 <div v-else>
@@ -101,7 +102,7 @@
 </template>
 
 <script>
-// import { mapState } from 'vuex'
+import { mapState } from 'vuex'
 // import axios from 'axios'
 
 export default {
@@ -122,7 +123,13 @@ export default {
         this.init()
       },
     },
+    ...mapState(['emailCodeValidate'])
 
+  },
+  watch: {
+    emailCodeValidate() {
+      this.validation.codeValidate = this.emailCodeValidate
+    }
   },
   data() {
     return {
@@ -133,10 +140,9 @@ export default {
       },
       validation: {
         passwordCheck: "",
-        sendEmail: false,
-        validateCode: false,
+        isSendEmail: false,
+        codeValidate: false,
       },
-      verificationCode: "",
       rules: {
         email: v => !!(v || '').match(/@/) || '이메일 형식이 아닙니다.',
         lengthCheck: len => v => (v || '').length >= len || `${len}자 이상이어야합니다. 현재 ${v.length}자 입니다.`,
@@ -156,34 +162,21 @@ export default {
       this.$refs.form.reset()
     },
     verificateCode() {
-      if ( this.verificateCode === this.signUpData.code ) {
-        this.validation.validateCode = true
-      }
-      else {
-        // validation할까?
-        alert('틀립니다')
-        this.validation.validateCode = false
-      }
-      this.validation.validateCode = true
+      this.$store.dispatch('emailVerificateCode', this.signUpData.code)
 
     },
     sendEmail() {
 
-      this.validation.sendEmail = true
-      // this.$store.dispatch('sendValidationEmail', this.signUpData.email)
-      // 여기서 처리할지 store에서 처리할지 고민해봐야할듯.
-      // axios.get('backend/email', '?')
-      //   .then(res => {
-      //     return res
-      //   })
-      //   .catch(err => {
-      //     return err
-      //   })
-    },
+      this.validation.isSendEmail = true
+      this.$store.dispatch('sendValidationEmail', this.signUpData.email)
+      // async 써서 이메일 중복인지 검사하고 나서 isSendEmail 넘겨줘야할거같네.
+      // 일단은 로딩창 생각해야하니 나중에 알아보자.
+
+},
     init() {
       this.resetValidation()
-      this.validation.sendEmail = false
-      this.validation.validateCode = false
+      this.validation.isSendEmail = false
+      this.validation.codeValidate = false
       
     }
   },
