@@ -5,11 +5,14 @@
           <VueDragResize
             v-for="(image, idx) in images"
             :key="idx"
+            :isActive="image.isActive"
             :parentH="webtoonCanvasHeight"
             :parentW="webtoonCanvasWidth"
             :w="200"
             :h="200"
             :parentLimitation="true"
+            @activated="canvasImageOnActivated(idx)"
+
           >
             <img :src="image.image" style="height: inherit; width: inherit;" alt="">
 
@@ -178,6 +181,16 @@ export default {
     },
     btnAddCanvasHeight() {
       this.webtoonCanvasHeight = this.webtoonCanvasHeight*2
+    },
+    canvasImageOnActivated(idx) {
+      for ( let i = 0; i < this.images.length; i++ ) {
+        if ( i === idx ) {
+          this.images[i].isActive = true
+          continue
+        }
+        this.images[i].isActive = false
+      }
+
     },
 
 
