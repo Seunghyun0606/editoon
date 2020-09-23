@@ -32,7 +32,7 @@
 
               <!-- 이메일 코드인증 -->
               <v-text-field
-                v-if="validation.isSendEmail"
+                v-if="signUpValidation.isSendEmail"
                 v-model="signUpData.code"
                 label="Security Code"
                 :rules="[rules.lengthCheck(6)]"
@@ -44,10 +44,22 @@
                 class="mx-auto"
                 
               ></v-text-field>
+              <!-- 이름 -->
+              <v-text-field
+                v-if="signUpValidation.codeValidate"
+                v-model="signUpData.name"
+                label="Name"
+                required
+                clearable
+                dark
+                style="width: 70%;"
+                class="mx-auto"
+                
+              ></v-text-field>
               
               <!-- 패스워드 검증 -->
               <v-text-field
-                v-if="validation.codeValidate"
+                v-if="signUpValidation.codeValidate"
                 v-model="signUpData.password"
                 label="password"
                 type="password"
@@ -59,7 +71,7 @@
                 class="mx-auto"
               ></v-text-field>
               <v-text-field
-                v-if="validation.codeValidate"
+                v-if="signUpValidation.codeValidate"
                 v-model="validation.passwordCheck"
                 label="password 확인"
                 type="password"
@@ -70,16 +82,16 @@
                 style="width: 70%;"
                 class="mx-auto"
               ></v-text-field>
-              <div v-if="!validation.codeValidate">
+              <div v-if="!signUpValidation.codeValidate">
 
-                <v-btn v-if="!validation.isSendEmail" slot="" class="primary" @click="sendEmail()" style="" >
+                <v-btn v-if="!signUpValidation.isSendEmail" slot="" class="primary" @click="signUpSendEmail()" style="" >
                   <strong>인증 메일 보내기!</strong>
                 </v-btn>
                 <div v-else>
                   <v-btn class="primary" @click="sendEmail()" style="">
                     <strong>재전송</strong>
                   </v-btn>
-                  <v-btn class="primary ml-5" @click="verificateCode()" style="">
+                  <v-btn class="primary ml-5" @click="signUpVerificateCode()" style="">
                     <strong>확인</strong>
                   </v-btn>
 
@@ -119,22 +131,21 @@ export default {
         return this.$store.state.signUpDialog;
       },
       set(val) {
-        this.$store.state.signUpDialog = val;
-        this.init()
+        console.log(val)
+        this.$store.commit('signUpInit', val)
+        this.resetValidation()
       },
     },
-    ...mapState(['emailCodeValidate'])
+    ...mapState(['signUpValidation'])
 
   },
   watch: {
-    emailCodeValidate() {
-      this.validation.codeValidate = this.emailCodeValidate
-    }
   },
   data() {
     return {
       signUpData: {
         email: "",
+        name: "",
         password: "",
         code: "",
       },
@@ -149,36 +160,43 @@ export default {
         password: v => !!(v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/) ||
           '숫자, 영어 대소문자, 특수문자가 포함되어야합니다.',
         // required: v => !!v || 'This field is required',
-        passwordCheck: v => !!( v === this.validation.password ) || '비밀번호가 맞지 않습니다.',
+        passwordCheck: v => !!( v === this.signUpData.password ) || '비밀번호가 맞지 않습니다.',
       },  
     };
   },
   methods: {
-    signUp() {
-      this.$store.state.signUpDialog = false;
-      // this.$store.dispatch('signUp', this.signUpData)
-    },
     resetValidation () {
       this.$refs.form.reset()
     },
-    verificateCode() {
-      this.$store.dispatch('emailVerificateCode', this.signUpData.code)
 
-    },
-    sendEmail() {
-
-      this.validation.isSendEmail = true
-      this.$store.dispatch('sendValidationEmail', this.signUpData.email)
-      // async 써서 이메일 중복인지 검사하고 나서 isSendEmail 넘겨줘야할거같네.
-      // 일단은 로딩창 생각해야하니 나중에 알아보자.
-
-},
-    init() {
-      this.resetValidation()
-      this.validation.isSendEmail = false
-      this.validation.codeValidate = false
+    // signUp 순서. Email -> Code 보내기 -> 이름, 비밀번호, 메일 보내기
+    signUpSendEmail() {
       
-    }
+      this.validation.isSendEmail = true
+      this.$store.dispatch('signUpSendValidationEmail', this.signUpData.email)
+      // async 써서 이메일 중복인지 검사하고 나서 isSendEmail 넘겨줘야할거같네. 필요없음, 백에서 검증할거임.
+      // 일단은 로딩창 생각해야하니 나중에 알아보자.
+  
+    },
+    signUpVerificateCode() {
+      this.$store.dispatch('signUpEmailVerificateCode', {
+          'email': this.signUpData.email,
+          'authNum': this.signUpData.code
+        }
+      )
+    },
+    signUp() {
+      const isSignUp = this.$store.dispatch('signUp', this.signUpData)
+      if ( isSignUp ) {
+        this.$store.commit('signUpInit', !!isSignUp)
+        this.resetValidation()
+      }
+      else {
+        console.log(1234)
+
+      }
+    },
+
   },
 
 };
