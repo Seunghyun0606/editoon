@@ -20,6 +20,7 @@ import com.nokk.editoon.exception.InternalServerException;
 import com.nokk.editoon.model.account.dto.AccountSignUpDTO;
 import com.nokk.editoon.model.account.entity.AccountEntity;
 import com.nokk.editoon.model.account.repository.AccountRepo;
+import com.nokk.editoon.model.editoon.repository.EditoonRepo;
 import com.nokk.editoon.util.JwtTokenUtil;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -43,18 +44,28 @@ public class NonMemberSerivceImpl implements INonMemberService{
 	@Autowired
 	private JavaMailSender mailSender;
 	
+	@Autowired
+	private EditoonRepo editoonRepo;
+	
 	@Override
 	public void signUp(AccountSignUpDTO accountSignUpDTO) {
 		BCryptPasswordEncoder bcryptPasswordEncoder = new BCryptPasswordEncoder(10);
 		accountSignUpDTO.setPassword(bcryptPasswordEncoder.encode(accountSignUpDTO.getPassword()));
 
-		accountRepo.save(AccountEntity.builder()
+		int accountNo = -1;
+		
+		accountNo = accountRepo.save(AccountEntity.builder()
 									.email(accountSignUpDTO.getEmail())
 									.name(accountSignUpDTO.getName())
 									.password(accountSignUpDTO.getPassword())
 									.role(Role.USER)
 									.build()
-						);
+						).getNo();
+		
+		if(accountNo == -1)
+			throw new InternalServerException("InternalServerException from signUp method. please check monogodb or mariadb.");
+		
+		editoonRepo.createEditoon(accountNo);
 	}
 
 	@Override
