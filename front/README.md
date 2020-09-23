@@ -7,6 +7,8 @@
 - axios
 - toast-ui/vue-image-editor (MIT)
 - vue-compare-image (MIT)
+- vue-drag-resize (MIT)
+- vue2-dropzone (MIT)
 
 
 
