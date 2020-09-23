@@ -87,7 +87,9 @@ export default {
       useDefaultUI: true,
       webtoonCanvasHeight: window.innerHeight*0.87,
       webtoonCanvasWidth: 0,
-      options: { // for tui-image-editor component's "options" prop
+      options: {
+        cssMaxWidth: 400,
+        cssMaxHeight: 400,
         includeUI: {
           loadImage: {
             path: require(`@/assets/init.png`),
@@ -110,9 +112,8 @@ export default {
           rotatingPointOffset: 40,
         },
       },
-              dropzoneOptions: {
-          
-      url: 'https://httpbin.org/post',
+      dropzoneOptions: {          
+        url: 'https://httpbin.org/post',
         thumbnailWidth: 100,
         thumbnailHeight: 100,
         // addRemoveLinks: true
