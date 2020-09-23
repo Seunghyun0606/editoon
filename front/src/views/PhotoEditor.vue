@@ -173,7 +173,7 @@ export default {
 
     },
     btnAddCanvasHeight() {
-
+      this.webtoonCanvasHeight = this.webtoonCanvasHeight*2
     },
 
 
