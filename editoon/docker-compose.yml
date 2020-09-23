@@ -1,11 +1,14 @@
 version: "3"
 services:
   nginx:
-    image: nginx
+    image: springboot-nginx:0.1
     ports:
       - 80:80
+      - 443:443
+    volumes:
+      - /var/www/j3b308.p.ssafy.io:/var/www/j3b308.p.ssafy.io
     depends_on:
-      - editoon
+      - docker-springboot
   docker-springboot:
     build: .
     expose:

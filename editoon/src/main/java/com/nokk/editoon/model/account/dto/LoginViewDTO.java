@@ -1,4 +1,4 @@
-package com.nokk.editoon.account.domain.dto;
+package com.nokk.editoon.model.account.dto;
 
 import lombok.Data;
 

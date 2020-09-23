@@ -1,8 +1,9 @@
-package com.nokk.editoon.account.controller;
+package com.nokk.editoon.controller.account;
 
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.WebUtils;
 
-import com.nokk.editoon.account.domain.dto.AccountSignUpDTO;
-import com.nokk.editoon.account.service.INonMemberService;
 import com.nokk.editoon.domain.SuccessResponse;
+import com.nokk.editoon.model.account.dto.AccountSignUpDTO;
+import com.nokk.editoon.model.account.service.INonMemberService;
 
 import io.swagger.annotations.ApiOperation;
 /*
@@ -107,7 +109,6 @@ public class NonMemberController {
 	public ResponseEntity emailAuthCheck(@RequestBody Map<String, String> map) {
 		ResponseEntity response = null;
 		final SuccessResponse result = new SuccessResponse();
-
 		// Input Data
 		String email = map.get("email");
 		String authNum = map.get("authNum");
@@ -129,9 +130,6 @@ public class NonMemberController {
 	public ResponseEntity signUp(@RequestBody(required = true) AccountSignUpDTO accountSignUpDTO) {
 		ResponseEntity response = null;
 		final SuccessResponse result = new SuccessResponse();
-		System.out.println(accountSignUpDTO.getEmail());
-		System.out.println(accountSignUpDTO.getName());
-		System.out.println(accountSignUpDTO.getPassword());
 		nonMemberService.signUp(accountSignUpDTO);
 		
 		result.status = true;

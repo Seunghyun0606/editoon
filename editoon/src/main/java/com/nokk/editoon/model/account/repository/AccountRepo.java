@@ -1,4 +1,4 @@
-package com.nokk.editoon.account.repository;
+package com.nokk.editoon.model.account.repository;
 
 import java.util.Optional;
 
@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import com.nokk.editoon.account.domain.entity.AccountEntity;
+import com.nokk.editoon.model.account.entity.AccountEntity;
 
 public interface AccountRepo extends JpaRepository<AccountEntity, Integer> {
 	Optional<AccountEntity> findAccountByEmail(String email);

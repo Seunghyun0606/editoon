@@ -1,6 +1,5 @@
 package com.nokk.editoon.config;
 
-import org.apache.catalina.filters.CsrfPreventionFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,12 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.csrf.CsrfFilter;
-import org.springframework.security.web.csrf.CsrfLogoutHandler;
-import org.springframework.security.web.csrf.CsrfTokenRepository;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
-import com.nokk.editoon.account.service.CustomAccountDetailService;
+import com.nokk.editoon.model.account.service.CustomAccountDetailService;
 import com.nokk.editoon.security.CustomAccessDeniedHandler;
 import com.nokk.editoon.security.CustomAuthenticationEntryPoint;
 import com.nokk.editoon.security.CustomJwtRequestFilter;
@@ -65,13 +60,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-			.httpBasic().disable() // for rest api
+			.httpBasic().disable()
 				.cors();
 
 		http
-			.csrf()
+			.csrf().disable();
 //			.ignoringAntMatchers("/nonmember/**")
-			.csrfTokenRepository(getCookieCsrfTokenRepository());
+//			.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 		
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
@@ -133,17 +128,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return filter;
 	}
 
-	private CsrfTokenRepository csrfTokenRepository() {
-		HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-		repository.setHeaderName("X-XSRF-TOKEN");
-		return repository;
-	}
-	
-	@Bean
-	public CookieCsrfTokenRepository getCookieCsrfTokenRepository() {
-		CookieCsrfTokenRepository cookieCsrfTokenRepository = new CookieCsrfTokenRepository();
-		cookieCsrfTokenRepository.setCookieDomain("localhost");
-		return cookieCsrfTokenRepository;
-	}
+//	@Bean
+//	public CookieCsrfTokenRepository getCookieCsrfTokenRepository() {
+//		CookieCsrfTokenRepository cookieCsrfTokenRepository = new CookieCsrfTokenRepository();
+//		cookieCsrfTokenRepository.setCookieDomain("j3b308.p.ssafy.io");
+//		cookieCsrfTokenRepository.setCookieHttpOnly(false);
+//		return cookieCsrfTokenRepository;
+//	}
 
 }

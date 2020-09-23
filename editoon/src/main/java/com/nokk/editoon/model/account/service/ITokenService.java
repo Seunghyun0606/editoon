@@ -1,4 +1,4 @@
-package com.nokk.editoon.account.service;
+package com.nokk.editoon.model.account.service;
 
 public interface ITokenService {
 	public void newAccessTokenByAccessToken(String accessToken);

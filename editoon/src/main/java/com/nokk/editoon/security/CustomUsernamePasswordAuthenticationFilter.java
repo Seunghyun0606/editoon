@@ -30,8 +30,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nokk.editoon.account.domain.dto.LoginViewDTO;
 import com.nokk.editoon.domain.Token;
+import com.nokk.editoon.model.account.dto.LoginViewDTO;
 import com.nokk.editoon.util.JwtTokenUtil;
 
 /*
@@ -136,26 +136,28 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 		Cookie accessCookie = new Cookie("access-token", accessToken);
 		accessCookie.setMaxAge(30 * 60); // 30분
 		accessCookie.setHttpOnly(true);
-		accessCookie.setDomain("localhost");
+		accessCookie.setDomain("j3b308.p.ssafy.io");
 		accessCookie.setPath("/editoon");
-//		accessCookie.setSecure(true);
+		accessCookie.setSecure(true);
+		accessCookie.setHttpOnly(true);
 		response.addCookie(accessCookie); 
 //	
 		Cookie refreshCookie = new Cookie("refresh-token", refreshToken);
 		refreshCookie.setMaxAge(24 * 60 * 60 * 31); // 31일
 		refreshCookie.setHttpOnly(true);
-		refreshCookie.setDomain("localhost");
+		refreshCookie.setDomain("j3b308.p.ssafy.io");
 		refreshCookie.setPath("/editoon");
-//		refreshCookie.setSecure(true);
+		refreshCookie.setSecure(true);
+		accessCookie.setHttpOnly(true);
 		response.addCookie(refreshCookie);
 		
-		Cookie accessCookieExpirationDate = new Cookie("access-token-expiration-date", accessTokenExpirationDate);
-		accessCookieExpirationDate.setMaxAge(30 * 60);
-		accessCookieExpirationDate.setHttpOnly(true);
-		accessCookieExpirationDate.setDomain("localhost");
-		accessCookieExpirationDate.setPath("/editoon");
+//		Cookie accessCookieExpirationDate = new Cookie("access-token-expiration-date", accessTokenExpirationDate);
+//		accessCookieExpirationDate.setMaxAge(30 * 60);
+//		accessCookieExpirationDate.setHttpOnly(true);
+//		accessCookieExpirationDate.setDomain("localhost");
+//		accessCookieExpirationDate.setPath("/editoon");
 //		accessCookieExpirationDate.setSecure(true);
-		response.addCookie(accessCookieExpirationDate);
+//		response.addCookie(accessCookieExpirationDate);
 		
 //		Cookie refreshCookieExpirationDate = new Cookie("refresh-token-expiration-date", refreshTokenExpirationDate);
 //		refreshCookieExpirationDate.setMaxAge(24 * 60 * 60 * 31);

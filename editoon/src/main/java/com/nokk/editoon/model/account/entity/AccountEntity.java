@@ -1,4 +1,4 @@
-package com.nokk.editoon.account.domain.entity;
+package com.nokk.editoon.model.account.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.springframework.data.domain.Persistable;
+import org.springframework.security.web.csrf.CsrfFilter;
 
 import com.nokk.editoon.domain.Role;
 

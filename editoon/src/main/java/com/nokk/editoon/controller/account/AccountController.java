@@ -1,4 +1,4 @@
-package com.nokk.editoon.account.controller;
+package com.nokk.editoon.controller.account;
 
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nokk.editoon.account.domain.dto.AccountDTO;
-import com.nokk.editoon.account.domain.dto.PrimitiveAccountDTO;
-import com.nokk.editoon.account.service.IAccountService;
 import com.nokk.editoon.domain.SuccessResponse;
+import com.nokk.editoon.model.account.dto.AccountDTO;
+import com.nokk.editoon.model.account.dto.PrimitiveAccountDTO;
+import com.nokk.editoon.model.account.service.IAccountService;
 
 import io.swagger.annotations.ApiOperation;
 /*
@@ -146,8 +146,7 @@ public class AccountController {
 
 	@ApiOperation(value = "accountModify - name", httpMethod = "POST", notes = "Hello this is accountModify - name")
 	@PostMapping("/v1/nameModify")
-	public ResponseEntity accountNameModify(HttpServletRequest request,
-			@RequestBody(required = true) PrimitiveAccountDTO primitiveAccountDTO) {
+	public ResponseEntity accountNameModify(@RequestBody(required = true) PrimitiveAccountDTO primitiveAccountDTO) {
 		ResponseEntity response = null;
 		System.out.println(primitiveAccountDTO.toString());
 		final SuccessResponse result = new SuccessResponse();
@@ -162,8 +161,7 @@ public class AccountController {
 
 	@ApiOperation(value = "accountModify - pw", httpMethod = "POST", notes = "Hello this is accountModify - pw")
 	@PostMapping("/v1/passwordModify")
-	public ResponseEntity accountPasswordModify(HttpServletRequest request,
-			@RequestBody(required = true) Map<String, String> map) {
+	public ResponseEntity accountPasswordModify(@RequestBody(required = true) Map<String, String> map) {
 		ResponseEntity response = null;
 		final SuccessResponse result = new SuccessResponse();
 		String email = map.get("email");
@@ -194,8 +192,7 @@ public class AccountController {
 	// email, password 넘겨주면 됨 + header에 Email
 	@ApiOperation(value = "accountDelete", httpMethod = "POST", notes = "Hello this is accountDelete")
 	@PostMapping("/v1/delete")
-	public ResponseEntity accountDelete(HttpServletRequest request,
-			@RequestBody(required = true) Map<String, String> map) {
+	public ResponseEntity accountDelete(@RequestBody(required = true) Map<String, String> map) {
 		ResponseEntity response = null;
 		final SuccessResponse result = new SuccessResponse();
 		String email = map.get("email");
