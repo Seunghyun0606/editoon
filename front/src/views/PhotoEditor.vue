@@ -3,12 +3,16 @@
       <v-row style="justify-content: space-between;">
         <v-col cols="5" id="webtoonCanvas" class="mx-auto my-16 webtoon-canvas-css" :style="{ height: webtoonCanvasHeight+'px' }">
           <VueDragResize
+            v-for="(image, idx) in images"
+            :key="idx"
             :parentH="webtoonCanvasHeight"
             :parentW="webtoonCanvasWidth"
             :w="200"
             :h="200"
             :parentLimitation="true"
           >
+            <img :src="image.image" style="height: inherit; width: inherit;" alt="">
+
           </VueDragResize>
             <!-- v-on:resizing="resize"
             v-on:dragging="resize" -->
