@@ -1,7 +1,7 @@
 <template>
-    <v-container fluid>
-      <v-row style="height: calc(100vh - 64px); border-top: 1px solid black;">
-        <v-col cols="5" style="border-right: 1px solid black; ">
+    <v-container fluid style="height: calc(100%-64px); background-color: rgba(0, 0,0, 0.88)">
+      <v-row style="height: calc(100vh - 64px);  justify-content: space-between;">
+        <v-col cols="5" id="webtoonCanvas" class="mx-auto my-16 webtoon-canvas-css" :style="{ height: webtoonCanvasHeight+'px' }">
           <VueDragResize
             :parentH="webtoonCanvasHeight"
             :parentW="webtoonCanvasWidth"
@@ -13,11 +13,14 @@
           >
           </VueDragResize>
         </v-col>
+
+
         <v-col cols="6">
-          <v-row>
+          <v-row style="height: 70vh; width: 90%;" class="mx-auto">
             <tui-image-editor :include-ui="useDefaultUI" :options="options"></tui-image-editor>
 
           </v-row>
+
           <v-row>
             <vue2Dropzone
               @vdropzone-files-added="urlCheck"
@@ -72,6 +75,8 @@ export default {
   data() {
     return {
       useDefaultUI: true,
+      webtoonCanvasHeight: window.innerHeight*0.87,
+      webtoonCanvasWidth: 0,
       options: { // for tui-image-editor component's "options" prop
         includeUI: {
           loadImage: {
@@ -116,13 +121,14 @@ export default {
 
 <style>
 
-.tui-image-editor-container {
-  /* width: 50% !important; */
-
+.tui-image-editor-header > .tui-image-editor-header-logo, .tui-image-editor-header-buttons {
+  display: none;
 }
 
-.tui-image-editor-header-logo {
-  display: none !important;
+.webtoon-canvas-css {
+  position: relative;
+  background-color: white;
+  border: 1px solid black;
 }
 
 
