@@ -125,10 +125,25 @@ export default {
   display: none;
 }
 
+.tui-image-editor-container .tui-image-editor-wrap {
+  overflow: initial;
+}
+
 .webtoon-canvas-css {
   position: relative;
   background-color: white;
   border: 1px solid black;
+}
+
+.dropzone-custom-title {
+  margin-top: 0;
+  /* color: #00b782; */
+  color: rgba(255, 255, 255, 1);
+}
+
+.subtitle {
+  /* color: #314b5f; */
+  color: inherit
 }
 
 
