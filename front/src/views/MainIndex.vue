@@ -1,141 +1,152 @@
 <template>
   <div>
-    <!-- <div class="main-background-first" :style="{backgroundImage: 'url(\'' + require(`@/assets/bg2.jpg`) + '\')', backgroundAttachment: 'fixed', backgroundSize: 'cover'}"></div> -->
-    <!-- <img class="main-background-first" :src="require('@/assets/bg2.jpg')" alt /> -->
-    <!-- <img class="test ani1" :src="require('@/assets/1.jpg')" alt="">
-    <img class="test ani2" :src="require('@/assets/2.jpg')" alt="">
-    <img class="test ani3" :src="require('@/assets/3.jpg')" alt="">-->
-    <!-- <div class="test1"></div> -->
-
-    <v-container fluid class="main-background-first pt-16" :style="[mainBackgroundImage.one]">
+    <v-container
+      fluid
+      class="main-background-first pt-16"
+      :style="[mainBackgroundImage.one]"
+      style="background-color: #fb9;"
+    >
       <v-row style="height: 90%;">
         <v-col style="padding: 3vh 6vw;">
           <v-row>
-            <v-col class="white--text main-index-txt text-sm-center text-md-left">
-              <h1 class="block-effect" style="--td: 1.2s">
-                <div class="block-reveal white--text" style="--bc: #fff263; --d: .1s;">
-                  <strong>Editoon</strong>
-                </div>
-                <div class="block-reveal white--text" style="--bc: #ffbb63; --d: .5s">
-                  <strong>Just do it</strong>
-                </div>
-              </h1>
+            <v-col class="text-center main-index-txt">
+              <div class="text">
+                <span>E</span>
+                <span>D</span>
+                <span>I</span>
+                <span>T</span>
+                <span>O</span>
+                <span>O</span>
+                <span>N</span>
+              </div>
             </v-col>
           </v-row>
 
-          <v-row>
-            <v-col
-              class="sub-index-txt my-5 text-sm-center text-md-left"
-            >Start your webtoon experience</v-col>
-          </v-row>
-
-          <v-row style="width: 150px; height: 200px;" class="mx-sm-auto mx-md-0 mx-lg-0">
-            <v-col style="z-index: 10;">
-              <v-btn x-large color="rgb(23, 46, 252)" class="white--text mt-16" @click="getStated">Get Started</v-btn>
+          <!-- <v-row>
+            <v-col align="center">
+              <v-btn
+                x-large
+                color="rgb(23, 46, 252)"
+                class="white--text mx-auto "
+                @click="getStated"
+                >Get Started</v-btn
+              >
             </v-col>
-          </v-row>
-          <!-- <v-row style="width: 150px;" class="my-5 mx-sm-auto mx-md-0">
-            <v-col
-              style="z-index: 10;  background-color: blue; text-align:center; padding: 10px; color:white; border-radius: 5px;"
-              class="align-self-center;"
-            >Look around
-            </v-col>
-          </v-row>-->
+          </v-row> -->
         </v-col>
-
-        <!-- <v-col
-          md="7"
-          sm="6"
-          class="mx-sm-auto p-3"
-          style="z-index: 10; position: relative;  align-self: center; "
-        >
-          <img :src="require('@/assets/main_img.png')" style="width: 85%;" alt />
-        </v-col> -->
       </v-row>
-      <div @click="scrollDown(1)" class="mx-auto d-flex justify-center main-scroll-down">
-        <v-icon style="color: white; font-size: 36px;">
-          mdi-chevron-down
-        </v-icon>
+      <div
+        @click="scrollDown(1)"
+        class="mx-auto d-flex justify-center main-scroll-down"
+      >
+        <v-icon style="color: white; font-size: 36px;">mdi-chevron-down</v-icon>
       </div>
     </v-container>
 
-    <!-- main 2 페이지 -->
-    <!-- backgroundImage: 'url(\'' + require(`@/assets/1-3.png`) + '\')', -->
-
-    <!-- <img :src="require('@/assets/1-1.jpg')" class="main-background" alt /> -->
-    <!-- <v-parallax
-      :src="require('@/assets/1-1.jpg')"
-      class="main-background"
-    ></v-parallax> -->
-
-    <v-container fluid class="px-10 main-background" :style="mainBackgroundImage.two">
-      <v-row class="align-content-center justify-center" style="height: 90%;">
-        <v-col md="6" cols="10" class="mx-md-10 mx-sm-0 mx-xs-0 pa-0">
-          <img style="width: 100%;" :src="require('@/assets/main_img.png')" alt />
-        </v-col>
-
+    <v-container
+      fluid
+      class="px-10 main-background"
+      :style="mainBackgroundImage.two"
+    >
+      <v-row
+        class="align-content-center justify-center d-flex"
+        style="height: 90%; width: 100%"
+      >
         <v-col md="4" lg="4" cols="10" class="pa-0">
           <v-row>
-            <v-col class="main-index-txt">대충 소개 제목</v-col>
+            <v-col class="main-index-txt">사진에서 만화로 빠르고 쉽게!</v-col>
           </v-row>
 
           <v-row>
-            <v-col style="font-size: 1rem;">
-              대충 소개 내용 대충대충 소개2 내용대충대충3 소개 내용대충대충 소개 내용대충대충 소개 내용대충
-              1대충 소개 내용대충대충 소개 내용 대충대충 소개2 내용대충대충3 소개 내용대충대충 소개 내용대충대충 소개 내용대충
-              1대충 소개 내용대충대충 소개 내용 대충대충 소개2 내용대충대충3 소개 내용대충대충 소개 내용대충대충 소개 내용대충
-              1대충 소개 내용대충대충 소개 내용 대충대충 소개2 내용대충대충3 소개 내용대충대충 소개 내용대충대충 소개 내용대충
-              1대충 소개 내용대충
+            <v-col style="font-size: 1.7em;">
+              <div>
+                한 번만 클릭하면 몇 초만에 사진에서 만화로 바꿀 수 있습니다.
+                지금 당장, 당신의 셀피를 만화로 만들어 보세요!
+              </div>
+              <div>
+                A single click of our Editoon, you'll go from photo to cartoon
+                in seconds. Make your selfie into a cartoon right now!!
+              </div>
             </v-col>
           </v-row>
         </v-col>
-      </v-row>
-      <div @click="scrollDown(2)" class="mx-auto d-flex justify-center main-scroll-down">
-        <v-icon style="color: white; font-size: 36px;">
-          mdi-chevron-down
-        </v-icon>
-      </div>
+        <v-col
+          justify-center
+          md="6"
+          cols="10"
+          class="mx-md-10 mx-sm-0 mx-xs-0 mx-lg-5 pa-0"
+          style="height: 60vh;"
+        >
+          <!-- <img style="width: 100%;" :src="require('@/assets/main_second.jpg')" alt /> -->
 
+          <VueCompareImage
+            style="height: 100%;"
+            :leftImage="require('@/assets/iu.jpg')"
+            :rightImage="require('@/assets/iu_cartoon.jpg')"
+          />
+        </v-col>
+      </v-row>
+      <div
+        @click="scrollDown(2)"
+        class="mx-auto d-flex justify-center main-scroll-down"
+      >
+        <v-icon style="color: white; font-size: 36px;">mdi-chevron-down</v-icon>
+      </div>
     </v-container>
 
     <!-- main 3 페이지 -->
-    <!-- backgroundImage: 'url(\'' + require(`@/assets/1-3.png`) + '\')', -->
-    <!-- <img :src="require('@/assets/1-3.jpg')" class="main-background" alt /> -->
 
-    <v-container fluid class="px-10 main-background" :style="mainBackgroundImage.three">
+    <v-container
+      fluid
+      class="px-10 main-background"
+      :style="mainBackgroundImage.three"
+    >
       <v-row class="align-content-center justify-center" style="height: 90%;">
+        <v-col md="6" cols="10" class="mx-md-10 mx-sm-0 mx-xs-0 pa-0">
+          <img
+            style="width: 100%;"
+            :src="require('@/assets/webtoon.png')"
+            alt
+          />
+        </v-col>
+
         <v-col md="4" lg="4" cols="10" class="pa-0">
           <v-row>
-            <v-col class="main-index-txt">대충 소개 제목</v-col>
+            <v-col class="main-index-txt">사진을 웹툰으로!</v-col>
           </v-row>
 
           <v-row>
-            <v-col style="font-size: 1rem;">
-              대충 소개 내용 대충대충 소개2 내용대충대충3 소개 내용대충대충 소개 내용대충대충 소개 내용대충
-              1대충 소개 내용대충대충 소개 내용 대충대충 소개2 내용대충대충3 소개 내용대충대충 소개 내용대충대충 소개 내용대충
-              1대충 소개 내용대충대충 소개 내용 대충대충 소개2 내용대충대충3 소개 내용대충대충 소개 내용대충대충 소개 내용대충
-              1대충 소개 내용대충대충 소개 내용 대충대충 소개2 내용대충대충3 소개 내용대충대충 소개 내용대충대충 소개 내용대충
-              1대충 소개 내용대충
+            <v-col style="font-size: 1.7rem;">
+              <div>
+                빠르고 간단하게, 몇번의 클릭만으로 웹툰을 만들어보세요. 간단한
+                배치와 말풍선을 추가하여 꾸밀수있습니다!
+              </div>
+              <div>
+                Quickly and simply, create a webtoon with just a few clicks. you
+                can decorate it by adding simple arrangements and speech
+                bubbles!
+              </div>
             </v-col>
           </v-row>
         </v-col>
-        <v-col md="6" cols="10" class="mx-md-10 mx-sm-0 mx-xs-0 pa-0">
-          <!-- <img style="width: 100%;" :src="require('@/assets/main_second.jpg')" alt /> -->
-          <VueCompareImage :leftImage="require('@/assets/1-1.jpg')" :rightImage="require('@/assets/1-2.jpg')" />
-        </v-col>
       </v-row>
-      <div @click="scrollDown(3)" class="mx-auto d-flex justify-center main-scroll-down">
-        <v-icon style="color: white; font-size: 36px;">
-          mdi-chevron-down
-        </v-icon>
+
+      <div
+        @click="scrollDown(3)"
+        class="mx-auto d-flex justify-center main-scroll-down"
+      >
+        <v-icon style="color: white; font-size: 36px;">mdi-chevron-down</v-icon>
       </div>
     </v-container>
 
     <!-- main 4 페이지 -->
     <!-- <img :src="require('@/assets/1-2.jpg')" class="main-background-last" alt /> -->
 
-    <v-container fluid class="px-10 main-background-last" :style="[mainBackgroundImage.four]" >
-      
+    <v-container
+      fluid
+      class="px-10 main-background-last"
+      :style="[mainBackgroundImage.four]"
+    >
       <v-row style="height: 90%;">
         <v-col>
           <v-row style="height: 30vh; text-align: center;" class="align-center">
@@ -143,44 +154,63 @@
           </v-row>
           <v-row class="justify-space-around">
             <v-col class="mx-2">
-              <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt />
+              <img
+                style="width: 100%; height: 300px;"
+                src="https://picsum.photos/1920/1080?random"
+                alt
+              />
             </v-col>
             <v-col class="mx-2">
-              <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt />
+              <img
+                style="width: 100%; height: 300px;"
+                src="https://picsum.photos/1920/1080?random"
+                alt
+              />
             </v-col>
             <v-col class="mx-2">
-              <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt />
+              <img
+                style="width: 100%; height: 300px;"
+                src="https://picsum.photos/1920/1080?random"
+                alt
+              />
             </v-col>
             <v-col class="mx-2">
-              <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt />
+              <img
+                style="width: 100%; height: 300px;"
+                src="https://picsum.photos/1920/1080?random"
+                alt
+              />
             </v-col>
             <v-col class="mx-2">
-              <img style="width: 100%; height: 300px;" src="https://picsum.photos/1920/1080?random" alt />
+              <img
+                style="width: 100%; height: 300px;"
+                src="https://picsum.photos/1920/1080?random"
+                alt
+              />
             </v-col>
           </v-row>
-
         </v-col>
       </v-row>
-      <div @click="scrollDown(0)" class="mx-auto main-scroll-down d-flex justify-center" >
-        <v-icon style="color: black; font-size: 36px;">
-          mdi-chevron-up
-        </v-icon>
+      <div
+        @click="scrollDown(0)"
+        class="mx-auto main-scroll-down d-flex justify-center"
+      >
+        <v-icon style="color: black; font-size: 36px;">mdi-chevron-up</v-icon>
       </div>
     </v-container>
-    <div v-show="viewPortHeight/2 <= current" @click="scrollDown(0)">
-      <v-icon class="main-scroll-up" style="z-index: 9999; background-color: black; width: 40px; height: 40px; border-radius: 50%; color: white; font-size: 36px; position: fixed; bottom: 50px; right: 50px;">
-        mdi-chevron-up
-      </v-icon>
+    <div v-show="viewPortHeight / 2 <= current" @click="scrollDown(0)">
+      <v-icon
+        class="main-scroll-up"
+        style="z-index: 9999; background-color: black; width: 40px; height: 40px; border-radius: 50%; color: white; font-size: 36px; position: fixed; bottom: 50px; right: 50px;"
+        >mdi-chevron-up</v-icon
+      >
     </div>
-    
   </div>
 </template>
 
 <script>
 // import LoginModal from '@/components/login/LoginModal'
-import VueCompareImage from 'vue-compare-image';
-
-
+import VueCompareImage from "vue-compare-image";
 
 export default {
   name: "Index",
@@ -200,18 +230,18 @@ export default {
       current: 0,
       mainBackgroundImage: {
         one: {
-          backgroundImage: 'url(\'' + require(`@/assets/bg2.jpg`) + '\')'
+          backgroundImage: "url('" + require(`@/assets/simple10.gif`) + "')",
         },
         two: {
-          backgroundImage: 'url(\'' + require(`@/assets/1-1.jpg`) + '\')'
+          backgroundImage: "url('" + require(`@/assets/simple2.jpg`) + "')",
         },
         three: {
-          backgroundImage: 'url(\'' + require(`@/assets/1-3.jpg`) + '\')'
+          backgroundImage: "url('" + require(`@/assets/simple2.jpg`) + "')",
         },
         four: {
-          backgroundImage: 'url(\'' + require(`@/assets/1-2.jpg`) + '\')'
+          backgroundImage: "url('" + require(`@/assets/simple11.gif`) + "')",
         },
-      }
+      },
     };
   },
   // watch: {
@@ -224,19 +254,18 @@ export default {
   //   }
   // },
 
-
   computed: {
     viewPortHeight() {
-      return window.innerHeight
+      return window.innerHeight;
     },
   },
 
   methods: {
     currentScrollPlace() {
-      this.current = document.documentElement.scrollTop
+      this.current = document.documentElement.scrollTop;
     },
     isIndex() {
-      this.$store.commit('isIndex', true)
+      this.$store.commit("isIndex", true);
     },
     isNotEditor() {
       this.$store.commit("isNotEditor", true);
@@ -245,31 +274,29 @@ export default {
       this.dialog = true;
     },
     getStated() {
-      this.$router.push('photoeditor')
+      this.$router.push("photoeditor");
     },
     scrollDown(page) {
-      var y = this.viewPortHeight
-      y *= page
-      window.scrollTo({top: y, left:0, behavior: 'smooth'})
-    }
+      var y = this.viewPortHeight;
+      y *= page;
+      window.scrollTo({ top: y, left: 0, behavior: "smooth" });
+    },
   },
   created() {
-    this.isIndex()
+    this.isIndex();
     this.isNotEditor();
   },
   // 계속해서 scroll이 변하는 것을 추적하기 위함.
   mounted() {
-    window.addEventListener('scroll', this.currentScrollPlace);
-
+    window.addEventListener("scroll", this.currentScrollPlace);
   },
   destroy() {
-     window.removeEventListener('scroll', this.currentScrollPlace)
+    window.removeEventListener("scroll", this.currentScrollPlace);
   },
 };
 </script>
 
-<style>
-
+<style lang="scss">
 .check {
   margin-top: 0 !important;
 }
@@ -301,6 +328,18 @@ export default {
   height: 100vh;
   background-attachment: fixed;
   background-size: cover;
+  position:  relative;
+}
+
+.main-background-first::after {
+  background-color: black !important;
+  opacity: 0.3;
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: calc(100%);
+  top: 0;
+  left: 0;
 }
 
 .main-background {
@@ -308,6 +347,7 @@ export default {
   background-attachment: fixed;
   background-size: cover;
 }
+
 .main-background-last {
   height: 100vh;
   background-attachment: fixed;
@@ -336,7 +376,6 @@ export default {
   font-size: 30px;
   z-index: 10;
 }
-
 
 .ani1 {
   /* opacity: 0.5; */
@@ -379,14 +418,6 @@ export default {
   animation-fill-mode: none;
   /* animation-play-state: running; */
   animation-name: fading;
-}
-
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
 }
 
 /* other */
@@ -467,4 +498,48 @@ p {
   color: hsla(0, 0%, 0%, 0.6);
   font-size: 16px;
 } */
+
+.text {
+  font-size: 40px;
+  display: flex;
+  justify-content: center;
+  margin-top: 40vh;
+  transform: translateY(-50%);
+  // margin: 250px auto;
+  text-align: center;
+  // border: 1px solid #000;
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: rotateX(35deg), translateY(-50%);
+    span {
+      color: #ccc;
+      &:nth-child(odd) {
+        transform: skewY(15deg);
+        // background-color: #f00;
+        // box-shadow: 0 60px 20px rgba(0,0,0,0.1);
+      }
+      &:nth-child(even) {
+        transform: skewY(-15deg);
+        background-color: #f9f9f9;
+        color: #a6a6a6;
+        // box-shadow: 0 60px 20px rgba(0,0,0,0.1);
+      }
+    }
+  }
+
+  > span {
+    display: block;
+    background-color: #fff;
+    width: 150px;
+    height: 150px;
+    line-height: 150px;
+    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out,
+      background-color 0.3s ease-in-out;
+    box-shadow: 0 40px 50px rgba(0, 0, 0, 0.1);
+    &:first-child {
+      border-radius: 5px 0 0 5px;
+    }
+  }
+}
 </style>

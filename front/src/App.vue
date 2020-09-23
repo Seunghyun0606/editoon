@@ -1,53 +1,48 @@
 <template>
   <v-app>
-    <NavBar/>
-     <!-- v-if="!isIndex"  -->
+    <NavBar />
+    <!-- v-if="!isIndex"  -->
     <!-- :class="[ isIndex ? '' : navMargin ]" -->
-    <v-main :class="[ isIndex ? '' : navMargin ]">
-
+    <v-main :class="[isIndex ? '' : navMargin]">
       <router-view></router-view>
-
-
-
     </v-main>
-    <Footer v-if="isNotEditor"/>
-
+    <Footer v-if="isNotEditor" />
   </v-app>
 </template>
 
 <script>
-import NavBar from '@/components/NavBar';
-import Footer from '@/components/Footer';
+import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer";
 // import MainIndex from '@/views/MainIndex';
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     // MainIndex,
     NavBar,
-    Footer
+    Footer,
   },
   computed: {
     isIndex() {
-      return this.$store.state.isIndex
+      return this.$store.state.isIndex;
     },
     isNotEditor() {
-      return this.$store.state.isNotEditor
+      return this.$store.state.isNotEditor;
     },
-
   },
-
 
   data() {
     return {
-      navMargin: 'nav-margin'
-    }
-  }
+      navMargin: "nav-margin",
+    };
+  },
 };
 </script>
 
 <style>
-
+body {
+  background-color: #fb9;
+}
 .nav-margin {
   margin-top: 64px;
 }
@@ -65,5 +60,4 @@ export default {
   margin: 0;
   padding: 0;
 }
-
 </style>
