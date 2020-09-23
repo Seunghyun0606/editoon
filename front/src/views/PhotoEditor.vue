@@ -74,6 +74,16 @@ export default {
   },
   data() {
     return {
+      previewCount: 0,
+
+      images: [
+        {
+          image: require(`@/assets/account_signup.png`),  // 맨처음 테스트용으로 넣은것
+          isActive: false,  // 나중에 중복 선택 제거를 위함.
+
+        }
+      ],
+
       useDefaultUI: true,
       webtoonCanvasHeight: window.innerHeight*0.87,
       webtoonCanvasWidth: 0,
@@ -99,9 +109,15 @@ export default {
           cornerColor: 'white',
           rotatingPointOffset: 40,
         },
-
-
-      }
+      },
+              dropzoneOptions: {
+          
+      url: 'https://httpbin.org/post',
+        thumbnailWidth: 100,
+        thumbnailHeight: 100,
+        // addRemoveLinks: true
+        // clickable: false,
+      },
     }
   },
   methods: {
