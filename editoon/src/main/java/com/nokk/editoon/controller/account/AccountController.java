@@ -1,19 +1,26 @@
 package com.nokk.editoon.controller.account;
 
+import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.WebUtils;
 
 import com.nokk.editoon.domain.SuccessResponse;
+import com.nokk.editoon.exception.UnAuthorizationException;
 import com.nokk.editoon.model.account.dto.AccountDTO;
-import com.nokk.editoon.model.account.dto.PrimitiveAccountDTO;
+import com.nokk.editoon.model.account.dto.AccountModifyDTO;
+import com.nokk.editoon.model.account.dto.LoginInfoDTO;
 import com.nokk.editoon.model.account.service.IAccountService;
 
 import io.swagger.annotations.ApiOperation;
@@ -143,15 +150,33 @@ import io.swagger.annotations.ApiOperation;
 public class AccountController {
 	@Autowired
 	private IAccountService accountService;
-
-	@ApiOperation(value = "accountModify - name", httpMethod = "POST", notes = "Hello this is accountModify - name")
-	@PostMapping("/v1/nameModify")
-	public ResponseEntity accountNameModify(@RequestBody(required = true) PrimitiveAccountDTO primitiveAccountDTO) {
+	
+	@ApiOperation(value = "getLoginInfo", httpMethod = "POST", notes = "Hello this is getLoginInfo")
+	@PostMapping("/getLoginInfo")
+	public ResponseEntity getLoginInfo(HttpServletRequest request) {
 		ResponseEntity response = null;
-		System.out.println(primitiveAccountDTO.toString());
 		final SuccessResponse result = new SuccessResponse();
 
-		accountService.saveAccountName(primitiveAccountDTO);
+		Cookie cookie = WebUtils.getCookie(request, "access-token");
+		String accessToken = cookie.getValue();
+		LoginInfoDTO loginInfoDTO = accountService.getLoginInfo(accessToken);
+		Map<String, Object> retMap = new HashMap<>();
+		retMap.put("loginInfoDTO", loginInfoDTO);
+		result.status = true;
+		result.result = "success";
+		result.map = retMap;
+		response = new ResponseEntity<>(result, HttpStatus.OK);
+
+		return response;
+	} // 만약 Unauthorized가 뜨면 access token 이 변조된것이다. 로그아웃 시켜야함.
+
+	@ApiOperation(value = "nameAndImageModify - name", httpMethod = "POST", notes = "Hello this is nameAndImageModify - name and image")
+	@PostMapping("/v1/nameAndImageModify")
+	public ResponseEntity accountNameAndImageModify(@ModelAttribute AccountModifyDTO accountModifyDTO) {
+		ResponseEntity response = null;
+		System.out.println(accountModifyDTO.toString());
+		final SuccessResponse result = new SuccessResponse();
+		accountService.saveAccountNameAndImage(accountModifyDTO);
 		result.status = true;
 		result.result = "success";
 		response = new ResponseEntity<>(result, HttpStatus.OK);

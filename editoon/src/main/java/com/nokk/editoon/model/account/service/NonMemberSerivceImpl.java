@@ -58,6 +58,7 @@ public class NonMemberSerivceImpl implements INonMemberService{
 									.email(accountSignUpDTO.getEmail())
 									.name(accountSignUpDTO.getName())
 									.password(accountSignUpDTO.getPassword())
+									.image("default.jpg")
 									.role(Role.USER)
 									.build()
 						).getNo();
