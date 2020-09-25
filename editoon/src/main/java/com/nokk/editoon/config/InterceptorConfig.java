@@ -23,8 +23,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(verifyAccountInterceptor)
 			.addPathPatterns("/account/v1/*")
-			.addPathPatterns("/band/v1/*")
-			.addPathPatterns("/accountBand/v1/*")
+			.addPathPatterns("/editoon/v1/*")
 			.order(0);
 		
 //		registry.addInterceptor(verifyBandMemberInterceptor)
