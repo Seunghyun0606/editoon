@@ -81,5 +81,22 @@ public class GlobalExceptionHandler {
 
 		return response;
 	}
+	
+	@ExceptionHandler(ForbidenUserException.class)
+	protected ResponseEntity ForbidenUserException(ForbidenUserException e) {
+		ResponseEntity response = null;
+		
+		final ExceptionResponse result = new ExceptionResponse();
+		
+		result.code = ErrorCode.Forbidden_User.getCode();
+		result.msg = ErrorCode.Forbidden_User.getMessage() + " : " + e.getMessage();
+		result.status = ErrorCode.Forbidden_User.getStatus();
+		response = new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
+		
+//		httpConnection.postRequest(e, ErrorCode.InternalServer.getMessage(), e.getMessage());
+
+		return response;
+	}
+
 
 }

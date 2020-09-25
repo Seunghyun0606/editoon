@@ -5,7 +5,8 @@ public enum ErrorCode {
 	InternalServer(500, "U001", "Internal Server Exception"),
 	Unknown(520, "U002", "Unknown Exception"),
     Unauthorized_Account(401, "A001", "Unauthorized"),
-	ExpiredToken(406, "T001", "ExpiredToken");
+	ExpiredToken(406, "T001", "ExpiredToken"),
+	Forbidden_User(403, "A002", "Forbidden");
 	
     private final String code;
     private final String message;
