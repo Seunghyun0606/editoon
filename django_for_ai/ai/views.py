@@ -81,12 +81,10 @@ def ImgtoAnime(request):
         print(" [*] finished!")
 
     imgs = gan.ret_imgs
-    print(1, imgs)
+    # print(1, imgs)
 
     img_test = Image.fromarray(imgs[0], 'RGB')  # dimension이 4차원인이유가...?
-    img.show()
-    img.save('my.png')
-    img.show()
+    # img.show()
 
     ret = {}  # ret?? 어디서쓰임?
     t=[]
@@ -95,12 +93,21 @@ def ImgtoAnime(request):
         ret['img{}'.format(i)] = img[0].tolist()
         img = np.asarray(img[0])
         im = Image.fromarray(img, 'RGB')
-        print(im)
-        output = io.BytesIO()
-        im.save(output, format='JPEG')
-        hex_data = base64.b64encode(output.getvalue())
-        im.show()
+        t.append(im)
+
+    
+        # print(im)
+        # output = io.BytesIO()
+        # im.save(output, format='JPEG')
+        # hex_data = base64.b64encode(output.getvalue())
+        # im.show()
+
+        # 데이터를 주고받으려면 binary형태여야함, 다른 형식을 못찾겠어서 일단 지원하는 base64형태로 바꿔서 보냈고, 날라오는거 확인.
+        # 근데 파일이 이상함. 노션 -> 문제점에서 좌측 하단처럼 깨져서 파일이옴.
+        # 실제로 im.show를 해보면 이상하게 나옴. 원인파악필요.
+        # 일단은 한개파일만 주고받은 경우로 만들었고, 다중파일은 그냥 리스트형태로 만들어서 보내주면됨.
 
         response = HttpResponse(hex_data, content_type="image/jpeg")
 
     return response
+    # return HttpResponse(t, content_type="image/jpeg")
