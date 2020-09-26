@@ -6,11 +6,11 @@
       :style="[mainBackgroundImage.one]"
       style="background-color: #fb9;"
     >
-      <v-row style="height: 90%;">
-        <v-col style="padding: 3vh 6vw;">
-          <v-row>
-            <v-col class="text-center main-index-txt">
-              <div class="text">
+      <v-row style="height: 90%; justify-content: center; align-content: center;" class="pt-16">
+        <!-- <v-col style="padding: 3vh 6vw;">
+          <v-row> -->
+            <!-- <v-col class="text-center main-index-txt"> -->
+              <div class="text" style="cursor: pointer;">
                 <span>E</span>
                 <span>D</span>
                 <span>I</span>
@@ -19,8 +19,8 @@
                 <span>O</span>
                 <span>N</span>
               </div>
-            </v-col>
-          </v-row>
+            <!-- </v-col> -->
+          <!-- </v-row> -->
 
           <!-- <v-row>
             <v-col align="center">
@@ -33,7 +33,7 @@
               >
             </v-col>
           </v-row> -->
-        </v-col>
+        <!-- </v-col> -->
       </v-row>
       <div
         @click="scrollDown(1)"
@@ -209,13 +209,11 @@
 </template>
 
 <script>
-// import LoginModal from '@/components/login/LoginModal'
 import VueCompareImage from "vue-compare-image";
 
 export default {
   name: "Index",
   components: {
-    // LoginModal
     VueCompareImage,
   },
   data() {
@@ -503,7 +501,6 @@ p {
   font-size: 40px;
   display: flex;
   justify-content: center;
-  margin-top: 40vh;
   transform: translateY(-50%);
   // margin: 250px auto;
   text-align: center;
