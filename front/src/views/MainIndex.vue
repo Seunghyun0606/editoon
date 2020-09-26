@@ -4,10 +4,10 @@
       fluid
       class="main-background-first pt-16"
       :style="[mainBackgroundImage.one]"
-      style="background-color: #fb9;"
+      style="background-color: #fb9"
     >
-      <v-row style="height: 90%;">
-        <v-col style="padding: 3vh 6vw;">
+      <v-row style="height: 90%">
+        <v-col style="padding: 3vh 6vw">
           <v-row>
             <v-col class="text-center main-index-txt">
               <div class="text">
@@ -19,6 +19,9 @@
                 <span>O</span>
                 <span>N</span>
               </div>
+              <label>사진:</label>
+              <input type="file" id="imgseletor" multiple />
+              <v-btn @click="sendimg">test</v-btn>
             </v-col>
           </v-row>
 
@@ -35,11 +38,12 @@
           </v-row> -->
         </v-col>
       </v-row>
+
       <div
         @click="scrollDown(1)"
         class="mx-auto d-flex justify-center main-scroll-down"
       >
-        <v-icon style="color: white; font-size: 36px;">mdi-chevron-down</v-icon>
+        <v-icon style="color: white; font-size: 36px">mdi-chevron-down</v-icon>
       </div>
     </v-container>
 
@@ -58,7 +62,7 @@
           </v-row>
 
           <v-row>
-            <v-col style="font-size: 1.7em;">
+            <v-col style="font-size: 1.7em">
               <div>
                 한 번만 클릭하면 몇 초만에 사진에서 만화로 바꿀 수 있습니다.
                 지금 당장, 당신의 셀피를 만화로 만들어 보세요!
@@ -75,12 +79,12 @@
           md="6"
           cols="10"
           class="mx-md-10 mx-sm-0 mx-xs-0 mx-lg-5 pa-0"
-          style="height: 60vh;"
+          style="height: 60vh"
         >
           <!-- <img style="width: 100%;" :src="require('@/assets/main_second.jpg')" alt /> -->
 
           <VueCompareImage
-            style="height: 100%;"
+            style="height: 100%"
             :leftImage="require('@/assets/iu.jpg')"
             :rightImage="require('@/assets/iu_cartoon.jpg')"
           />
@@ -90,7 +94,7 @@
         @click="scrollDown(2)"
         class="mx-auto d-flex justify-center main-scroll-down"
       >
-        <v-icon style="color: white; font-size: 36px;">mdi-chevron-down</v-icon>
+        <v-icon style="color: white; font-size: 36px">mdi-chevron-down</v-icon>
       </div>
     </v-container>
 
@@ -101,13 +105,9 @@
       class="px-10 main-background"
       :style="mainBackgroundImage.three"
     >
-      <v-row class="align-content-center justify-center" style="height: 90%;">
+      <v-row class="align-content-center justify-center" style="height: 90%">
         <v-col md="6" cols="10" class="mx-md-10 mx-sm-0 mx-xs-0 pa-0">
-          <img
-            style="width: 100%;"
-            :src="require('@/assets/webtoon.png')"
-            alt
-          />
+          <img style="width: 100%" :src="require('@/assets/webtoon.png')" alt />
         </v-col>
 
         <v-col md="4" lg="4" cols="10" class="pa-0">
@@ -116,7 +116,7 @@
           </v-row>
 
           <v-row>
-            <v-col style="font-size: 1.7rem;">
+            <v-col style="font-size: 1.7rem">
               <div>
                 빠르고 간단하게, 몇번의 클릭만으로 웹툰을 만들어보세요. 간단한
                 배치와 말풍선을 추가하여 꾸밀수있습니다!
@@ -135,7 +135,7 @@
         @click="scrollDown(3)"
         class="mx-auto d-flex justify-center main-scroll-down"
       >
-        <v-icon style="color: white; font-size: 36px;">mdi-chevron-down</v-icon>
+        <v-icon style="color: white; font-size: 36px">mdi-chevron-down</v-icon>
       </div>
     </v-container>
 
@@ -147,43 +147,43 @@
       class="px-10 main-background-last"
       :style="[mainBackgroundImage.four]"
     >
-      <v-row style="height: 90%;">
+      <v-row style="height: 90%">
         <v-col>
-          <v-row style="height: 30vh; text-align: center;" class="align-center">
+          <v-row style="height: 30vh; text-align: center" class="align-center">
             <v-col class="main-index-txt">대표작품들을 감상해보세요</v-col>
           </v-row>
           <v-row class="justify-space-around">
             <v-col class="mx-2">
               <img
-                style="width: 100%; height: 300px;"
+                style="width: 100%; height: 300px"
                 src="https://picsum.photos/1920/1080?random"
                 alt
               />
             </v-col>
             <v-col class="mx-2">
               <img
-                style="width: 100%; height: 300px;"
+                style="width: 100%; height: 300px"
                 src="https://picsum.photos/1920/1080?random"
                 alt
               />
             </v-col>
             <v-col class="mx-2">
               <img
-                style="width: 100%; height: 300px;"
+                style="width: 100%; height: 300px"
                 src="https://picsum.photos/1920/1080?random"
                 alt
               />
             </v-col>
             <v-col class="mx-2">
               <img
-                style="width: 100%; height: 300px;"
+                style="width: 100%; height: 300px"
                 src="https://picsum.photos/1920/1080?random"
                 alt
               />
             </v-col>
             <v-col class="mx-2">
               <img
-                style="width: 100%; height: 300px;"
+                style="width: 100%; height: 300px"
                 src="https://picsum.photos/1920/1080?random"
                 alt
               />
@@ -195,13 +195,24 @@
         @click="scrollDown(0)"
         class="mx-auto main-scroll-down d-flex justify-center"
       >
-        <v-icon style="color: black; font-size: 36px;">mdi-chevron-up</v-icon>
+        <v-icon style="color: black; font-size: 36px">mdi-chevron-up</v-icon>
       </div>
     </v-container>
     <div v-show="viewPortHeight / 2 <= current" @click="scrollDown(0)">
       <v-icon
         class="main-scroll-up"
-        style="z-index: 9999; background-color: black; width: 40px; height: 40px; border-radius: 50%; color: white; font-size: 36px; position: fixed; bottom: 50px; right: 50px;"
+        style="
+          z-index: 9999;
+          background-color: black;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          color: white;
+          font-size: 36px;
+          position: fixed;
+          bottom: 50px;
+          right: 50px;
+        "
         >mdi-chevron-up</v-icon
       >
     </div>
@@ -211,7 +222,7 @@
 <script>
 // import LoginModal from '@/components/login/LoginModal'
 import VueCompareImage from "vue-compare-image";
-
+import axios from "axios";
 export default {
   name: "Index",
   components: {
@@ -261,6 +272,27 @@ export default {
   },
 
   methods: {
+    sendimg() {
+      const formData = new FormData();
+      const file = document.getElementById("imgseletor");
+      formData.append("img1", file.files[0]);
+      formData.append("img2", file.files[1]);
+      axios
+        .post("http://localhost:8000/ai/ImgtoAnime/", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          if (res.data["res"] == 1) {
+            this.mysrc = "1.jpg";
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     currentScrollPlace() {
       this.current = document.documentElement.scrollTop;
     },
@@ -328,7 +360,7 @@ export default {
   height: 100vh;
   background-attachment: fixed;
   background-size: cover;
-  position:  relative;
+  position: relative;
 }
 
 .main-background-first::after {
