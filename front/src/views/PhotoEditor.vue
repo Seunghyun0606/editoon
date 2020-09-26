@@ -12,9 +12,10 @@
             :h="200"
             :parentLimitation="true"
             @activated="canvasImageOnActivated(idx)"
-
+            :style="[ image.isBackground ? addBackground : addImage(image.image) ]"
           >
-            <img :src="image.image" style="height: inherit; width: inherit;" alt="">
+            <!-- :style="{ backgroundImage:  'url('+ `${image.image}` + ')', backgroundRepeat: 'round' }" -->
+            <!-- <img :src="image.image" style="height: inherit; width: inherit;" alt=""> -->
 
           </VueDragResize>
         </v-col>
@@ -50,6 +51,7 @@
               <v-btn @click="btnDropZoneImageMoveToEditor">에디터로보내기</v-btn>
               <v-btn @click="btnEditorImageToCanvas">캔버스로보내기</v-btn>
               <v-btn @click="btnAddCanvasHeight">캔버스늘리기</v-btn>
+              <v-btn @click="btnAddBackground">회상배경추가하기</v-btn>
 
             </div>
           </v-row>
@@ -88,9 +90,20 @@ export default {
         {
           image: require(`@/assets/account_signup.png`),  // 맨처음 테스트용으로 넣은것
           isActive: false,  // 나중에 중복 선택 제거를 위함.
+          isBackground: false, // 배경인지 확인하기위함.
 
         }
       ],
+      addBackground: {
+        backgroundColor: 'black',
+      },
+      addImage: function(imageURL) {
+        let imageStyle = {
+          backgroundImage:  'url('+ `${imageURL}` + ')',
+          backgroundRepeat: 'round' 
+        }
+        return imageStyle
+      },
 
       useDefaultUI: true,
       webtoonCanvasHeight: window.innerHeight*0.87,
@@ -136,8 +149,10 @@ export default {
     isNotEditor() {
       this.$store.commit("isNotEditor", false);
     },
-
-// 파일 업로드시, preview만 클릭하면 올라갈 수 있도록 만듬.
+    btnAddBackground() {
+      console.log(1)
+    },
+    // 파일 업로드시, preview만 클릭하면 올라갈 수 있도록 만듬.
     dropZoneImageMoveToEditor(file_list) {
       console.log(file_list)
 
