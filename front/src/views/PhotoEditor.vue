@@ -50,7 +50,6 @@
               <v-btn @click="btnDropZoneImageMoveToEditor">에디터로보내기</v-btn>
               <v-btn @click="btnEditorImageToCanvas">캔버스로보내기</v-btn>
               <v-btn @click="btnAddCanvasHeight">캔버스늘리기</v-btn>
-
             </div>
           </v-row>
         </v-col>
@@ -139,15 +138,11 @@ export default {
 
 // 파일 업로드시, preview만 클릭하면 올라갈 수 있도록 만듬.
     dropZoneImageMoveToEditor(file_list) {
-      console.log(file_list)
+      // console.log(file_list)
 
       const dz_preview = document.querySelectorAll('.dz-preview')
 
-      // const temp2 = document.querySelectorAll('.dz-image > img')
-
-      // temp1[0].addEventListener('click', function(e) {
-        //   console.log(e)
-      // })
+      this.dropZoneImageToDjango(file_list)
 
       for ( let idx = 0; idx < file_list.length; idx++) {
         dz_preview[idx + this.previewCount].addEventListener('click', e => {
@@ -157,6 +152,17 @@ export default {
       }
       // 여러번 올렸을경우, dz_preview의 인덱스가 달라지기때문
       this.previewCount += file_list.length
+    },
+    // django로 이미지 보내기.
+    dropZoneImageToDjango(file_list) {
+
+      const my_form = new FormData()
+      
+      for ( let file of file_list ) {
+        my_form.append(file.name ,file)
+      }
+
+      this.$store.dispatch("dropZoneImageToDjango", my_form)
     },
 
     // 사실상 preview에서 클릭해서 넣을 수 있기 때문에 필요없음.

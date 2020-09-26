@@ -6,6 +6,7 @@ Vue.use(Vuex)
 
 
 const SERVER_URL = 'http://localhost:8080/editoon/'
+const Django_SERVER_URL = 'http://localhost:8000/ai/ImgtoAnime/'
 // const DJANGO_URL = ''
 
 export default new Vuex.Store({
@@ -46,6 +47,10 @@ export default new Vuex.Store({
     },
     signUpStatus(state, check) {
       state.signUpValidation.signUpstatus = check
+    },
+    imageFromDjango(state, images) {
+      state, images
+      // 이미지 어떻게 넘어오는지 봐야할듯.
     }
 
   },
@@ -105,6 +110,22 @@ export default new Vuex.Store({
           console.log('회원가입실패')
           return false
         })
+    },
+    dropZoneImageToDjango({ commit }, my_form) {
+
+      axios.post( Django_SERVER_URL, my_form, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+        .then (res => {
+          commit('imageFromDjango', res.data)
+          console.log(res.data)
+        })
+        .catch ( err => {
+          console.log(err)
+        })
+
     }
 
   },
