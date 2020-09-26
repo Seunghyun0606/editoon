@@ -5,7 +5,6 @@ import json
 import os
 import numpy as np
 from PIL import Image
-from io import BytesIO
 import base64
 from my_UGATIT import UGATIT
 import argparse
@@ -15,6 +14,7 @@ import cv2
 from django.http import FileResponse
 from django.http import HttpResponse
 from glob import glob
+import io
 """parsing and configuration"""
 
 class Args:
@@ -60,7 +60,9 @@ def ImgtoAnime(request):
     for idx in range(len(test)):
         file_name = 'img'+str((idx+1))
         img = Image.open(test[file_name])
+        # img.show()
         img = img.resize((256, 256))
+        # img.show()
         img_np = np.array(img)[:,:,:3] 
         files[str(test[file_name])]=[img_np]
    
@@ -73,20 +75,32 @@ def ImgtoAnime(request):
         gan = UGATIT(sess, args)
         # build graph
         gan.build_model() 
-        gan.files = files
+        gan.files = files  # arigs.imgs에 넣은이유가?
 
         gan.test()
         print(" [*] finished!")
 
     imgs = gan.ret_imgs
+    print(1, imgs)
 
-    ret = {}
+    img_test = Image.fromarray(imgs[0], 'RGB')  # dimension이 4차원인이유가...?
+    img.show()
+    img.save('my.png')
+    img.show()
+
+    ret = {}  # ret?? 어디서쓰임?
     t=[]
     for i, img in enumerate(imgs):
         img = (img+1.)/2 * 255
         ret['img{}'.format(i)] = img[0].tolist()
         img = np.asarray(img[0])
         im = Image.fromarray(img, 'RGB')
-        t.append(im)
+        print(im)
+        output = io.BytesIO()
+        im.save(output, format='JPEG')
+        hex_data = base64.b64encode(output.getvalue())
+        im.show()
 
-    return HttpResponse(t, content_type="image/jpeg")
+        response = HttpResponse(hex_data, content_type="image/jpeg")
+
+    return response
