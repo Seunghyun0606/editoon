@@ -1,12 +1,14 @@
 from my_UGATIT import UGATIT
 import argparse
 from utils import *
+import json
 
 """parsing and configuration"""
 
 def parse_args():
     desc = "Tensorflow implementation of U-GAT-IT"
     parser = argparse.ArgumentParser(description=desc)
+    parser.add_argument('--imgs', type=str)
     parser.add_argument('--file_name', type=str)
     parser.add_argument('--phase', type=str, default='test', help='[train / test]')
     parser.add_argument('--light', type=str2bool, default=False, help='[U-GAT-IT full version / U-GAT-IT light version]')
@@ -81,14 +83,16 @@ def check_args(args):
 def main():
     # parse arguments
     args = parse_args()
-    print(args.dataset)
+    print(args.imgs,'★----------------------★')
+    args.imgs = args.imgs.split('?')
+    #print(args.dataset)
     if args is None:
       exit()
 
     # open session
     with tf.Session(config=tf.ConfigProto(allow_soft_placement=True)) as sess:
         gan = UGATIT(sess, args)
-
+        
         # build graph
         gan.build_model()
 

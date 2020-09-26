@@ -46,7 +46,7 @@ def conv(x, channels, kernel=4, stride=2, pad=0, pad_type='zero', use_bias=True,
             x = tf.layers.conv2d(inputs=x, filters=channels,
                                  kernel_size=kernel, kernel_initializer=weight_init,
                                  kernel_regularizer=weight_regularizer,
-                                 strides=stride, use_bias=use_bias)
+                                 strides=stride, use_bias=use_bias, reuse=tf.AUTO_REUSE)
 
 
         return x
