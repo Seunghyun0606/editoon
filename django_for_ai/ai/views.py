@@ -83,7 +83,7 @@ def ImgtoAnime(request):
     imgs = gan.ret_imgs
     # print(1, imgs)
 
-    img_test = Image.fromarray(imgs[0], 'RGB')  # dimension이 4차원인이유가...?
+    # img_test = Image.fromarray(imgs[0], 'RGB')  # dimension이 4차원인이유가...?
     # img.show()
 
     ret = {}  # ret?? 어디서쓰임?
@@ -107,7 +107,7 @@ def ImgtoAnime(request):
         # 실제로 im.show를 해보면 이상하게 나옴. 원인파악필요.
         # 일단은 한개파일만 주고받은 경우로 만들었고, 다중파일은 그냥 리스트형태로 만들어서 보내주면됨.
 
-        response = HttpResponse(hex_data, content_type="image/jpeg")
+        # response = HttpResponse(hex_data, content_type="image/jpeg")
 
-    return response
-    # return HttpResponse(t, content_type="image/jpeg")
+    # return response
+    return HttpResponse(t, content_type="image/jpeg")
