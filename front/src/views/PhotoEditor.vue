@@ -150,7 +150,12 @@ export default {
       this.$store.commit("isNotEditor", false);
     },
     btnAddBackground() {
-      console.log(1)
+      const addBackground = {
+        image: "",
+        isActive: false,
+        isBackground: true,
+      }
+      this.images.push(addBackground)
     },
     // 파일 업로드시, preview만 클릭하면 올라갈 수 있도록 만듬.
     dropZoneImageMoveToEditor(file_list) {
@@ -191,6 +196,7 @@ export default {
       const imageData = {
         image: dataURL,
         isActive: false,
+        isBackground: false,
       }
       this.images.push(imageData)
 
