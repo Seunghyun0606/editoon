@@ -230,7 +230,7 @@ export default {
       current: 0,
       mainBackgroundImage: {
         one: {
-          backgroundImage: "url('" + require(`@/assets/simple10.gif`) + "')",
+          backgroundImage: "url('" + require(`@/assets/simple12.gif`) + "')",
         },
         two: {
           backgroundImage: "url('" + require(`@/assets/simple2.jpg`) + "')",
@@ -331,16 +331,16 @@ export default {
   position:  relative;
 }
 
-.main-background-first::after {
-  background-color: black !important;
-  opacity: 0.3;
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: calc(100%);
-  top: 0;
-  left: 0;
-}
+// .main-background-first::after {
+//   background-color: black !important;
+//   opacity: 0.3;
+//   position: absolute;
+//   content: "";
+//   width: 100%;
+//   height: calc(100%);
+//   top: 0;
+//   left: 0;
+// }
 
 .main-background {
   height: 100vh;
