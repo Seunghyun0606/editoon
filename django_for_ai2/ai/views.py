@@ -80,11 +80,9 @@ def ImgtoAnime(request):
 
     imgs = gan.ret_imgs
 
-    ret = {}
     t=[]
     for i, img in enumerate(imgs):
         img = (img+1.)/2 * 255
-        ret['img{}'.format(i)] = img[0].tolist()
         img = np.asarray(img[0])
         im = Image.fromarray(img, 'RGB')
         t.append(im)

@@ -14,7 +14,7 @@ class UGATIT(object) :
             self.model_name = 'UGATIT_light'
         else :
             self.model_name = 'UGATIT'
-        self.ret_imgs = []
+
         self.sess = sess
         self.phase = args.phase
         self.checkpoint_dir = args.checkpoint_dir
@@ -645,8 +645,7 @@ class UGATIT(object) :
                 image_path = os.path.join(self.result_dir,'{0}'.format(os.path.basename(file_name_)))
 
                 fake_img = self.sess.run(self.test_fake_B, feed_dict = {self.test_domain_A : sample_image})
-                self.ret_imgs.append(fake_img)
-                # save_images(fake_img, [1, 1], image_path)
+                save_images(fake_img, [1, 1], image_path)
         else:
             for sample_file  in test_A_files : # A -> B
                 print('Processing A image: ' + sample_file)
