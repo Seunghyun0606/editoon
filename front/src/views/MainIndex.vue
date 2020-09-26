@@ -90,6 +90,7 @@
       <div
         @click="scrollDown(2)"
         class="mx-auto d-flex justify-center main-scroll-down"
+        :class="{ 'fade-in': activeClass.second, 'fade-out': !activeClass.second }"
       >
         <v-icon style="color: white; font-size: 36px;">mdi-chevron-down</v-icon>
       </div>
@@ -138,6 +139,8 @@
       <div
         @click="scrollDown(3)"
         class="mx-auto d-flex justify-center main-scroll-down"
+        :class="{ 'fade-in': activeClass.third, 'fade-out': !activeClass.third }"
+
       >
         <v-icon style="color: white; font-size: 36px;">mdi-chevron-down</v-icon>
       </div>
@@ -198,6 +201,8 @@
       <div
         @click="scrollDown(0)"
         class="mx-auto main-scroll-down d-flex justify-center"
+        :class="{ 'fade-in': activeClass.fourth, 'fade-out': !activeClass.fourth }"
+
       >
         <v-icon style="color: black; font-size: 36px;">mdi-chevron-up</v-icon>
       </div>
