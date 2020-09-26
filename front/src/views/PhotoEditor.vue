@@ -10,12 +10,15 @@
             :parentW="webtoonCanvasWidth"
             :w="200"
             :h="200"
+            :z="image.zIndex"
             :parentLimitation="true"
             @activated="canvasImageOnActivated(idx)"
             :style="[ image.isBackground ? addBackground : addImage(image.image) ]"
           >
             <!-- :style="{ backgroundImage:  'url('+ `${image.image}` + ')', backgroundRepeat: 'round' }" -->
             <!-- <img :src="image.image" style="height: inherit; width: inherit;" alt=""> -->
+            <v-btn @click="btnUpZindex(idx)">zindex올리기</v-btn>
+            <v-btn @click="btnDownZindex(idx)">zindex내리기</v-btn>
 
           </VueDragResize>
         </v-col>
@@ -52,6 +55,7 @@
               <v-btn @click="btnEditorImageToCanvas">캔버스로보내기</v-btn>
               <v-btn @click="btnAddCanvasHeight">캔버스늘리기</v-btn>
               <v-btn @click="btnAddBackground">회상배경추가하기</v-btn>
+
 
             </div>
           </v-row>
@@ -91,7 +95,7 @@ export default {
           image: require(`@/assets/account_signup.png`),  // 맨처음 테스트용으로 넣은것
           isActive: false,  // 나중에 중복 선택 제거를 위함.
           isBackground: false, // 배경인지 확인하기위함.
-
+          zIndex: 100,
         }
       ],
       addBackground: {
@@ -149,11 +153,19 @@ export default {
     isNotEditor() {
       this.$store.commit("isNotEditor", false);
     },
+    btnUpZindex(idx) {
+      console.log(idx)
+      this.images[idx].zIndex += 1
+    },
+    btnDownZindex(idx) {
+      this.images[idx].zIndex -= 1
+    },
     btnAddBackground() {
       const addBackground = {
         image: "",
         isActive: false,
         isBackground: true,
+        zIndex: 100,
       }
       this.images.push(addBackground)
     },
@@ -197,6 +209,7 @@ export default {
         image: dataURL,
         isActive: false,
         isBackground: false,
+        zIndex: 100,
       }
       this.images.push(imageData)
 
