@@ -11,11 +11,13 @@
             :w="200"
             :h="200"
             :z="image.zIndex"
+            :isDraggable='image.isDraggable'
             :parentLimitation="true"
             @activated="canvasImageOnActivated(idx)"
             @deactivated="canvasImageOffActivated(idx)"
-            :style="[ image.isBackground ? addBackground : addImage(image.image) ]"
+            :style="[objectStyle(idx)]"
           >
+            <!-- :style="[ image.isBackground ? addBackground : addImage(image.image), { border: image.imageOption.borderSlider +'px' + ' solid' + ' black'} ]" -->
             <!-- @clicked="check2('bubble' + idx)" -->
             <!-- :style="{ backgroundImage:  'url('+ `${image.image}` + ')', backgroundRepeat: 'round' }" -->
             <!-- <img :src="image.image" style="height: inherit; width: inherit;" alt=""> -->
@@ -67,7 +69,7 @@
             </div>
             <!-- 이미지의 경우 -->
             <div v-if="image.isClickOption && !image.isBubble && !image.isBackground" style="width: 500px; height: 500px; background-color: black; position: relative; z-index: 999; left: calc(100% + 50px);">
-              <v-container style="color:white;">
+              <v-container fluid style="color:white;">
                 <v-row>
                   <v-col>
                     테두리 컬러
@@ -75,7 +77,12 @@
                 </v-row>
                 <v-row>
                   <v-col>
-                    테두리 두께
+                    <v-subheader class="" style="color: white;">테두리 두께</v-subheader>
+                    <v-slider
+                      v-model="image.imageOption.borderSlider"
+                      thumb-label
+                    >
+                    </v-slider>
                   </v-col>
                 </v-row>
 
@@ -163,26 +170,57 @@ export default {
           isActive: false,  // 나중에 중복 선택 제거를 위함.
           isBackground: false, // 배경인지 확인하기위함.
           isBubble: false,  // 말풍선인지 확인
-          zIndex: 100,
+          zIndex: 102,
           isClickOption: false,
+          isDraggable: false,
+          imageOption: {
+            borderSlider: 5,
+            color: '#fff',
+          },
+          backgroundOption: {
+
+          },
+          bubbleOption: {
+
+          }
         },
-        {
-          image: require(`@/assets/account_signup.png`),  // 맨처음 테스트용으로 넣은것
-          isActive: false,  // 나중에 중복 선택 제거를 위함.
-          isBackground: true, // 배경인지 확인하기위함.
-          isBubble: false,  // 말풍선인지 확인
-          zIndex: 100,
-          isClickOption: false,
-        },
-        {
-          image: require(`@/assets/webtoon.png`),  // 맨처음 테스트용으로 넣은것
-          isActive: false,  // 나중에 중복 선택 제거를 위함.
-          isBackground: false, // 배경인지 확인하기위함.
-          isBubble: true,  // 말풍선인지 확인
-          zIndex: 100,
-          isClickOption: false,
-        },
+        // {
+        //   image: require(`@/assets/account_signup.png`),  // 맨처음 테스트용으로 넣은것
+        //   isActive: false,  // 나중에 중복 선택 제거를 위함.
+        //   isBackground: true, // 배경인지 확인하기위함.
+        //   isBubble: false,  // 말풍선인지 확인
+        //   zIndex: 100,
+        //   isClickOption: false,
+        //   isDraggable: false,
+        // },
+        // {
+        //   image: require(`@/assets/webtoon.png`),  // 맨처음 테스트용으로 넣은것
+        //   isActive: false,  // 나중에 중복 선택 제거를 위함.
+        //   isBackground: false, // 배경인지 확인하기위함.
+        //   isBubble: true,  // 말풍선인지 확인
+        //   zIndex: 100,
+        //   isClickOption: false,
+        //   isDraggable: false,
+        // },
       ],
+      objectStyle: function(idx) {
+        let image = this.images[idx]
+        let imageStyle = {}
+
+        if ( image.isBackground ) {
+          imageStyle.backgroundColor = 'black'
+        }
+        else if ( image.isBubble ) {
+          imageStyle.backgroundColor = 'blue'
+        }
+        else {
+          imageStyle.color = image.imageOption.color
+          imageStyle.border = image.imageOption.borderSlider + 'px' + " solid black"
+          imageStyle.backgroundImage = 'url(' + `${image.image}` + ')',
+          imageStyle.backgroundRepeat= 'round'
+        }
+        return imageStyle
+      },
       addBackground: {
         backgroundColor: 'black',
       },
@@ -341,6 +379,7 @@ export default {
     },
     canvasImageOffActivated(idx) {
       this.images[idx].isActive = false
+      this.images[idx].isClickOption = false
     },
 
     //캔버스 사이즈 변경시, 캔버스 안의 이미지가 안옮겨지는 버그 수정
