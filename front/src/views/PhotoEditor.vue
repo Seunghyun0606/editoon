@@ -65,7 +65,8 @@
               </v-container>
             </div>
             <!-- 이미지의 경우 -->
-            <div v-if="image.isClickOption && !image.isBubble && !image.isBackground" style="width: 500px; height: 500px; background-color: black; position: relative; z-index: 999; left: calc(100% + 50px);">
+            <div v-if="image.isClickOption && !image.isBubble && !image.isBackground"
+              :style="{ width: '500px', height: '500px', backgroundColor: 'black', position: 'relative', zIndex: 999, bottom: image.imageOption.borderSlider + 'px', left: 'calc(100% + 50px + ' + `${image.imageOption.borderSlider}` + 'px )' }">
               <v-container fluid style="color:white;">
                 <v-row>
                   <v-col>
