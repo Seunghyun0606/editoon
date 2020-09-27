@@ -63,9 +63,7 @@ def ImgtoAnime(request):
     for idx in range(len(test)):
         file_name = 'img'+str((idx+1))
         img = Image.open(test[file_name])
-        # img.show()
         img = img.resize((256, 256))
-        # img.show()
         img_np = np.array(img)[:,:,:3] 
         files[str(test[file_name])]=[img_np]
    
@@ -76,8 +74,7 @@ def ImgtoAnime(request):
         gan = UGATIT(sess, args)
         # build graph
         gan.build_model() 
-        gan.files = files  # arigs.imgs에 넣은이유가?
-
+        gan.files = files 
         gan.test()
         print(" [*] finished!")
 
