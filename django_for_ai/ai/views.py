@@ -14,8 +14,6 @@ import cv2
 from django.http import HttpResponse
 from glob import glob
 import io
-import base64
-import matplotlib.pylab as plt
 
 """parsing and configuration"""
 
