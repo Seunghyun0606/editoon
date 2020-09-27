@@ -47,6 +47,7 @@
               </div>
             </vue2Dropzone>
             <div id='editorBtnSet'>
+              <v-btn @click="convertTest">캔버스 이미지변환 테스트</v-btn>
               <v-btn @click="btnDropZoneImageMoveToEditor">에디터로보내기</v-btn>
               <v-btn @click="btnEditorImageToCanvas">캔버스로보내기</v-btn>
               <v-btn @click="btnAddCanvasHeight">캔버스늘리기</v-btn>
@@ -65,6 +66,8 @@
 import VueDragResize from 'vue-drag-resize'
 import vue2Dropzone from 'vue2-dropzone'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+import html2canvas from 'html2canvas';
+
 
 import { ImageEditor } from '@toast-ui/vue-image-editor';
 import 'tui-image-editor/dist/svg/icon-a.svg';
@@ -134,6 +137,16 @@ export default {
     },
     isNotEditor() {
       this.$store.commit("isNotEditor", false);
+    },
+
+    convertTest() {
+      const ctxTest = document.querySelector("#webtoonCanvas")
+      console.log(ctxTest)
+      html2canvas(ctxTest, {
+        height: this.webtoonCanvasHeight,
+      }).then( canvas => {
+        document.body.appendChild(canvas)
+      })
     },
 
 // 파일 업로드시, preview만 클릭하면 올라갈 수 있도록 만듬.
@@ -242,7 +255,6 @@ export default {
 .webtoon-canvas-css {
   position: relative;
   background-color: white;
-  border: 1px solid black;
 }
 
 .dropzone-custom-content {
