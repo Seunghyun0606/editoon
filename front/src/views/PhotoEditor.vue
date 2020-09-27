@@ -72,7 +72,7 @@
               <v-container fluid style="color:white;">
                 <v-row>
                   <v-col>
-                    테두리 컬러
+                    <v-color-picker v-model="image.imageOption.borderColor" class="ma-2" hide-inputs></v-color-picker>
                   </v-col>
                 </v-row>
                 <v-row>
@@ -175,7 +175,7 @@ export default {
           isDraggable: false,
           imageOption: {
             borderSlider: 5,
-            color: '#fff',
+            borderColor: '#000',
           },
           backgroundOption: {
 
@@ -215,7 +215,8 @@ export default {
         }
         else {
           imageStyle.color = image.imageOption.color
-          imageStyle.border = image.imageOption.borderSlider + 'px' + " solid black"
+          imageStyle.border = image.imageOption.borderSlider + 'px' + " solid"
+          imageStyle.borderColor = image.imageOption.borderColor
           imageStyle.backgroundImage = 'url(' + `${image.image}` + ')',
           imageStyle.backgroundRepeat= 'round'
         }
