@@ -33,7 +33,7 @@ import io.jsonwebtoken.MalformedJwtException;
 
 @Service
 public class AccountServiceImpl implements IAccountService {
-	private static final String IMAGE_FOLDER = "/var/www/image/";
+	private static final String IMAGE_FOLDER = "/var/www/image/profileImg";
 
 	@Autowired
 	private AccountRepo accountRepo;
