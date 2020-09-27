@@ -11,7 +11,6 @@ import argparse
 from utils import *
 import json
 import cv2
-from django.http import FileResponse
 from django.http import HttpResponse
 from glob import glob
 import io
