@@ -21,7 +21,8 @@ export default new Vuex.Store({
       isSendEmail: false,
       codeValidate: false,
       signUpStatus: false,
-    }
+    },
+    convertedImages: [],
   },
   getters: {
 
@@ -49,7 +50,7 @@ export default new Vuex.Store({
       state.signUpValidation.signUpstatus = check
     },
     imageFromDjango(state, images) {
-      state, images
+      state.convertedImages.push(images)
       // 이미지 어떻게 넘어오는지 봐야할듯.
     }
 
@@ -111,9 +112,9 @@ export default new Vuex.Store({
           return false
         })
     },
-    dropZoneImageToDjango({ commit }, my_form) {
+    dropZoneImageToDjango({ commit }, djangoImageForm) {
 
-      axios.post( Django_SERVER_URL, my_form, {
+      axios.post( Django_SERVER_URL, djangoImageForm, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -126,6 +127,20 @@ export default new Vuex.Store({
           console.log(err)
         })
 
+    },
+    canvasImageToSpring({ commit }, canvasForms) {
+      axios.post( SERVER_URL + 'test/photos/', canvasForms, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+        .then (res => {
+          commit
+          console.log(res.data)
+        })
+        .catch ( err => {
+          console.log(err)
+        })
     }
 
   },

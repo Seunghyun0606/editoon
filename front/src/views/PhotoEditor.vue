@@ -47,6 +47,7 @@
               </div>
             </vue2Dropzone>
             <div id='editorBtnSet'>
+              <v-btn @click="canvasImageToSpring">캔버스 이미지변환 테스트</v-btn>
               <v-btn @click="btnDropZoneImageMoveToEditor">에디터로보내기</v-btn>
               <v-btn @click="btnEditorImageToCanvas">캔버스로보내기</v-btn>
               <v-btn @click="btnAddCanvasHeight">캔버스늘리기</v-btn>
@@ -65,13 +66,16 @@
 import VueDragResize from 'vue-drag-resize'
 import vue2Dropzone from 'vue2-dropzone'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+import html2canvas from 'html2canvas';
 
-import { ImageEditor } from '@toast-ui/vue-image-editor';
-import 'tui-image-editor/dist/svg/icon-a.svg';
-import 'tui-image-editor/dist/svg/icon-b.svg';
-import 'tui-image-editor/dist/svg/icon-c.svg';
-import 'tui-image-editor/dist/svg/icon-d.svg';
-import 'tui-image-editor/dist/tui-image-editor.css';
+
+import { ImageEditor } from '@toast-ui/vue-image-editor'
+import 'tui-image-editor/dist/svg/icon-a.svg'
+import 'tui-image-editor/dist/svg/icon-b.svg'
+import 'tui-image-editor/dist/svg/icon-c.svg'
+import 'tui-image-editor/dist/svg/icon-d.svg'
+import 'tui-image-editor/dist/tui-image-editor.css'
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -87,13 +91,14 @@ export default {
         {
           image: require(`@/assets/account_signup.png`),  // 맨처음 테스트용으로 넣은것
           isActive: false,  // 나중에 중복 선택 제거를 위함.
-
         }
       ],
 
       useDefaultUI: true,
+      initWebtoonCanvasHeight: window.innerHeight*0.87,
       webtoonCanvasHeight: window.innerHeight*0.87,
       webtoonCanvasWidth: 0,
+      webtoonCanvasCount: 1,
       options: {
         cssMaxWidth: 400,
         cssMaxHeight: 400,
@@ -128,6 +133,10 @@ export default {
       },
     }
   },
+  computed: {
+    ...mapState(['convertedImages'])
+    // img :src="'data:image/png;base64,' + `${test123}`" 나중에 이미지 base64파일 형식으로 넣어주면된다.
+  },
   methods: {
     isIndex() {
       this.$store.commit('isIndex', false)
@@ -136,7 +145,53 @@ export default {
       this.$store.commit("isNotEditor", false);
     },
 
-// 파일 업로드시, preview만 클릭하면 올라갈 수 있도록 만듬.
+    async canvasImageToSpring() {
+      const ctxTest = document.querySelector("#webtoonCanvas")
+      // console.log(ctxTest)
+
+      let canvasFormData = new FormData()
+      // let canvasFormData = new Array()
+
+      for ( let count = 0; count < this.webtoonCanvasCount; count++ ) {
+        await html2canvas(ctxTest, {
+          height: this.initWebtoonCanvasHeight,
+          y: 128 + this.initWebtoonCanvasHeight*count,  // 아래위 마진때문에 128.
+        })
+          .then( canvas => {
+            // document.body.appendChild(canvas)
+  
+            const base64Data = canvas.toDataURL('image/png')
+            
+            // base64 데이터 디코딩
+            let blobBin = atob(base64Data.split(',')[1])
+            let array = [];
+            for (var i = 0; i < blobBin.length; i++) {
+                array.push(blobBin.charCodeAt(i));
+            }
+  
+            let file = new Blob([new Uint8Array(array)], {type: 'image/png'});	// Blob 생성
+            canvasFormData.append(count, file);	// file data 추가
+            // canvasFormData.append("one", file);	// file data 추가
+            // canvasFormData.append("two", file);	// file data 추가
+            // canvasFormData.append("three", file);	// file data 추가
+            // canvasFormData.push(count, file);	// file data 추가
+            // return canvasFormData
+        })
+          // .catch( e => {
+          //   console.log(e)
+          //   alert('캔버스 전송실패')
+          // })
+          // .then( canvasFormData => {
+          //   console.log(5)
+          //   this.$store.dispatch('canvasImageToSpring', canvasFormData)
+          // })
+      }
+      this.$store.dispatch('canvasImageToSpring', canvasFormData)
+
+
+    },
+    
+    // 파일 업로드시, preview만 클릭하면 올라갈 수 있도록 만듬.
     dropZoneImageMoveToEditor(file_list) {
       // console.log(file_list)
 
@@ -156,13 +211,13 @@ export default {
     // django로 이미지 보내기.
     dropZoneImageToDjango(file_list) {
 
-      const my_form = new FormData()
+      const djangoImageForm = new FormData()
       
       for ( let file of file_list ) {
-        my_form.append(file.name ,file)
+        djangoImageForm.append(file.name ,file)
       }
 
-      this.$store.dispatch("dropZoneImageToDjango", my_form)
+      this.$store.dispatch("dropZoneImageToDjango", djangoImageForm)
     },
 
     // 사실상 preview에서 클릭해서 넣을 수 있기 때문에 필요없음.
@@ -190,6 +245,7 @@ export default {
     // 캔버스 추가
     btnAddCanvasHeight() {
       this.webtoonCanvasHeight = this.webtoonCanvasHeight*2
+      this.webtoonCanvasCount++
     },
 
     // 캔버스의 이미지가 눌러졌을때, 다른 이미지는 활성화 취소
@@ -242,7 +298,6 @@ export default {
 .webtoon-canvas-css {
   position: relative;
   background-color: white;
-  border: 1px solid black;
 }
 
 .dropzone-custom-content {
