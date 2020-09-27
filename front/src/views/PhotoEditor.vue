@@ -19,7 +19,7 @@
             <!-- @clicked="check2('bubble' + idx)" -->
             <!-- :style="{ backgroundImage:  'url('+ `${image.image}` + ')', backgroundRepeat: 'round' }" -->
             <!-- <img :src="image.image" style="height: inherit; width: inherit;" alt=""> -->
-            <div v-show="image.isActive">
+            <div v-show="image.isActive" style="position: absolute;">
               <v-btn @click="btnUpZindex(idx)">zindex올리기</v-btn>
               <v-btn @click="btnDownZindex(idx)">zindex내리기</v-btn>
               <v-btn @click="btnOption(idx)">옵션</v-btn>
@@ -28,7 +28,7 @@
             <!-- <input v-if="image.isBubble" :id="'bubble' + idx" @click='check' style="width: inherit; height: inherit" type="text" class="triangle-isosceles" value='대사란' > -->
             <!-- <p v-if="image.isBubble" >abcdefawefawefawefawefawefaabcdefawefawefawefawefawefaabcdefawefawefawefawefawefaabcdefawefawefawefawefawefa</p> -->
 
-            <div style="float: right; width: 100px; height: 100px; background-color: black;">
+            <div v-show="image.isClickOption" style="width: 500px; height: 500px; background-color: black; position: relative; z-index: 999; left: calc(100% + 50px);">
               abcd
             </div>
           </VueDragResize>
@@ -114,6 +114,7 @@ export default {
           isBackground: false, // 배경인지 확인하기위함.
           isBubble: false,  // 말풍선인지 확인
           zIndex: 100,
+          isClickOption: false,
         },
         // {
         //   image: require(`@/assets/bubble1.png`),  // 맨처음 테스트용으로 넣은것
@@ -172,6 +173,9 @@ export default {
     }
   },
   methods: {
+    btnOption(idx) {
+      this.images[idx].isClickOption = !this.images[idx].isClickOption
+    },
     btnAddBubble1() {
       
     },
@@ -209,6 +213,8 @@ export default {
         isActive: false,
         isBackground: true,
         zIndex: 100,
+        isClickOption: false,
+
       }
       this.images.push(addBackground)
     },
@@ -253,6 +259,8 @@ export default {
         isActive: false,
         isBackground: false,
         zIndex: 100,
+        isClickOption: false,
+
       }
       this.images.push(imageData)
     },
