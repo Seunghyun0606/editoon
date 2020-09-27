@@ -16,22 +16,22 @@
             @activated="canvasImageOnActivated(idx)"
             @deactivated="canvasImageOffActivated(idx)"
             :style="[objectStyle(idx)]"
+            class="d-flex"
           >
             <!-- :style="[ image.isBackground ? addBackground : addImage(image.image), { border: image.imageOption.borderSlider +'px' + ' solid' + ' black'} ]" -->
             <!-- @clicked="check2('bubble' + idx)" -->
             <!-- :style="{ backgroundImage:  'url('+ `${image.image}` + ')', backgroundRepeat: 'round' }" -->
             <!-- <img :src="image.image" style="height: inherit; width: inherit;" alt=""> -->
-            <div v-show="image.isActive" style="position: absolute;">
+            <div v-show="image.isActive" style="position: absolute; float: right;">
               <v-btn @click="btnUpZindex(idx)">zindex올리기</v-btn>
               <v-btn @click="btnDownZindex(idx)">zindex내리기</v-btn>
               <v-btn @click="btnOption(idx)">옵션</v-btn>
 
             </div>
             <!-- <input v-if="image.isBubble" :id="'bubble' + idx" @click='check' style="width: inherit; height: inherit" type="text" class="triangle-isosceles" value='대사란' > -->
-            <!-- <p v-if="image.isBubble" >abcdefawefawefawefawefawefaabcdefawefawefawefawefawefaabcdefawefawefawefawefawefaabcdefawefawefawefawefawefa</p> -->
 
             <!-- background의 경우 -->
-            <div v-if="image.isClickOption && image.isBackground" style="width: 500px; height: 500px; background-color: black; position: relative; z-index: 999; left: calc(100% + 50px);">
+            <div v-if="image.isClickOption && image.isBackground" style="width: 500px; height: 500px; background-color: black; position: absolute; z-index: 999; left: calc(100% + 50px);">
 
               <v-btn @click="image.backgroundOption.gradientCheck = 0">
                 일반
@@ -45,11 +45,17 @@
 
             </div>
             <!-- 말풍선의 경우 -->
-            <div v-if="image.isClickOption && image.isBubble" style="width: 500px; height: 500px; background-color: black; position: relative; z-index: 999; left: calc(100% + 50px);">
-              <v-container>
+            <div v-if="image.isClickOption && image.isBubble" style="width: 500px; height: 500px; background-color: black; position: absolute; z-index: 999; left: calc(100% + 50px);">
+              <v-container style="color: white;">
                 <v-row>
                   <v-col>
-                    
+                    말풍선 영역
+                    <div>
+                      색깔
+                    </div>
+                    <div>
+                      둥글게
+                    </div>
                   </v-col>
                 </v-row>
                 <v-row>
@@ -59,6 +65,35 @@
                 </v-row>
                 <v-row>
                   <v-col>
+                    말풍선 꼬리영역
+                    <div>
+                      위치
+                    </div>
+                    <v-btn>a</v-btn>
+                    <v-btn>b</v-btn>
+                    <v-btn>c</v-btn>
+                    <v-btn>d</v-btn>
+                    <div>
+                      모양
+                    </div>
+                    <v-btn>1</v-btn>
+                    <v-btn>2</v-btn>
+                    <v-btn>3</v-btn>
+                    <div>
+                      크기조절 v-side 3개정도? postition, width, height
+                    </div>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col>
+                    텍스트영역
+                    <v-input></v-input>
+                    <div>
+                      font-size vislide
+                    </div>
+                    <div>
+                      font-색깔
+                    </div>
 
                   </v-col>
                 </v-row>
@@ -66,7 +101,7 @@
             </div>
             <!-- 이미지의 경우 -->
             <div v-if="image.isClickOption && !image.isBubble && !image.isBackground"
-              :style="{ width: '500px', height: '500px', backgroundColor: 'black', position: 'relative', zIndex: 999, bottom: image.imageOption.borderSlider + 'px', left: 'calc(100% + 50px + ' + `${image.imageOption.borderSlider}` + 'px )' }">
+              :style="{ width: '500px', height: '500px', backgroundColor: 'black', position: 'absolute', zIndex: 999, bottom: image.imageOption.borderSlider + 'px', left: 'calc(100% + 50px + ' + `${image.imageOption.borderSlider}` + 'px )' }">
               <v-container fluid style="color:white;">
                 <v-row>
                   <v-col>
@@ -86,6 +121,8 @@
 
               </v-container>
             </div>
+
+            <p v-if="image.isBubble" class="my-0 mx-auto" style="width: 80%; align-self: center; text-align: center; overflow-wrap: anywhere;" >fawefawefawefawe</p>
           </VueDragResize>
           
         </v-col>
@@ -133,9 +170,6 @@
       </v-row>
     </v-container>
 
-
-
-
 </template>
 
 <script>
@@ -165,7 +199,7 @@ export default {
           image: require(`@/assets/account_signup.png`),  // 맨처음 테스트용으로 넣은것
           isActive: false,  // 나중에 중복 선택 제거를 위함.
           isBackground: false, // 배경인지 확인하기위함.
-          isBubble: false,  // 말풍선인지 확인
+          isBubble: true,  // 말풍선인지 확인
           zIndex: 102,
           isClickOption: false,
           isDraggable: true,
@@ -265,7 +299,8 @@ export default {
     }
   },
   methods: {
-    btnOption(idx) {
+    btnOption(idx) {      
+      this.images[idx].isDraggable = false
       this.images[idx].isClickOption = !this.images[idx].isClickOption
     },
     btnAddBubble1() {
@@ -361,7 +396,6 @@ export default {
 
     // 캔버스의 이미지가 눌러졌을때, 다른 이미지는 활성화 취소
     canvasImageOnActivated(idx) {
-      this.images[idx].isDraggable = false
       for ( let i = 0; i < this.images.length; i++ ) {
         if ( i === idx ) {
           this.images[i].isActive = true
