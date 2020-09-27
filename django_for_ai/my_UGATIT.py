@@ -617,7 +617,7 @@ class UGATIT(object) :
 
     def test(self):
         tf.global_variables_initializer().run()
-        test_A_files =['./dataset/{}/{}'.format(self.dataset_name, img)  for img in self.imgs] 
+        test_A_files =['./dataset/{}/{}'.format(self.dataset_name, img)  for img in self.files] 
         print(test_A_files)
         #glob('./dataset/{}/{}'.format(self.dataset_name, self.imgs))
         

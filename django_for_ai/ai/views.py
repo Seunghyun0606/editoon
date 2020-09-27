@@ -5,7 +5,6 @@ import json
 import os
 import numpy as np
 from PIL import Image
-from io import BytesIO
 import base64
 from my_UGATIT import UGATIT
 import argparse
@@ -15,6 +14,9 @@ import cv2
 from django.http import FileResponse
 from django.http import HttpResponse
 from glob import glob
+import io
+import base64
+import matplotlib.pylab as plt
 """parsing and configuration"""
 
 class Args:
@@ -64,10 +66,8 @@ def ImgtoAnime(request):
         img_np = np.array(img)[:,:,:3] 
         files[str(test[file_name])]=[img_np]
    
-    print(files)
     args = Args()
     
-    args.imgs = files
     gan = ''
     with tf.Session(config=tf.ConfigProto(allow_soft_placement=True)) as sess:
         gan = UGATIT(sess, args)
@@ -79,14 +79,17 @@ def ImgtoAnime(request):
         print(" [*] finished!")
 
     imgs = gan.ret_imgs
-
-    ret = {}
-    t=[]
+    
+    res=[]
     for i, img in enumerate(imgs):
         img = (img+1.)/2 * 255
-        ret['img{}'.format(i)] = img[0].tolist()
-        img = np.asarray(img[0])
-        im = Image.fromarray(img, 'RGB')
-        t.append(im)
+        im = Image.fromarray(img[0].astype(np.uint8), 'RGB')
+        
+        output = io.BytesIO()
+        im.save(output, format='JPEG')
+        hex_data = base64.b64encode(output.getvalue())
+        return HttpResponse(hex_data, content_type="image/jpeg")
 
-    return HttpResponse(t, content_type="image/jpeg")
+    #여러개할때
+    #    res.append(hex_data) 
+    #return HttpResponse(res, content_type="image/jpeg")
