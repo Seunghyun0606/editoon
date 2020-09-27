@@ -13,14 +13,26 @@
             :z="image.zIndex"
             :parentLimitation="true"
             @activated="canvasImageOnActivated(idx)"
+            @deactivated="canvasImageOffActivated(idx)"
             :style="[ image.isBackground ? addBackground : addImage(image.image) ]"
           >
+            <!-- @clicked="check2('bubble' + idx)" -->
             <!-- :style="{ backgroundImage:  'url('+ `${image.image}` + ')', backgroundRepeat: 'round' }" -->
             <!-- <img :src="image.image" style="height: inherit; width: inherit;" alt=""> -->
-            <v-btn @click="btnUpZindex(idx)">zindex올리기</v-btn>
-            <v-btn @click="btnDownZindex(idx)">zindex내리기</v-btn>
+            <div v-show="image.isActive">
+              <v-btn @click="btnUpZindex(idx)">zindex올리기</v-btn>
+              <v-btn @click="btnDownZindex(idx)">zindex내리기</v-btn>
+              <v-btn @click="btnOption(idx)">옵션</v-btn>
 
+            </div>
+            <!-- <input v-if="image.isBubble" :id="'bubble' + idx" @click='check' style="width: inherit; height: inherit" type="text" class="triangle-isosceles" value='대사란' > -->
+            <!-- <p v-if="image.isBubble" >abcdefawefawefawefawefawefaabcdefawefawefawefawefawefaabcdefawefawefawefawefawefaabcdefawefawefawefawefawefa</p> -->
+
+            <div style="float: right; width: 100px; height: 100px; background-color: black;">
+              abcd
+            </div>
           </VueDragResize>
+          
         </v-col>
 
 
@@ -55,12 +67,17 @@
               <v-btn @click="btnEditorImageToCanvas">캔버스로보내기</v-btn>
               <v-btn @click="btnAddCanvasHeight">캔버스늘리기</v-btn>
               <v-btn @click="btnAddBackground">회상배경추가하기</v-btn>
+              <v-btn @click="btnAddBubble1">말풍선1</v-btn>
+              <v-btn @click="btnAddBubble2">말풍선2</v-btn>
 
 
             </div>
+
           </v-row>
         </v-col>
       </v-row>
+      <input @click="check" style="z-index: 999;" type="text" class="oval-speech" value='.'>
+      <p style="z-index: 999;" class="oval-speech" >oval</p>
     </v-container>
 
 
@@ -95,8 +112,16 @@ export default {
           image: require(`@/assets/account_signup.png`),  // 맨처음 테스트용으로 넣은것
           isActive: false,  // 나중에 중복 선택 제거를 위함.
           isBackground: false, // 배경인지 확인하기위함.
+          isBubble: false,  // 말풍선인지 확인
           zIndex: 100,
-        }
+        },
+        // {
+        //   image: require(`@/assets/bubble1.png`),  // 맨처음 테스트용으로 넣은것
+        //   isActive: false,  // 나중에 중복 선택 제거를 위함.
+        //   isBackground: false, // 배경인지 확인하기위함.
+        //   isBubble: true,  // 말풍선인지 확인
+        //   zIndex: 100,
+        // }
       ],
       addBackground: {
         backgroundColor: 'black',
@@ -127,7 +152,7 @@ export default {
           menuBarPosition: 'bottom',
           // initMenu: 'filter',
           // menu: ['shape', 'filter',],
-          // menu: ['crop']
+          menu: ['crop', 'flip', 'rotate', 'shape', 'draw', 'icon', 'text']
         },
         selectionStyle: {
           cornerSize: 10,
@@ -147,6 +172,24 @@ export default {
     }
   },
   methods: {
+    btnAddBubble1() {
+      
+    },
+    btnAddBubble2() {
+
+    },
+    check1() {
+      console.log(123)
+    },
+    check2(idx) {
+      console.log(idx)
+      document.querySelector('#' + `${idx}`).focus()
+    },
+    check(e) {
+      e.stopPropagation()
+      console.log(1)
+      // console.log(e)
+    },
     isIndex() {
       this.$store.commit('isIndex', false)
     },
@@ -212,7 +255,6 @@ export default {
         zIndex: 100,
       }
       this.images.push(imageData)
-
     },
     
     // 캔버스 추가
@@ -229,6 +271,9 @@ export default {
         }
         this.images[i].isActive = false
       }
+    },
+    canvasImageOffActivated(idx) {
+      this.images[idx].isActive = false
     },
 
     //캔버스 사이즈 변경시, 캔버스 안의 이미지가 안옮겨지는 버그 수정
@@ -259,6 +304,8 @@ export default {
 
 <style>
 
+
+
 .tui-image-editor-header > .tui-image-editor-header-logo, .tui-image-editor-header-buttons {
   display: none;
 }
@@ -282,6 +329,10 @@ export default {
   margin: 0;
   font-size: 1.1rem
   
+}
+
+.vdr:hover {
+  cursor: pointer;
 }
 
 .subtitle {
