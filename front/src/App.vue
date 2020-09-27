@@ -40,9 +40,6 @@ export default {
 </script>
 
 <style>
-body {
-  background-color: #fb9;
-}
 .nav-margin {
   margin-top: 64px;
 }

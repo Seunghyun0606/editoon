@@ -6,11 +6,11 @@
       :style="[mainBackgroundImage.one]"
       style="background-color: #fb9;"
     >
-      <v-row style="height: 90%;">
-        <v-col style="padding: 3vh 6vw;">
-          <v-row>
-            <v-col class="text-center main-index-txt">
-              <div class="text">
+      <v-row style="height: 90%; justify-content: center; align-content: center;" class="pt-16">
+        <!-- <v-col style="padding: 3vh 6vw;">
+          <v-row> -->
+            <!-- <v-col class="text-center main-index-txt"> -->
+              <div class="text" style="cursor: pointer;">
                 <span>E</span>
                 <span>D</span>
                 <span>I</span>
@@ -19,8 +19,8 @@
                 <span>O</span>
                 <span>N</span>
               </div>
-            </v-col>
-          </v-row>
+            <!-- </v-col> -->
+          <!-- </v-row> -->
 
           <!-- <v-row>
             <v-col align="center">
@@ -33,7 +33,7 @@
               >
             </v-col>
           </v-row> -->
-        </v-col>
+        <!-- </v-col> -->
       </v-row>
       <div
         @click="scrollDown(1)"
@@ -50,7 +50,8 @@
     >
       <v-row
         class="align-content-center justify-center d-flex"
-        style="height: 90%; width: 100%"
+        :class="{ 'fade-in': activeClass.second, 'fade-out': !activeClass.second }"
+        style="height: 90%; width: 100%;"
       >
         <v-col md="4" lg="4" cols="10" class="pa-0">
           <v-row>
@@ -89,6 +90,7 @@
       <div
         @click="scrollDown(2)"
         class="mx-auto d-flex justify-center main-scroll-down"
+        :class="{ 'fade-in': activeClass.second, 'fade-out': !activeClass.second }"
       >
         <v-icon style="color: white; font-size: 36px;">mdi-chevron-down</v-icon>
       </div>
@@ -101,7 +103,10 @@
       class="px-10 main-background"
       :style="mainBackgroundImage.three"
     >
-      <v-row class="align-content-center justify-center" style="height: 90%;">
+      <v-row
+        class="align-content-center justify-center"
+        :class="{ 'fade-in': activeClass.third, 'fade-out': !activeClass.third }"
+        style="height: 90%;">
         <v-col md="6" cols="10" class="mx-md-10 mx-sm-0 mx-xs-0 pa-0">
           <img
             style="width: 100%;"
@@ -134,6 +139,8 @@
       <div
         @click="scrollDown(3)"
         class="mx-auto d-flex justify-center main-scroll-down"
+        :class="{ 'fade-in': activeClass.third, 'fade-out': !activeClass.third }"
+
       >
         <v-icon style="color: white; font-size: 36px;">mdi-chevron-down</v-icon>
       </div>
@@ -148,7 +155,7 @@
       :style="[mainBackgroundImage.four]"
     >
       <v-row style="height: 90%;">
-        <v-col>
+        <v-col :class="{ 'fade-in': activeClass.fourth, 'fade-out': !activeClass.fourth }">
           <v-row style="height: 30vh; text-align: center;" class="align-center">
             <v-col class="main-index-txt">대표작품들을 감상해보세요</v-col>
           </v-row>
@@ -194,6 +201,8 @@
       <div
         @click="scrollDown(0)"
         class="mx-auto main-scroll-down d-flex justify-center"
+        :class="{ 'fade-in': activeClass.fourth, 'fade-out': !activeClass.fourth }"
+
       >
         <v-icon style="color: black; font-size: 36px;">mdi-chevron-up</v-icon>
       </div>
@@ -209,19 +218,17 @@
 </template>
 
 <script>
-// import LoginModal from '@/components/login/LoginModal'
 import VueCompareImage from "vue-compare-image";
 
 export default {
   name: "Index",
   components: {
-    // LoginModal
     VueCompareImage,
   },
   data() {
     return {
       dialog: false,
-
+      isActive: true,
       loginData: {
         username: "",
         email: "",
@@ -230,7 +237,7 @@ export default {
       current: 0,
       mainBackgroundImage: {
         one: {
-          backgroundImage: "url('" + require(`@/assets/simple10.gif`) + "')",
+          backgroundImage: "url('" + require(`@/assets/simple12.gif`) + "')",
         },
         two: {
           backgroundImage: "url('" + require(`@/assets/simple2.jpg`) + "')",
@@ -242,6 +249,11 @@ export default {
           backgroundImage: "url('" + require(`@/assets/simple11.gif`) + "')",
         },
       },
+      activeClass: {
+        second: false,
+        third: false,
+        fourth: false,
+      }
     };
   },
   // watch: {
@@ -263,6 +275,7 @@ export default {
   methods: {
     currentScrollPlace() {
       this.current = document.documentElement.scrollTop;
+      this.fadeInOut(this.current)
     },
     isIndex() {
       this.$store.commit("isIndex", true);
@@ -277,9 +290,35 @@ export default {
       this.$router.push("photoeditor");
     },
     scrollDown(page) {
-      var y = this.viewPortHeight;
+      let y = this.viewPortHeight;
       y *= page;
       window.scrollTo({ top: y, left: 0, behavior: "smooth" });
+    },
+
+    // fadeInOut
+    fadeInOut(current) {
+      let y = this.viewPortHeight
+      let currentPlace = current + y
+      if ( currentPlace > y + y/5 && currentPlace < 2*y + y/5 ) {
+        this.activeClass.second = true
+        this.activeClass.third = false
+        this.activeClass.fourth = false
+      }
+      else if ( currentPlace > 2*y + y/5 && currentPlace < 3*y + y/5 ) {
+        this.activeClass.second = false
+        this.activeClass.third = true
+        this.activeClass.fourth = false    
+      }
+      else if ( currentPlace > 3*y + y/5 ) {
+        this.activeClass.second = false
+        this.activeClass.third = false
+        this.activeClass.fourth = true
+      }
+      else {
+        this.activeClass.second = false
+        this.activeClass.third = false
+        this.activeClass.fourth = false
+      }
     },
   },
   created() {
@@ -297,6 +336,29 @@ export default {
 </script>
 
 <style lang="scss">
+
+.fade-in {
+  
+  animation: fade-in 2s;
+  opacity: 1;
+}
+
+@keyframes fade-in {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+
+.fade-out {
+  animation: fade-out 2s;
+  opacity: 0;
+}
+
+
+@keyframes fade-out {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
 .check {
   margin-top: 0 !important;
 }
@@ -331,16 +393,16 @@ export default {
   position:  relative;
 }
 
-.main-background-first::after {
-  background-color: black !important;
-  opacity: 0.3;
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: calc(100%);
-  top: 0;
-  left: 0;
-}
+// .main-background-first::after {
+//   background-color: black !important;
+//   opacity: 0.3;
+//   position: absolute;
+//   content: "";
+//   width: 100%;
+//   height: calc(100%);
+//   top: 0;
+//   left: 0;
+// }
 
 .main-background {
   height: 100vh;
@@ -503,7 +565,6 @@ p {
   font-size: 40px;
   display: flex;
   justify-content: center;
-  margin-top: 40vh;
   transform: translateY(-50%);
   // margin: 250px auto;
   text-align: center;
