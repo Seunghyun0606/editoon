@@ -21,7 +21,8 @@ export default {
     return {
       items: [
           {
-            src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
+            // src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
+            src: 'https://j3b308.p.ssafy.io/images/profileImg/200927_c1cb4f6611.JPG'
           },
           {
             src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
