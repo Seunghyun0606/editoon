@@ -111,6 +111,7 @@ export default new Vuex.Store({
           return false
         })
     },
+    // 장고로 이미지 보내기
     dropZoneImageToDjango({ commit }, my_form) {
 
       axios.post( Django_SERVER_URL, my_form, {
@@ -126,6 +127,21 @@ export default new Vuex.Store({
           console.log(err)
         })
 
+    },
+    canvasImageToSpring({ commit }, canvasForms) {
+      console.log(4, canvasForms)
+      axios.post( SERVER_URL + 'test/photos/', canvasForms, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+        .then (res => {
+          commit
+          console.log(res.data)
+        })
+        .catch ( err => {
+          console.log(err)
+        })
     }
 
   },

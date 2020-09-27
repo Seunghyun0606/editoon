@@ -144,12 +144,39 @@ export default {
       console.log(ctxTest)
       html2canvas(ctxTest, {
         height: this.webtoonCanvasHeight,
-      }).then( canvas => {
-        document.body.appendChild(canvas)
       })
-    },
+        .then( canvas => {
+          document.body.appendChild(canvas)
 
-// 파일 업로드시, preview만 클릭하면 올라갈 수 있도록 만듬.
+          let canvasFormData = new FormData()
+
+          const base64Data = canvas.toDataURL('image/png')
+          console.log(base64Data)
+          
+          // base64 데이터 디코딩
+          let blobBin = atob(base64Data.split(',')[1])
+          let array = [];
+          for (var i = 0; i < blobBin.length; i++) {
+              array.push(blobBin.charCodeAt(i));
+          }
+
+          let file = new Blob([new Uint8Array(array)], {type: 'image/png'});	// Blob 생성
+          canvasFormData.append("one", file);	// file data 추가
+          canvasFormData.append("two", file);	// file data 추가
+          canvasFormData.append("three", file);	// file data 추가
+
+          return canvasFormData
+      })
+        .catch( e => {
+          console.log(e)
+          alert('캔버스 전송실패')
+        })
+        .then( canvasFormData => {
+          this.$store.dispatch('canvasImageToSpring', canvasFormData)
+        })
+    },
+    
+    // 파일 업로드시, preview만 클릭하면 올라갈 수 있도록 만듬.
     dropZoneImageMoveToEditor(file_list) {
       // console.log(file_list)
 
