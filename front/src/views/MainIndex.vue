@@ -79,11 +79,10 @@
           style="height: 60vh;"
         >
           <!-- <img style="width: 100%;" :src="require('@/assets/main_second.jpg')" alt /> -->
-          <!-- '@/assets/iu.jpg' -->
 
           <VueCompareImage
             style="height: 100%;"
-            :leftImage="require('https://j3b308.p.ssafy.io/images/profileImg/200927_c1cb4f6611.JPG')"
+            :leftImage="require('@/assets/iu.jpg')"
             :rightImage="require('@/assets/iu_cartoon.jpg')"
           />
         </v-col>
