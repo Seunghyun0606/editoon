@@ -50,7 +50,6 @@
               <v-btn @click="btnDropZoneImageMoveToEditor">에디터로보내기</v-btn>
               <v-btn @click="btnEditorImageToCanvas">캔버스로보내기</v-btn>
               <v-btn @click="btnAddCanvasHeight">캔버스늘리기</v-btn>
-
             </div>
           </v-row>
         </v-col>
@@ -67,12 +66,13 @@ import VueDragResize from 'vue-drag-resize'
 import vue2Dropzone from 'vue2-dropzone'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 
-import { ImageEditor } from '@toast-ui/vue-image-editor';
-import 'tui-image-editor/dist/svg/icon-a.svg';
-import 'tui-image-editor/dist/svg/icon-b.svg';
-import 'tui-image-editor/dist/svg/icon-c.svg';
-import 'tui-image-editor/dist/svg/icon-d.svg';
-import 'tui-image-editor/dist/tui-image-editor.css';
+import { ImageEditor } from '@toast-ui/vue-image-editor'
+import 'tui-image-editor/dist/svg/icon-a.svg'
+import 'tui-image-editor/dist/svg/icon-b.svg'
+import 'tui-image-editor/dist/svg/icon-c.svg'
+import 'tui-image-editor/dist/svg/icon-d.svg'
+import 'tui-image-editor/dist/tui-image-editor.css'
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -88,7 +88,6 @@ export default {
         {
           image: require(`@/assets/account_signup.png`),  // 맨처음 테스트용으로 넣은것
           isActive: false,  // 나중에 중복 선택 제거를 위함.
-
         }
       ],
 
@@ -129,6 +128,10 @@ export default {
       },
     }
   },
+  computed: {
+    ...mapState(['convertedImages'])
+    // img :src="'data:image/png;base64,' + `${test123}`" 나중에 이미지 base64파일 형식으로 넣어주면된다.
+  },
   methods: {
     isIndex() {
       this.$store.commit('isIndex', false)
@@ -139,15 +142,11 @@ export default {
 
 // 파일 업로드시, preview만 클릭하면 올라갈 수 있도록 만듬.
     dropZoneImageMoveToEditor(file_list) {
-      console.log(file_list)
+      // console.log(file_list)
 
       const dz_preview = document.querySelectorAll('.dz-preview')
 
-      // const temp2 = document.querySelectorAll('.dz-image > img')
-
-      // temp1[0].addEventListener('click', function(e) {
-        //   console.log(e)
-      // })
+      this.dropZoneImageToDjango(file_list)
 
       for ( let idx = 0; idx < file_list.length; idx++) {
         dz_preview[idx + this.previewCount].addEventListener('click', e => {
@@ -157,6 +156,17 @@ export default {
       }
       // 여러번 올렸을경우, dz_preview의 인덱스가 달라지기때문
       this.previewCount += file_list.length
+    },
+    // django로 이미지 보내기.
+    dropZoneImageToDjango(file_list) {
+
+      const djangoImageForm = new FormData()
+      
+      for ( let file of file_list ) {
+        djangoImageForm.append(file.name ,file)
+      }
+
+      this.$store.dispatch("dropZoneImageToDjango", djangoImageForm)
     },
 
     // 사실상 preview에서 클릭해서 넣을 수 있기 때문에 필요없음.
