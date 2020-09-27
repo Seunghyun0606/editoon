@@ -15,6 +15,7 @@ public class ProfileImageRepo {
 	//	rootPath = "/home/jenkins/workspace/joinmeeting/backend/resources";
 
 		File dir = new File(rootPath);
+		System.out.println(dir.getPath());
 		if(!dir.exists())
 			dir.mkdirs();
 		

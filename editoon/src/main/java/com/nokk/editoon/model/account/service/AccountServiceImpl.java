@@ -33,7 +33,7 @@ import io.jsonwebtoken.MalformedJwtException;
 
 @Service
 public class AccountServiceImpl implements IAccountService {
-	private static final String IMAGE_FOLDER = "";
+	private static final String IMAGE_FOLDER = "/var/www/image/";
 
 	@Autowired
 	private AccountRepo accountRepo;
@@ -139,20 +139,21 @@ public class AccountServiceImpl implements IAccountService {
 				if (canUseFileExtension(fileExtension)) {
 					newImageName = createUUID.createUUID(fileExtension);
 				}
+				profileImageRepo.saveFile(accountModifyDTO.getMultipartFile(), IMAGE_FOLDER, newImageName);
 			} else if (!accountModifyDTO.getImage().equals("default.jpg")) {
 				if (accountModifyDTO.getMultipartFile() != null && !accountModifyDTO.getMultipartFile().isEmpty()) {
 					// CASE 2.
 					newImageName = accountModifyDTO.getImage(); // 기존에 있던 파일 지우고 그 이름으로 다시 설정
-//					profileImageRepo.deleteFile(IMAGE_FOLDER, newImageName);
+					profileImageRepo.deleteFile(IMAGE_FOLDER, newImageName);
+					profileImageRepo.saveFile(accountModifyDTO.getMultipartFile(), IMAGE_FOLDER, newImageName);
 				} else if (accountModifyDTO.getMultipartFile() == null
 						|| accountModifyDTO.getMultipartFile().isEmpty()) {
 					// CASE 3.
 					String deleteImageName = accountModifyDTO.getImage();
-//					profileImageRepo.deleteFile(IMAGE_FOLDER, deleteImageName);
+					profileImageRepo.deleteFile(IMAGE_FOLDER, deleteImageName);
 				}
 			}
 
-//			profileImageRepo.saveFile(accountModifyDTO.getMultipartFile(), IMAGE_FOLDER, newImageName);
 
 			// name 변경 부분
 			int ret = -1;
