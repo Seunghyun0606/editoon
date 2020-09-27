@@ -79,7 +79,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //				.antMatchers("/account/**").hasAnyRole("USER")
 				.antMatchers("/editoon/**").hasAnyRole("USER")
 //            	.antMatchers("/ws/**").permitAll() // ws로 들어오는 권한 모두 풀어줘야, 프론트에서 요청해도 401에러가 안뜸.
-				.antMatchers("/nonmember/**").permitAll() 
 				.anyRequest().authenticated();
 
 		http.logout()
