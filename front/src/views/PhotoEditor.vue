@@ -275,18 +275,6 @@ export default {
     btnAddBubble2() {
 
     },
-    check1() {
-      console.log(123)
-    },
-    check2(idx) {
-      console.log(idx)
-      document.querySelector('#' + `${idx}`).focus()
-    },
-    check(e) {
-      e.stopPropagation()
-      console.log(1)
-      // console.log(e)
-    },
     isIndex() {
       this.$store.commit('isIndex', false)
     },
@@ -305,9 +293,13 @@ export default {
         image: "",
         isActive: false,
         isBackground: true,
+        isBubble: false,
         zIndex: 100,
         isClickOption: false,
-
+        isDraggable: true,
+        backgroundOption: {
+          gradientCheck: 0  // 0 없음, 1 upper, 2 lower
+        },
       }
       this.images.push(addBackground)
     },
@@ -351,9 +343,14 @@ export default {
         image: dataURL,
         isActive: false,
         isBackground: false,
+        isBubble: false, 
         zIndex: 100,
         isClickOption: false,
-
+        isDraggable: true,
+        imageOption: {
+          borderSlider: 5,
+          borderColor: '#000',
+        },
       }
       this.images.push(imageData)
     },
