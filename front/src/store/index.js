@@ -129,7 +129,6 @@ export default new Vuex.Store({
 
     },
     canvasImageToSpring({ commit }, canvasForms) {
-      console.log(4, canvasForms)
       axios.post( SERVER_URL + 'test/photos/', canvasForms, {
         headers: {
           'Content-Type': 'multipart/form-data'
