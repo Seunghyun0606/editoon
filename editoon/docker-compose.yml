@@ -7,6 +7,7 @@ services:
       - 443:443
     volumes:
       - /var/www/j3b308.p.ssafy.io:/var/www/j3b308.p.ssafy.io
+      - /var/www/image:/var/www/image
     depends_on:
       - docker-springboot
   docker-springboot:
