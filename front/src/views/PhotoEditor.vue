@@ -130,8 +130,6 @@
           </v-row>
         </v-col>
       </v-row>
-      <input @click="check" style="z-index: 999;" type="text" class="oval-speech" value='.'>
-      <p style="z-index: 999;" class="oval-speech" >oval</p>
     </v-container>
 
 
@@ -165,7 +163,7 @@ export default {
         {
           image: require(`@/assets/account_signup.png`),  // 맨처음 테스트용으로 넣은것
           isActive: false,  // 나중에 중복 선택 제거를 위함.
-          isBackground: true, // 배경인지 확인하기위함.
+          isBackground: false, // 배경인지 확인하기위함.
           isBubble: false,  // 말풍선인지 확인
           zIndex: 102,
           isClickOption: false,
@@ -362,6 +360,7 @@ export default {
 
     // 캔버스의 이미지가 눌러졌을때, 다른 이미지는 활성화 취소
     canvasImageOnActivated(idx) {
+      this.images[idx].isDraggable = false
       for ( let i = 0; i < this.images.length; i++ ) {
         if ( i === idx ) {
           this.images[i].isActive = true
@@ -373,6 +372,7 @@ export default {
     canvasImageOffActivated(idx) {
       this.images[idx].isActive = false
       this.images[idx].isClickOption = false
+      this.images[idx].isDraggable = true
     },
 
     //캔버스 사이즈 변경시, 캔버스 안의 이미지가 안옮겨지는 버그 수정
