@@ -11,7 +11,7 @@ services:
       - docker-springboot
   docker-springboot:
     build: .
-#    volumes:
-#      - /var/www/image
+    volumes:
+      - /var/www/image:/resource/image
     expose:
       - 8080
