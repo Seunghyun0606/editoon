@@ -38,7 +38,16 @@
           </v-row> -->
         </v-col>
       </v-row>
-
+      <div>
+        test
+        <img :src="'data:image/png;base64,' + `${test123}`" alt=""
+        style="width: 100px;
+              height: 100px;
+              background-color: black;
+              z-index: 9999;
+              "
+        >
+      </div>
       <div
         @click="scrollDown(1)"
         class="mx-auto d-flex justify-center main-scroll-down"
@@ -232,7 +241,7 @@ export default {
   data() {
     return {
       dialog: false,
-
+      test123: '',
       loginData: {
         username: "",
         email: "",
@@ -284,7 +293,9 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res.data);
+          console.log(1, res.data)
+          console.log(2, res)
+          this.test123 = res.data
           if (res.data["res"] == 1) {
             this.mysrc = "1.jpg";
           }

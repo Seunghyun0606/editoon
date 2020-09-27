@@ -17,6 +17,7 @@ from glob import glob
 import io
 import base64
 import matplotlib.pylab as plt
+
 """parsing and configuration"""
 
 class Args:
@@ -62,7 +63,9 @@ def ImgtoAnime(request):
     for idx in range(len(test)):
         file_name = 'img'+str((idx+1))
         img = Image.open(test[file_name])
+        # img.show()
         img = img.resize((256, 256))
+        # img.show()
         img_np = np.array(img)[:,:,:3] 
         files[str(test[file_name])]=[img_np]
    
@@ -73,7 +76,7 @@ def ImgtoAnime(request):
         gan = UGATIT(sess, args)
         # build graph
         gan.build_model() 
-        gan.files = files
+        gan.files = files  # arigs.imgs에 넣은이유가?
 
         gan.test()
         print(" [*] finished!")
@@ -81,6 +84,7 @@ def ImgtoAnime(request):
     imgs = gan.ret_imgs
     
     res=[]
+
     for i, img in enumerate(imgs):
         img = (img+1.)/2 * 255
         im = Image.fromarray(img[0].astype(np.uint8), 'RGB')
@@ -93,3 +97,4 @@ def ImgtoAnime(request):
     #여러개할때
     #    res.append(hex_data) 
     #return HttpResponse(res, content_type="image/jpeg")
+
