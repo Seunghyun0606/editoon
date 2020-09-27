@@ -28,8 +28,58 @@
             <!-- <input v-if="image.isBubble" :id="'bubble' + idx" @click='check' style="width: inherit; height: inherit" type="text" class="triangle-isosceles" value='대사란' > -->
             <!-- <p v-if="image.isBubble" >abcdefawefawefawefawefawefaabcdefawefawefawefawefawefaabcdefawefawefawefawefawefaabcdefawefawefawefawefawefa</p> -->
 
-            <div v-show="image.isClickOption" style="width: 500px; height: 500px; background-color: black; position: relative; z-index: 999; left: calc(100% + 50px);">
-              abcd
+            <!-- background의 경우 -->
+            <div v-if="image.isClickOption && image.isBackground" style="width: 500px; height: 500px; background-color: red; position: relative; z-index: 999; left: calc(100% + 50px);">
+              <div>
+                상단 테두리 border정도
+              </div>
+              <div>
+                상단 테두리 opacity 정도
+              </div>
+              <div>
+                하단 테두리 border정도
+              </div>
+              <div>
+                하단 테두리 opacity 정도
+              </div>
+
+
+            </div>
+            <!-- 말풍선의 경우 -->
+            <div v-if="image.isClickOption && image.isBubble" style="width: 500px; height: 500px; background-color: blue; position: relative; z-index: 999; left: calc(100% + 50px);">
+              <v-container>
+                <v-row>
+                  <v-col>
+                    
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col>
+
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col>
+
+                  </v-col>
+                </v-row>
+              </v-container>
+            </div>
+            <!-- 이미지의 경우 -->
+            <div v-if="image.isClickOption && !image.isBubble && !image.isBackground" style="width: 500px; height: 500px; background-color: black; position: relative; z-index: 999; left: calc(100% + 50px);">
+              <v-container style="color:white;">
+                <v-row>
+                  <v-col>
+                    테두리 컬러
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col>
+                    테두리 두께
+                  </v-col>
+                </v-row>
+
+              </v-container>
             </div>
           </VueDragResize>
           
@@ -116,13 +166,22 @@ export default {
           zIndex: 100,
           isClickOption: false,
         },
-        // {
-        //   image: require(`@/assets/bubble1.png`),  // 맨처음 테스트용으로 넣은것
-        //   isActive: false,  // 나중에 중복 선택 제거를 위함.
-        //   isBackground: false, // 배경인지 확인하기위함.
-        //   isBubble: true,  // 말풍선인지 확인
-        //   zIndex: 100,
-        // }
+        {
+          image: require(`@/assets/account_signup.png`),  // 맨처음 테스트용으로 넣은것
+          isActive: false,  // 나중에 중복 선택 제거를 위함.
+          isBackground: true, // 배경인지 확인하기위함.
+          isBubble: false,  // 말풍선인지 확인
+          zIndex: 100,
+          isClickOption: false,
+        },
+        {
+          image: require(`@/assets/webtoon.png`),  // 맨처음 테스트용으로 넣은것
+          isActive: false,  // 나중에 중복 선택 제거를 위함.
+          isBackground: false, // 배경인지 확인하기위함.
+          isBubble: true,  // 말풍선인지 확인
+          zIndex: 100,
+          isClickOption: false,
+        },
       ],
       addBackground: {
         backgroundColor: 'black',
