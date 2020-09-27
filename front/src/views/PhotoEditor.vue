@@ -69,12 +69,13 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import html2canvas from 'html2canvas';
 
 
-import { ImageEditor } from '@toast-ui/vue-image-editor';
-import 'tui-image-editor/dist/svg/icon-a.svg';
-import 'tui-image-editor/dist/svg/icon-b.svg';
-import 'tui-image-editor/dist/svg/icon-c.svg';
-import 'tui-image-editor/dist/svg/icon-d.svg';
-import 'tui-image-editor/dist/tui-image-editor.css';
+import { ImageEditor } from '@toast-ui/vue-image-editor'
+import 'tui-image-editor/dist/svg/icon-a.svg'
+import 'tui-image-editor/dist/svg/icon-b.svg'
+import 'tui-image-editor/dist/svg/icon-c.svg'
+import 'tui-image-editor/dist/svg/icon-d.svg'
+import 'tui-image-editor/dist/tui-image-editor.css'
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -90,7 +91,6 @@ export default {
         {
           image: require(`@/assets/account_signup.png`),  // 맨처음 테스트용으로 넣은것
           isActive: false,  // 나중에 중복 선택 제거를 위함.
-
         }
       ],
 
@@ -132,6 +132,10 @@ export default {
         // clickable: false,
       },
     }
+  },
+  computed: {
+    ...mapState(['convertedImages'])
+    // img :src="'data:image/png;base64,' + `${test123}`" 나중에 이미지 base64파일 형식으로 넣어주면된다.
   },
   methods: {
     isIndex() {
@@ -207,13 +211,13 @@ export default {
     // django로 이미지 보내기.
     dropZoneImageToDjango(file_list) {
 
-      const my_form = new FormData()
+      const djangoImageForm = new FormData()
       
       for ( let file of file_list ) {
-        my_form.append(file.name ,file)
+        djangoImageForm.append(file.name ,file)
       }
 
-      this.$store.dispatch("dropZoneImageToDjango", my_form)
+      this.$store.dispatch("dropZoneImageToDjango", djangoImageForm)
     },
 
     // 사실상 preview에서 클릭해서 넣을 수 있기 때문에 필요없음.
