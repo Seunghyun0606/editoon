@@ -108,7 +108,7 @@
                   <v-col>
                     말풍선 영역
                     <div>
-                      색깔
+                      말풍선 색깔
                     </div>
                     <v-color-picker
                       hide-mode-switch
@@ -118,8 +118,16 @@
                     >
                     </v-color-picker>
                     <div>
-                      둥글게
+                      경계선 색깔
                     </div>
+                    <v-color-picker
+                      hide-mode-switch
+                      v-model="image.bubbleOption.main.borderColor"
+                      mode='hexa'
+                      class="my-2"
+                    >
+                    </v-color-picker>
+
                   </v-col>
                 </v-row>
 
@@ -270,6 +278,7 @@ export default {
               backgroundColor: 'white',
               borderWidth: '1px 1px 0 0',
               borderStyle: 'solid',
+              borderColor: 'black',
               transform: 'rotate(135deg)'
 
             }
@@ -443,6 +452,7 @@ export default {
             backgroundColor: '#fff',
             borderWidth: '1px 1px 0 0',
             borderStyle: 'solid',
+            borderColor: 'black',
             transform: 'rotate(135deg)'
           }
         }
