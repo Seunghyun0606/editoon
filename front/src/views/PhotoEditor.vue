@@ -51,95 +51,30 @@
             <div v-if="image.isClickOption && image.isBubble" style="width: 500px; background-color: black; position: absolute; z-index: 999; left: calc(100% + 50px);">
               <v-container fluid class="mx-auto my-8" style="width: 80%; color: white;">
                 <div class="mb-6">
-                  <v-btn></v-btn>
-                  <v-btn></v-btn>
-                  <v-btn></v-btn>
+                  <v-btn>텍스트</v-btn>
+                  <v-btn>말풍선</v-btn>
 
                 </div>
+
                 <v-row>
                   <v-col>
-                    텍스트영역
-                    <!-- stopPropagation 통해서 상위 이벤트로 못넘어가게해줘야함 -->
-                    <v-text-field
-                      @focus.stop
-                      @mouseup.stop
-                      @mousedown.stop
-                      label="Regular"
-                      placeholder="Placeholder"
-                      style="color: white;"
-                      dark
-                      v-model="image.bubbleOption.text.content"
-                    >
-                    </v-text-field>
+                    말풍선 꼬리영역
                     <div>
-                      font-size vislide
+                      위치
                     </div>
-                    <v-slider
-                      v-model="image.bubbleOption.text.fontSize"
-                      class="align-center"
-                      :max="100"
-                      :min="10"
-                      hide-details
-                      dark
-                    >
-                      <template v-slot:append>
-                        <v-text-field
-                          dark
-                          v-model="image.bubbleOption.text.fontSize"
-                          class="mt-0 pt-0"
-                          hide-details
-                          single-line
-                          type="number"
-                          style="width: 60px"
-                        ></v-text-field>
-                      </template>
-                    </v-slider>
+                    <v-btn @click="btnBubbleArrowUp(idx)">위</v-btn>
+                    <v-btn @click="btnBubbleArrowLeft(idx)">좌</v-btn>
+                    <v-btn @click="btnBubbleArrowRight(idx)">우</v-btn>
+                    <v-btn @click="btnBubbleArrowDown(idx)">하</v-btn>
                     <div>
-                      font-weight
+                      크기조절 v-side 3개정도? postition, width, height
                     </div>
-                    <v-slider
-                      v-model="image.bubbleOption.text.fontWeight"
-                      class="align-center"
-                      :max="9"
-                      :min="1"
-                      hide-details
-                      dark
-                    >
-                      <template v-slot:append>
-                        <v-text-field
-                          dark
-                          v-model="image.bubbleOption.text.fontWeight"
-                          class="mt-0 pt-0"
-                          hide-details
-                          single-line
-                          type="number"
-                          style="width: 60px"
-                        ></v-text-field>
-                      </template>
-                    </v-slider>
-                    <div>
-                      font-color
-                    </div>
-
-                    <!-- <div
-                      @click="isClickTextColor = !isClickTextColor"
-                      style="width: 50px; height: 50px; background-color: white; border-radius: 70px;"
-
-                    ></div> -->
-                    <v-color-picker
-                      hide-mode-switch
-                      v-model="image.bubbleOption.text.color"
-                      mode='hexa'
-                      class="my-2"
-                      :value="image.bubbleOption.text.color"
-                      
-                    >
-                    </v-color-picker>
-
-
                   </v-col>
                 </v-row>
-                <!-- <v-row>
+
+
+
+                <v-row>
                   <v-col>
                     말풍선 영역
                     <div>
@@ -150,32 +85,6 @@
                     </div>
                   </v-col>
                 </v-row>
-                <v-row>
-                  <v-col>
-
-                  </v-col>
-                </v-row>
-                <v-row>
-                  <v-col>
-                    말풍선 꼬리영역
-                    <div>
-                      위치
-                    </div>
-                    <v-btn>a</v-btn>
-                    <v-btn>b</v-btn>
-                    <v-btn>c</v-btn>
-                    <v-btn>d</v-btn>
-                    <div>
-                      모양
-                    </div>
-                    <v-btn>1</v-btn>
-                    <v-btn>2</v-btn>
-                    <v-btn>3</v-btn>
-                    <div>
-                      크기조절 v-side 3개정도? postition, width, height
-                    </div>
-                  </v-col>
-                </v-row> -->
 
               </v-container>
             </div>
@@ -316,15 +225,14 @@ export default {
             },
             sub: {
               position: 'absolute',
-              bottom: '0px',
               zIndex: -1,
-              left: '70%',
+              bottom: -5,
+              left: 70,
               width: '30px',
               height: '30px',
               backgroundColor: 'white',
               borderWidth: '1px 1px 0 0',
               borderStyle: 'solid',
-              marginBottom: '-12px',
               transform: 'rotate(135deg)'
 
             }
@@ -372,9 +280,9 @@ export default {
         let arrowStyle = {}
         
         arrowStyle.position = style.position
-        arrowStyle.bottom = style.bottom
         arrowStyle.zIndex = -1
-        arrowStyle.left = style.left
+        arrowStyle.bottom = style.bottom + '%'
+        arrowStyle.left = style.left + '%'
         arrowStyle.width = style.width
         arrowStyle.height = style.height
         arrowStyle.backgroundColor = this.images[idx].bubbleOption.main.backgroundColor
@@ -382,7 +290,6 @@ export default {
         arrowStyle.borderStyle = style.borderStyle
         arrowStyle.borderColor = this.images[idx].bubbleOption.main.borderColor
 
-        arrowStyle.marginBottom = style.marginBottom
         arrowStyle.transform = style.transform
 
         return arrowStyle
@@ -436,6 +343,30 @@ export default {
     }
   },
   methods: {
+    btnBubbleArrowUp(idx) {
+      const arrowStyle = this.images[idx].bubbleOption.sub
+      arrowStyle.bottom = 90
+      arrowStyle.left = 30
+      arrowStyle.transform = 'rotate(315deg)'
+    },
+    btnBubbleArrowDown(idx) {
+      const arrowStyle = this.images[idx].bubbleOption.sub
+      arrowStyle.bottom = -5
+      arrowStyle.left = 70
+      arrowStyle.transform = 'rotate(135deg)'
+    },
+    btnBubbleArrowLeft(idx) {
+      const arrowStyle = this.images[idx].bubbleOption.sub
+      arrowStyle.bottom = 50
+      arrowStyle.left = -5
+      arrowStyle.transform = 'rotate(225deg)'
+    },
+    btnBubbleArrowRight(idx) {
+      const arrowStyle = this.images[idx].bubbleOption.sub
+      arrowStyle.bottom = 50
+      arrowStyle.left = 90
+      arrowStyle.transform = 'rotate(45deg)'
+    },
     btnOption(idx) {      
       this.images[idx].isDraggable = false
       this.images[idx].isClickOption = !this.images[idx].isClickOption
@@ -467,15 +398,14 @@ export default {
           },
           sub: {
             position: 'absolute',
-            bottom: '0px',
             zIndex: -1,
-            left: '70%',
+            bottom: -5,
+            left: 70,
             width: '30px',
             height: '30px',
-            backgroundColor: 'white',
+            backgroundColor: '#fff',
             borderWidth: '1px 1px 0 0',
             borderStyle: 'solid',
-            marginBottom: '-12px',
             transform: 'rotate(135deg)'
           }
         }
