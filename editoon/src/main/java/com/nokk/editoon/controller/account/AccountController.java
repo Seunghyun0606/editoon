@@ -172,7 +172,9 @@ public class AccountController {
 
 	@ApiOperation(value = "nameAndImageModify - name", httpMethod = "POST", notes = "Hello this is nameAndImageModify - name and image")
 	@PostMapping("/v1/nameAndImageModify")
-	public ResponseEntity accountNameAndImageModify(@ModelAttribute AccountModifyDTO accountModifyDTO) {
+	public ResponseEntity accountNameAndImageModify(@ModelAttribute AccountModifyDTO accountModifyDTO, HttpServletRequest request) {
+		System.out.println(request.getSession().getServletContext().getRealPath("/"));
+		System.out.println("resources/upload/");
 		ResponseEntity response = null;
 		System.out.println(accountModifyDTO.toString());
 		final SuccessResponse result = new SuccessResponse();
