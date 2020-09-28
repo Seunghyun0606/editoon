@@ -318,7 +318,7 @@ export default {
       // console.log(ctxTest)
 
       let canvasFormData = new FormData()
-      // let canvasFormData = new Array()
+      let canvasFormArray = new Array()
 
       for ( let count = 0; count < this.webtoonCanvasCount; count++ ) {
         await html2canvas(ctxTest, {
@@ -338,11 +338,11 @@ export default {
             }
   
             let file = new Blob([new Uint8Array(array)], {type: 'image/png'});	// Blob 생성
-            canvasFormData.append(count, file);	// file data 추가
+            // canvasFormData.append(count, file);	// file data 추가
             // canvasFormData.append("one", file);	// file data 추가
             // canvasFormData.append("two", file);	// file data 추가
             // canvasFormData.append("three", file);	// file data 추가
-            // canvasFormData.push(count, file);	// file data 추가
+            canvasFormArray.push(file);	// file data 추가
             // return canvasFormData
         })
           // .catch( e => {
@@ -354,6 +354,13 @@ export default {
           //   this.$store.dispatch('canvasImageToSpring', canvasFormData)
           // })
       }
+      canvasFormData.append('_id', 0)
+      canvasFormData.append('subject', 'check')
+      canvasFormData.append('thumbnail', 'check')
+      // canvasFormData.append('createDate', 'check')
+
+      canvasFormData.append('image', canvasFormArray)
+      console.log(canvasFormArray)
       this.$store.dispatch('canvasImageToSpring', canvasFormData)
 
 
