@@ -74,6 +74,7 @@
 
                     ></div> -->
                     <v-color-picker
+                      @update:color.once="image.bubbleOption.text.color = 'black'"
                       hide-mode-switch
                       v-model="image.bubbleOption.text.color"
                       mode='hexa'

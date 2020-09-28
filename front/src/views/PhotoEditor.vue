@@ -85,7 +85,7 @@
                       v-model="image.bubbleOption.sub.left"
                       thumb-label
                       :max="95"
-                      :min="-5"
+                      :min="-10"
                     >
                     </v-slider>
                     <div>
@@ -96,7 +96,7 @@
                       v-model="image.bubbleOption.sub.bottom"
                       thumb-label
                       :max="95"
-                      :min="-5"
+                      :min="-10"
                     >
                     </v-slider>
                   </v-col>
@@ -121,12 +121,24 @@
                       경계선 색깔
                     </div>
                     <v-color-picker
+                      @update:color.once="image.bubbleOption.main.borderColor = 'black'"
                       hide-mode-switch
                       v-model="image.bubbleOption.main.borderColor"
                       mode='hexa'
                       class="my-2"
                     >
                     </v-color-picker>
+                    <div>
+                      경계 크기
+                    </div>
+                    <v-slider
+                      @mousedown.stop
+                      v-model="image.bubbleOption.main.borderWidth"
+                      thumb-label
+                      :max="10"
+                      :min="0"
+                    >
+                    </v-slider>
 
                   </v-col>
                 </v-row>
@@ -266,6 +278,7 @@ export default {
               borderRadius: 1,
               border: '1px solid',
               borderColor: 'black',
+              borderWidth: 1,
 
             },
             sub: {
@@ -309,6 +322,7 @@ export default {
             imageStyle.border = image.bubbleOption.main.border
             imageStyle.borderRadius = image.bubbleOption.main.borderRadius + 'em'
             imageStyle.borderColor = image.bubbleOption.main.borderColor
+            imageStyle.borderWidth = image.bubbleOption.main.borderWidth + 'px'
 
 
         }
@@ -323,6 +337,7 @@ export default {
       },
       bubbleArrowStyleSub: function(idx) {
         let style = this.images[idx].bubbleOption.sub
+        let mainStyle = this.images[idx].bubbleOption.main
         let arrowStyle = {}
         
         arrowStyle.position = style.position
@@ -331,10 +346,11 @@ export default {
         arrowStyle.left = style.left + '%'
         arrowStyle.width = style.width + 'px'
         arrowStyle.height = style.width + 'px'  // width === height
-        arrowStyle.backgroundColor = this.images[idx].bubbleOption.main.backgroundColor
-        arrowStyle.borderWidth = style.borderWidth
         arrowStyle.borderStyle = style.borderStyle
-        arrowStyle.borderColor = this.images[idx].bubbleOption.main.borderColor
+
+        arrowStyle.backgroundColor = mainStyle.backgroundColor
+        arrowStyle.borderWidth = mainStyle.borderWidth + 'px ' + mainStyle.borderWidth + 'px ' + '0 0'
+        arrowStyle.borderColor = mainStyle.borderColor
 
         arrowStyle.transform = style.transform
 
@@ -440,6 +456,7 @@ export default {
             borderRadius: 1,
             border: '1px solid',
             borderColor: 'black',
+            borderWidth: 1
 
           },
           sub: {
