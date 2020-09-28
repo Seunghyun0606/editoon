@@ -51,12 +51,96 @@
             <div v-if="image.isClickOption && image.isBubble" style="width: 500px; background-color: black; position: absolute; z-index: 999; left: calc(100% + 50px);">
               <v-container fluid class="mx-auto my-8" style="width: 80%; color: white;">
                 <div class="mb-6">
-                  <v-btn>텍스트</v-btn>
-                  <v-btn>말풍선</v-btn>
+                  <v-btn @click.stop="clickBubbleOptionText">텍스트</v-btn>
+                  <v-btn @click.stop="clickBubbleOption">말풍선</v-btn>
 
                 </div>
 
-                <v-row>
+                <v-row v-show="isClickBubbleOptionText">
+                  <v-col>
+                    텍스트영역
+                    <!-- stopPropagation 통해서 상위 이벤트로 못넘어가게해줘야함 -->
+                    <v-text-field
+                      @focus.stop
+                      @mouseup.stop
+                      @mousedown.stop
+                      label="Regular"
+                      placeholder="Placeholder"
+                      style="color: white;"
+                      dark
+                      v-model="image.bubbleOption.text.content"
+                    >
+                    </v-text-field>
+                    <div>
+                      font-size vislide
+                    </div>
+                    <v-slider
+                      v-model="image.bubbleOption.text.fontSize"
+                      class="align-center"
+                      :max="100"
+                      :min="10"
+                      hide-details
+                      dark
+                    >
+                      <template v-slot:append>
+                        <v-text-field
+                          dark
+                          v-model="image.bubbleOption.text.fontSize"
+                          class="mt-0 pt-0"
+                          hide-details
+                          single-line
+                          type="number"
+                          style="width: 60px"
+                        ></v-text-field>
+                      </template>
+                    </v-slider>
+                    <div>
+                      font-weight
+                    </div>
+                    <v-slider
+                      v-model="image.bubbleOption.text.fontWeight"
+                      class="align-center"
+                      :max="9"
+                      :min="1"
+                      hide-details
+                      dark
+                    >
+                      <template v-slot:append>
+                        <v-text-field
+                          dark
+                          v-model="image.bubbleOption.text.fontWeight"
+                          class="mt-0 pt-0"
+                          hide-details
+                          single-line
+                          type="number"
+                          style="width: 60px"
+                        ></v-text-field>
+                      </template>
+                    </v-slider>
+                    <div>
+                      font-color
+                    </div>
+
+                    <!-- <div
+                      @click="isClickTextColor = !isClickTextColor"
+                      style="width: 50px; height: 50px; background-color: white; border-radius: 70px;"
+
+                    ></div> -->
+                    <v-color-picker
+                      @update:color.once="image.bubbleOption.text.color = 'black'"
+                      hide-mode-switch
+                      v-model="image.bubbleOption.text.color"
+                      mode='hexa'
+                      class="my-2"
+                      
+                    >
+                    </v-color-picker>
+
+
+                  </v-col>
+                </v-row>
+
+                <v-row v-show="isClickBubbleOption">
                   <v-col>
                     말풍선 꼬리영역
                     <div>
@@ -99,12 +183,21 @@
                       :min="-10"
                     >
                     </v-slider>
+                    <div>
+                      경계 크기
+                    </div>
+                    <v-slider
+                      @mousedown.stop
+                      v-model="image.bubbleOption.main.borderWidth"
+                      thumb-label
+                      :max="10"
+                      :min="0"
+                    >
+                    </v-slider>
                   </v-col>
                 </v-row>
 
-
-
-                <v-row>
+                <v-row id="bubbleOptionController">
                   <v-col>
                     말풍선 영역
                     <div>
@@ -128,17 +221,6 @@
                       class="my-2"
                     >
                     </v-color-picker>
-                    <div>
-                      경계 크기
-                    </div>
-                    <v-slider
-                      @mousedown.stop
-                      v-model="image.bubbleOption.main.borderWidth"
-                      thumb-label
-                      :max="10"
-                      :min="0"
-                    >
-                    </v-slider>
 
                   </v-col>
                 </v-row>
@@ -247,6 +329,8 @@ export default {
   },
   data() {
     return {
+      isClickBubbleOptionText: true,
+      isClickBubbleOption: false,
       previewCount: 0,
       images: [
         {
@@ -405,6 +489,16 @@ export default {
     }
   },
   methods: {
+
+    clickBubbleOptionText() {
+      this.isClickBubbleOptionText = true
+      this.isClickBubbleOption = false
+    },
+    clickBubbleOption() {
+      this.isClickBubbleOptionText = false
+      this.isClickBubbleOption = true
+    },
+
     btnBubbleArrowUp(idx) {
       const arrowStyle = this.images[idx].bubbleOption.sub
       arrowStyle.bottom = 90
@@ -573,6 +667,12 @@ export default {
       this.images[idx].isActive = false
       this.images[idx].isClickOption = false
       this.images[idx].isDraggable = true
+
+
+      // 여기서 세팅 init 하면될듯.
+      this.isClickBubbleOptionText = true
+      this.isClickBubbleOption = false
+
     },
 
     //캔버스 사이즈 변경시, 캔버스 안의 이미지가 안옮겨지는 버그 수정
@@ -601,6 +701,30 @@ export default {
 </script>
 
 <style>
+
+/* #bubbleOptionController .v-color-picker {
+  max-width: 150px !important;
+  padding: 0;
+}
+
+#bubbleOptionController .v-color-picker__canvas {
+  width: 150px !important;
+  height: 100px !important;
+}
+#bubbleOptionController .v-color-picker__canvas canvas {
+  width: 100% !important;
+  height: 100% !important;
+} */
+/* #bubbleOptionController .v-color-picker__canvas canvas .v-color-picker__canvas-dot {
+  display: none !important;
+}
+#bubbleOptionController .v-color-picker .v-color-picker__controls {
+  padding: 5px !important;
+}
+
+#bubbleOptionController .v-color-picker .v-color-picker__preview {
+  display: none;
+} */
 
 .v-slider {
   margin-left: 0 !important;
