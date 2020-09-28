@@ -21,5 +21,4 @@ public class EditoonDetailDTO {
 		this.image = image;
 		this.createDate = createDate;
 	}
-	
 }

@@ -10,20 +10,31 @@ import org.springframework.stereotype.Service;
 import com.nokk.editoon.exception.ForbidenUserException;
 import com.nokk.editoon.model.account.entity.AccountEntity;
 import com.nokk.editoon.model.account.repository.AccountRepo;
+import com.nokk.editoon.model.account.repository.ProfileImageRepo;
 import com.nokk.editoon.model.editoon.dto.EditoonDetailDTO;
+import com.nokk.editoon.model.editoon.dto.SaveEditoonDetail;
 import com.nokk.editoon.model.editoon.entity.EditoonDetailEntity;
 import com.nokk.editoon.model.editoon.entity.EditoonEntity;
 import com.nokk.editoon.model.editoon.repository.EditoonDetailRepo;
+import com.nokk.editoon.util.CreateUUID;
 import com.nokk.editoon.util.MapperUtil;
 
 @Service
 public class EditoonServiceImpl implements IEditoonService{
+	private static final String IMAGE_FOLDER = "/resource/image/editoonImg";
+	
 	
 	@Autowired
 	private AccountRepo accountRepo;
 	
 	@Autowired
 	private EditoonDetailRepo editoonDetailRepo;
+	
+	@Autowired
+	private ProfileImageRepo profileImageRepo;
+	
+	@Autowired
+	private CreateUUID createUUID;
 	
 	@Autowired
 	private MapperUtil mapperUtil;
@@ -72,4 +83,9 @@ public class EditoonServiceImpl implements IEditoonService{
 		return editoonDetailDTO;
 	}
 	
+	@Override
+	public void saveEditoonDetail(SaveEditoonDetail saveEditoonDetail) {
+		
+		
+	}
 }
