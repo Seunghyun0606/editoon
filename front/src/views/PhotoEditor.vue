@@ -10,15 +10,15 @@
             :parentW="webtoonCanvasWidth"
             :w="200"
             :h="200"
-            :z="image.zIndex"
+            :z="image.isActive ? 999 : image.zIndex"
             :isDraggable='image.isDraggable'
             :parentLimitation="true"
             @activated="canvasImageOnActivated(idx)"
             @deactivated="canvasImageOffActivated(idx)"
-            :style="[objectStyle(idx)]"
+            :style="[objectStyle(idx), { }]"
             class="d-flex"
           >
-            <div :style="[bubbleArrowStyleSub(idx)]">
+            <div v-if="image.isBubble" :style="[bubbleArrowStyleSub(idx)]">
 
             </div>
             <!-- :style="[ image.isBackground ? addBackground : addImage(image.image), { border: image.imageOption.borderSlider +'px' + ' solid' + ' black'} ]" -->
@@ -34,7 +34,7 @@
             <!-- <input v-if="image.isBubble" :id="'bubble' + idx" @click='check' style="width: inherit; height: inherit" type="text" class="triangle-isosceles" value='대사란' > -->
 
             <!-- background의 경우 -->
-            <div v-if="image.isClickOption && image.isBackground" style="width: 500px; background-color: black; position: absolute; z-index: 999; left: calc(100% + 50px);">
+            <div v-if="image.isClickOption && image.isBackground" style="width: 500px; background-color: black; position: absolute; left: calc(100% + 50px);">
 
               <v-btn @click="image.backgroundOption.gradientCheck = 0">
                 일반
@@ -48,7 +48,7 @@
 
             </div>
             <!-- 말풍선의 경우 -->
-            <div v-if="image.isClickOption && image.isBubble" style="width: 500px; background-color: black; position: absolute; z-index: 999; left: calc(100% + 50px);">
+            <div v-if="image.isClickOption && image.isBubble" style="width: 500px; background-color: black; position: absolute; left: calc(100% + 50px);">
               <v-container fluid class="mx-auto my-8" style="width: 80%; color: white;">
                 <div class="mb-6">
                   <v-btn @click.stop="clickBubbleOptionText">텍스트</v-btn>
@@ -229,7 +229,7 @@
             </div>
             <!-- 이미지의 경우 -->
             <div v-if="image.isClickOption && !image.isBubble && !image.isBackground"
-              :style="{ width: '500px', backgroundColor: 'black', position: 'absolute', zIndex: 999, bottom: image.imageOption.borderSlider + 'px', left: 'calc(100% + 50px + ' + `${image.imageOption.borderSlider}` + 'px )' }">
+              :style="{ width: '500px', backgroundColor: 'black', position: 'absolute', bottom: image.imageOption.borderSlider + 'px', left: 'calc(100% + 50px + ' + `${image.imageOption.borderSlider}` + 'px )' }">
               <v-container fluid style="color:white;">
                 <v-row>
                   <v-col>
@@ -415,7 +415,6 @@ export default {
 
         }
         else {
-          imageStyle.color = image.imageOption.color
           imageStyle.border = image.imageOption.borderSlider + 'px' + " solid"
           imageStyle.borderColor = image.imageOption.borderColor
           imageStyle.backgroundImage = 'url(' + `${image.image}` + ')'
@@ -837,3 +836,5 @@ export default {
   /* color: #314b5f; */
   color: inherit
 }
+
+</style>
