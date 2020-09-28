@@ -34,7 +34,7 @@
             <!-- <input v-if="image.isBubble" :id="'bubble' + idx" @click='check' style="width: inherit; height: inherit" type="text" class="triangle-isosceles" value='대사란' > -->
 
             <!-- background의 경우 -->
-            <div v-if="image.isClickOption && image.isBackground" style="width: 500px; height: 500px; background-color: black; position: absolute; z-index: 999; left: calc(100% + 50px);">
+            <div v-if="image.isClickOption && image.isBackground" style="width: 500px; background-color: black; position: absolute; z-index: 999; left: calc(100% + 50px);">
 
               <v-btn @click="image.backgroundOption.gradientCheck = 0">
                 일반
@@ -48,9 +48,98 @@
 
             </div>
             <!-- 말풍선의 경우 -->
-            <div v-if="image.isClickOption && image.isBubble" style="width: 500px; height: 500px; background-color: black; position: absolute; z-index: 999; left: calc(100% + 50px);">
-              <v-container fluid class="ma-10" style="width: 80%; color: white;">
+            <div v-if="image.isClickOption && image.isBubble" style="width: 500px; background-color: black; position: absolute; z-index: 999; left: calc(100% + 50px);">
+              <v-container fluid class="mx-auto my-8" style="width: 80%; color: white;">
+                <div class="mb-6">
+                  <v-btn></v-btn>
+                  <v-btn></v-btn>
+                  <v-btn></v-btn>
+
+                </div>
                 <v-row>
+                  <v-col>
+                    텍스트영역
+                    <!-- stopPropagation 통해서 상위 이벤트로 못넘어가게해줘야함 -->
+                    <v-text-field
+                      @focus.stop
+                      @mouseup.stop
+                      @mousedown.stop
+                      label="Regular"
+                      placeholder="Placeholder"
+                      style="color: white;"
+                      dark
+                      v-model="image.bubbleOption.text.content"
+                    >
+                    </v-text-field>
+                    <div>
+                      font-size vislide
+                    </div>
+                    <v-slider
+                      v-model="image.bubbleOption.text.fontSize"
+                      class="align-center"
+                      :max="100"
+                      :min="10"
+                      hide-details
+                      dark
+                    >
+                      <template v-slot:append>
+                        <v-text-field
+                          dark
+                          v-model="image.bubbleOption.text.fontSize"
+                          class="mt-0 pt-0"
+                          hide-details
+                          single-line
+                          type="number"
+                          style="width: 60px"
+                        ></v-text-field>
+                      </template>
+                    </v-slider>
+                    <div>
+                      font-weight
+                    </div>
+                    <v-slider
+                      v-model="image.bubbleOption.text.fontWeight"
+                      class="align-center"
+                      :max="9"
+                      :min="1"
+                      hide-details
+                      dark
+                    >
+                      <template v-slot:append>
+                        <v-text-field
+                          dark
+                          v-model="image.bubbleOption.text.fontWeight"
+                          class="mt-0 pt-0"
+                          hide-details
+                          single-line
+                          type="number"
+                          style="width: 60px"
+                        ></v-text-field>
+                      </template>
+                    </v-slider>
+                    <div>
+                      font-color
+                    </div>
+
+                    <!-- <div
+                      @click="isClickTextColor = !isClickTextColor"
+                      style="width: 50px; height: 50px; background-color: white; border-radius: 70px;"
+
+                    ></div> -->
+                    <v-color-picker
+                      hide-mode-switch
+                      v-model="image.bubbleOption.text.color"
+                      mode='hexa'
+                      class="my-2"
+                      :value="image.bubbleOption.text.color"
+                      
+                    >
+                    </v-color-picker>
+
+
+                  </v-col>
+                </v-row>
+                <!-- <v-row>
                   <v-col>
                     말풍선 영역
                     <div>
@@ -86,36 +175,13 @@
                       크기조절 v-side 3개정도? postition, width, height
                     </div>
                   </v-col>
-                </v-row>
-                <v-row>
-                  <v-col>
-                    텍스트영역
-                    <!-- stopPropagation 통해서 상위 이벤트로 못넘어가게해줘야함 -->
-                    <v-text-field
-                      @focus.stop
-                      @mouseup.stop
-                      @mousedown.stop
-                      label="Regular"
-                      placeholder="Placeholder"
-                      style="color: white;"
-                      dark
-                      v-model="image.bubbleOption.content"
-                    >
-                    </v-text-field>
-                    <div>
-                      font-size vislide
-                    </div>
-                    <div>
-                      font-색깔
-                    </div>
+                </v-row> -->
 
-                  </v-col>
-                </v-row>
               </v-container>
             </div>
             <!-- 이미지의 경우 -->
             <div v-if="image.isClickOption && !image.isBubble && !image.isBackground"
-              :style="{ width: '500px', height: '500px', backgroundColor: 'black', position: 'absolute', zIndex: 999, bottom: image.imageOption.borderSlider + 'px', left: 'calc(100% + 50px + ' + `${image.imageOption.borderSlider}` + 'px )' }">
+              :style="{ width: '500px', backgroundColor: 'black', position: 'absolute', zIndex: 999, bottom: image.imageOption.borderSlider + 'px', left: 'calc(100% + 50px + ' + `${image.imageOption.borderSlider}` + 'px )' }">
               <v-container fluid style="color:white;">
                 <v-row>
                   <v-col>
@@ -137,8 +203,15 @@
             </div>
 
             <!-- 대사영역 -->
-            <p v-if="image.isBubble" class="my-0 mx-auto" style="width: 80%; align-self: center; text-align: center; overflow-wrap: anywhere;" >
-              {{ image.bubbleOption.content }}
+            <p
+              v-if="image.isBubble"
+              class="my-0 mx-auto"
+              style="width: 80%; align-self: center; text-align: center; overflow-wrap: anywhere;"
+              :style="[contentStyle(idx)]"
+            
+            
+            >
+              {{ image.bubbleOption.text.content }}
             </p>
           </VueDragResize>
           
@@ -209,7 +282,6 @@ export default {
   data() {
     return {
       previewCount: 0,
-
       images: [
         {
           image: require(`@/assets/account_signup.png`),  // 맨처음 테스트용으로 넣은것
@@ -227,7 +299,13 @@ export default {
             gradientCheck: 0  // 0 없음, 1 upper, 2 lower
           },
           bubbleOption: {
-            content: '',
+            text: {
+              content: '',
+              fontSize: 16,
+              fontFamily: '',
+              fontWeight: 5,
+              color: 'black',
+            },
             main: {
               position: 'absolute',
               backgroundColor: '#fff',
@@ -309,6 +387,17 @@ export default {
 
         return arrowStyle
       },
+      contentStyle: function(idx) {
+        let content = this.images[idx].bubbleOption.text
+        let contentStyle = {}
+
+        contentStyle.fontSize = content.fontSize + 'px'
+        contentStyle.fontFamily = content.fontFamily
+        contentStyle.fontWeight = content.fontWeight * 100
+        contentStyle.color = content.color
+
+        return contentStyle
+      },
       useDefaultUI: true,
       webtoonCanvasHeight: window.innerHeight*0.87,
       webtoonCanvasWidth: 0,
@@ -361,7 +450,13 @@ export default {
         isClickOption: false,
         isDraggable: true,
         bubbleOption: {
-          content: '',
+          text: {
+            content: '',
+            fontSize: 16,
+            fontFamily: '',
+            fontWeight: 5,
+            color: 'black',
+          },
           main: {
             position: 'absolute',
             backgroundColor: '#fff',
@@ -513,7 +608,9 @@ export default {
 
 <style>
 
-
+.v-slider {
+  margin-left: 0 !important;
+}
 
 .tui-image-editor-header > .tui-image-editor-header-logo, .tui-image-editor-header-buttons {
   display: none;
