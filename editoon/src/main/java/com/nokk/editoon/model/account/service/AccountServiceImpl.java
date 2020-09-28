@@ -144,6 +144,7 @@ public class AccountServiceImpl implements IAccountService {
 			} else if (!accountModifyDTO.getImage().equals("default.jpg")) {
 				if (accountModifyDTO.getMultipartFile() != null && !accountModifyDTO.getMultipartFile().isEmpty()) {
 					// CASE 2.
+					//if (canUseFileExtension(fileExtension)) 추가하고 boolean 으로 바꿔줘야 함
 					newImageName = accountModifyDTO.getImage(); // 기존에 있던 파일 지우고 그 이름으로 다시 설정
 					profileImageRepo.deleteFile(IMAGE_FOLDER, newImageName);
 					profileImageRepo.saveFile(accountModifyDTO.getMultipartFile(), IMAGE_FOLDER, newImageName);

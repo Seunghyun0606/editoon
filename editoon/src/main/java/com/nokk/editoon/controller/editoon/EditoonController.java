@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nokk.editoon.domain.SuccessResponse;
 import com.nokk.editoon.model.editoon.dto.EditoonDetailDTO;
-import com.nokk.editoon.model.editoon.dto.SaveEditoonDetail;
+import com.nokk.editoon.model.editoon.dto.SaveEditoonDetailDTO;
 import com.nokk.editoon.model.editoon.service.IEditoonService;
 
 import io.swagger.annotations.ApiOperation;
@@ -30,12 +30,19 @@ public class EditoonController {
 
 	@ApiOperation(value = "saveEditoonDetail", httpMethod = "POST", notes = "Hello this is saveEditoonDetail")
 	@GetMapping("/v1/saveEditoonDetail")
-	public ResponseEntity saveEditoonDetail(@ModelAttribute SaveEditoonDetail saveEditoonDetail) {
+	public ResponseEntity saveEditoonDetail(@ModelAttribute SaveEditoonDetailDTO saveEditoonDetailDTO) {
 		ResponseEntity response = null;
 		final SuccessResponse result = new SuccessResponse();
-		editoonService.saveEditoonDetail(saveEditoonDetail);
+		int retSaveEditoonDetial = editoonService.saveEditoonDetail(saveEditoonDetailDTO);
+		
 		result.status = true;
-		result.result = "success";
+		if(retSaveEditoonDetial == -1) {
+			result.result = "noImage";
+		}else if(retSaveEditoonDetial == -2) {
+			result.result = "noThumbnail";
+		}else {
+			result.result = "success";
+		}
 		response = new ResponseEntity<>(result, HttpStatus.OK);
 		return response;
 	}
