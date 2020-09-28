@@ -15,7 +15,7 @@
             :parentLimitation="true"
             @activated="canvasImageOnActivated(idx)"
             @deactivated="canvasImageOffActivated(idx)"
-            :style="[objectStyle(idx), { }]"
+            :style="[objectStyle(idx)]"
             class="d-flex"
           >
             <div v-if="image.isBubble" :style="[bubbleArrowStyleSub(idx)]">
@@ -48,7 +48,7 @@
 
             </div>
             <!-- 말풍선의 경우 -->
-            <div v-if="image.isClickOption && image.isBubble" style="width: 500px; background-color: black; position: absolute; left: calc(100% + 50px);">
+            <div v-if="image.isClickOption && image.isBubble" :style="{ width: '500px', height: 'fit-content', backgroundColor: 'black', position: 'relative', bottom: image.bubbleOption.main.borderWidth + 'px', left: 'calc(100% + 50px + ' + `${image.bubbleOption.main.borderWidth}` + 'px )' }">
               <v-container fluid class="mx-auto my-8" style="width: 80%; color: white;">
                 <div class="mb-6">
                   <v-btn @click.stop="clickBubbleOptionText">텍스트</v-btn>
@@ -229,7 +229,7 @@
             </div>
             <!-- 이미지의 경우 -->
             <div v-if="image.isClickOption && !image.isBubble && !image.isBackground"
-              :style="{ width: '500px', backgroundColor: 'black', position: 'absolute', bottom: image.imageOption.borderSlider + 'px', left: 'calc(100% + 50px + ' + `${image.imageOption.borderSlider}` + 'px )' }">
+              :style="{ width: '500px', height: 'fit-content', backgroundColor: 'black', position: 'relative', bottom: image.imageOption.borderSlider + 'px', left: 'calc(100% + 50px + ' + `${image.imageOption.borderSlider}` + 'px )' }">
               <v-container fluid style="color:white;">
                 <v-row>
                   <v-col>
