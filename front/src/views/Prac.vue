@@ -78,7 +78,6 @@
                       v-model="image.bubbleOption.text.color"
                       mode='hexa'
                       class="my-2"
-                      :value="image.bubbleOption.text.color"
                       
                     >
                     </v-color-picker>

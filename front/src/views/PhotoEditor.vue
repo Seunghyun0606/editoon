@@ -110,6 +110,13 @@
                     <div>
                       색깔
                     </div>
+                    <v-color-picker
+                      hide-mode-switch
+                      v-model="image.bubbleOption.main.backgroundColor"
+                      mode='hexa'
+                      class="my-2"
+                    >
+                    </v-color-picker>
                     <div>
                       둥글게
                     </div>
