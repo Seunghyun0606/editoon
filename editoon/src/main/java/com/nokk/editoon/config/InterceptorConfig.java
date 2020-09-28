@@ -21,10 +21,10 @@ public class InterceptorConfig implements WebMvcConfigurer {
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(verifyAccountInterceptor)
-			.addPathPatterns("/account/v1/*")
-			.addPathPatterns("/editoon/v1/*")
-			.order(0);
+//		registry.addInterceptor(verifyAccountInterceptor)
+//			.addPathPatterns("/account/v1/*")
+//			.addPathPatterns("/editoon/v1/*")
+//			.order(0);
 		
 //		registry.addInterceptor(verifyBandMemberInterceptor)
 //			.addPathPatterns("/note/v2/*")
