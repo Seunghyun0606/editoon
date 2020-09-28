@@ -35,7 +35,6 @@ public class EditoonController {
 		ResponseEntity response = null;
 		final SuccessResponse result = new SuccessResponse();
 		int retSaveEditoonDetial = editoonService.saveEditoonDetail(saveEditoonDetailDTO);
-		System.out.println(saveEditoonDetailDTO.getThumbnail());
 		result.status = true;
 		if(retSaveEditoonDetial == -1) {
 			result.result = "noImage";

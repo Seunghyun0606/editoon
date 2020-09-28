@@ -614,9 +614,9 @@ export default {
       // console.log(ctxTest)
 
       let canvasFormData = new FormData()
-      let canvasFormArray = new Array()
+      //let canvasFormArray = new Array()
 
-      for ( let count = 0; count < this.webtoonCanvasCount; count++ ) {
+for ( let count = 0; count < this.webtoonCanvasCount; count++ ) {
         await html2canvas(ctxTest, {
           height: this.initWebtoonCanvasHeight,
           y: 128 + this.initWebtoonCanvasHeight*count,  // 아래위 마진때문에 128.
@@ -638,7 +638,8 @@ export default {
             // canvasFormData.append("one", file);	// file data 추가
             // canvasFormData.append("two", file);	// file data 추가
             // canvasFormData.append("three", file);	// file data 추가
-            canvasFormArray.push(file);	// file data 추가
+            // canvasFormArray.push(file);	// file data 추가
+            canvasFormData.append('image', file)
             // return canvasFormData
         })
           // .catch( e => {
@@ -650,13 +651,12 @@ export default {
           //   this.$store.dispatch('canvasImageToSpring', canvasFormData)
           // })
       }
-      canvasFormData.append('_id', 0)
+      canvasFormData.append('no', 24)
       canvasFormData.append('subject', 'check')
-      canvasFormData.append('thumbnail', canvasFormArray[0])
+      // canvasFormData.append('thumbnail', null) // 여기에 섬네일 파일 넣어주면 됨.
       // canvasFormData.append('createDate', 'check')
-
-      canvasFormData.append('image', canvasFormArray)
-      console.log(canvasFormArray)
+      //canvasFormData.append('image', canvasFormArray)
+      //console.log(canvasFormArray[1])
       this.$store.dispatch('canvasImageToSpring', canvasFormData)
 
 

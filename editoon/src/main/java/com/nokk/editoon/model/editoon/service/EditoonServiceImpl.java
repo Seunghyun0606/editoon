@@ -104,19 +104,19 @@ public class EditoonServiceImpl implements IEditoonService{
 		int ret = -1;
 		try {
 			if(saveEditoonDetailDTO.getThumbnail() != null && !saveEditoonDetailDTO.getThumbnail().isEmpty()) {
-				String fileExtension = StringUtils
-						.getFilenameExtension(saveEditoonDetailDTO.getThumbnail().getOriginalFilename());
+//				String fileExtension = StringUtils
+//						.getFilenameExtension(saveEditoonDetailDTO.getThumbnail().getOriginalFilename());
 				thumbNailName = createUUID.createUUID("png");
 				editoonImageRepo.saveFile(saveEditoonDetailDTO.getThumbnail(), IMAGE_FOLDER + "/" + saveEditoonDetailDTO.getNo(), thumbNailName);
 				hasThumbNail = true;
 			}
 			
-			if(saveEditoonDetailDTO.getImage().length != 0) {
+			if(!saveEditoonDetailDTO.getImage().isEmpty()) {
 				for(MultipartFile multipartFile : saveEditoonDetailDTO.getImage()) {
 					String newImageName = "";
-					String fileExtension = StringUtils
-							.getFilenameExtension(multipartFile.getOriginalFilename());
-					newImageName = createUUID.createUUID(fileExtension);
+//					String fileExtension = StringUtils
+//							.getFilenameExtension(multipartFile.getOriginalFilename());
+					newImageName = createUUID.createUUID("png");
 					editoonImageRepo.saveFile(multipartFile, IMAGE_FOLDER + "/" + saveEditoonDetailDTO.getNo(), newImageName);
 					imageNameList.add(newImageName);
 				}

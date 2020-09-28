@@ -12,7 +12,6 @@ public class EditoonImageRepo {
 	public void saveFile(MultipartFile multipartFile, String rootPath, String saveFileName){
 		
 			File dir = new File(rootPath);
-			System.out.println(dir.getAbsolutePath());
 			if(!dir.exists())
 				dir.mkdirs();
 			
