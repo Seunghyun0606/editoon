@@ -18,6 +18,9 @@
             :style="[objectStyle(idx)]"
             class="d-flex"
           >
+            <div :style="[bubbleArrowStyleSub(idx)]">
+
+            </div>
             <!-- :style="[ image.isBackground ? addBackground : addImage(image.image), { border: image.imageOption.borderSlider +'px' + ' solid' + ' black'} ]" -->
             <!-- @clicked="check2('bubble' + idx)" -->
             <!-- :style="{ backgroundImage:  'url('+ `${image.image}` + ')', backgroundRepeat: 'round' }" -->
@@ -160,7 +163,6 @@
               <v-btn @click="btnAddCanvasHeight">캔버스늘리기</v-btn>
               <v-btn @click="btnAddBackground">회상배경추가하기</v-btn>
               <v-btn @click="btnAddBubble1">말풍선1</v-btn>
-              <v-btn @click="btnAddBubble2">말풍선2</v-btn>
 
 
             </div>
@@ -211,28 +213,33 @@ export default {
             gradientCheck: 0  // 0 없음, 1 upper, 2 lower
           },
           bubbleOption: {
+            main: {
+              position: 'absolute',
+              backgroundColor: '#fff',
+              borderRadius: 1,
+              border: '1px solid',
+              borderColor: 'black',
+
+            },
+            sub: {
+              position: 'absolute',
+              bottom: '0px',
+              zIndex: -1,
+              left: '70%',
+              width: '30px',
+              height: '30px',
+              backgroundColor: 'white',
+              borderWidth: '1px 1px 0 0',
+              borderStyle: 'solid',
+              marginBottom: '-12px',
+              transform: 'rotate(135deg)'
+
+            }
 
           }
         },
-        // {
-        //   image: require(`@/assets/account_signup.png`),  // 맨처음 테스트용으로 넣은것
-        //   isActive: false,  // 나중에 중복 선택 제거를 위함.
-        //   isBackground: true, // 배경인지 확인하기위함.
-        //   isBubble: false,  // 말풍선인지 확인
-        //   zIndex: 100,
-        //   isClickOption: false,
-        //   isDraggable: false,
-        // },
-        // {
-        //   image: require(`@/assets/webtoon.png`),  // 맨처음 테스트용으로 넣은것
-        //   isActive: false,  // 나중에 중복 선택 제거를 위함.
-        //   isBackground: false, // 배경인지 확인하기위함.
-        //   isBubble: true,  // 말풍선인지 확인
-        //   zIndex: 100,
-        //   isClickOption: false,
-        //   isDraggable: false,
-        // },
       ],
+      // 배경, 이미지 변경시
       objectStyle: function(idx) {
         let image = this.images[idx]
         let imageStyle = {}
@@ -250,16 +257,42 @@ export default {
           }
         }
         else if ( image.isBubble ) {
-          imageStyle.backgroundColor = 'blue'
+            imageStyle.position = image.bubbleOption.main.position
+            imageStyle.backgroundColor = image.bubbleOption.main.backgroundColor
+            imageStyle.border = image.bubbleOption.main.border
+            imageStyle.borderRadius = image.bubbleOption.main.borderRadius + 'em'
+            imageStyle.borderColor = image.bubbleOption.main.borderColor
+
+
         }
         else {
           imageStyle.color = image.imageOption.color
           imageStyle.border = image.imageOption.borderSlider + 'px' + " solid"
           imageStyle.borderColor = image.imageOption.borderColor
-          imageStyle.backgroundImage = 'url(' + `${image.image}` + ')',
+          imageStyle.backgroundImage = 'url(' + `${image.image}` + ')'
           imageStyle.backgroundRepeat= 'round'
         }
         return imageStyle
+      },
+      bubbleArrowStyleSub: function(idx) {
+        let style = this.images[idx].bubbleOption.sub
+        let arrowStyle = {}
+        
+        arrowStyle.position = style.position
+        arrowStyle.bottom = style.bottom
+        arrowStyle.zIndex = -1
+        arrowStyle.left = style.left
+        arrowStyle.width = style.width
+        arrowStyle.height = style.height
+        arrowStyle.backgroundColor = this.images[idx].bubbleOption.main.backgroundColor
+        arrowStyle.borderWidth = style.borderWidth
+        arrowStyle.borderStyle = style.borderStyle
+        arrowStyle.borderColor = this.images[idx].bubbleOption.main.borderColor
+
+        arrowStyle.marginBottom = style.marginBottom
+        arrowStyle.transform = style.transform
+
+        return arrowStyle
       },
       useDefaultUI: true,
       webtoonCanvasHeight: window.innerHeight*0.87,
@@ -304,10 +337,39 @@ export default {
       this.images[idx].isClickOption = !this.images[idx].isClickOption
     },
     btnAddBubble1() {
-      
-    },
-    btnAddBubble2() {
+      const addBubble = {
+        image: "",
+        isActive: false,
+        isBackground: false,
+        isBubble: true,
+        zIndex: 100,
+        isClickOption: false,
+        isDraggable: true,
+        bubbleOption: {
+          main: {
+            position: 'absolute',
+            backgroundColor: '#fff',
+            borderRadius: 1,
+            border: '1px solid',
+            borderColor: 'black',
 
+          },
+          sub: {
+            position: 'absolute',
+            bottom: '0px',
+            zIndex: -1,
+            left: '70%',
+            width: '30px',
+            height: '30px',
+            backgroundColor: 'white',
+            borderWidth: '1px 1px 0 0',
+            borderStyle: 'solid',
+            marginBottom: '-12px',
+            transform: 'rotate(135deg)'
+          }
+        }
+      }
+      this.images.push(addBubble)
     },
     isIndex() {
       this.$store.commit('isIndex', false)
@@ -362,8 +424,6 @@ export default {
     // 사실상 preview에서 클릭해서 넣을 수 있기 때문에 필요없음.
     btnDropZoneImageMoveToEditor() {
       const files = this.$refs.myVueDropzone.getAcceptedFiles()
-      // console.log(1)
-      // console.log(a)
       // this.image = files[0].dataURL
       const file = files[0]
       this.$refs.imageEditor.invoke('loadImageFromFile', file)
@@ -414,7 +474,6 @@ export default {
     resizeCanvasWidth(e) {
       if (e) {
         const canvas_width = e.target.document.querySelector('#webtoonCanvas').clientWidth
-        // console.log(canvas_width)
         this.webtoonCanvasWidth = canvas_width
 
       }
