@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,12 +30,12 @@ public class EditoonController {
 	private IEditoonService editoonService;
 
 	@ApiOperation(value = "saveEditoonDetail", httpMethod = "POST", notes = "Hello this is saveEditoonDetail")
-	@GetMapping("/v1/saveEditoonDetail")
+	@PostMapping("/v1/saveEditoonDetail")
 	public ResponseEntity saveEditoonDetail(@ModelAttribute SaveEditoonDetailDTO saveEditoonDetailDTO) {
 		ResponseEntity response = null;
 		final SuccessResponse result = new SuccessResponse();
 		int retSaveEditoonDetial = editoonService.saveEditoonDetail(saveEditoonDetailDTO);
-		
+		System.out.println(saveEditoonDetailDTO.getThumbnail());
 		result.status = true;
 		if(retSaveEditoonDetial == -1) {
 			result.result = "noImage";
