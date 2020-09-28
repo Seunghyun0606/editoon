@@ -69,6 +69,36 @@
                     <div>
                       크기조절 v-side 3개정도? postition, width, height
                     </div>
+                    <v-slider
+                      @mousedown.stop
+                      v-model="image.bubbleOption.sub.width"
+                      thumb-label
+                      :max="100"
+                      :min="10"
+                    >
+                    </v-slider>
+                    <div>
+                      좌우 위치
+                    </div>
+                    <v-slider
+                      @mousedown.stop
+                      v-model="image.bubbleOption.sub.left"
+                      thumb-label
+                      :max="95"
+                      :min="-5"
+                    >
+                    </v-slider>
+                    <div>
+                      상하 위치
+                    </div>
+                    <v-slider
+                      @mousedown.stop
+                      v-model="image.bubbleOption.sub.bottom"
+                      thumb-label
+                      :max="95"
+                      :min="-5"
+                    >
+                    </v-slider>
                   </v-col>
                 </v-row>
 
@@ -228,8 +258,8 @@ export default {
               zIndex: -1,
               bottom: -5,
               left: 70,
-              width: '30px',
-              height: '30px',
+              width: 30,
+              height: 30,
               backgroundColor: 'white',
               borderWidth: '1px 1px 0 0',
               borderStyle: 'solid',
@@ -283,8 +313,8 @@ export default {
         arrowStyle.zIndex = -1
         arrowStyle.bottom = style.bottom + '%'
         arrowStyle.left = style.left + '%'
-        arrowStyle.width = style.width
-        arrowStyle.height = style.height
+        arrowStyle.width = style.width + 'px'
+        arrowStyle.height = style.width + 'px'  // width === height
         arrowStyle.backgroundColor = this.images[idx].bubbleOption.main.backgroundColor
         arrowStyle.borderWidth = style.borderWidth
         arrowStyle.borderStyle = style.borderStyle
@@ -401,8 +431,8 @@ export default {
             zIndex: -1,
             bottom: -5,
             left: 70,
-            width: '30px',
-            height: '30px',
+            width: 30,
+            height: 30,
             backgroundColor: '#fff',
             borderWidth: '1px 1px 0 0',
             borderStyle: 'solid',
