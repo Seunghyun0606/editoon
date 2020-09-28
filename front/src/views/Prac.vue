@@ -3,7 +3,6 @@
   <div class="mt-16">
     <div class="oval-speech" style="z-index:999">
       
-      <input type="text" class="" value='check'>
 
     </div>
     <div style="z-index: 999;" class="oval-speech">abadcaef</div>
