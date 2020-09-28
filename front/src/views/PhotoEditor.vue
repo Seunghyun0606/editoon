@@ -49,7 +49,7 @@
             </div>
             <!-- 말풍선의 경우 -->
             <div v-if="image.isClickOption && image.isBubble" style="width: 500px; height: 500px; background-color: black; position: absolute; z-index: 999; left: calc(100% + 50px);">
-              <v-container style="color: white;">
+              <v-container fluid class="ma-10" style="width: 80%; color: white;">
                 <v-row>
                   <v-col>
                     말풍선 영역
@@ -90,7 +90,18 @@
                 <v-row>
                   <v-col>
                     텍스트영역
-                    <v-input></v-input>
+                    <!-- stopPropagation 통해서 상위 이벤트로 못넘어가게해줘야함 -->
+                    <v-text-field
+                      @focus.stop
+                      @mouseup.stop
+                      @mousedown.stop
+                      label="Regular"
+                      placeholder="Placeholder"
+                      style="color: white;"
+                      dark
+                      v-model="image.bubbleOption.content"
+                    >
+                    </v-text-field>
                     <div>
                       font-size vislide
                     </div>
@@ -125,7 +136,10 @@
               </v-container>
             </div>
 
-            <p v-if="image.isBubble" class="my-0 mx-auto" style="width: 80%; align-self: center; text-align: center; overflow-wrap: anywhere;" >fawefawefawefawe</p>
+            <!-- 대사영역 -->
+            <p v-if="image.isBubble" class="my-0 mx-auto" style="width: 80%; align-self: center; text-align: center; overflow-wrap: anywhere;" >
+              {{ image.bubbleOption.content }}
+            </p>
           </VueDragResize>
           
         </v-col>
@@ -213,6 +227,7 @@ export default {
             gradientCheck: 0  // 0 없음, 1 upper, 2 lower
           },
           bubbleOption: {
+            content: '',
             main: {
               position: 'absolute',
               backgroundColor: '#fff',
@@ -346,6 +361,7 @@ export default {
         isClickOption: false,
         isDraggable: true,
         bubbleOption: {
+          content: '',
           main: {
             position: 'absolute',
             backgroundColor: '#fff',
