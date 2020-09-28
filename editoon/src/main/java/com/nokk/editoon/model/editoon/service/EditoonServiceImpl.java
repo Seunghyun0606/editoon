@@ -28,8 +28,9 @@ import com.nokk.editoon.util.MapperUtil;
 
 @Service
 public class EditoonServiceImpl implements IEditoonService{
-	private static final String IMAGE_FOLDER = "/resource/image/editoonImg";
+//	private static final String IMAGE_FOLDER = "/resource/image/editoonImg";
 	
+	private static final String IMAGE_FOLDER = "c:/image";
 	
 	@Autowired
 	private AccountRepo accountRepo;
@@ -103,20 +104,18 @@ public class EditoonServiceImpl implements IEditoonService{
 		int ret = -1;
 		try {
 			if(saveEditoonDetailDTO.getThumbnail() != null && !saveEditoonDetailDTO.getThumbnail().isEmpty()) {
-				
 				String fileExtension = StringUtils
 						.getFilenameExtension(saveEditoonDetailDTO.getThumbnail().getOriginalFilename());
-				thumbNailName = createUUID.createUUID(fileExtension);
+				thumbNailName = createUUID.createUUID("png");
 				editoonImageRepo.saveFile(saveEditoonDetailDTO.getThumbnail(), IMAGE_FOLDER + "/" + saveEditoonDetailDTO.getNo(), thumbNailName);
 				hasThumbNail = true;
 			}
 			
-			if(!saveEditoonDetailDTO.getImage().isEmpty()) {
+			if(saveEditoonDetailDTO.getImage().length != 0) {
 				for(MultipartFile multipartFile : saveEditoonDetailDTO.getImage()) {
 					String newImageName = "";
 					String fileExtension = StringUtils
 							.getFilenameExtension(multipartFile.getOriginalFilename());
-					
 					newImageName = createUUID.createUUID(fileExtension);
 					editoonImageRepo.saveFile(multipartFile, IMAGE_FOLDER + "/" + saveEditoonDetailDTO.getNo(), newImageName);
 					imageNameList.add(newImageName);

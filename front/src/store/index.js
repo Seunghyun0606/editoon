@@ -129,7 +129,7 @@ export default new Vuex.Store({
 
     },
     canvasImageToSpring({ commit }, canvasForms) {
-      axios.post( SERVER_URL + 'v1/saveEditoonDetail/', canvasForms, {
+      axios.post( SERVER_URL + 'editoon/v1/saveEditoonDetail/', canvasForms, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

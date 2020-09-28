@@ -11,6 +11,6 @@ public class SaveEditoonDetailDTO {
 	private int no;
 	private String subject;
 	private MultipartFile thumbnail;
-	private List<MultipartFile> image;
+	private MultipartFile[] image;
 	private String createDate;
 }

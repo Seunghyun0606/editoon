@@ -356,7 +356,7 @@ export default {
       }
       canvasFormData.append('_id', 0)
       canvasFormData.append('subject', 'check')
-      canvasFormData.append('thumbnail', 'check')
+      canvasFormData.append('thumbnail', canvasFormArray[0])
       // canvasFormData.append('createDate', 'check')
 
       canvasFormData.append('image', canvasFormArray)
