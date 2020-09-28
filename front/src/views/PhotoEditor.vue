@@ -16,22 +16,25 @@
             @activated="canvasImageOnActivated(idx)"
             @deactivated="canvasImageOffActivated(idx)"
             :style="[objectStyle(idx)]"
+            class="d-flex"
           >
+            <div :style="[bubbleArrowStyleSub(idx)]">
+
+            </div>
             <!-- :style="[ image.isBackground ? addBackground : addImage(image.image), { border: image.imageOption.borderSlider +'px' + ' solid' + ' black'} ]" -->
             <!-- @clicked="check2('bubble' + idx)" -->
             <!-- :style="{ backgroundImage:  'url('+ `${image.image}` + ')', backgroundRepeat: 'round' }" -->
             <!-- <img :src="image.image" style="height: inherit; width: inherit;" alt=""> -->
-            <div v-show="image.isActive" style="position: absolute;">
+            <div v-show="image.isActive" style="position: absolute; float: right;">
               <v-btn @click="btnUpZindex(idx)">zindex올리기</v-btn>
               <v-btn @click="btnDownZindex(idx)">zindex내리기</v-btn>
               <v-btn @click="btnOption(idx)">옵션</v-btn>
 
             </div>
             <!-- <input v-if="image.isBubble" :id="'bubble' + idx" @click='check' style="width: inherit; height: inherit" type="text" class="triangle-isosceles" value='대사란' > -->
-            <!-- <p v-if="image.isBubble" >abcdefawefawefawefawefawefaabcdefawefawefawefawefawefaabcdefawefawefawefawefawefaabcdefawefawefawefawefawefa</p> -->
 
             <!-- background의 경우 -->
-            <div v-if="image.isClickOption && image.isBackground" style="width: 500px; height: 500px; background-color: black; position: relative; z-index: 999; left: calc(100% + 50px);">
+            <div v-if="image.isClickOption && image.isBackground" style="width: 500px; background-color: black; position: absolute; z-index: 999; left: calc(100% + 50px);">
 
               <v-btn @click="image.backgroundOption.gradientCheck = 0">
                 일반
@@ -45,28 +48,188 @@
 
             </div>
             <!-- 말풍선의 경우 -->
-            <div v-if="image.isClickOption && image.isBubble" style="width: 500px; height: 500px; background-color: black; position: relative; z-index: 999; left: calc(100% + 50px);">
-              <v-container>
-                <v-row>
+            <div v-if="image.isClickOption && image.isBubble" style="width: 500px; background-color: black; position: absolute; z-index: 999; left: calc(100% + 50px);">
+              <v-container fluid class="mx-auto my-8" style="width: 80%; color: white;">
+                <div class="mb-6">
+                  <v-btn @click.stop="clickBubbleOptionText">텍스트</v-btn>
+                  <v-btn @click.stop="clickBubbleOption">말풍선</v-btn>
+
+                </div>
+
+                <v-row v-show="isClickBubbleOptionText">
                   <v-col>
-                    
-                  </v-col>
-                </v-row>
-                <v-row>
-                  <v-col>
+                    텍스트영역
+                    <!-- stopPropagation 통해서 상위 이벤트로 못넘어가게해줘야함 -->
+                    <v-text-field
+                      @focus.stop
+                      @mouseup.stop
+                      @mousedown.stop
+                      label="Regular"
+                      placeholder="Placeholder"
+                      style="color: white;"
+                      dark
+                      v-model="image.bubbleOption.text.content"
+                    >
+                    </v-text-field>
+                    <div>
+                      font-size vislide
+                    </div>
+                    <v-slider
+                      v-model="image.bubbleOption.text.fontSize"
+                      class="align-center"
+                      :max="100"
+                      :min="10"
+                      hide-details
+                      dark
+                    >
+                      <template v-slot:append>
+                        <v-text-field
+                          dark
+                          v-model="image.bubbleOption.text.fontSize"
+                          class="mt-0 pt-0"
+                          hide-details
+                          single-line
+                          type="number"
+                          style="width: 60px"
+                        ></v-text-field>
+                      </template>
+                    </v-slider>
+                    <div>
+                      font-weight
+                    </div>
+                    <v-slider
+                      v-model="image.bubbleOption.text.fontWeight"
+                      class="align-center"
+                      :max="9"
+                      :min="1"
+                      hide-details
+                      dark
+                    >
+                      <template v-slot:append>
+                        <v-text-field
+                          dark
+                          v-model="image.bubbleOption.text.fontWeight"
+                          class="mt-0 pt-0"
+                          hide-details
+                          single-line
+                          type="number"
+                          style="width: 60px"
+                        ></v-text-field>
+                      </template>
+                    </v-slider>
+                    <div>
+                      font-color
+                    </div>
+
+                    <!-- <div
+                      @click="isClickTextColor = !isClickTextColor"
+                      style="width: 50px; height: 50px; background-color: white; border-radius: 70px;"
+
+                    ></div> -->
+                    <v-color-picker
+                      @update:color.once="image.bubbleOption.text.color = 'black'"
+                      hide-mode-switch
+                      v-model="image.bubbleOption.text.color"
+                      mode='hexa'
+                      class="my-2"
+                      
+                    >
+                    </v-color-picker>
+
 
                   </v-col>
                 </v-row>
-                <v-row>
+
+                <v-row v-show="isClickBubbleOption">
                   <v-col>
+                    말풍선 꼬리영역
+                    <div>
+                      위치
+                    </div>
+                    <v-btn @click="btnBubbleArrowUp(idx)">위</v-btn>
+                    <v-btn @click="btnBubbleArrowLeft(idx)">좌</v-btn>
+                    <v-btn @click="btnBubbleArrowRight(idx)">우</v-btn>
+                    <v-btn @click="btnBubbleArrowDown(idx)">하</v-btn>
+                    <div>
+                      크기조절 v-side 3개정도? postition, width, height
+                    </div>
+                    <v-slider
+                      @mousedown.stop
+                      v-model="image.bubbleOption.sub.width"
+                      thumb-label
+                      :max="100"
+                      :min="10"
+                    >
+                    </v-slider>
+                    <div>
+                      좌우 위치
+                    </div>
+                    <v-slider
+                      @mousedown.stop
+                      v-model="image.bubbleOption.sub.left"
+                      thumb-label
+                      :max="95"
+                      :min="-10"
+                    >
+                    </v-slider>
+                    <div>
+                      상하 위치
+                    </div>
+                    <v-slider
+                      @mousedown.stop
+                      v-model="image.bubbleOption.sub.bottom"
+                      thumb-label
+                      :max="95"
+                      :min="-10"
+                    >
+                    </v-slider>
+                    <div>
+                      경계 크기
+                    </div>
+                    <v-slider
+                      @mousedown.stop
+                      v-model="image.bubbleOption.main.borderWidth"
+                      thumb-label
+                      :max="10"
+                      :min="0"
+                    >
+                    </v-slider>
+                  </v-col>
+                </v-row>
+
+                <v-row id="bubbleOptionController">
+                  <v-col>
+                    말풍선 영역
+                    <div>
+                      말풍선 색깔
+                    </div>
+                    <v-color-picker
+                      hide-mode-switch
+                      v-model="image.bubbleOption.main.backgroundColor"
+                      mode='hexa'
+                      class="my-2"
+                    >
+                    </v-color-picker>
+                    <div>
+                      경계선 색깔
+                    </div>
+                    <v-color-picker
+                      @update:color.once="image.bubbleOption.main.borderColor = 'black'"
+                      hide-mode-switch
+                      v-model="image.bubbleOption.main.borderColor"
+                      mode='hexa'
+                      class="my-2"
+                    >
+                    </v-color-picker>
 
                   </v-col>
                 </v-row>
+
               </v-container>
             </div>
             <!-- 이미지의 경우 -->
             <div v-if="image.isClickOption && !image.isBubble && !image.isBackground"
-              :style="{ width: '500px', height: '500px', backgroundColor: 'black', position: 'relative', zIndex: 999, bottom: image.imageOption.borderSlider + 'px', left: 'calc(100% + 50px + ' + `${image.imageOption.borderSlider}` + 'px )' }">
+              :style="{ width: '500px', backgroundColor: 'black', position: 'absolute', zIndex: 999, bottom: image.imageOption.borderSlider + 'px', left: 'calc(100% + 50px + ' + `${image.imageOption.borderSlider}` + 'px )' }">
               <v-container fluid style="color:white;">
                 <v-row>
                   <v-col>
@@ -86,6 +249,18 @@
 
               </v-container>
             </div>
+
+            <!-- 대사영역 -->
+            <p
+              v-if="image.isBubble"
+              class="my-0 mx-auto"
+              style="width: 80%; align-self: center; text-align: center; overflow-wrap: anywhere;"
+              :style="[contentStyle(idx)]"
+            
+            
+            >
+              {{ image.bubbleOption.text.content }}
+            </p>
           </VueDragResize>
           
         </v-col>
@@ -124,7 +299,6 @@
               <v-btn @click="btnAddCanvasHeight">캔버스늘리기</v-btn>
               <v-btn @click="btnAddBackground">회상배경추가하기</v-btn>
               <v-btn @click="btnAddBubble1">말풍선1</v-btn>
-              <v-btn @click="btnAddBubble2">말풍선2</v-btn>
 
 
             </div>
@@ -134,9 +308,6 @@
       </v-row>
     </v-container>
 
-
-
-
 </template>
 
 <script>
@@ -144,7 +315,6 @@ import VueDragResize from 'vue-drag-resize'
 import vue2Dropzone from 'vue2-dropzone'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import html2canvas from 'html2canvas';
-
 
 import { ImageEditor } from '@toast-ui/vue-image-editor'
 import 'tui-image-editor/dist/svg/icon-a.svg'
@@ -154,6 +324,7 @@ import 'tui-image-editor/dist/svg/icon-d.svg'
 import 'tui-image-editor/dist/tui-image-editor.css'
 import { mapState } from 'vuex'
 
+
 export default {
   components: {
     'tui-image-editor': ImageEditor,
@@ -162,14 +333,15 @@ export default {
   },
   data() {
     return {
+      isClickBubbleOptionText: true,
+      isClickBubbleOption: false,
       previewCount: 0,
-
       images: [
         {
           image: require(`@/assets/account_signup.png`),  // 맨처음 테스트용으로 넣은것
           isActive: false,  // 나중에 중복 선택 제거를 위함.
           isBackground: false, // 배경인지 확인하기위함.
-          isBubble: false,  // 말풍선인지 확인
+          isBubble: true,  // 말풍선인지 확인
           zIndex: 102,
           isClickOption: false,
           isDraggable: true,
@@ -181,28 +353,41 @@ export default {
             gradientCheck: 0  // 0 없음, 1 upper, 2 lower
           },
           bubbleOption: {
+            text: {
+              content: '',
+              fontSize: 16,
+              fontFamily: '',
+              fontWeight: 5,
+              color: 'black',
+            },
+            main: {
+              position: 'absolute',
+              backgroundColor: '#fff',
+              borderRadius: 1,
+              border: '1px solid',
+              borderColor: 'black',
+              borderWidth: 1,
+
+            },
+            sub: {
+              position: 'absolute',
+              zIndex: -1,
+              bottom: -5,
+              left: 70,
+              width: 30,
+              height: 30,
+              backgroundColor: 'white',
+              borderWidth: '1px 1px 0 0',
+              borderStyle: 'solid',
+              borderColor: 'black',
+              transform: 'rotate(135deg)'
+
+            }
 
           }
         },
-        // {
-        //   image: require(`@/assets/account_signup.png`),  // 맨처음 테스트용으로 넣은것
-        //   isActive: false,  // 나중에 중복 선택 제거를 위함.
-        //   isBackground: true, // 배경인지 확인하기위함.
-        //   isBubble: false,  // 말풍선인지 확인
-        //   zIndex: 100,
-        //   isClickOption: false,
-        //   isDraggable: false,
-        // },
-        // {
-        //   image: require(`@/assets/webtoon.png`),  // 맨처음 테스트용으로 넣은것
-        //   isActive: false,  // 나중에 중복 선택 제거를 위함.
-        //   isBackground: false, // 배경인지 확인하기위함.
-        //   isBubble: true,  // 말풍선인지 확인
-        //   zIndex: 100,
-        //   isClickOption: false,
-        //   isDraggable: false,
-        // },
       ],
+      // 배경, 이미지 변경시
       objectStyle: function(idx) {
         let image = this.images[idx]
         let imageStyle = {}
@@ -220,16 +405,55 @@ export default {
           }
         }
         else if ( image.isBubble ) {
-          imageStyle.backgroundColor = 'blue'
+            imageStyle.position = image.bubbleOption.main.position
+            imageStyle.backgroundColor = image.bubbleOption.main.backgroundColor
+            imageStyle.border = image.bubbleOption.main.border
+            imageStyle.borderRadius = image.bubbleOption.main.borderRadius + 'em'
+            imageStyle.borderColor = image.bubbleOption.main.borderColor
+            imageStyle.borderWidth = image.bubbleOption.main.borderWidth + 'px'
+
+
         }
         else {
           imageStyle.color = image.imageOption.color
           imageStyle.border = image.imageOption.borderSlider + 'px' + " solid"
           imageStyle.borderColor = image.imageOption.borderColor
-          imageStyle.backgroundImage = 'url(' + `${image.image}` + ')',
+          imageStyle.backgroundImage = 'url(' + `${image.image}` + ')'
           imageStyle.backgroundRepeat= 'round'
         }
         return imageStyle
+      },
+      bubbleArrowStyleSub: function(idx) {
+        let style = this.images[idx].bubbleOption.sub
+        let mainStyle = this.images[idx].bubbleOption.main
+        let arrowStyle = {}
+        
+        arrowStyle.position = style.position
+        arrowStyle.zIndex = -1
+        arrowStyle.bottom = style.bottom + '%'
+        arrowStyle.left = style.left + '%'
+        arrowStyle.width = style.width + 'px'
+        arrowStyle.height = style.width + 'px'  // width === height
+        arrowStyle.borderStyle = style.borderStyle
+
+        arrowStyle.backgroundColor = mainStyle.backgroundColor
+        arrowStyle.borderWidth = mainStyle.borderWidth + 'px ' + mainStyle.borderWidth + 'px ' + '0 0'
+        arrowStyle.borderColor = mainStyle.borderColor
+
+        arrowStyle.transform = style.transform
+
+        return arrowStyle
+      },
+      contentStyle: function(idx) {
+        let content = this.images[idx].bubbleOption.text
+        let contentStyle = {}
+
+        contentStyle.fontSize = content.fontSize + 'px'
+        contentStyle.fontFamily = content.fontFamily
+        contentStyle.fontWeight = content.fontWeight * 100
+        contentStyle.color = content.color
+
+        return contentStyle
       },
       useDefaultUI: true,
       initWebtoonCanvasHeight: window.innerHeight*0.87,
@@ -275,14 +499,86 @@ export default {
     // img :src="'data:image/png;base64,' + `${test123}`" 나중에 이미지 base64파일 형식으로 넣어주면된다.
   },
   methods: {
-    btnOption(idx) {
+
+    clickBubbleOptionText() {
+      this.isClickBubbleOptionText = true
+      this.isClickBubbleOption = false
+    },
+    clickBubbleOption() {
+      this.isClickBubbleOptionText = false
+      this.isClickBubbleOption = true
+    },
+
+    btnBubbleArrowUp(idx) {
+      const arrowStyle = this.images[idx].bubbleOption.sub
+      arrowStyle.bottom = 90
+      arrowStyle.left = 30
+      arrowStyle.transform = 'rotate(315deg)'
+    },
+    btnBubbleArrowDown(idx) {
+      const arrowStyle = this.images[idx].bubbleOption.sub
+      arrowStyle.bottom = -5
+      arrowStyle.left = 70
+      arrowStyle.transform = 'rotate(135deg)'
+    },
+    btnBubbleArrowLeft(idx) {
+      const arrowStyle = this.images[idx].bubbleOption.sub
+      arrowStyle.bottom = 50
+      arrowStyle.left = -5
+      arrowStyle.transform = 'rotate(225deg)'
+    },
+    btnBubbleArrowRight(idx) {
+      const arrowStyle = this.images[idx].bubbleOption.sub
+      arrowStyle.bottom = 50
+      arrowStyle.left = 90
+      arrowStyle.transform = 'rotate(45deg)'
+    },
+    btnOption(idx) {      
+      this.images[idx].isDraggable = false
       this.images[idx].isClickOption = !this.images[idx].isClickOption
     },
     btnAddBubble1() {
-      
-    },
-    btnAddBubble2() {
+      const addBubble = {
+        image: "",
+        isActive: false,
+        isBackground: false,
+        isBubble: true,
+        zIndex: 100,
+        isClickOption: false,
+        isDraggable: true,
+        bubbleOption: {
+          text: {
+            content: '',
+            fontSize: 16,
+            fontFamily: '',
+            fontWeight: 5,
+            color: 'black',
+          },
+          main: {
+            position: 'absolute',
+            backgroundColor: '#fff',
+            borderRadius: 1,
+            border: '1px solid',
+            borderColor: 'black',
+            borderWidth: 1
 
+          },
+          sub: {
+            position: 'absolute',
+            zIndex: -1,
+            bottom: -5,
+            left: 70,
+            width: 30,
+            height: 30,
+            backgroundColor: '#fff',
+            borderWidth: '1px 1px 0 0',
+            borderStyle: 'solid',
+            borderColor: 'black',
+            transform: 'rotate(135deg)'
+          }
+        }
+      }
+      this.images.push(addBubble)
     },
     isIndex() {
       this.$store.commit('isIndex', false)
@@ -312,7 +608,8 @@ export default {
       }
       this.images.push(addBackground)
     },
-
+    
+    // 스프링으로 이미지 전달.
     async canvasImageToSpring() {
       const ctxTest = document.querySelector("#webtoonCanvas")
       // console.log(ctxTest)
@@ -358,7 +655,8 @@ export default {
 
 
     },
-    
+
+
     // 파일 업로드시, preview만 클릭하면 올라갈 수 있도록 만듬.
     dropZoneImageMoveToEditor(file_list) {
       // console.log(file_list)
@@ -366,6 +664,12 @@ export default {
       const dz_preview = document.querySelectorAll('.dz-preview')
 
       this.dropZoneImageToDjango(file_list)
+
+      // const temp2 = document.querySelectorAll('.dz-image > img')
+
+      // temp1[0].addEventListener('click', function(e) {
+        //   console.log(e)
+      // })
 
       for ( let idx = 0; idx < file_list.length; idx++) {
         dz_preview[idx + this.previewCount].addEventListener('click', e => {
@@ -376,6 +680,7 @@ export default {
       // 여러번 올렸을경우, dz_preview의 인덱스가 달라지기때문
       this.previewCount += file_list.length
     },
+
     // django로 이미지 보내기.
     dropZoneImageToDjango(file_list) {
 
@@ -391,8 +696,6 @@ export default {
     // 사실상 preview에서 클릭해서 넣을 수 있기 때문에 필요없음.
     btnDropZoneImageMoveToEditor() {
       const files = this.$refs.myVueDropzone.getAcceptedFiles()
-      // console.log(1)
-      // console.log(a)
       // this.image = files[0].dataURL
       const file = files[0]
       this.$refs.imageEditor.invoke('loadImageFromFile', file)
@@ -426,7 +729,6 @@ export default {
 
     // 캔버스의 이미지가 눌러졌을때, 다른 이미지는 활성화 취소
     canvasImageOnActivated(idx) {
-      this.images[idx].isDraggable = false
       for ( let i = 0; i < this.images.length; i++ ) {
         if ( i === idx ) {
           this.images[i].isActive = true
@@ -439,13 +741,18 @@ export default {
       this.images[idx].isActive = false
       this.images[idx].isClickOption = false
       this.images[idx].isDraggable = true
+
+
+      // 여기서 세팅 init 하면될듯.
+      this.isClickBubbleOptionText = true
+      this.isClickBubbleOption = false
+
     },
 
     //캔버스 사이즈 변경시, 캔버스 안의 이미지가 안옮겨지는 버그 수정
     resizeCanvasWidth(e) {
       if (e) {
         const canvas_width = e.target.document.querySelector('#webtoonCanvas').clientWidth
-        // console.log(canvas_width)
         this.webtoonCanvasWidth = canvas_width
 
       }
@@ -469,7 +776,33 @@ export default {
 
 <style>
 
+/* #bubbleOptionController .v-color-picker {
+  max-width: 150px !important;
+  padding: 0;
+}
 
+#bubbleOptionController .v-color-picker__canvas {
+  width: 150px !important;
+  height: 100px !important;
+}
+#bubbleOptionController .v-color-picker__canvas canvas {
+  width: 100% !important;
+  height: 100% !important;
+} */
+/* #bubbleOptionController .v-color-picker__canvas canvas .v-color-picker__canvas-dot {
+  display: none !important;
+}
+#bubbleOptionController .v-color-picker .v-color-picker__controls {
+  padding: 5px !important;
+}
+
+#bubbleOptionController .v-color-picker .v-color-picker__preview {
+  display: none;
+} */
+
+.v-slider {
+  margin-left: 0 !important;
+}
 
 .tui-image-editor-header > .tui-image-editor-header-logo, .tui-image-editor-header-buttons {
   display: none;
@@ -482,6 +815,7 @@ export default {
 .webtoon-canvas-css {
   position: relative;
   background-color: white;
+  border: 1px solid black;
 }
 
 .dropzone-custom-content {
@@ -503,7 +837,3 @@ export default {
   /* color: #314b5f; */
   color: inherit
 }
-
-
-
-</style>
