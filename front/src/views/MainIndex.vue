@@ -290,7 +290,6 @@ export default {
       formData.append("img1", file.files[0]);
       formData.append("img2", file.files[1]);
       axios
-        // .post("http://j3b308.p.ssafy.io:8002/ai/ImgtoAnime/", formData, {
         .post("http://j3b308.p.ssafy.io:8002/ai/ImgtoAnime/", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
