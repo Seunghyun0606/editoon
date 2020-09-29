@@ -6,26 +6,33 @@
       :style="[mainBackgroundImage.one]"
       style="background-color: #fb9"
     >
-      <v-row style="height: 90%; justify-content: center; align-content: center;" class="pt-16">
+      <v-row
+        style="height: 90%; justify-content: center; align-content: center;"
+        class="pt-16"
+      >
         <!-- <v-col style="padding: 3vh 6vw;">
           <v-row> -->
-            <!-- <v-col class="text-center main-index-txt"> -->
-              <div class="text" style="cursor: pointer;">
-                <span>E</span>
-                <span>D</span>
-                <span>I</span>
-                <span>T</span>
-                <span>O</span>
-                <span>O</span>
-                <span>N</span>
-              </div>
-              <label>사진:</label>
-              <input type="file" id="imgseletor" multiple />
-              <v-btn @click="sendimg">test</v-btn>
-            </v-col>
-          </v-row>
+        <!-- <v-col class="text-center main-index-txt"> -->
+        <div class="text" style="cursor: pointer;">
+          <span>E</span>
+          <span>D</span>
+          <span>I</span>
+          <span>T</span>
+          <span>O</span>
+          <span>O</span>
+          <span>N</span>
+        </div>
 
-          <!-- <v-row>
+        <div>
+          <label>사진:</label>
+          <input type="file" id="imgseletor" multiple />
+          <v-btn @click="sendimg">test</v-btn>
+        </div>
+
+        <!-- </v-col> -->
+      </v-row>
+
+      <!-- <v-row>
             <v-col align="center">
               <v-btn
                 x-large
@@ -36,8 +43,8 @@
               >
             </v-col>
           </v-row> -->
-        <!-- </v-col> -->
-      </v-row>
+      <!-- </v-col> -->
+      <!-- </v-row> -->
       <div>
         test
         <img
@@ -66,7 +73,10 @@
     >
       <v-row
         class="align-content-center justify-center d-flex"
-        :class="{ 'fade-in': activeClass.second, 'fade-out': !activeClass.second }"
+        :class="{
+          'fade-in': activeClass.second,
+          'fade-out': !activeClass.second,
+        }"
         style="height: 90%; width: 100%;"
       >
         <v-col md="4" lg="4" cols="10" class="pa-0">
@@ -106,7 +116,10 @@
       <div
         @click="scrollDown(2)"
         class="mx-auto d-flex justify-center main-scroll-down"
-        :class="{ 'fade-in': activeClass.second, 'fade-out': !activeClass.second }"
+        :class="{
+          'fade-in': activeClass.second,
+          'fade-out': !activeClass.second,
+        }"
       >
         <v-icon style="color: white; font-size: 36px">mdi-chevron-down</v-icon>
       </div>
@@ -121,8 +134,12 @@
     >
       <v-row
         class="align-content-center justify-center"
-        :class="{ 'fade-in': activeClass.third, 'fade-out': !activeClass.third }"
-        style="height: 90%;">
+        :class="{
+          'fade-in': activeClass.third,
+          'fade-out': !activeClass.third,
+        }"
+        style="height: 90%;"
+      >
         <v-col md="6" cols="10" class="mx-md-10 mx-sm-0 mx-xs-0 pa-0">
           <img style="width: 100%" :src="require('@/assets/webtoon.png')" alt />
         </v-col>
@@ -151,8 +168,10 @@
       <div
         @click="scrollDown(3)"
         class="mx-auto d-flex justify-center main-scroll-down"
-        :class="{ 'fade-in': activeClass.third, 'fade-out': !activeClass.third }"
-
+        :class="{
+          'fade-in': activeClass.third,
+          'fade-out': !activeClass.third,
+        }"
       >
         <v-icon style="color: white; font-size: 36px">mdi-chevron-down</v-icon>
       </div>
@@ -167,7 +186,12 @@
       :style="[mainBackgroundImage.four]"
     >
       <v-row style="height: 90%;">
-        <v-col :class="{ 'fade-in': activeClass.fourth, 'fade-out': !activeClass.fourth }">
+        <v-col
+          :class="{
+            'fade-in': activeClass.fourth,
+            'fade-out': !activeClass.fourth,
+          }"
+        >
           <v-row style="height: 30vh; text-align: center;" class="align-center">
             <v-col class="main-index-txt">대표작품들을 감상해보세요</v-col>
           </v-row>
@@ -213,8 +237,10 @@
       <div
         @click="scrollDown(0)"
         class="mx-auto main-scroll-down d-flex justify-center"
-        :class="{ 'fade-in': activeClass.fourth, 'fade-out': !activeClass.fourth }"
-
+        :class="{
+          'fade-in': activeClass.fourth,
+          'fade-out': !activeClass.fourth,
+        }"
       >
         <v-icon style="color: black; font-size: 36px">mdi-chevron-up</v-icon>
       </div>
@@ -276,7 +302,7 @@ export default {
         second: false,
         third: false,
         fourth: false,
-      }
+      },
     };
   },
   // watch: {
@@ -301,6 +327,7 @@ export default {
       const file = document.getElementById("imgseletor");
       formData.append("img1", file.files[0]);
       formData.append("img2", file.files[1]);
+
       axios
         .post("http://j3b308.p.ssafy.io:8002/ai/ImgtoAnime/", formData, {
           headers: {
@@ -321,7 +348,7 @@ export default {
     },
     currentScrollPlace() {
       this.current = document.documentElement.scrollTop;
-      this.fadeInOut(this.current)
+      this.fadeInOut(this.current);
     },
     isIndex() {
       this.$store.commit("isIndex", true);
@@ -343,27 +370,24 @@ export default {
 
     // fadeInOut
     fadeInOut(current) {
-      let y = this.viewPortHeight
-      let currentPlace = current + y
-      if ( currentPlace > y + y/5 && currentPlace < 2*y + y/5 ) {
-        this.activeClass.second = true
-        this.activeClass.third = false
-        this.activeClass.fourth = false
-      }
-      else if ( currentPlace > 2*y + y/5 && currentPlace < 3*y + y/5 ) {
-        this.activeClass.second = false
-        this.activeClass.third = true
-        this.activeClass.fourth = false    
-      }
-      else if ( currentPlace > 3*y + y/5 ) {
-        this.activeClass.second = false
-        this.activeClass.third = false
-        this.activeClass.fourth = true
-      }
-      else {
-        this.activeClass.second = false
-        this.activeClass.third = false
-        this.activeClass.fourth = false
+      let y = this.viewPortHeight;
+      let currentPlace = current + y;
+      if (currentPlace > y + y / 5 && currentPlace < 2 * y + y / 5) {
+        this.activeClass.second = true;
+        this.activeClass.third = false;
+        this.activeClass.fourth = false;
+      } else if (currentPlace > 2 * y + y / 5 && currentPlace < 3 * y + y / 5) {
+        this.activeClass.second = false;
+        this.activeClass.third = true;
+        this.activeClass.fourth = false;
+      } else if (currentPlace > 3 * y + y / 5) {
+        this.activeClass.second = false;
+        this.activeClass.third = false;
+        this.activeClass.fourth = true;
+      } else {
+        this.activeClass.second = false;
+        this.activeClass.third = false;
+        this.activeClass.fourth = false;
       }
     },
   },
@@ -382,28 +406,32 @@ export default {
 </script>
 
 <style lang="scss">
-
 .fade-in {
-  
   animation: fade-in 2s;
   opacity: 1;
 }
 
 @keyframes fade-in {
-    from {opacity: 0;}
-    to {opacity: 1;}
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
-
 
 .fade-out {
   animation: fade-out 2s;
   opacity: 0;
 }
 
-
 @keyframes fade-out {
-    from {opacity: 1;}
-    to {opacity: 0;}
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 .check {
   margin-top: 0 !important;
