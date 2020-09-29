@@ -41,7 +41,7 @@ export default {
 
 <style>
 body {
-  background-color: #fb9;
+  background-color: rgba(0, 0,0, 0.88);
 }
 .nav-margin {
   margin-top: 64px;

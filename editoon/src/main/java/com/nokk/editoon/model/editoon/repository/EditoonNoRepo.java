@@ -7,5 +7,5 @@ import com.nokk.editoon.model.editoon.entity.EditoonInfoEntity;
 
 public interface EditoonNoRepo extends MongoRepository<EditoonInfoEntity, Integer>{
 	@Query(value = "{'_id' : ?0}")
-	EditoonInfoEntity findNoteNo(int accountNo);
+	EditoonInfoEntity findEditoonNo(int accountNo);
 }
