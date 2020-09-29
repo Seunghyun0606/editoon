@@ -9,6 +9,7 @@
 - vue-compare-image (MIT)
 - vue-drag-resize (MIT)
 - vue2-dropzone (MIT)
+- html2canvas (MIT)
 
 
 
