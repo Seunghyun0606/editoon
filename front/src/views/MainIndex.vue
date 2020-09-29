@@ -40,13 +40,16 @@
       </v-row>
       <div>
         test
-        <img :src="'data:image/png;base64,' + `${test123}`" alt=""
-        style="width: 100px;
-              height: 100px;
-              background-color: black;
-              z-index: 9999;
-              "
-        >
+        <img
+          :src="'data:image/png;base64,' + `${test123}`"
+          alt=""
+          style="
+            width: 100px;
+            height: 100px;
+            background-color: black;
+            z-index: 9999;
+          "
+        />
       </div>
       <div
         @click="scrollDown(1)"
@@ -241,7 +244,7 @@ export default {
   data() {
     return {
       dialog: false,
-      test123: '',
+      test123: "",
       loginData: {
         username: "",
         email: "",
@@ -287,15 +290,16 @@ export default {
       formData.append("img1", file.files[0]);
       formData.append("img2", file.files[1]);
       axios
+        // .post("http://j3b308.p.ssafy.io:8002/ai/ImgtoAnime/", formData, {
         .post("http://localhost:8000/ai/ImgtoAnime/", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         })
         .then((res) => {
-          console.log(1, res.data)
-          console.log(2, res)
-          this.test123 = res.data
+          console.log(1, res.data);
+          console.log(2, res);
+          this.test123 = res.data;
           if (res.data["res"] == 1) {
             this.mysrc = "1.jpg";
           }
