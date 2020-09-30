@@ -136,20 +136,20 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 		Cookie accessCookie = new Cookie("access-token", accessToken);
 		accessCookie.setMaxAge(30 * 60); // 30분
 		accessCookie.setHttpOnly(true);
-		accessCookie.setDomain("j3b308.p.ssafy.io");
-//		accessCookie.setDomain("localhost");
+//		accessCookie.setDomain("j3b308.p.ssafy.io");
+		accessCookie.setDomain("localhost");
 		accessCookie.setPath("/editoon");
-		accessCookie.setSecure(true);
+//		accessCookie.setSecure(true);
 		accessCookie.setHttpOnly(true);
 		response.addCookie(accessCookie); 
 //	
 		Cookie refreshCookie = new Cookie("refresh-token", refreshToken);
 		refreshCookie.setMaxAge(24 * 60 * 60 * 31); // 31일
 		refreshCookie.setHttpOnly(true);
-		refreshCookie.setDomain("j3b308.p.ssafy.io");
-//		accessCookie.setDomain("localhost");
+//		refreshCookie.setDomain("j3b308.p.ssafy.io");
+		accessCookie.setDomain("localhost");
 		refreshCookie.setPath("/editoon");
-		refreshCookie.setSecure(true);
+//		refreshCookie.setSecure(true);
 		accessCookie.setHttpOnly(true);
 		response.addCookie(refreshCookie);
 		
