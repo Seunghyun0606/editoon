@@ -73,6 +73,8 @@
             :style="[objectStyle(idx)]"
             class="d-flex"
           >
+            <img v-if="!image.isBubble && !image.isBackground" :src="image.image" style="position: absolute; height: 100%; width: 100%;" alt="">
+
             <div v-if="image.isBubble" :style="[bubbleArrowStyleSub(idx)]">
             </div>
             <div v-show="image.isActive" style="position: absolute; top: -35px; right: 0; z-index: 999">
@@ -430,7 +432,7 @@
               :options="dropzoneOptions"
               :useCustomSlot='true'>
               <div class="dropzone-custom-content">
-                <h3 class="dropzone-custom-title">Drag and drop to upload content!</h3>
+                <h3 class="dropzone-custom-title">Drag and drop to upload content First!</h3>
                 <div class="subtitle">...or click to select a file from your computer</div>
               </div>
             </vue2Dropzone>
@@ -505,7 +507,7 @@ export default {
           image: require(`@/assets/account_signup.png`),  // 맨처음 테스트용으로 넣은것
           isActive: false,  // 나중에 중복 선택 제거를 위함.
           isBackground: false, // 배경인지 확인하기위함.
-          isBubble: true,  // 말풍선인지 확인
+          isBubble: false,  // 말풍선인지 확인
           zIndex: 102,
           isClickOption: false,
           isDraggable: true,
@@ -575,14 +577,12 @@ export default {
             imageStyle.borderRadius = image.bubbleOption.main.borderRadius + 'em'
             imageStyle.borderColor = image.bubbleOption.main.borderColor
             imageStyle.borderWidth = image.bubbleOption.main.borderWidth + 'px'
-
-
         }
         else {
           imageStyle.border = image.imageOption.borderSlider + 'px' + " solid"
           imageStyle.borderColor = image.imageOption.borderColor
-          imageStyle.backgroundImage = 'url(' + `${image.image}` + ')'
-          imageStyle.backgroundRepeat= 'round'
+          // imageStyle.backgroundImage = 'url(' + `${image.image}` + ')'
+          // imageStyle.backgroundRepeat= 'round'
         }
         return imageStyle
       },
@@ -706,6 +706,31 @@ export default {
       // this.images[idx].isDraggable = false
       this.images[idx].isClickOption = !this.images[idx].isClickOption
     },
+
+    // 캔버스 추가
+    btnAddCanvasHeight() {
+      this.webtoonCanvasHeight = this.webtoonCanvasHeight*2
+      this.webtoonCanvasCount++
+    },
+    // 에디터 이미지를 캔버스로 이동
+    btnEditorImageToCanvas() {
+      const dataURL = this.$refs.imageEditor.invoke('toDataURL')  // base64 data
+      const imageData = {
+        image: dataURL,
+        isActive: false,
+        isBackground: false,
+        isBubble: false, 
+        zIndex: 100,
+        isClickOption: false,
+        isDraggable: true,
+        imageOption: {
+          borderSlider: 5,
+          borderColor: '#000',
+        },
+      }
+      this.images.push(imageData)
+    },
+    // 말풍선 추가
     btnAddBubble1() {
       const addBubble = {
         image: "",
@@ -749,19 +774,7 @@ export default {
       }
       this.images.push(addBubble)
     },
-    isIndex() {
-      this.$store.commit('isIndex', false)
-    },
-    isNotEditor() {
-      this.$store.commit("isNotEditor", false);
-    },
-    btnUpZindex(idx) {
-      console.log(idx)
-      this.images[idx].zIndex += 1
-    },
-    btnDownZindex(idx) {
-      this.images[idx].zIndex -= 1
-    },
+    // background 추가.
     btnAddBackground() {
       const addBackground = {
         image: "",
@@ -777,19 +790,34 @@ export default {
       }
       this.images.push(addBackground)
     },
+
+    isIndex() {
+      this.$store.commit('isIndex', false)
+    },
+    isNotEditor() {
+      this.$store.commit("isNotEditor", false);
+    },
+    btnUpZindex(idx) {
+      console.log(idx)
+      this.images[idx].zIndex += 1
+    },
+    btnDownZindex(idx) {
+      this.images[idx].zIndex -= 1
+    },
     
     // 스프링으로 이미지 전달.
     async canvasImageToSpring() {
       const ctxTest = document.querySelector("#webtoonCanvas")
+      const offsetY = ctxTest.offsetTop + 64
       // console.log(ctxTest)
 
       let canvasFormData = new FormData()
       //let canvasFormArray = new Array()
-
-    for ( let count = 0; count < this.webtoonCanvasCount; count++ ) {
+      
+      for ( let count = 0; count < this.webtoonCanvasCount; count++ ) {
         await html2canvas(ctxTest, {
           height: this.initWebtoonCanvasHeight,
-          y: 128 + this.initWebtoonCanvasHeight*count,  // 아래위 마진때문에 128.
+          y: offsetY + this.initWebtoonCanvasHeight*count,  // 아래위 마진때문
         })
           .then( canvas => {
             // document.body.appendChild(canvas)
@@ -805,10 +833,8 @@ export default {
   
             let file = new Blob([new Uint8Array(array)], {type: 'image/png'});	// Blob 생성
             // canvasFormData.append(count, file);	// file data 추가
-            // canvasFormData.append("one", file);	// file data 추가
-            // canvasFormData.append("two", file);	// file data 추가
-            // canvasFormData.append("three", file);	// file data 추가
             // canvasFormArray.push(file);	// file data 추가
+            // 같은 이름으로 넣어줘야, Array list 로 스프링에서 받을수 있다.
             canvasFormData.append('image', file)
             // return canvasFormData
         })
@@ -867,31 +893,6 @@ export default {
       }
 
       this.$store.dispatch("dropZoneImageToDjango", djangoImageForm)
-    },
-
-    // 에디터 이미지를 캔버스로 이동
-    btnEditorImageToCanvas() {
-      const dataURL = this.$refs.imageEditor.invoke('toDataURL')  // base64 data
-      const imageData = {
-        image: dataURL,
-        isActive: false,
-        isBackground: false,
-        isBubble: false, 
-        zIndex: 100,
-        isClickOption: false,
-        isDraggable: true,
-        imageOption: {
-          borderSlider: 5,
-          borderColor: '#000',
-        },
-      }
-      this.images.push(imageData)
-    },
-    
-    // 캔버스 추가
-    btnAddCanvasHeight() {
-      this.webtoonCanvasHeight = this.webtoonCanvasHeight*2
-      this.webtoonCanvasCount++
     },
 
     // 캔버스의 이미지가 눌러졌을때, 다른 이미지는 활성화 취소
@@ -970,7 +971,7 @@ export default {
 .webtoon-canvas-css {
   position: relative;
   background-color: white;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 
 .dropzone-custom-content {
