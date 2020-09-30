@@ -33,7 +33,7 @@
               </v-btn>
               <v-btn
                 icon
-                color="black"
+                color='black'
                 @click="btnDownZindex(idx)">
                 <v-icon
                 >
@@ -48,28 +48,28 @@
                 @click="btnOption(idx)">
                 <v-icon
                 >
-                  mdi-open-in-new
+                  mdi-cog
                 </v-icon>
 
               </v-btn>
             </div>
 
             <!-- background의 경우 -->
-            <div v-if="image.isClickOption && image.isBackground" style="background-color: rgba(0,0,20,0.9); position: absolute; left: calc(100% + 50px);">
+            <div @mousedown="onOptionPreventDrag(idx)" @mouseup="onOptionAllowDrag(idx)" v-if="image.isClickOption && image.isBackground" class="pa-3" style="position: absolute; left: calc(100% + 50px);">
 
-              <v-btn @click="image.backgroundOption.gradientCheck = 0">
-                일반
+              <v-btn dark color="#0D47A1" @click="image.backgroundOption.gradientCheck = 1" style="text-transform: none;">
+                Background Uppper
               </v-btn>
-              <v-btn @click="image.backgroundOption.gradientCheck = 1">
-                회상 윗배경
+              <v-btn dark color="#0D47A1" class="my-2" @click="image.backgroundOption.gradientCheck = 0" style="text-transform: none;">
+                Background Center
               </v-btn>
-              <v-btn @click="image.backgroundOption.gradientCheck = 2">
-                회상 아랫배경
+              <v-btn dark color="#0D47A1" @click="image.backgroundOption.gradientCheck = 2" style="text-transform: none;">
+                Background Lower
               </v-btn>
 
             </div>
             <!-- 말풍선의 경우 -->
-            <div v-if="image.isClickOption && image.isBubble" :style="{ height: 'fit-content', backgroundColor: 'rgba(0,0,20,0.9)', position: 'relative', bottom: image.bubbleOption.main.borderWidth + 'px', left: 'calc(100% + 50px + ' + `${image.bubbleOption.main.borderWidth}` + 'px )' }">
+            <div @mousedown="onOptionPreventDrag(idx)" @mouseup="onOptionAllowDrag(idx)" v-if="image.isClickOption && image.isBubble" :style="{ height: 'fit-content', backgroundColor: 'rgba(0,0,20,0.9)', position: 'relative', bottom: image.bubbleOption.main.borderWidth + 'px', left: 'calc(100% + 50px + ' + `${image.bubbleOption.main.borderWidth}` + 'px )' }">
               <v-container  class="mx-auto my-8 obejct-option" id="bubbleOption" >
                 <div class="mb-6">
                   <v-btn dark color="#0D47A1" class="mr-5" @click.stop="clickBubbleOptionText">Text</v-btn>
@@ -80,13 +80,15 @@
                 <v-row v-show="isClickBubbleOptionText">
                   <v-col>
                     <!-- stopPropagation 통해서 상위 이벤트로 못넘어가게해줘야함 -->
+                    <div>
+                      Your Line
+                    </div>
                     <v-text-field
                       @focus.stop
                       @mouseup.stop
                       @mousedown.stop
-                      label="Your Line"
                       placeholder="Say anything for your Character"
-                      style="color: white;"
+                      class="pt-0"
                       dark
                       v-model="image.bubbleOption.text.content"
                     >
@@ -95,6 +97,7 @@
                       Font Size
                     </div>
                     <v-slider
+                      @mousedown.stop
                       v-model="image.bubbleOption.text.fontSize"
                       class="align-center"
                       :max="100"
@@ -117,6 +120,7 @@
                       Font Weight
                     </div>
                     <v-slider
+                      @mousedown.stop
                       v-model="image.bubbleOption.text.fontWeight"
                       class="align-center"
                       :max="9"
@@ -144,7 +148,7 @@
                       v-model="image.bubbleOption.text.color"
                       mode='hexa'
                       class="my-2"
-                      width="420"
+                      width="250"
                     >
                     </v-color-picker>
 
@@ -305,7 +309,7 @@
               </v-container>
             </div>
             <!-- 이미지의 경우 -->
-            <div v-if="image.isClickOption && !image.isBubble && !image.isBackground"
+            <div @mousedown="onOptionPreventDrag(idx)" @mouseup="onOptionAllowDrag(idx)" v-if="image.isClickOption && !image.isBubble && !image.isBackground"
               :style="{ height: 'fit-content', backgroundColor: 'rgba(0,0,20,0.9)', position: 'relative', bottom: image.imageOption.borderSlider + 'px', left: 'calc(100% + 50px + ' + `${image.imageOption.borderSlider}` + 'px )' }">
               <v-container fluid class="obejct-option">
                 <v-row>
@@ -575,6 +579,12 @@ export default {
     // img :src="'data:image/png;base64,' + `${test123}`" 나중에 이미지 base64파일 형식으로 넣어주면된다.
   },
   methods: {
+    onOptionAllowDrag(idx) {
+      this.images[idx].isDraggable = true
+    },
+    onOptionPreventDrag(idx) {
+      this.images[idx].isDraggable = false
+    },
 
     clickBubbleOptionText() {
       this.isClickBubbleOptionText = true
@@ -610,7 +620,7 @@ export default {
       arrowStyle.transform = 'rotate(45deg)'
     },
     btnOption(idx) {      
-      this.images[idx].isDraggable = false
+      // this.images[idx].isDraggable = false
       this.images[idx].isClickOption = !this.images[idx].isClickOption
     },
     btnAddBubble1() {
@@ -852,6 +862,15 @@ export default {
     const editorHeader = document.querySelector('.tui-image-editor-header')
     const editorBtnSet = document.querySelector('#editorBtnSet')
     editorHeader.appendChild(editorBtnSet)
+
+    const colorPicker = document.querySelectorAll('.v-color-picker')
+    console.log(colorPicker)
+    // for ( let idx = 0; idx < file_list.length; idx++) {
+    //   dz_preview[idx + this.previewCount].addEventListener('click', e => {
+    //     this.$refs.imageEditor.invoke('loadImageFromFile', file_list[idx])
+    //     e
+    //   })
+    // }
 
   }
 }
