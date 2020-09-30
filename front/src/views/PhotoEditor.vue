@@ -709,7 +709,7 @@ export default {
 
     // 캔버스 추가
     btnAddCanvasHeight() {
-      this.webtoonCanvasHeight = this.webtoonCanvasHeight*2
+      this.webtoonCanvasHeight += this.initWebtoonCanvasHeight
       this.webtoonCanvasCount++
     },
     // 에디터 이미지를 캔버스로 이동
@@ -820,7 +820,7 @@ export default {
           y: offsetY + this.initWebtoonCanvasHeight*count,  // 아래위 마진때문
         })
           .then( canvas => {
-            // document.body.appendChild(canvas)
+            document.body.appendChild(canvas)
   
             const base64Data = canvas.toDataURL('image/png')
             
