@@ -35,7 +35,6 @@ public class EditoonController {
 		ResponseEntity response = null;
 		final SuccessResponse result = new SuccessResponse();
 		int retSaveEditoonDetial = editoonService.saveEditoonDetail(saveEditoonDetailDTO);
-		System.out.println(saveEditoonDetailDTO.getThumbnail());
 		result.status = true;
 		if(retSaveEditoonDetial == -1) {
 			result.result = "noImage";
@@ -58,7 +57,7 @@ public class EditoonController {
 		editoonDetailList = editoonService.getEditoonThumbnails(email);
 
 		result.status = true;
-		if (editoonDetailList != null || !editoonDetailList.isEmpty()) {
+		if (editoonDetailList != null && !editoonDetailList.isEmpty()) {
 			Map<String, Object> retMap = new HashMap<>();
 			retMap.put("editoonDetailList", editoonDetailList);
 			result.result = "success";

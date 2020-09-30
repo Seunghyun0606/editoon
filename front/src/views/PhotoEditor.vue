@@ -858,7 +858,7 @@ export default {
 
       let canvasFormData = new FormData()
       //let canvasFormArray = new Array()
-      
+
       for ( let count = 0; count < this.webtoonCanvasCount; count++ ) {
         await html2canvas(ctxTest, {
           height: this.initWebtoonCanvasHeight,

@@ -7,13 +7,14 @@ import numpy as np
 
 class UGATIT(object) :
     def __init__(self, sess, args):
+        if args == 0: return
         self.light = args.light
 
         if self.light :
             self.model_name = 'UGATIT_light'
         else :
             self.model_name = 'UGATIT'
-
+        self.ret_imgs = []
         self.sess = sess
         self.phase = args.phase
         self.checkpoint_dir = args.checkpoint_dir
@@ -21,8 +22,10 @@ class UGATIT(object) :
         self.log_dir = args.log_dir
         self.dataset_name = args.dataset
         self.file_name = args.file_name
+        self.files = None
+        self.imgs = args.imgs
         self.augment_flag = args.augment_flag
-
+        
         self.epoch = args.epoch
         self.iteration = args.iteration
         self.decay_flag = args.decay_flag
@@ -277,12 +280,12 @@ class UGATIT(object) :
     ##################################################################################
 
     def generate_a2b(self, x_A, reuse=False):
-        out, cam, _ = self.generator(x_A, reuse=reuse, scope="generator_B")
+        out, cam, _ = self.generator(x_A, reuse=tf.AUTO_REUSE, scope="generator_B")
 
         return out, cam
 
     def generate_b2a(self, x_B, reuse=False):
-        out, cam, _ = self.generator(x_B, reuse=reuse, scope="generator_A")
+        out, cam, _ = self.generator(x_B, reuse=tf.AUTO_REUSE, scope="generator_A")
 
         return out, cam
 
@@ -614,7 +617,10 @@ class UGATIT(object) :
 
     def test(self):
         tf.global_variables_initializer().run()
-        test_A_files = glob('./dataset/{}/{}'.format(self.dataset_name, self.file_name))
+        test_A_files =['./dataset/{}/{}'.format(self.dataset_name, img)  for img in self.files] 
+        print(test_A_files)
+        #glob('./dataset/{}/{}'.format(self.dataset_name, self.imgs))
+        
         test_B_files = glob('./dataset/{}/*.*'.format(self.dataset_name + '/testB'))
 
         self.saver = tf.train.Saver()
@@ -629,39 +635,47 @@ class UGATIT(object) :
             print(" [!] Load failed...")
 
         # write html for visual comparison
-        index_path = os.path.join(self.result_dir, 'index.html')
-        index = open(index_path, 'w')
-        index.write("<html><body><table><tr>")
-        index.write("<th>name</th><th>input</th><th>output</th></tr>")
+        # index_path = os.path.join(self.result_dir, 'index.html')
+        # index = open(index_path, 'w')
+        # index.write("<html><body><table><tr>")
+        # index.write("<th>name</th><th>input</th><th>output</th></tr>")
 
-        for sample_file  in test_A_files : # A -> B
-            print('Processing A image: ' + sample_file)
-            sample_image = np.asarray(load_test_data(sample_file, size=self.img_size))
-            image_path = os.path.join(self.result_dir,'{0}'.format(os.path.basename(sample_file)))
+        if self.files:
+            for file_name_, sample_image in self.files.items():
+                image_path = os.path.join(self.result_dir,'{0}'.format(os.path.basename(file_name_)))
 
-            fake_img = self.sess.run(self.test_fake_B, feed_dict = {self.test_domain_A : sample_image})
-            save_images(fake_img, [1, 1], image_path)
+                fake_img = self.sess.run(self.test_fake_B, feed_dict = {self.test_domain_A : sample_image})
+                self.ret_imgs.append(fake_img)
+                # save_images(fake_img, [1, 1], image_path)
+        else:
+            for sample_file  in test_A_files : # A -> B
+                print('Processing A image: ' + sample_file)
+                sample_image = np.asarray(load_test_data(sample_file, size=self.img_size))
+                image_path = os.path.join(self.result_dir,'{0}'.format(os.path.basename(sample_file)))
 
-            index.write("<td>%s</td>" % os.path.basename(image_path))
+                fake_img = self.sess.run(self.test_fake_B, feed_dict = {self.test_domain_A : sample_image})
+                save_images(fake_img, [1, 1], image_path)
 
-            index.write("<td><img src='%s' width='%d' height='%d'></td>" % (sample_file if os.path.isabs(sample_file) else (
-                '../..' + os.path.sep + sample_file), self.img_size, self.img_size))
-            index.write("<td><img src='%s' width='%d' height='%d'></td>" % (image_path if os.path.isabs(image_path) else (
-                '../..' + os.path.sep + image_path), self.img_size, self.img_size))
-            index.write("</tr>")
+                index.write("<td>%s</td>" % os.path.basename(image_path))
 
-        for sample_file  in test_B_files : # B -> A
-            print('Processing B image: ' + sample_file)
-            sample_image = np.asarray(load_test_data(sample_file, size=self.img_size))
-            image_path = os.path.join(self.result_dir,'{0}'.format(os.path.basename(sample_file)))
-
-            fake_img = self.sess.run(self.test_fake_A, feed_dict = {self.test_domain_B : sample_image})
-
-            save_images(fake_img, [1, 1], image_path)
-            index.write("<td>%s</td>" % os.path.basename(image_path))
-            index.write("<td><img src='%s' width='%d' height='%d'></td>" % (sample_file if os.path.isabs(sample_file) else (
+                index.write("<td><img src='%s' width='%d' height='%d'></td>" % (sample_file if os.path.isabs(sample_file) else (
                     '../..' + os.path.sep + sample_file), self.img_size, self.img_size))
-            index.write("<td><img src='%s' width='%d' height='%d'></td>" % (image_path if os.path.isabs(image_path) else (
+                index.write("<td><img src='%s' width='%d' height='%d'></td>" % (image_path if os.path.isabs(image_path) else (
                     '../..' + os.path.sep + image_path), self.img_size, self.img_size))
-            index.write("</tr>")
-        index.close()
+                index.write("</tr>")
+
+            for sample_file  in test_B_files : # B -> A
+                print('Processing B image: ' + sample_file)
+                sample_image = np.asarray(load_test_data(sample_file, size=self.img_size))
+                image_path = os.path.join(self.result_dir,'{0}'.format(os.path.basename(sample_file)))
+
+                fake_img = self.sess.run(self.test_fake_A, feed_dict = {self.test_domain_B : sample_image})
+
+                save_images(fake_img, [1, 1], image_path)
+                index.write("<td>%s</td>" % os.path.basename(image_path))
+                index.write("<td><img src='%s' width='%d' height='%d'></td>" % (sample_file if os.path.isabs(sample_file) else (
+                        '../..' + os.path.sep + sample_file), self.img_size, self.img_size))
+                index.write("<td><img src='%s' width='%d' height='%d'></td>" % (image_path if os.path.isabs(image_path) else (
+                        '../..' + os.path.sep + image_path), self.img_size, self.img_size))
+                index.write("</tr>")
+            index.close()

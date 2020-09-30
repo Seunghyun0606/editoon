@@ -6,4 +6,4 @@ app_name = 'ai'
 urlpatterns = [
     path('ImgtoAnime/', views.ImgtoAnime),
 
-]
+]   

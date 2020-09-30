@@ -65,12 +65,12 @@ public class EditoonServiceImpl implements IEditoonService{
 	@Override
 	public List<EditoonDetailDTO> getEditoonThumbnails(String email) {
 		int accountNo = verifyOwnEditoon(email);
-		
-		EditoonEntity editoonEntity = editoonDetailRepo.findEditoonDetailList(accountNo);
-		
+		EditoonEntity editoonEntity = null;
+		editoonEntity = editoonDetailRepo.findEditoonDetailList(accountNo);
 		List<EditoonDetailDTO> list = new ArrayList<EditoonDetailDTO>();
 		
-		if(editoonEntity.getEditoonDetails() != null || !editoonEntity.getEditoonDetails().isEmpty()) {
+		if(editoonEntity != null && (editoonEntity.getEditoonDetails() != null && !editoonEntity.getEditoonDetails().isEmpty())) {
+			System.out.println("들어오나");
 			for(EditoonDetailEntity editoonDetailEntity : editoonEntity.getEditoonDetails()) {
 				EditoonDetailDTO editoonDetailDTO = mapperUtil.convertToDTO(editoonDetailEntity, EditoonDetailDTO.class);
 				list.add(editoonDetailDTO);
@@ -83,11 +83,11 @@ public class EditoonServiceImpl implements IEditoonService{
 	@Override
 	public EditoonDetailDTO getEditoonDetail(String email, int _id) {
 		int accountNo = verifyOwnEditoon(email);
+		EditoonEntity editoonEntity = null;
+		editoonEntity = editoonDetailRepo.findEditoonDetailContent(accountNo, _id);
+		EditoonDetailDTO editoonDetailDTO = null;
 		
-		EditoonEntity editoonEntity = editoonDetailRepo.findEditoonDetailContent(accountNo, _id);
-		EditoonDetailDTO editoonDetailDTO = new EditoonDetailDTO();
-		
-		if(editoonEntity.getEditoonDetails() != null || !editoonEntity.getEditoonDetails().isEmpty()) {
+		if(editoonEntity != null && (editoonEntity.getEditoonDetails() != null && !editoonEntity.getEditoonDetails().isEmpty())) {
 			editoonDetailDTO = mapperUtil.convertToDTO(editoonEntity.getEditoonDetails().get(0), EditoonDetailDTO.class);
 		}
 		
@@ -104,19 +104,19 @@ public class EditoonServiceImpl implements IEditoonService{
 		int ret = -1;
 		try {
 			if(saveEditoonDetailDTO.getThumbnail() != null && !saveEditoonDetailDTO.getThumbnail().isEmpty()) {
-				String fileExtension = StringUtils
-						.getFilenameExtension(saveEditoonDetailDTO.getThumbnail().getOriginalFilename());
+//				String fileExtension = StringUtils
+//						.getFilenameExtension(saveEditoonDetailDTO.getThumbnail().getOriginalFilename());
 				thumbNailName = createUUID.createUUID("png");
 				editoonImageRepo.saveFile(saveEditoonDetailDTO.getThumbnail(), IMAGE_FOLDER + "/" + saveEditoonDetailDTO.getNo(), thumbNailName);
 				hasThumbNail = true;
 			}
 			
-			if(saveEditoonDetailDTO.getImage().length != 0) {
+			if(!saveEditoonDetailDTO.getImage().isEmpty()) {
 				for(MultipartFile multipartFile : saveEditoonDetailDTO.getImage()) {
 					String newImageName = "";
-					String fileExtension = StringUtils
-							.getFilenameExtension(multipartFile.getOriginalFilename());
-					newImageName = createUUID.createUUID(fileExtension);
+//					String fileExtension = StringUtils
+//							.getFilenameExtension(multipartFile.getOriginalFilename());
+					newImageName = createUUID.createUUID("png");
 					editoonImageRepo.saveFile(multipartFile, IMAGE_FOLDER + "/" + saveEditoonDetailDTO.getNo(), newImageName);
 					imageNameList.add(newImageName);
 				}

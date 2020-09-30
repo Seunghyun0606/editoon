@@ -1,5 +1,9 @@
 absl-py==0.10.0
+asgiref==3.2.10
 astor==0.8.1
+Django==3.1.1
+django-cors-headers==3.5.0
+djangorestframework==3.11.1
 gast==0.4.0
 google-pasta==0.2.0
 grpcio==1.31.0
@@ -10,8 +14,12 @@ Keras-Preprocessing==1.1.2
 Markdown==3.2.2
 numpy==1.19.1
 opencv-python==4.4.0.42
+Pillow==7.2.0
 protobuf==3.13.0
+pytz==2020.1
 six==1.15.0
+sqlparse==0.3.1
+setuptools==41.0.0
 tensorboard==1.14.0
 tensorflow==1.14.0
 tensorflow-estimator==1.14.0
@@ -19,3 +27,4 @@ termcolor==1.1.0
 Werkzeug==1.0.1
 wrapt==1.12.1
 zipp==3.1.0
+uWSGI==2.0.15
