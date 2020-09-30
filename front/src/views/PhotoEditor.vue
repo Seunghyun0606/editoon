@@ -20,10 +20,6 @@
           >
             <div v-if="image.isBubble" :style="[bubbleArrowStyleSub(idx)]">
             </div>
-            <!-- :style="[ image.isBackground ? addBackground : addImage(image.image), { border: image.imageOption.borderSlider +'px' + ' solid' + ' black'} ]" -->
-            <!-- @clicked="check2('bubble' + idx)" -->
-            <!-- :style="{ backgroundImage:  'url('+ `${image.image}` + ')', backgroundRepeat: 'round' }" -->
-            <!-- <img :src="image.image" style="height: inherit; width: inherit;" alt=""> -->
             <div v-show="image.isActive" style="position: absolute; top: -35px; right: 0; z-index: 999">
               <v-btn
                 icon
@@ -57,10 +53,9 @@
 
               </v-btn>
             </div>
-            <!-- <input v-if="image.isBubble" :id="'bubble' + idx" @click='check' style="width: inherit; height: inherit" type="text" class="triangle-isosceles" value='대사란' > -->
 
             <!-- background의 경우 -->
-            <div v-if="image.isClickOption && image.isBackground" style="width: 500px; background-color: black; position: absolute; left: calc(100% + 50px);">
+            <div v-if="image.isClickOption && image.isBackground" style="background-color: rgba(0,0,20,0.9); position: absolute; left: calc(100% + 50px);">
 
               <v-btn @click="image.backgroundOption.gradientCheck = 0">
                 일반
@@ -74,31 +69,30 @@
 
             </div>
             <!-- 말풍선의 경우 -->
-            <div v-if="image.isClickOption && image.isBubble" :style="{ width: '500px', height: 'fit-content', backgroundColor: 'black', position: 'relative', bottom: image.bubbleOption.main.borderWidth + 'px', left: 'calc(100% + 50px + ' + `${image.bubbleOption.main.borderWidth}` + 'px )' }">
-              <v-container fluid class="mx-auto my-8" style="width: 80%; color: white;">
+            <div v-if="image.isClickOption && image.isBubble" :style="{ height: 'fit-content', backgroundColor: 'rgba(0,0,20,0.9)', position: 'relative', bottom: image.bubbleOption.main.borderWidth + 'px', left: 'calc(100% + 50px + ' + `${image.bubbleOption.main.borderWidth}` + 'px )' }">
+              <v-container  class="mx-auto my-8 obejct-option" id="bubbleOption" >
                 <div class="mb-6">
-                  <v-btn @click.stop="clickBubbleOptionText">텍스트</v-btn>
-                  <v-btn @click.stop="clickBubbleOption">말풍선</v-btn>
-
+                  <v-btn dark color="#0D47A1" class="mr-5" @click.stop="clickBubbleOptionText">Text</v-btn>
+                  <v-btn dark color="#0D47A1" @click.stop="clickBubbleOption">Speech Bubble</v-btn>
                 </div>
 
+                <!-- 텍스트 옵션 -->
                 <v-row v-show="isClickBubbleOptionText">
                   <v-col>
-                    텍스트영역
                     <!-- stopPropagation 통해서 상위 이벤트로 못넘어가게해줘야함 -->
                     <v-text-field
                       @focus.stop
                       @mouseup.stop
                       @mousedown.stop
-                      label="Regular"
-                      placeholder="Placeholder"
+                      label="Your Line"
+                      placeholder="Say anything for your Character"
                       style="color: white;"
                       dark
                       v-model="image.bubbleOption.text.content"
                     >
                     </v-text-field>
                     <div>
-                      font-size vislide
+                      Font Size
                     </div>
                     <v-slider
                       v-model="image.bubbleOption.text.fontSize"
@@ -115,13 +109,12 @@
                           class="mt-0 pt-0"
                           hide-details
                           single-line
-                          type="number"
                           style="width: 60px"
                         ></v-text-field>
                       </template>
                     </v-slider>
                     <div>
-                      font-weight
+                      Font Weight
                     </div>
                     <v-slider
                       v-model="image.bubbleOption.text.fontWeight"
@@ -138,27 +131,20 @@
                           class="mt-0 pt-0"
                           hide-details
                           single-line
-                          type="number"
                           style="width: 60px"
                         ></v-text-field>
                       </template>
                     </v-slider>
                     <div>
-                      font-color
+                      Font Color
                     </div>
-
-                    <!-- <div
-                      @click="isClickTextColor = !isClickTextColor"
-                      style="width: 50px; height: 50px; background-color: white; border-radius: 70px;"
-
-                    ></div> -->
                     <v-color-picker
-                      @update:color.once="image.bubbleOption.text.color = 'black'"
+                      @update:color.once="image.bubbleOption.text.color = '#000000F0'"
                       hide-mode-switch
                       v-model="image.bubbleOption.text.color"
                       mode='hexa'
                       class="my-2"
-                      
+                      width="420"
                     >
                     </v-color-picker>
 
@@ -166,97 +152,162 @@
                   </v-col>
                 </v-row>
 
-                <v-row v-show="isClickBubbleOption">
-                  <v-col>
-                    말풍선 꼬리영역
-                    <div>
-                      위치
-                    </div>
-                    <v-btn @click="btnBubbleArrowUp(idx)">위</v-btn>
-                    <v-btn @click="btnBubbleArrowLeft(idx)">좌</v-btn>
-                    <v-btn @click="btnBubbleArrowRight(idx)">우</v-btn>
-                    <v-btn @click="btnBubbleArrowDown(idx)">하</v-btn>
-                    <div>
-                      크기조절 v-side 3개정도? postition, width, height
-                    </div>
-                    <v-slider
-                      @mousedown.stop
-                      v-model="image.bubbleOption.sub.width"
-                      thumb-label
-                      :max="100"
-                      :min="10"
-                    >
-                    </v-slider>
-                    <div>
-                      좌우 위치
-                    </div>
-                    <v-slider
-                      @mousedown.stop
-                      v-model="image.bubbleOption.sub.left"
-                      thumb-label
-                      :max="95"
-                      :min="-10"
-                    >
-                    </v-slider>
-                    <div>
-                      상하 위치
-                    </div>
-                    <v-slider
-                      @mousedown.stop
-                      v-model="image.bubbleOption.sub.bottom"
-                      thumb-label
-                      :max="95"
-                      :min="-10"
-                    >
-                    </v-slider>
-                    <div>
-                      경계 크기
-                    </div>
-                    <v-slider
-                      @mousedown.stop
-                      v-model="image.bubbleOption.main.borderWidth"
-                      thumb-label
-                      :max="10"
-                      :min="0"
-                    >
-                    </v-slider>
-                  </v-col>
-                </v-row>
+                <!-- 말풍선 옵션 -->
+                <div v-show="isClickBubbleOption">
+                  <v-row>
+                    <v-col>
+                      <div class="mb-2">
+                        <div>
+                          Place
+                        </div>
 
-                <v-row id="bubbleOptionController">
-                  <v-col>
-                    말풍선 영역
-                    <div>
-                      말풍선 색깔
-                    </div>
-                    <v-color-picker
-                      hide-mode-switch
-                      v-model="image.bubbleOption.main.backgroundColor"
-                      mode='hexa'
-                      class="my-2"
-                    >
-                    </v-color-picker>
-                    <div>
-                      경계선 색깔
-                    </div>
-                    <v-color-picker
-                      @update:color.once="image.bubbleOption.main.borderColor = 'black'"
-                      hide-mode-switch
-                      v-model="image.bubbleOption.main.borderColor"
-                      mode='hexa'
-                      class="my-2"
-                    >
-                    </v-color-picker>
+                        <v-btn @click="btnBubbleArrowUp(idx)" dark icon>
+                          <v-icon>
+                            mdi-arrow-up-bold-circle-outline
+                          </v-icon>
+                        </v-btn>
+                        <v-btn @click="btnBubbleArrowDown(idx)" dark icon>
+                          <v-icon>
+                            mdi-arrow-down-bold-circle-outline
+                          </v-icon>
+                        </v-btn>
+                        <v-btn @click="btnBubbleArrowLeft(idx)" dark icon>
+                          <v-icon>
+                            mdi-arrow-left-bold-circle-outline
+                          </v-icon>
+                        </v-btn>
+                        <v-btn @click="btnBubbleArrowRight(idx)" dark icon>
+                          <v-icon>
+                            mdi-arrow-right-bold-circle-outline
+                          </v-icon>
+                        </v-btn>
+                        
+                      </div>
 
-                  </v-col>
-                </v-row>
+                      <div>
+                        Arrow Size
+                      </div>
+                      <v-slider
+                        @mousedown.stop
+                        v-model="image.bubbleOption.sub.width"
+                        dark
+                        :max="100"
+                        :min="10"
+                      >
+                        <template v-slot:append>
+                          <v-text-field
+                            dark
+                            v-model="image.bubbleOption.sub.width"
+                            class="mt-0 pt-0"
+                            hide-details
+                            single-line
+                            style="width: 60px"
+                          ></v-text-field>
+                        </template>
+                      </v-slider>
+                      <div>
+                        Arrow Horizontal adjust
+                      </div>
+                      <v-slider
+                        @mousedown.stop
+                        v-model="image.bubbleOption.sub.left"
+                        dark
+                        :max="95"
+                        :min="-10"
+                      >
+                        <template v-slot:append>
+                          <v-text-field
+                            dark
+                            v-model="image.bubbleOption.sub.left"
+                            class="mt-0 pt-0"
+                            hide-details
+                            single-line
+                            style="width: 60px"
+                          ></v-text-field>
+                        </template>
+                      </v-slider>
+                      <div>
+                        Arrow Vertical adjust 
+                      </div>
+                      <v-slider
+                        @mousedown.stop
+                        v-model="image.bubbleOption.sub.bottom"
+                        dark
+                        :max="95"
+                        :min="-10"
+                      >
+                        <template v-slot:append>
+                          <v-text-field
+                            dark
+                            v-model="image.bubbleOption.sub.bottom"
+                            class="mt-0 pt-0"
+                            hide-details
+                            single-line
+                            style="width: 60px"
+                          ></v-text-field>
+                        </template>
+                      </v-slider>
+                      <div>
+                        Border Size
+                      </div>
+                      <v-slider
+                        @mousedown.stop
+                        v-model="image.bubbleOption.main.borderWidth"
+                        dark
+                        :max="10"
+                        :min="0"
+                      >
+                        <template v-slot:append>
+                          <v-text-field
+                            dark
+                            v-model="image.bubbleOption.main.borderWidth"
+                            class="mt-0 pt-0"
+                            hide-details
+                            single-line
+                            style="width: 60px"
+                          ></v-text-field>
+                        </template>
+                      </v-slider>
+                    </v-col>
+                  </v-row>
+                  <v-row class="">
+                    <v-col class="mr-5">
+                      <div>
+                        Speech bubble Color
+                      </div>
+                      <v-color-picker
+                        hide-mode-switch
+                        v-model="image.bubbleOption.main.backgroundColor"
+                        mode='hexa'
+                        class="my-2"
+                        width="200"
+                      >
+                      </v-color-picker>                      
+                    </v-col>
+                    <v-col>
+                      <div>
+                        Border line Color
+                      </div>
+                      <v-color-picker
+                        @update:color.once="image.bubbleOption.main.borderColor = '#000000F0'"
+                        hide-mode-switch
+                        v-model="image.bubbleOption.main.borderColor"
+                        mode='hexa'
+                        class="my-2"
+                        width="200"
+                      >
+                      </v-color-picker>
+                    </v-col>
+                  </v-row>
+                </div>
+
 
               </v-container>
             </div>
             <!-- 이미지의 경우 -->
             <div v-if="image.isClickOption && !image.isBubble && !image.isBackground"
-              :style="{ width: '500px', height: 'fit-content', backgroundColor: 'black', position: 'relative', bottom: image.imageOption.borderSlider + 'px', left: 'calc(100% + 50px + ' + `${image.imageOption.borderSlider}` + 'px )' }">
-              <v-container fluid style="color:white;">
+              :style="{ height: 'fit-content', backgroundColor: 'rgba(0,0,20,0.9)', position: 'relative', bottom: image.imageOption.borderSlider + 'px', left: 'calc(100% + 50px + ' + `${image.imageOption.borderSlider}` + 'px )' }">
+              <v-container fluid class="obejct-option">
                 <v-row>
                   <v-col>
                     <v-color-picker v-model="image.imageOption.borderColor" class="ma-2" hide-inputs></v-color-picker>
@@ -268,6 +319,8 @@
                     <v-slider
                       v-model="image.imageOption.borderSlider"
                       thumb-label
+                      :min="0"
+                      :max="10"
                     >
                     </v-slider>
                   </v-col>
@@ -282,8 +335,6 @@
               class="my-0"
               style="width: 100%; padding: 20%; position: absolute; align-self: center; text-align: center; overflow-wrap: anywhere;"
               :style="[contentStyle(idx)]"
-            
-            
             >
               {{ image.bubbleOption.text.content }}
             </p>
@@ -642,7 +693,7 @@ export default {
       let canvasFormData = new FormData()
       //let canvasFormArray = new Array()
 
-for ( let count = 0; count < this.webtoonCanvasCount; count++ ) {
+    for ( let count = 0; count < this.webtoonCanvasCount; count++ ) {
         await html2canvas(ctxTest, {
           height: this.initWebtoonCanvasHeight,
           y: 128 + this.initWebtoonCanvasHeight*count,  // 아래위 마진때문에 128.
@@ -808,29 +859,17 @@ for ( let count = 0; count < this.webtoonCanvasCount; count++ ) {
 
 <style>
 
-/* #bubbleOptionController .v-color-picker {
-  max-width: 150px !important;
-  padding: 0;
+.obejct-option {
+  width: 500px;
+  color: white;
+  padding-left: 40px;
+  padding-right: 40px;
 }
 
-#bubbleOptionController .v-color-picker__canvas {
-  width: 150px !important;
-  height: 100px !important;
+#bubbleOption .v-input__append-outer {
+  position: relative;
+  bottom: 16px;
 }
-#bubbleOptionController .v-color-picker__canvas canvas {
-  width: 100% !important;
-  height: 100% !important;
-} */
-/* #bubbleOptionController .v-color-picker__canvas canvas .v-color-picker__canvas-dot {
-  display: none !important;
-}
-#bubbleOptionController .v-color-picker .v-color-picker__controls {
-  padding: 5px !important;
-}
-
-#bubbleOptionController .v-color-picker .v-color-picker__preview {
-  display: none;
-} */
 
 .v-slider {
   margin-left: 0 !important;
