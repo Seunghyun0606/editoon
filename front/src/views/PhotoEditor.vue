@@ -24,10 +24,38 @@
             <!-- @clicked="check2('bubble' + idx)" -->
             <!-- :style="{ backgroundImage:  'url('+ `${image.image}` + ')', backgroundRepeat: 'round' }" -->
             <!-- <img :src="image.image" style="height: inherit; width: inherit;" alt=""> -->
-            <div v-show="image.isActive" style="position: absolute; float: right; z-index: 999">
-              <v-btn @click="btnUpZindex(idx)">zindex올리기</v-btn>
-              <v-btn @click="btnDownZindex(idx)">zindex내리기</v-btn>
-              <v-btn @click="btnOption(idx)">옵션</v-btn>
+            <div v-show="image.isActive" style="position: absolute; top: -35px; right: 0; z-index: 999">
+              <v-btn
+                icon
+                color='black'
+                @click="btnUpZindex(idx)"
+              >
+                <v-icon
+                >
+                  mdi-arrow-up-circle
+                </v-icon>
+              </v-btn>
+              <v-btn
+                icon
+                color="black"
+                @click="btnDownZindex(idx)">
+                <v-icon
+                >
+                  mdi-arrow-down-circle
+                </v-icon>
+
+
+              </v-btn>
+              <v-btn
+                icon
+                color="black"              
+                @click="btnOption(idx)">
+                <v-icon
+                >
+                  mdi-open-in-new
+                </v-icon>
+
+              </v-btn>
             </div>
             <!-- <input v-if="image.isBubble" :id="'bubble' + idx" @click='check' style="width: inherit; height: inherit" type="text" class="triangle-isosceles" value='대사란' > -->
 
