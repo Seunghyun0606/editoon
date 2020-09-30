@@ -22,7 +22,7 @@
           </v-btn>
 
         </v-col>
-        <v-col cols="6" class="mr-5">
+        <v-col cols="6" class="mr-5" :style="{ position: 'relative', top: `${currentScrollPlace}` + 'px' }">
           <v-btn @click="btnAddBubble1" dark>
             <v-icon class="pr-2">
               mdi-chat-plus-outline
@@ -419,7 +419,7 @@
         </v-col>
 
 
-        <v-col cols="6" class="mr-5">
+        <v-col cols="6" class="mr-5" :style="{ position: 'relative', top: `${currentScrollPlace}` + 'px' }">
           <v-row style="height: 70vh; width: 100%;" class="">
             <tui-image-editor ref="imageEditor" :include-ui="useDefaultUI" :options="options"></tui-image-editor>
 
@@ -514,6 +514,7 @@ export default {
   },
   data() {
     return {
+      currentScrollPlace: 0,
       isClickBubbleOptionText: true,
       isClickBubbleOption: false,
       previewCount: 0,
@@ -677,6 +678,15 @@ export default {
     // img :src="'data:image/png;base64,' + `${test123}`" 나중에 이미지 base64파일 형식으로 넣어주면된다.
   },
   methods: {
+    getCurrentScrollPlace() {
+      const checkScrollPlace = document.documentElement.scrollTop
+      if ( checkScrollPlace >= 200 ) {
+        this.currentScrollPlace = checkScrollPlace - 70
+      }
+      else {
+        this.currentScrollPlace = 0
+      }
+    },
     onOptionAllowDrag(idx) {
       this.images[idx].isDraggable = true
     },
@@ -718,7 +728,6 @@ export default {
       arrowStyle.transform = 'rotate(45deg)'
     },
     btnOption(idx) {      
-      // this.images[idx].isDraggable = false
       this.images[idx].isClickOption = !this.images[idx].isClickOption
     },
 
@@ -952,6 +961,13 @@ export default {
     const editorHeader = document.querySelector('.tui-image-editor-header')
     const editorBtnSet = document.querySelector('#editorBtnSet')
     editorHeader.appendChild(editorBtnSet)
+
+    // scroll 추적기 붙이기
+    window.addEventListener("scroll", this.getCurrentScrollPlace);
+
+  },
+  destroy() {
+    window.removeEventListener("scroll", this.getCurrentScrollPlace);
 
   }
 }
