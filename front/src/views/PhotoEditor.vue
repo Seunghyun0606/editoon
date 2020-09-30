@@ -127,7 +127,7 @@
             </div>
             <!-- 말풍선의 경우 -->
             <div @mousedown="onOptionPreventDrag(idx)" @mouseup="onOptionAllowDrag(idx)" v-if="image.isClickOption && image.isBubble" :style="{ height: 'fit-content', backgroundColor: 'rgba(0,0,20,0.9)', position: 'relative', bottom: image.bubbleOption.main.borderWidth + 'px', left: 'calc(100% + 50px + ' + `${image.bubbleOption.main.borderWidth}` + 'px )' }">
-              <v-container  class="mx-auto my-8 obejct-option" id="bubbleOption" >
+              <v-container  class="mx-auto my-8 obejct-option" id="optionSlider" >
                 <div class="mb-6">
                   <v-btn dark color="#0D47A1" class="mr-5" @click.stop="clickBubbleOptionText">Text</v-btn>
                   <v-btn dark color="#0D47A1" @click.stop="clickBubbleOption">Speech Bubble</v-btn>
@@ -156,7 +156,6 @@
                     <v-slider
                       @mousedown.stop
                       v-model="image.bubbleOption.text.fontSize"
-                      class="align-center"
                       :max="100"
                       :min="10"
                       hide-details
@@ -179,7 +178,6 @@
                     <v-slider
                       @mousedown.stop
                       v-model="image.bubbleOption.text.fontWeight"
-                      class="align-center"
                       :max="9"
                       :min="1"
                       hide-details
@@ -201,8 +199,8 @@
                     </div>
                     <v-color-picker
                       @update:color.once="image.bubbleOption.text.color = '#000000F0'"
-                      hide-mode-switch
                       v-model="image.bubbleOption.text.color"
+                      hide-mode-switch
                       mode='hexa'
                       class="my-2"
                       width="250"
@@ -368,24 +366,41 @@
             <!-- 이미지의 경우 -->
             <div @mousedown="onOptionPreventDrag(idx)" @mouseup="onOptionAllowDrag(idx)" v-if="image.isClickOption && !image.isBubble && !image.isBackground"
               :style="{ height: 'fit-content', backgroundColor: 'rgba(0,0,20,0.9)', position: 'relative', bottom: image.imageOption.borderSlider + 'px', left: 'calc(100% + 50px + ' + `${image.imageOption.borderSlider}` + 'px )' }">
-              <v-container fluid class="obejct-option">
-                <v-row>
-                  <v-col>
-                    <v-color-picker v-model="image.imageOption.borderColor" class="ma-2" hide-inputs></v-color-picker>
-                  </v-col>
-                </v-row>
-                <v-row>
-                  <v-col>
-                    <v-subheader class="" style="color: white;">테두리 두께</v-subheader>
-                    <v-slider
-                      v-model="image.imageOption.borderSlider"
-                      thumb-label
-                      :min="0"
-                      :max="10"
-                    >
-                    </v-slider>
-                  </v-col>
-                </v-row>
+              <v-container fluid class="mx-auto my-8 obejct-option" id="optionSlider">
+                  <div>
+                    Border Size
+                  </div>
+                  <v-slider
+                    @mousedown.stop
+                    v-model="image.imageOption.borderSlider"
+                    dark
+                    :max="10"
+                    :min="0"
+                  >
+                    <template v-slot:append>
+                      <v-text-field
+                        dark
+                        v-model="image.imageOption.borderSlider"
+                        class="mt-0 pt-0"
+                        hide-details
+                        single-line
+                        style="width: 60px"
+                      ></v-text-field>
+                    </template>
+                  </v-slider>
+
+                  <div>
+                    Border Color
+                  </div>
+                  <v-color-picker
+                    v-model="image.imageOption.borderColor"
+                    hide-mode-switch
+                    class="my-2"
+                    mode="hexa"
+
+                  >
+
+                  </v-color-picker>
 
               </v-container>
             </div>
@@ -951,9 +966,9 @@ export default {
   padding-right: 40px;
 }
 
-#bubbleOption .v-input__append-outer {
+#optionSlider .v-input__append-outer {
   position: relative;
-  bottom: 16px;
+  bottom: 20px;
 }
 
 .v-slider {
