@@ -1,5 +1,60 @@
 <template>
     <v-container fluid style="height: 100%; background-color: rgba(0, 0,0, 0.88)">
+      <v-row style="justify-content: space-between; top: 20px; position: relative; z-index: 999;">
+        <v-col cols="5" class="mx-auto" style="text-align: end;">
+          <v-btn @click="canvasImageToSpring" dark>
+            <v-icon class="pr-2">
+              mdi-cloud-download-outline
+            </v-icon>
+            SAVE online
+          </v-btn>
+          <v-btn dark class="mx-2" >
+            <v-icon class="pr-2">
+              mdi-file-download-outline
+            </v-icon>
+            download canvas
+          </v-btn>
+          <v-btn dark >
+            <v-icon class="pr-2">
+              mdi-download
+            </v-icon>
+            download image
+          </v-btn>
+
+        </v-col>
+        <v-col cols="6" class="mr-5">
+          <v-btn @click="btnAddBubble1" dark>
+            <v-icon class="pr-2">
+              mdi-chat-plus-outline
+            </v-icon>
+            Add Chat
+          </v-btn>
+          <v-btn @click="btnAddBackground" dark class="mx-2">
+            <v-icon class="pr-2">
+              mdi-card-plus
+            </v-icon>
+            Add Background
+          </v-btn>
+          <v-btn @click="btnAddCanvasHeight" dark class="">
+            <v-icon class="pr-2">
+              mdi-table-column-plus-after
+            </v-icon>
+            Add Page
+          </v-btn>
+          <v-btn @click="btnEditorImageToCanvas" class="mx-2" dark>
+            <v-icon class="pr-2">
+              mdi-send
+            </v-icon>
+            Send
+          </v-btn>
+          <v-btn @click="btnEditorImageToCanvas" class="" color="" dark>
+            <v-icon class="pr-2">
+              mdi-image-multiple-outline
+            </v-icon>
+            Images
+          </v-btn>
+        </v-col>
+      </v-row>
       <v-row style="justify-content: space-between;">
         <v-col v-resize="resizeCanvasWidth" cols="5" id="webtoonCanvas" class="mx-auto my-16 webtoon-canvas-css" :style="{ height: webtoonCanvasHeight+'px' }">
           <VueDragResize
@@ -347,8 +402,8 @@
         </v-col>
 
 
-        <v-col cols="6">
-          <v-row style="height: 70vh; width: 90%;" class="mx-auto">
+        <v-col cols="6" class="mr-5">
+          <v-row style="height: 70vh; width: 100%;" class="">
             <tui-image-editor ref="imageEditor" :include-ui="useDefaultUI" :options="options"></tui-image-editor>
 
           </v-row>
@@ -358,14 +413,20 @@
               @vdropzone-files-added="dropZoneImageMoveToEditor"
               id="dropZone"
               ref="myVueDropzone"
-              style=" width: 90%; position: relative;
+              style="
+                width: 100%;
+                position: relative;
                 height: 25vh;
                 overflow-y: auto;
                 border: 1px solid white;
-                border-radius: 20px;
                 text-align: center;
-                background: border-box"
-              class="mx-auto"
+                background: border-box;
+                border-bottom-right-radius: 20px;
+                border-bottom-left-radius: 20px;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+                "
+              class=""
               :options="dropzoneOptions"
               :useCustomSlot='true'>
               <div class="dropzone-custom-content">
@@ -373,16 +434,38 @@
                 <div class="subtitle">...or click to select a file from your computer</div>
               </div>
             </vue2Dropzone>
-            <div id='editorBtnSet'>
-              <v-btn @click="canvasImageToSpring">캔버스 이미지변환 테스트</v-btn>
-              <v-btn @click="btnDropZoneImageMoveToEditor">에디터로보내기</v-btn>
-              <v-btn @click="btnEditorImageToCanvas">캔버스로보내기</v-btn>
-              <v-btn @click="btnAddCanvasHeight">캔버스늘리기</v-btn>
-              <v-btn @click="btnAddBackground">회상배경추가하기</v-btn>
-              <v-btn @click="btnAddBubble1">말풍선1</v-btn>
-
-
-            </div>
+            <v-row id='editorBtnSet'>
+              <!-- <v-btn @click="btnAddBubble1" dark class="mt-2">
+                <v-icon class="pr-2">
+                  mdi-chat-plus-outline
+                </v-icon>
+                Add Chat
+              </v-btn>
+              <v-btn @click="btnAddBackground" dark class="mx-2 mt-2">
+                <v-icon class="pr-2">
+                  mdi-card-plus
+                </v-icon>
+                Add Background
+              </v-btn>
+              <v-btn @click="btnAddCanvasHeight" dark class="mt-2">
+                <v-icon class="pr-2">
+                  mdi-table-column-plus-after
+                </v-icon>
+                Add Page
+              </v-btn>
+              <v-btn @click="btnEditorImageToCanvas" class="mt-2 mx-2" dark>
+                <v-icon class="pr-2">
+                  mdi-send
+                </v-icon>
+                Send
+              </v-btn>
+              <v-btn @click="btnEditorImageToCanvas" class="mt-2" color="" dark>
+                <v-icon class="pr-2">
+                  mdi-image-multiple-outline
+                </v-icon>
+                Images
+              </v-btn> -->
+            </v-row>
 
           </v-row>
         </v-col>
@@ -786,15 +869,6 @@ export default {
       this.$store.dispatch("dropZoneImageToDjango", djangoImageForm)
     },
 
-    // 사실상 preview에서 클릭해서 넣을 수 있기 때문에 필요없음.
-    btnDropZoneImageMoveToEditor() {
-      const files = this.$refs.myVueDropzone.getAcceptedFiles()
-      // this.image = files[0].dataURL
-      const file = files[0]
-      this.$refs.imageEditor.invoke('loadImageFromFile', file)
-
-    },
-
     // 에디터 이미지를 캔버스로 이동
     btnEditorImageToCanvas() {
       const dataURL = this.$refs.imageEditor.invoke('toDataURL')  // base64 data
@@ -862,15 +936,6 @@ export default {
     const editorHeader = document.querySelector('.tui-image-editor-header')
     const editorBtnSet = document.querySelector('#editorBtnSet')
     editorHeader.appendChild(editorBtnSet)
-
-    const colorPicker = document.querySelectorAll('.v-color-picker')
-    console.log(colorPicker)
-    // for ( let idx = 0; idx < file_list.length; idx++) {
-    //   dz_preview[idx + this.previewCount].addEventListener('click', e => {
-    //     this.$refs.imageEditor.invoke('loadImageFromFile', file_list[idx])
-    //     e
-    //   })
-    // }
 
   }
 }
