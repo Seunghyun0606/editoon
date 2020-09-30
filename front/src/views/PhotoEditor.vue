@@ -27,13 +27,13 @@
             <v-icon class="pr-2">
               mdi-chat-plus-outline
             </v-icon>
-            Add Chat
+            Chat
           </v-btn>
           <v-btn @click="btnAddBackground" dark class="mx-2">
             <v-icon class="pr-2">
               mdi-card-plus
             </v-icon>
-            Add Background
+            Background
           </v-btn>
           <v-btn @click="btnAddCanvasHeight" dark class="">
             <v-icon class="pr-2">
@@ -45,9 +45,9 @@
             <v-icon class="pr-2">
               mdi-send
             </v-icon>
-            Send
+            paint image
           </v-btn>
-          <v-btn @click="btnEditorImageToCanvas" class="" color="" dark>
+          <v-btn class="" color="" dark>
             <v-icon class="pr-2">
               mdi-image-multiple-outline
             </v-icon>
@@ -65,6 +65,7 @@
             :parentW="webtoonCanvasWidth"
             :w="200"
             :h="200"
+            :y="image.y"
             :z="image.isActive ? 999 : image.zIndex"
             :isDraggable='image.isDraggable'
             :parentLimitation="true"
@@ -520,6 +521,7 @@ export default {
       previewCount: 0,
       images: [
         {
+          y: 0,
           image: require(`@/assets/account_signup.png`),  // 맨처음 테스트용으로 넣은것
           isActive: false,  // 나중에 중복 선택 제거를 위함.
           isBackground: false, // 배경인지 확인하기위함.
@@ -678,6 +680,8 @@ export default {
     // img :src="'data:image/png;base64,' + `${test123}`" 나중에 이미지 base64파일 형식으로 넣어주면된다.
   },
   methods: {
+    objectStartY() {
+    },
     getCurrentScrollPlace() {
       const checkScrollPlace = document.documentElement.scrollTop
       if ( checkScrollPlace >= 200 ) {
@@ -740,6 +744,7 @@ export default {
     btnEditorImageToCanvas() {
       const dataURL = this.$refs.imageEditor.invoke('toDataURL')  // base64 data
       const imageData = {
+        y: this.currentScrollPlace,
         image: dataURL,
         isActive: false,
         isBackground: false,
@@ -757,6 +762,7 @@ export default {
     // 말풍선 추가
     btnAddBubble1() {
       const addBubble = {
+        y: this.currentScrollPlace,
         image: "",
         isActive: false,
         isBackground: false,
@@ -801,6 +807,7 @@ export default {
     // background 추가.
     btnAddBackground() {
       const addBackground = {
+        y: this.currentScrollPlace,
         image: "",
         isActive: false,
         isBackground: true,
