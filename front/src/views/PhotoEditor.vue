@@ -19,17 +19,15 @@
             class="d-flex"
           >
             <div v-if="image.isBubble" :style="[bubbleArrowStyleSub(idx)]">
-
             </div>
             <!-- :style="[ image.isBackground ? addBackground : addImage(image.image), { border: image.imageOption.borderSlider +'px' + ' solid' + ' black'} ]" -->
             <!-- @clicked="check2('bubble' + idx)" -->
             <!-- :style="{ backgroundImage:  'url('+ `${image.image}` + ')', backgroundRepeat: 'round' }" -->
             <!-- <img :src="image.image" style="height: inherit; width: inherit;" alt=""> -->
-            <div v-show="image.isActive" style="position: absolute; float: right;">
+            <div v-show="image.isActive" style="position: absolute; float: right; z-index: 999">
               <v-btn @click="btnUpZindex(idx)">zindex올리기</v-btn>
               <v-btn @click="btnDownZindex(idx)">zindex내리기</v-btn>
               <v-btn @click="btnOption(idx)">옵션</v-btn>
-
             </div>
             <!-- <input v-if="image.isBubble" :id="'bubble' + idx" @click='check' style="width: inherit; height: inherit" type="text" class="triangle-isosceles" value='대사란' > -->
 
@@ -253,8 +251,8 @@
             <!-- 대사영역 -->
             <p
               v-if="image.isBubble"
-              class="my-0 mx-auto"
-              style="width: 80%; align-self: center; text-align: center; overflow-wrap: anywhere;"
+              class="my-0"
+              style="width: 100%; padding: 20%; position: absolute; align-self: center; text-align: center; overflow-wrap: anywhere;"
               :style="[contentStyle(idx)]"
             
             
@@ -614,9 +612,9 @@ export default {
       // console.log(ctxTest)
 
       let canvasFormData = new FormData()
-      let canvasFormArray = new Array()
+      //let canvasFormArray = new Array()
 
-      for ( let count = 0; count < this.webtoonCanvasCount; count++ ) {
+for ( let count = 0; count < this.webtoonCanvasCount; count++ ) {
         await html2canvas(ctxTest, {
           height: this.initWebtoonCanvasHeight,
           y: 128 + this.initWebtoonCanvasHeight*count,  // 아래위 마진때문에 128.
@@ -638,7 +636,8 @@ export default {
             // canvasFormData.append("one", file);	// file data 추가
             // canvasFormData.append("two", file);	// file data 추가
             // canvasFormData.append("three", file);	// file data 추가
-            canvasFormArray.push(file);	// file data 추가
+            // canvasFormArray.push(file);	// file data 추가
+            canvasFormData.append('image', file)
             // return canvasFormData
         })
           // .catch( e => {
@@ -650,13 +649,12 @@ export default {
           //   this.$store.dispatch('canvasImageToSpring', canvasFormData)
           // })
       }
-      canvasFormData.append('_id', 0)
+      canvasFormData.append('no', 24)
       canvasFormData.append('subject', 'check')
-      canvasFormData.append('thumbnail', canvasFormArray[0])
+      // canvasFormData.append('thumbnail', null) // 여기에 섬네일 파일 넣어주면 됨.
       // canvasFormData.append('createDate', 'check')
-
-      canvasFormData.append('image', canvasFormArray)
-      console.log(canvasFormArray)
+      //canvasFormData.append('image', canvasFormArray)
+      //console.log(canvasFormArray[1])
       this.$store.dispatch('canvasImageToSpring', canvasFormData)
 
 
