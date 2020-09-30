@@ -65,6 +65,7 @@
             :parentW="webtoonCanvasWidth"
             :w="200"
             :h="200"
+            :x="image.x"
             :y="image.y"
             :z="image.isActive ? 999 : image.zIndex"
             :isDraggable='image.isDraggable'
@@ -513,14 +514,23 @@ export default {
     VueDragResize,
     vue2Dropzone,
   },
+  watch: {
+    objectCount(newVal) {
+      if ( newVal >= 10 ) {
+        this.objectCount = 0
+      }
+    }
+  },
   data() {
     return {
       currentScrollPlace: 0,
       isClickBubbleOptionText: true,
       isClickBubbleOption: false,
       previewCount: 0,
+      objectCount: 0,
       images: [
         {
+          x: 0,
           y: 0,
           image: require(`@/assets/account_signup.png`),  // 맨처음 테스트용으로 넣은것
           isActive: false,  // 나중에 중복 선택 제거를 위함.
@@ -680,8 +690,6 @@ export default {
     // img :src="'data:image/png;base64,' + `${test123}`" 나중에 이미지 base64파일 형식으로 넣어주면된다.
   },
   methods: {
-    objectStartY() {
-    },
     getCurrentScrollPlace() {
       const checkScrollPlace = document.documentElement.scrollTop
       if ( checkScrollPlace >= 200 ) {
@@ -744,6 +752,7 @@ export default {
     btnEditorImageToCanvas() {
       const dataURL = this.$refs.imageEditor.invoke('toDataURL')  // base64 data
       const imageData = {
+        x: this.objectCount * 10,
         y: this.currentScrollPlace,
         image: dataURL,
         isActive: false,
@@ -758,10 +767,12 @@ export default {
         },
       }
       this.images.push(imageData)
+      this.objectCount++
     },
     // 말풍선 추가
     btnAddBubble1() {
       const addBubble = {
+        x: this.objectCount * 10,
         y: this.currentScrollPlace,
         image: "",
         isActive: false,
@@ -803,10 +814,12 @@ export default {
         }
       }
       this.images.push(addBubble)
+      this.objectCount++
     },
     // background 추가.
     btnAddBackground() {
       const addBackground = {
+        x: this.objectCount * 10,
         y: this.currentScrollPlace,
         image: "",
         isActive: false,
@@ -820,6 +833,7 @@ export default {
         },
       }
       this.images.push(addBackground)
+      this.objectCount++
     },
 
     isIndex() {
