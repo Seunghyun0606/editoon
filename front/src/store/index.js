@@ -17,6 +17,8 @@ export default new Vuex.Store({
     signUpDialog: false,
     changePasswordDialog: false,
     
+    isLogin: false,
+
     // 나중에 새로고침에 대비해서 쿠키에 넣어야할수도있음 생각해두자.
     userNumber: '',
     userEditoonImages: [],
@@ -54,10 +56,17 @@ export default new Vuex.Store({
     signUpStatus(state, check) {
       state.signUpValidation.signUpstatus = check
     },
+    setLoginStatus(state, check) {
+      state.isLogin = check
+    },
     imageFromDjango(state, images) {
       state.convertedImages.push(images)
       // 이미지 어떻게 넘어오는지 봐야할듯.
-    }
+    },
+    setUserEditoonImages(state, images) {
+      state.userEditoonImages = images
+    },
+
 
   },
   actions: {
@@ -110,7 +119,24 @@ export default new Vuex.Store({
           return false
         })
     },
-    getUserEditoonImages({ commit }) {
+    // login check
+    login({ commit }, loginData) {
+      axios.post( SERVEr_URL + 'nonmember/email/authCheck', loginData)
+        .then( res => {
+          console.log(res.data)
+          commit('setLoginStatus', true)
+          // 딱히 해줄일이 없다.
+        })
+        .catch( err => {
+          alert('로그인 실패')
+          console.log(err)
+          // 토큰 만료시 , HttpStatus === 406일때 토큰 만료이기 때문에 토큰을 다시 받는 로직 만들어야한다.
+        })
+    },
+
+
+    // 유저가 저장한 editton image 보여주기
+    getUserEditoonImages({ state, commit }) {
       axios.get( SERVER_URL + 'v1/getEditoonDetail/' + `${state.userEmail}/` + `${state.userNumber}/`)
         .then( res => {
           console.log(res.data)
