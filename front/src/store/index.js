@@ -121,7 +121,7 @@ export default new Vuex.Store({
     },
     // login check
     login({ commit }, loginData) {
-      axios.post( SERVER_URL + 'login', loginData)
+      axios.post( SERVER_URL + 'login/', loginData)
         .then( res => {
           console.log(res.data)
           commit('setLoginStatus', true)
@@ -147,7 +147,7 @@ export default new Vuex.Store({
     },
     // 유저정보 변경
     changeUserInfo({ commit }, changedInfo) {
-      axios.post( SERVER_URL + 'account/v1/nameAndImageModify', changedInfo)
+      axios.post( SERVER_URL + 'account/v1/nameAndImageModify/', changedInfo)
         .then( res => {
           console.log(res.data)
           commit
@@ -163,7 +163,7 @@ export default new Vuex.Store({
     // 비밀번호 변경
     // email이랑 password를 넘겨준다
     changePassword({ state }, changedInfo ) {
-      axios.post( SERVER_URL + 'account/v1/passwordModify', changedInfo)
+      axios.post( SERVER_URL + 'account/v1/passwordModify/', changedInfo)
         .then( res => {
           console.log(res.data)
           alert("비밀번호 변경이 완료되었습니다.")
@@ -172,6 +172,19 @@ export default new Vuex.Store({
         .catch( err => {
           console.log(err)
           alert("비밀번호를 다시 확인해주세요")
+        })
+    },
+    // 유저정보 삭제
+    // email password
+    deleteUser(userInfo) {
+      axios.post( SERVER_URL + 'account/v1/delete/', userInfo)
+        .then( res => {
+          console.log(res.data)
+          alert('삭제가 완료되었습니다.')
+        })
+        .catch( err => {
+          console.log(err)
+          // 내가 쿠키를 제거해야하는가? 확인해야할듯.
         })
     },
 
