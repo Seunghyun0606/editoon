@@ -8,7 +8,7 @@
             </v-icon>
             SAVE online
           </v-btn>
-          <v-btn dark class="mx-2" >
+          <v-btn @click="downloadCanvas" dark class="mx-2" >
             <v-icon class="pr-2">
               mdi-file-download-outline
             </v-icon>
@@ -849,12 +849,55 @@ export default {
     btnDownZindex(idx) {
       this.images[idx].zIndex -= 1
     },
-    
+    downloadCanvas() {
+      const downCanvas = document.querySelector('#webtoonCanvas')
+      html2canvas(downCanvas)
+        .then( canvas => {
+          const base64Data = canvas.toDataURL('image/png')
+
+          // base64 데이터 디코딩
+          let blobBin = atob(base64Data.split(',')[1])
+          let array = [];
+          for (var i = 0; i < blobBin.length; i++) {
+              array.push(blobBin.charCodeAt(i));
+          }
+          let file = new Blob([new Uint8Array(array)], {type: 'image/png'});	// Blob 생성
+
+          let downloadArray = new Array()
+          downloadArray.push(file)
+          downloadArray.push(base64Data)
+          return downloadArray
+        })
+        .then( (downloadArray) => {
+          let file = downloadArray[0]
+          let base64Data = downloadArray[1]
+
+          // blob 생성해서 msSaveOrOpenBlob 사용하면 IE 10+ 에서 다운로드를 지원한다.
+          // IE 10+ 를 지원할 생각이없다면 그냥 a 태그의 download쓰면됨.
+          if ( window.navigator.msSaveOrOpenBlob ) {
+            window.navigator.msSaveOrOpenBlob(file, 'new_file.png')
+          }
+          else {
+            let a = document.createElement('a')
+            a.style = 'display: none'
+            a.href = base64Data
+            a.download = 'new_file.png'
+            document.body.appendChild(a)
+            a.click()
+
+            setTimeout(function () {
+              document.body.removeChild(a)
+            }, 100);
+          }
+
+
+        })
+
+    },
     // 스프링으로 이미지 전달.
     async canvasImageToSpring() {
       const ctxTest = document.querySelector("#webtoonCanvas")
       const offsetY = ctxTest.offsetTop + 64
-      // console.log(ctxTest)
 
       let canvasFormData = new FormData()
       //let canvasFormArray = new Array()
@@ -865,7 +908,7 @@ export default {
           y: offsetY + this.initWebtoonCanvasHeight*count,  // 아래위 마진때문
         })
           .then( canvas => {
-            document.body.appendChild(canvas)
+            // document.body.appendChild(canvas)
   
             const base64Data = canvas.toDataURL('image/png')
             
