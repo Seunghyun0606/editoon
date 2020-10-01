@@ -13,7 +13,7 @@
         <!-- <v-col style="padding: 3vh 6vw;">
           <v-row> -->
         <!-- <v-col class="text-center main-index-txt"> -->
-        <div class="text" style="cursor: pointer;">
+        <div @click="moveToEditor" class="text" style="cursor: pointer;">
           <span>E</span>
           <span>D</span>
           <span>I</span>
@@ -345,6 +345,9 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    moveToEditor() {
+      this.$router.push('PhotoEditor')
     },
     currentScrollPlace() {
       this.current = document.documentElement.scrollTop;
