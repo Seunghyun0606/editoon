@@ -23,14 +23,27 @@
           <span>N</span>
         </div>
 
-        <div>
+        <!-- <div>
           <label>사진:</label>
           <input type="file" id="imgseletor" multiple />
           <v-btn @click="sendimg">test</v-btn>
-        </div>
+        </div> -->
 
         <!-- </v-col> -->
       </v-row>
+      <!-- <div>
+        test
+        <img
+          :src="'data:image/png;base64,' + `${test123}`"
+          alt=""
+          style="
+            width: 100px;
+            height: 100px;
+            background-color: black;
+            z-index: 9999;
+          "
+        />
+      </div> -->
 
       <!-- <v-row>
             <v-col align="center">
@@ -45,19 +58,6 @@
           </v-row> -->
       <!-- </v-col> -->
       <!-- </v-row> -->
-      <div>
-        test
-        <img
-          :src="'data:image/png;base64,' + `${test123}`"
-          alt=""
-          style="
-            width: 100px;
-            height: 100px;
-            background-color: black;
-            z-index: 9999;
-          "
-        />
-      </div>
       <div
         @click="scrollDown(1)"
         class="mx-auto d-flex justify-center main-scroll-down"
