@@ -158,14 +158,18 @@ public class AccountController {
 		final SuccessResponse result = new SuccessResponse();
 
 		Cookie cookie = WebUtils.getCookie(request, "access-token");
-		String accessToken = cookie.getValue();
-		LoginInfoDTO loginInfoDTO = accountService.getLoginInfo(accessToken);
-		Map<String, Object> retMap = new HashMap<>();
-		retMap.put("loginInfoDTO", loginInfoDTO);
-		result.status = true;
-		result.result = "success";
-		result.map = retMap;
-		response = new ResponseEntity<>(result, HttpStatus.OK);
+		if(cookie == null) {
+			throw new UnAuthorizationException("getLoginInfo UnAuthorization Exception \n");
+		}else {
+			String accessToken = cookie.getValue();
+			LoginInfoDTO loginInfoDTO = accountService.getLoginInfo(accessToken);
+			Map<String, Object> retMap = new HashMap<>();
+			retMap.put("loginInfoDTO", loginInfoDTO);
+			result.status = true;
+			result.result = "success";
+			result.map = retMap;
+			response = new ResponseEntity<>(result, HttpStatus.OK);
+		}
 
 		return response;
 	} // 만약 Unauthorized가 뜨면 access token 이 변조된것이다. 로그아웃 시켜야함.
