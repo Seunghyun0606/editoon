@@ -133,12 +133,30 @@ export default new Vuex.Store({
           // 토큰 만료시 , HttpStatus === 406일때 토큰 만료이기 때문에 토큰을 다시 받는 로직 만들어야한다.
         })
     },
-    logout({ commit }) {
+    logout() {
       axios.post( SERVER_URL + '/account/logout/' )
         .then( res => {
           console.log(res.data)
           // 쿠키에 이름이 어떻게 저장되는지 보고, 나중에 다 삭제해줘야함.
-
+          // 무조건 success로 옴
+        })
+        .catch( err => {
+          console.log(err)
+          // 에러가 뜨면 서버에러임
+        })
+    },
+    changeUserInfo({ commit }, changedInfo) {
+      axios.post( SERVER_URL + 'account/v1/nameAndImageModify')
+        .then( res => {
+          console.log(res.data)
+          commit
+          // 체인지한다음에 표시되는 부분이 있는가?
+          // 아마도 있다면 로그인하고나서 로그아웃으로 바뀌고 옆에 아이콘뜨게?
+          // 그럼 이미지랑 유저네임이 떠야하는가? 일단은 보류하자.
+          // 유저 정보를 다시 갱신시켜서 받아야하는데 어디서 받는가?
+        })
+        .catch( err => {
+          console.log(err)
         })
     },
 
