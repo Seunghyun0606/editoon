@@ -121,7 +121,7 @@ export default new Vuex.Store({
     },
     // login check
     login({ commit }, loginData) {
-      axios.post( SERVEr_URL + 'nonmember/email/authCheck', loginData)
+      axios.post( SERVER_URL + 'login', loginData)
         .then( res => {
           console.log(res.data)
           commit('setLoginStatus', true)
@@ -131,6 +131,14 @@ export default new Vuex.Store({
           alert('로그인 실패')
           console.log(err)
           // 토큰 만료시 , HttpStatus === 406일때 토큰 만료이기 때문에 토큰을 다시 받는 로직 만들어야한다.
+        })
+    },
+    logout({ commit }) {
+      axios.post( SERVER_URL + '/account/logout/' )
+        .then( res => {
+          console.log(res.data)
+          // 쿠키에 이름이 어떻게 저장되는지 보고, 나중에 다 삭제해줘야함.
+
         })
     },
 
