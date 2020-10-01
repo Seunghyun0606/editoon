@@ -14,7 +14,7 @@
             </v-icon>
             download canvas
           </v-btn>
-          <v-btn dark >
+          <v-btn @click='downloadImage' dark >
             <v-icon class="pr-2">
               mdi-download
             </v-icon>
@@ -849,6 +849,23 @@ export default {
     btnDownZindex(idx) {
       this.images[idx].zIndex -= 1
     },
+    downloadImage() {
+      const base64Data = this.$refs.imageEditor.invoke('toDataURL')
+      // 굳이 IE 10+ 지원하지말자. 지원할거면 canvas와 같이 한다
+      let a = document.createElement('a')
+      a.style = 'display: none'
+      a.href = base64Data
+      a.download = 'new_image.png'
+      document.body.appendChild(a)
+      a.click()
+
+      setTimeout(function () {
+        document.body.removeChild(a)
+      }, 100);
+
+
+
+    },
     downloadCanvas() {
       const downCanvas = document.querySelector('#webtoonCanvas')
       html2canvas(downCanvas)
@@ -889,8 +906,6 @@ export default {
               document.body.removeChild(a)
             }, 100);
           }
-
-
         })
 
     },
@@ -939,8 +954,7 @@ export default {
       canvasFormData.append('subject', 'check')
       // canvasFormData.append('thumbnail', null) // 여기에 섬네일 파일 넣어주면 됨.
       // canvasFormData.append('createDate', 'check')
-      //canvasFormData.append('image', canvasFormArray)
-      //console.log(canvasFormArray[1])
+      // canvasFormData.append('image', canvasFormArray)
       this.$store.dispatch('canvasImageToSpring', canvasFormData)
 
 
