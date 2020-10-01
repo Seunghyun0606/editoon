@@ -17,6 +17,11 @@ export default new Vuex.Store({
     signUpDialog: false,
     changePasswordDialog: false,
     
+    // 나중에 새로고침에 대비해서 쿠키에 넣어야할수도있음 생각해두자.
+    userNumber: '',
+    userEditoonImages: [],
+    userEmail: '',
+
     signUpValidation: {
       isSendEmail: false,
       codeValidate: false,
@@ -76,13 +81,6 @@ export default new Vuex.Store({
 
         })
     },
-    // axios.post( SERVER_URL + 'nonmember/email/authCheck/', signUpData,
-    //     {
-      //       headers: {
-        //         xsrfCookieName: 'XSRF-TOKEN', xsrfHeaderName: 'X-XSRF-TOKEN'
-        //       },
-        //     }
-        //   )
     // 코드보내기.
     signUpEmailVerificateCode({ commit }, signUpData ) {
       axios.post( SERVER_URL + 'nonmember/email/authCheck/', signUpData)
@@ -110,6 +108,16 @@ export default new Vuex.Store({
           console.log(err)
           console.log('회원가입실패')
           return false
+        })
+    },
+    getUserEditoonImages({ commit }) {
+      axios.get( SERVER_URL + 'v1/getEditoonDetail/' + `${state.userEmail}/` + `${state.userNumber}/`)
+        .then( res => {
+          console.log(res.data)
+          commit('setUserEditoonImages', res.data)
+        })
+        .catch( err => {
+          console.log(err)
         })
     },
     dropZoneImageToDjango({ commit }, djangoImageForm) {
