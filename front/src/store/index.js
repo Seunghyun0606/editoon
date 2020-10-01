@@ -145,8 +145,9 @@ export default new Vuex.Store({
           // 에러가 뜨면 서버에러임
         })
     },
+    // 유저정보 변경
     changeUserInfo({ commit }, changedInfo) {
-      axios.post( SERVER_URL + 'account/v1/nameAndImageModify')
+      axios.post( SERVER_URL + 'account/v1/nameAndImageModify', changedInfo)
         .then( res => {
           console.log(res.data)
           commit
@@ -157,6 +158,20 @@ export default new Vuex.Store({
         })
         .catch( err => {
           console.log(err)
+        })
+    },
+    // 비밀번호 변경
+    // email이랑 password를 넘겨준다
+    changePassword({ state }, changedInfo ) {
+      axios.post( SERVER_URL + 'account/v1/passwordModify', changedInfo)
+        .then( res => {
+          console.log(res.data)
+          alert("비밀번호 변경이 완료되었습니다.")
+          state.changePasswordDialog = false
+        })
+        .catch( err => {
+          console.log(err)
+          alert("비밀번호를 다시 확인해주세요")
         })
     },
 
