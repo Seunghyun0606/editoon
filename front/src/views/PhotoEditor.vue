@@ -47,11 +47,16 @@
             </v-icon>
             paint image
           </v-btn>
-          <v-btn class="" color="" dark>
+          <v-btn @click="isShowWebtoonImages = !isShowWebtoonImages" class="" color="" dark>
             <v-icon class="pr-2">
               mdi-image-multiple-outline
             </v-icon>
             Images
+            <v-row class="showConvertedImage" v-show="isShowWebtoonImages">
+              <v-col v-for="(convertedImage, idx) in convertedImages" :key="idx">
+                <img style="width: 100px; height: 100px;" :src="'data:image/png;base64,' + `${convertedImage}`" alt="transformed image">
+              </v-col>
+            </v-row>
           </v-btn>
         </v-col>
       </v-row>
@@ -523,6 +528,7 @@ export default {
   },
   data() {
     return {
+      isShowWebtoonImages: false,
       currentScrollPlace: 0,
       isClickBubbleOptionText: true,
       isClickBubbleOption: false,
@@ -862,9 +868,6 @@ export default {
       setTimeout(function () {
         document.body.removeChild(a)
       }, 100);
-
-
-
     },
     downloadCanvas() {
       const downCanvas = document.querySelector('#webtoonCanvas')
@@ -1041,7 +1044,9 @@ export default {
     editorHeader.appendChild(editorBtnSet)
 
     // scroll 추적기 붙이기
-    window.addEventListener("scroll", this.getCurrentScrollPlace);
+    window.addEventListener("scroll", this.getCurrentScrollPlace)
+
+    this.isShowWebtoonImages = false
 
   },
   destroy() {
@@ -1052,6 +1057,34 @@ export default {
 </script>
 
 <style>
+
+.showConvertedImage {
+  top: 60px;
+  position: absolute;
+  width: 400px;
+  height: 200px;
+  background-color: rgba(0,0,20,0.9);
+  border-radius: 10px;
+}
+
+.showConvertedImage::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  border-bottom: 20px solid rgba(0,0,20,0.9);
+  border-right: 20px solid transparent;
+  border-left: 20px solid  transparent;
+}
+
+.showConvertedImage:hover {
+  background-color: rgba(0,0, 20, 0.5);
+}
+
+
+.tri{
+  width: 0px;height: 0px;
+}
 
 .obejct-option {
   width: 500px;
