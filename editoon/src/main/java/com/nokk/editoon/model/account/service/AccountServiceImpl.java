@@ -129,30 +129,36 @@ public class AccountServiceImpl implements IAccountService {
 			// -> 사용자 이미지 값을 받아서 새로운 사용자 이미지 값으로 저장시켜버림.
 			// CASE 3. 사용자 이미지 -> default
 			// -> 사용자 이미지 값을 받아서 삭제시킨다음 account image를 default로 저장시킴
+			// CASE 4. 사용자 이미지는 변경 시키지 않는 경우
+			
 
 			String newImageName = "default.jpg";
-			if (accountModifyDTO.getImage().equals("default.jpg") && accountModifyDTO.getMultipartFile() != null
-					&& !accountModifyDTO.getMultipartFile().isEmpty()) {
-				// CASE 1.
-				String fileExtension = StringUtils
-						.getFilenameExtension(accountModifyDTO.getMultipartFile().getOriginalFilename());
-
-				if (canUseFileExtension(fileExtension)) {
-					newImageName = createUUID.createUUID(fileExtension);
-				}
-				profileImageRepo.saveFile(accountModifyDTO.getMultipartFile(), IMAGE_FOLDER, newImageName);
-			} else if (!accountModifyDTO.getImage().equals("default.jpg")) {
-				if (accountModifyDTO.getMultipartFile() != null && !accountModifyDTO.getMultipartFile().isEmpty()) {
-					// CASE 2.
-					//if (canUseFileExtension(fileExtension)) 추가하고 boolean 으로 바꿔줘야 함
-					newImageName = accountModifyDTO.getImage(); // 기존에 있던 파일 지우고 그 이름으로 다시 설정
-					profileImageRepo.deleteFile(IMAGE_FOLDER, newImageName);
+			if(accountModifyDTO.getIsChange().equals("no")) {
+				newImageName = accountModifyDTO.getImage();
+			}else if(accountModifyDTO.getIsChange().equals("yes")) {
+				if (accountModifyDTO.getImage().equals("default.jpg") && accountModifyDTO.getMultipartFile() != null
+						&& !accountModifyDTO.getMultipartFile().isEmpty()) {
+					// CASE 1.
+					String fileExtension = StringUtils
+							.getFilenameExtension(accountModifyDTO.getMultipartFile().getOriginalFilename());
+					
+					if (canUseFileExtension(fileExtension)) {
+						newImageName = createUUID.createUUID(fileExtension);
+					}
 					profileImageRepo.saveFile(accountModifyDTO.getMultipartFile(), IMAGE_FOLDER, newImageName);
-				} else if (accountModifyDTO.getMultipartFile() == null
-						|| accountModifyDTO.getMultipartFile().isEmpty()) {
-					// CASE 3.
-					String deleteImageName = accountModifyDTO.getImage();
-					profileImageRepo.deleteFile(IMAGE_FOLDER, deleteImageName);
+				} else if (!accountModifyDTO.getImage().equals("default.jpg")) {
+					if (accountModifyDTO.getMultipartFile() != null && !accountModifyDTO.getMultipartFile().isEmpty()) {
+						// CASE 2.
+						//if (canUseFileExtension(fileExtension)) 추가하고 boolean 으로 바꿔줘야 함
+						newImageName = accountModifyDTO.getImage(); // 기존에 있던 파일 지우고 그 이름으로 다시 설정
+						profileImageRepo.deleteFile(IMAGE_FOLDER, newImageName);
+						profileImageRepo.saveFile(accountModifyDTO.getMultipartFile(), IMAGE_FOLDER, newImageName);
+					} else if (accountModifyDTO.getMultipartFile() == null
+							|| accountModifyDTO.getMultipartFile().isEmpty()) {
+						// CASE 3.
+						String deleteImageName = accountModifyDTO.getImage();
+						profileImageRepo.deleteFile(IMAGE_FOLDER, deleteImageName);
+					}
 				}
 			}
 
@@ -195,11 +201,13 @@ public class AccountServiceImpl implements IAccountService {
 			Optional<AccountEntity> optional = accountRepo.findAccountByEmail(email);
 			if (optional.isPresent()) {
 				accountNo = optional.get().getNo();
-				profileImageRepo.deleteFile(IMAGE_FOLDER, optional.get().getImage());
+				if(!optional.get().getImage().equals("default.jpg")) {
+					profileImageRepo.deleteFile(IMAGE_FOLDER, optional.get().getImage());
+				}
 			} else {
 				throw new UnknownException(email + "is not exist. maybe check mariadb.");
 			}
-
+			System.out.println(accountNo);
 			ret = accountRepo.deleteAccount(email); // 여기서 에러 나면 false 출력하게 어떻게?
 
 			ValueOperations<String, Object> vop = redisTemplate.opsForValue();

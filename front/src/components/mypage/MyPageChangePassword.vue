@@ -12,7 +12,7 @@
 
             <form action="" style="margin-top: 0.2vh;">
               <v-text-field
-                v-model="changePassword.password"
+                v-model="passwordSet.password"
                 label="Password"
                 type="password"
                 :rules="passwordRules"
@@ -23,7 +23,7 @@
                 class="mx-auto"
               ></v-text-field>
               <v-text-field
-                v-model="changePassword.password2"
+                v-model="passwordSet.newPassword"
                 label="Password 확인"
                 type="password"
                 :rules="passwordRules"
@@ -33,7 +33,7 @@
                 style="width: 70%;"
                 class="mx-auto"
               ></v-text-field>
-              <v-btn class='warning mr-4' @click="clickOut()" style="width: 30%;">
+              <v-btn class='warning mr-4' @click="changePassword()" style="width: 30%;">
                 <strong>비밀번호변경하기</strong>
               </v-btn>
               <v-btn class='' @click="clickOut()" style="width: 30%;">
@@ -73,9 +73,9 @@ export default {
   },
   data() {
     return {
-      changePassword: {
+      passwordSet: {
         password: "",
-        password2: "",
+        newPassword: "",
       },
       passwordRules: [
         v => !!v || 'Password is required',
@@ -86,6 +86,12 @@ export default {
     }
   },
   methods: {
+    changePassword() {
+      let changeInfo = {}
+      changeInfo['email'] = this.$state.userEmail
+      Object.assign(changeInfo, this.passwordSet)
+      this.$store.dispatch('changePassword', changeInfo)
+    },
     clickOut() {
       this.$store.state.changePasswordDialog = false
     }

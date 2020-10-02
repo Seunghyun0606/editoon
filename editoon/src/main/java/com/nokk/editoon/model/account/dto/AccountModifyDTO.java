@@ -11,4 +11,5 @@ public class AccountModifyDTO {
 	private String name;
 	private String image;
 	private MultipartFile multipartFile;
+	private String isChange;
 }

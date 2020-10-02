@@ -28,9 +28,9 @@ import com.nokk.editoon.util.MapperUtil;
 
 @Service
 public class EditoonServiceImpl implements IEditoonService{
-//	private static final String IMAGE_FOLDER = "/resource/image/editoonImg";
+	private static final String IMAGE_FOLDER = "/resource/image/editoonImg";
 	
-	private static final String IMAGE_FOLDER = "c:/image";
+//	private static final String IMAGE_FOLDER = "c:/image";
 	
 	@Autowired
 	private AccountRepo accountRepo;
@@ -65,12 +65,12 @@ public class EditoonServiceImpl implements IEditoonService{
 	@Override
 	public List<EditoonDetailDTO> getEditoonThumbnails(String email) {
 		int accountNo = verifyOwnEditoon(email);
-		
-		EditoonEntity editoonEntity = editoonDetailRepo.findEditoonDetailList(accountNo);
-		
+		EditoonEntity editoonEntity = null;
+		editoonEntity = editoonDetailRepo.findEditoonDetailList(accountNo);
 		List<EditoonDetailDTO> list = new ArrayList<EditoonDetailDTO>();
 		
-		if(editoonEntity.getEditoonDetails() != null || !editoonEntity.getEditoonDetails().isEmpty()) {
+		if(editoonEntity != null && (editoonEntity.getEditoonDetails() != null && !editoonEntity.getEditoonDetails().isEmpty())) {
+			System.out.println("들어오나");
 			for(EditoonDetailEntity editoonDetailEntity : editoonEntity.getEditoonDetails()) {
 				EditoonDetailDTO editoonDetailDTO = mapperUtil.convertToDTO(editoonDetailEntity, EditoonDetailDTO.class);
 				list.add(editoonDetailDTO);
@@ -83,11 +83,11 @@ public class EditoonServiceImpl implements IEditoonService{
 	@Override
 	public EditoonDetailDTO getEditoonDetail(String email, int _id) {
 		int accountNo = verifyOwnEditoon(email);
+		EditoonEntity editoonEntity = null;
+		editoonEntity = editoonDetailRepo.findEditoonDetailContent(accountNo, _id);
+		EditoonDetailDTO editoonDetailDTO = null;
 		
-		EditoonEntity editoonEntity = editoonDetailRepo.findEditoonDetailContent(accountNo, _id);
-		EditoonDetailDTO editoonDetailDTO = new EditoonDetailDTO();
-		
-		if(editoonEntity.getEditoonDetails() != null || !editoonEntity.getEditoonDetails().isEmpty()) {
+		if(editoonEntity != null && (editoonEntity.getEditoonDetails() != null && !editoonEntity.getEditoonDetails().isEmpty())) {
 			editoonDetailDTO = mapperUtil.convertToDTO(editoonEntity.getEditoonDetails().get(0), EditoonDetailDTO.class);
 		}
 		
