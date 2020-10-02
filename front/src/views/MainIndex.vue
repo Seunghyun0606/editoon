@@ -7,13 +7,13 @@
       style="background-color: #fb9"
     >
       <v-row
-        style="height: 90%; justify-content: center; align-content: center;"
+        style="height: 90%; justify-content: center; align-content: center"
         class="pt-16"
       >
         <!-- <v-col style="padding: 3vh 6vw;">
           <v-row> -->
         <!-- <v-col class="text-center main-index-txt"> -->
-        <div class="text" style="cursor: pointer;">
+        <div class="text" style="cursor: pointer">
           <span>E</span>
           <span>D</span>
           <span>I</span>
@@ -25,7 +25,7 @@
 
         <div>
           <label>사진:</label>
-          <input type="file" id="imgseletor" multiple />
+          <input type="file" id="imgselector" multiple />
           <v-btn @click="sendimg">test</v-btn>
         </div>
 
@@ -77,7 +77,7 @@
           'fade-in': activeClass.second,
           'fade-out': !activeClass.second,
         }"
-        style="height: 90%; width: 100%;"
+        style="height: 90%; width: 100%"
       >
         <v-col md="4" lg="4" cols="10" class="pa-0">
           <v-row>
@@ -138,7 +138,7 @@
           'fade-in': activeClass.third,
           'fade-out': !activeClass.third,
         }"
-        style="height: 90%;"
+        style="height: 90%"
       >
         <v-col md="6" cols="10" class="mx-md-10 mx-sm-0 mx-xs-0 pa-0">
           <img style="width: 100%" :src="require('@/assets/webtoon.png')" alt />
@@ -185,14 +185,14 @@
       class="px-10 main-background-last"
       :style="[mainBackgroundImage.four]"
     >
-      <v-row style="height: 90%;">
+      <v-row style="height: 90%">
         <v-col
           :class="{
             'fade-in': activeClass.fourth,
             'fade-out': !activeClass.fourth,
           }"
         >
-          <v-row style="height: 30vh; text-align: center;" class="align-center">
+          <v-row style="height: 30vh; text-align: center" class="align-center">
             <v-col class="main-index-txt">대표작품들을 감상해보세요</v-col>
           </v-row>
           <v-row class="justify-space-around">
@@ -276,6 +276,7 @@ export default {
   },
   data() {
     return {
+      test123: "",
       dialog: false,
       isActive: true,
       loginData: {
@@ -324,12 +325,12 @@ export default {
   methods: {
     sendimg() {
       const formData = new FormData();
-      const file = document.getElementById("imgseletor");
+      const file = document.getElementById("imgselector");
       formData.append("img1", file.files[0]);
       formData.append("img2", file.files[1]);
 
       axios
-        .post("http://j3b308.p.ssafy.io:8002/ai/ImgtoAnime/", formData, {
+        .post("http://j3b308.p.ssafy.io:8000/ai/ImgtoAnime/", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -338,9 +339,6 @@ export default {
           console.log(1, res.data);
           console.log(2, res);
           this.test123 = res.data;
-          if (res.data["res"] == 1) {
-            this.mysrc = "1.jpg";
-          }
         })
         .catch((err) => {
           console.log(err);
