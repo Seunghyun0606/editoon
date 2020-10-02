@@ -55,7 +55,7 @@ public class EditoonRepo {
     	item.put("thumbnail", thumbNailName);
     	item.put("image", imageNameList);
     	item.put("createDate", createDate);
-    	update.push("editoon").each(item);
+    	update.push("editoonDetails").each(item);
     	mongoTemplate.updateFirst(query, update, EditoonEntity.class);
     	return no;
     }

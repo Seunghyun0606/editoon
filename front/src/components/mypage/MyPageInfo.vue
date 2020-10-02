@@ -75,7 +75,7 @@
       <v-btn
         color="error"
         class="mr-4"
-        
+        @click="deleteUser"
       >
         탈퇴하기
       </v-btn>
@@ -130,6 +130,11 @@ export default {
     },
     changePassword() {
       this.$store.state.changePasswordDialog = true
+    },
+    deleteUser() {
+      // 나중에 경고창 만들어주자
+      // form 입력창 만들어야함.
+      this.$store.dispactch('deleteUser')
     }
   },
 
