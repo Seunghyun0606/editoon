@@ -24,7 +24,7 @@
         </div>
 
         <div>
-          <label>사진!!!:</label>
+          <label>사진★:</label>
           <input type="file" id="imgselector" multiple />
           <v-btn @click="sendimg">test</v-btn>
         </div>
@@ -339,6 +339,7 @@ export default {
           console.log(1, res.data);
           console.log(2, res);
           this.test123 = res.data;
+          console.log(this.test123);
         })
         .catch((err) => {
           console.log(err);
