@@ -8,13 +8,13 @@
             </v-icon>
             SAVE online
           </v-btn>
-          <v-btn dark class="mx-2" >
+          <v-btn @click="downloadCanvas" dark class="mx-2" >
             <v-icon class="pr-2">
               mdi-file-download-outline
             </v-icon>
             download canvas
           </v-btn>
-          <v-btn dark >
+          <v-btn @click='downloadImage' dark >
             <v-icon class="pr-2">
               mdi-download
             </v-icon>
@@ -47,11 +47,16 @@
             </v-icon>
             paint image
           </v-btn>
-          <v-btn class="" color="" dark>
+          <v-btn @click="isShowWebtoonImages = !isShowWebtoonImages" class="" color="" dark>
             <v-icon class="pr-2">
               mdi-image-multiple-outline
             </v-icon>
             Images
+            <v-row class="showConvertedImage" v-show="isShowWebtoonImages">
+              <v-col v-for="(convertedImage, idx) in convertedImages" :key="idx">
+                <img style="width: 100px; height: 100px;" :src="'data:image/png;base64,' + `${convertedImage}`" alt="transformed image">
+              </v-col>
+            </v-row>
           </v-btn>
         </v-col>
       </v-row>
@@ -523,6 +528,7 @@ export default {
   },
   data() {
     return {
+      isShowWebtoonImages: false,
       currentScrollPlace: 0,
       isClickBubbleOptionText: true,
       isClickBubbleOption: false,
@@ -849,12 +855,67 @@ export default {
     btnDownZindex(idx) {
       this.images[idx].zIndex -= 1
     },
-    
+    downloadImage() {
+      const base64Data = this.$refs.imageEditor.invoke('toDataURL')
+      // 굳이 IE 10+ 지원하지말자. 지원할거면 canvas와 같이 한다
+      let a = document.createElement('a')
+      a.style = 'display: none'
+      a.href = base64Data
+      a.download = 'new_image.png'
+      document.body.appendChild(a)
+      a.click()
+
+      setTimeout(function () {
+        document.body.removeChild(a)
+      }, 100);
+    },
+    downloadCanvas() {
+      const downCanvas = document.querySelector('#webtoonCanvas')
+      html2canvas(downCanvas)
+        .then( canvas => {
+          const base64Data = canvas.toDataURL('image/png')
+
+          // base64 데이터 디코딩
+          let blobBin = atob(base64Data.split(',')[1])
+          let array = [];
+          for (var i = 0; i < blobBin.length; i++) {
+              array.push(blobBin.charCodeAt(i));
+          }
+          let file = new Blob([new Uint8Array(array)], {type: 'image/png'});	// Blob 생성
+
+          let downloadArray = new Array()
+          downloadArray.push(file)
+          downloadArray.push(base64Data)
+          return downloadArray
+        })
+        .then( (downloadArray) => {
+          let file = downloadArray[0]
+          let base64Data = downloadArray[1]
+
+          // blob 생성해서 msSaveOrOpenBlob 사용하면 IE 10+ 에서 다운로드를 지원한다.
+          // IE 10+ 를 지원할 생각이없다면 그냥 a 태그의 download쓰면됨.
+          if ( window.navigator.msSaveOrOpenBlob ) {
+            window.navigator.msSaveOrOpenBlob(file, 'new_file.png')
+          }
+          else {
+            let a = document.createElement('a')
+            a.style = 'display: none'
+            a.href = base64Data
+            a.download = 'new_file.png'
+            document.body.appendChild(a)
+            a.click()
+
+            setTimeout(function () {
+              document.body.removeChild(a)
+            }, 100);
+          }
+        })
+
+    },
     // 스프링으로 이미지 전달.
     async canvasImageToSpring() {
       const ctxTest = document.querySelector("#webtoonCanvas")
       const offsetY = ctxTest.offsetTop + 64
-      // console.log(ctxTest)
 
       let canvasFormData = new FormData()
       //let canvasFormArray = new Array()
@@ -865,7 +926,7 @@ export default {
           y: offsetY + this.initWebtoonCanvasHeight*count,  // 아래위 마진때문
         })
           .then( canvas => {
-            document.body.appendChild(canvas)
+            // document.body.appendChild(canvas)
   
             const base64Data = canvas.toDataURL('image/png')
             
@@ -896,8 +957,7 @@ export default {
       canvasFormData.append('subject', 'check')
       // canvasFormData.append('thumbnail', null) // 여기에 섬네일 파일 넣어주면 됨.
       // canvasFormData.append('createDate', 'check')
-      //canvasFormData.append('image', canvasFormArray)
-      //console.log(canvasFormArray[1])
+      // canvasFormData.append('image', canvasFormArray)
       this.$store.dispatch('canvasImageToSpring', canvasFormData)
 
 
@@ -984,7 +1044,9 @@ export default {
     editorHeader.appendChild(editorBtnSet)
 
     // scroll 추적기 붙이기
-    window.addEventListener("scroll", this.getCurrentScrollPlace);
+    window.addEventListener("scroll", this.getCurrentScrollPlace)
+
+    this.isShowWebtoonImages = false
 
   },
   destroy() {
@@ -995,6 +1057,34 @@ export default {
 </script>
 
 <style>
+
+.showConvertedImage {
+  top: 60px;
+  position: absolute;
+  width: 400px;
+  height: 200px;
+  background-color: rgba(0,0,20,0.9);
+  border-radius: 10px;
+}
+
+.showConvertedImage::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  border-bottom: 20px solid rgba(0,0,20,0.9);
+  border-right: 20px solid transparent;
+  border-left: 20px solid  transparent;
+}
+
+.showConvertedImage:hover {
+  background-color: rgba(0,0, 20, 0.5);
+}
+
+
+.tri{
+  width: 0px;height: 0px;
+}
 
 .obejct-option {
   width: 500px;
