@@ -23,6 +23,12 @@ export default new Vuex.Store({
     userNumber: '',
     userEditoonImages: [],
     userEmail: '',
+    userInfo: {
+      number: '',
+      email: '',
+      name: '',
+      image: '',  // 유저 아이콘
+    },
 
     signUpValidation: {
       isSendEmail: false,
@@ -66,6 +72,9 @@ export default new Vuex.Store({
     setUserEditoonImages(state, images) {
       state.userEditoonImages = images
     },
+    setUserInfo(state, info) {
+      state.userInfo = info
+    }
 
 
   },
@@ -122,12 +131,13 @@ export default new Vuex.Store({
         })
     },
     // login check
-    login({ commit }, loginData) {
+    login({ commit, dispatch }, loginData) {
       axios.post( SERVER_URL + 'login', loginData)
         .then( res => {
           console.log(res.data)
           alert("로그인성공")
           commit('setLoginStatus', true)
+          dispatch('getUserInfo')
           // 딱히 해줄일이 없다.
         })
         .catch( err => {
@@ -137,7 +147,7 @@ export default new Vuex.Store({
         })
     },
     logout() {
-      axios.post( SERVER_URL + '/account/logout' )
+      axios.post( SERVER_URL + 'account/logout' )
         .then( res => {
           console.log(res.data)
           // 쿠키에 이름이 어떻게 저장되는지 보고, 나중에 다 삭제해줘야함.
@@ -146,6 +156,18 @@ export default new Vuex.Store({
         .catch( err => {
           console.log(err)
           // 에러가 뜨면 서버에러임
+        })
+    },
+    // 유저정보 가져오기
+    getUserInfo({ commit }) {
+      axios.post( SERVER_URL + 'account/getLoginInfo' )
+        .then( res => {
+          console.log(res.data)
+          commit('setUserInfo')
+        })
+        .catch( err => {
+          console.log(err)
+          alert('유저정보 가져오기 실패')
         })
     },
     // 유저정보 변경
