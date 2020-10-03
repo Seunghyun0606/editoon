@@ -192,16 +192,26 @@ export default new Vuex.Store({
     },
     // 비밀번호 변경
     // email이랑 password를 넘겨준다
-    changePassword({ state }, changedInfo ) {
-      axios.post( SERVER_URL + 'account/v1/passwordModify', changedInfo)
+    // 일단 다 성공으로 보내주기때문에 result에서 걸러야함. status가 다르면 다른에러.
+    changePassword({ state }, changeInfo ) {
+      axios.post( SERVER_URL + 'account/v1/passwordModify', changeInfo, {
+        headers: {
+          email: state.userInfo.email
+        }
+      })
         .then( res => {
           console.log(res.data)
-          alert("비밀번호 변경이 완료되었습니다.")
-          state.changePasswordDialog = false
+          if ( res.data.result === 'success' ) {
+            alert("비밀번호 변경이 완료되었습니다.")
+            state.changePasswordDialog = false
+          }
+          else {
+            alert("비밀번호를 다시 확인해주세요")
+          }
         })
         .catch( err => {
           console.log(err)
-          alert("비밀번호를 다시 확인해주세요")
+          alert('서버에러')
         })
     },
     // 유저정보 삭제
