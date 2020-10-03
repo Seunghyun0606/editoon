@@ -74,7 +74,7 @@ export default new Vuex.Store({
     // 이메일보내기
     signUpSendValidationEmail({ commit }, email) {
       console.log(commit, email)
-      axios.get( SERVER_URL + `nonmember/email/authSend/` + email)
+      axios.get( SERVER_URL + `nonmember/email/authSend` + email)
         .then( res => {
           if ( res.data.result === 'fail' ) {
             alert('이미 가입된 이메일입니다.')
@@ -92,7 +92,7 @@ export default new Vuex.Store({
     },
     // 코드보내기.
     signUpEmailVerificateCode({ commit }, signUpData ) {
-      axios.post( SERVER_URL + 'nonmember/email/authCheck/', signUpData)
+      axios.post( SERVER_URL + 'nonmember/email/authCheck', signUpData)
         .then( res => {
           console.log(res.data)
           console.log('코드 보내기 성공')
@@ -105,10 +105,12 @@ export default new Vuex.Store({
     },
     // 회원가입하기.
     signUp({ commit }, signUpData ) {
-      axios.post( SERVER_URL + 'nonmember/signUp/', signUpData)
+      console.log(signUpData)
+      axios.post( SERVER_URL + 'nonmember/signUp', signUpData)
         .then( res => {
           console.log(res.data)
           console.log('회원가입성공')
+          alert("회원가입 성공, 로그인해주세요")
           commit('signUpStatus', true)
           commit('signUpInit', false)
           return true
@@ -121,9 +123,10 @@ export default new Vuex.Store({
     },
     // login check
     login({ commit }, loginData) {
-      axios.post( SERVER_URL + 'login/', loginData)
+      axios.post( SERVER_URL + 'login', loginData)
         .then( res => {
           console.log(res.data)
+          alert("로그인성공")
           commit('setLoginStatus', true)
           // 딱히 해줄일이 없다.
         })
@@ -134,7 +137,7 @@ export default new Vuex.Store({
         })
     },
     logout() {
-      axios.post( SERVER_URL + '/account/logout/' )
+      axios.post( SERVER_URL + '/account/logout' )
         .then( res => {
           console.log(res.data)
           // 쿠키에 이름이 어떻게 저장되는지 보고, 나중에 다 삭제해줘야함.
@@ -147,7 +150,7 @@ export default new Vuex.Store({
     },
     // 유저정보 변경
     changeUserInfo({ commit }, changedInfo) {
-      axios.post( SERVER_URL + 'account/v1/nameAndImageModify/', changedInfo)
+      axios.post( SERVER_URL + 'account/v1/nameAndImageModify', changedInfo)
         .then( res => {
           console.log(res.data)
           commit
@@ -163,7 +166,7 @@ export default new Vuex.Store({
     // 비밀번호 변경
     // email이랑 password를 넘겨준다
     changePassword({ state }, changedInfo ) {
-      axios.post( SERVER_URL + 'account/v1/passwordModify/', changedInfo)
+      axios.post( SERVER_URL + 'account/v1/passwordModify', changedInfo)
         .then( res => {
           console.log(res.data)
           alert("비밀번호 변경이 완료되었습니다.")
@@ -177,7 +180,7 @@ export default new Vuex.Store({
     // 유저정보 삭제
     // email password
     deleteUser(userInfo) {
-      axios.post( SERVER_URL + 'account/v1/delete/', userInfo)
+      axios.post( SERVER_URL + 'account/v1/delete', userInfo)
         .then( res => {
           console.log(res.data)
           alert('삭제가 완료되었습니다.')
@@ -191,7 +194,7 @@ export default new Vuex.Store({
 
     // 유저가 저장한 editton image 보여주기
     getUserEditoonImages({ state, commit }) {
-      axios.get( SERVER_URL + 'v1/getEditoonDetail/' + `${state.userEmail}/` + `${state.userNumber}/`)
+      axios.get( SERVER_URL + 'v1/getEditoonDetail/' + `${state.userEmail}/` + `${state.userNumber}`)
         .then( res => {
           console.log(res.data)
           commit('setUserEditoonImages', res.data)
@@ -217,7 +220,7 @@ export default new Vuex.Store({
 
     },
     canvasImageToSpring({ commit }, canvasForms) {
-      axios.post( SERVER_URL + 'editoon/v1/saveEditoonDetail/', canvasForms, {
+      axios.post( SERVER_URL + 'editoon/v1/saveEditoonDetail', canvasForms, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
