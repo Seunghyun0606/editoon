@@ -33,8 +33,8 @@
 
     </v-tabs>
 
-    <LoginModal/> 
-    <SignUpModal/>
+    <LoginModal style="z-index: 999;"/> 
+    <SignUpModal style="z-index: 999;"/>
   </v-app-bar>
 </template>
 

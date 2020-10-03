@@ -22,16 +22,16 @@
           <span>O</span>
           <span>N</span>
         </div>
-
+<!-- 
         <div>
           <label>사진★:</label>
           <input type="file" id="imgselector" multiple />
           <v-btn @click="sendimg">test</v-btn>
-        </div>
+        </div> -->
 
         <!-- </v-col> -->
       </v-row>
-      <div>
+      <!-- <div>
         test
         <img
           :src="'data:image/png;base64,' + `${test123}`"
@@ -43,7 +43,7 @@
             z-index: 9999;
           "
         />
-      </div>
+      </div> -->
 
       <!-- <v-row>
             <v-col align="center">
