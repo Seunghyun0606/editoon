@@ -163,7 +163,7 @@ export default new Vuex.Store({
       axios.post( SERVER_URL + 'account/getLoginInfo' )
         .then( res => {
           console.log(res.data)
-          commit('setUserInfo')
+          commit('setUserInfo', res.data)
         })
         .catch( err => {
           console.log(err)
@@ -171,15 +171,20 @@ export default new Vuex.Store({
         })
     },
     // 유저정보 변경
-    changeUserInfo({ commit }, changedInfo) {
-      axios.post( SERVER_URL + 'account/v1/nameAndImageModify', changedInfo)
+    changeUserInfo({ state, commit, dispatch }, changeInfo) {
+      axios.post( SERVER_URL + 'account/v1/nameAndImageModify', changeInfo, {
+        headers: {
+          email: state.userInfo.email
+        }
+      })
         .then( res => {
           console.log(res.data)
-          commit
+          commit('setUserInfo', res.data)
           // 체인지한다음에 표시되는 부분이 있는가?
           // 아마도 있다면 로그인하고나서 로그아웃으로 바뀌고 옆에 아이콘뜨게?
           // 그럼 이미지랑 유저네임이 떠야하는가? 일단은 보류하자.
           // 유저 정보를 다시 갱신시켜서 받아야하는데 어디서 받는가?
+          dispatch('getUserInfo')
         })
         .catch( err => {
           console.log(err)

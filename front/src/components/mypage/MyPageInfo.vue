@@ -11,13 +11,14 @@
       <v-col>
         <v-avatar>
           <img
-            src="https://cdn.vuetifyjs.com/images/john.jpg"
-            alt="John"
+            :src="userInfo.image"
+            alt=""
           >
         </v-avatar>
       </v-col>
       <v-col cols=10>
         <v-file-input
+          id="putAvatar"
           accept="image/png, image/jpeg, image/bmp"
           placeholder="Pick an avatar"
           prepend-icon="mdi-camera"
@@ -27,7 +28,7 @@
     </v-row>
 
     <v-text-field
-      value="abcdedf@gamil.com"
+      :value="userInfo.email"
       label="e-mail"
       readonly
     ></v-text-field>
@@ -39,7 +40,7 @@
       lazy-validation
     >
       <v-text-field
-        v-model="name"
+        v-model="userInfo.name"
         :counter="10"
         :rules="nameRules"
         label="Name"
@@ -59,7 +60,7 @@
         :disabled="!valid"
         color="success"
         class="mr-4"
-        @click="validate"
+        @click="changeInfo"
       >
         변경하기
       </v-btn>
@@ -90,24 +91,23 @@
 
 <script>
 import MyPageChangePassword from '@/components/mypage/MyPageChangePassword'
+import { mapState } from 'vuex'
+
 
 export default {
   name: "MyPageInfo",
   components: {
     MyPageChangePassword
   },
+  computed: {
+    ...mapState(['userInfo'])
+  },
   data() {
     return {
       valid: true,
-      name: '',
       nameRules: [
         v => !!v || 'Name is required',
         v => (v && v.length <= 10) || 'Name must be less than 10 characters',
-      ],
-      email: '',
-      emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
       ],
       password: '',
       passwordRules: [
@@ -119,6 +119,35 @@ export default {
 
   },
   methods: {
+    changeInfo() {
+      const avatar = document.querySelector("#putAvatar")
+      let changeInfo = {}
+      console.log(avatar.files)
+      changeInfo.name = this.userInfo.name
+      changeInfo.email = this.userInfo.email
+      changeInfo.image = this.userInfo.image
+      if ( this.userInfo.image === 'default.jpg' ) {
+        if ( avatar.files.length > 0 ) {
+          changeInfo.multipartFile = avatar.files[0]
+          changeInfo.isChange = 'yes'  
+        }
+        else {
+          changeInfo.isChange = 'no'
+        }
+      }
+      else {
+        // default 값이 아니면서 아바타를 수정하는 경우
+        if ( avatar.files.length > 0 ) {
+          changeInfo.multipartFile = avatar.files[0]
+          changeInfo.isChange = 'yes'  
+        }
+        else {
+          changeInfo.isChange = 'yes'
+        }
+      }
+      this.$store.dispatch('changeUserInfo', changeInfo)
+
+    },
     validate () {
       this.$refs.form.validate()
     },
