@@ -163,7 +163,10 @@ export default {
     deleteUser() {
       // 나중에 경고창 만들어주자
       // form 입력창 만들어야함.
-      this.$store.dispactch('deleteUser')
+      let userInfo = {}
+      userInfo.email = 'limseung10@gmail.com'
+      userInfo.password = 'Aasdfasdf1!'
+      this.$store.dispatch('deleteUser', userInfo)
     }
   },
 

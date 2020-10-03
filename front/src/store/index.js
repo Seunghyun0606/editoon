@@ -216,15 +216,21 @@ export default new Vuex.Store({
     },
     // 유저정보 삭제
     // email password
-    deleteUser(userInfo) {
-      axios.post( SERVER_URL + 'account/v1/delete', userInfo)
+    deleteUser({ state }, userInfo) {
+      alert('정말?')
+      axios.post( SERVER_URL + 'account/v1/delete', userInfo, {
+        headers: {
+          email: state.userInfo.email
+        }
+      })
         .then( res => {
           console.log(res.data)
           alert('삭제가 완료되었습니다.')
         })
         .catch( err => {
           console.log(err)
-          // 내가 쿠키를 제거해야하는가? 확인해야할듯.
+          alert('삭제 실패')
+          // 내가 쿠키를 제거해야하는가? 서버에서 한다..
         })
     },
 
