@@ -22,6 +22,9 @@ export default new Vuex.Store({
     // 나중에 새로고침에 대비해서 쿠키에 넣어야할수도있음 생각해두자.
     userNumber: '',
     userEditoonImages: [],
+    userThumbnails: [],
+    // _id, subject, thumbnail, createDate로 온다.
+
     userEmail: '',
     userInfo: {
       number: '',
@@ -69,11 +72,14 @@ export default new Vuex.Store({
       state.convertedImages.push(images)
       // 이미지 어떻게 넘어오는지 봐야할듯.
     },
+    setUserInfo(state, info) {
+      state.userInfo = info
+    },
     setUserEditoonImages(state, images) {
       state.userEditoonImages = images
     },
-    setUserInfo(state, info) {
-      state.userInfo = info
+    setUserEditoonThumbnails(state, info) {
+      state.getUserEditoonThumbnails = info
     }
 
 
@@ -233,6 +239,21 @@ export default new Vuex.Store({
           // 내가 쿠키를 제거해야하는가? 서버에서 한다..
         })
     },
+    // 유저가 저장한 editoon image 목록(썸네일) 보여주기
+    getUserEditoonThumbnails({ state, commit }) {
+      axios.get( SERVER_URL + 'v1/getEditoonThumbnails', state.userInfo.email, {
+        headers: {
+          email: state.userInfo.email
+        }
+        })
+        .then( res => {
+          console.log(res.data)
+          commit('setUserEditoonThumbnails', res.data)
+        })
+        .catch( err => {
+          console.log(err)
+        })
+    },
 
 
     // 유저가 저장한 editton image 보여주기
@@ -243,6 +264,20 @@ export default new Vuex.Store({
           commit('setUserEditoonImages', res.data)
         })
         .catch( err => {
+          console.log(err)
+        })
+    },
+    canvasImageToSpring({ commit }, canvasForms) {
+      axios.post( SERVER_URL + 'editoon/v1/saveEditoonDetail', canvasForms, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+        .then (res => {
+          commit
+          console.log(res.data)
+        })
+        .catch ( err => {
           console.log(err)
         })
     },
@@ -262,20 +297,6 @@ export default new Vuex.Store({
         })
 
     },
-    canvasImageToSpring({ commit }, canvasForms) {
-      axios.post( SERVER_URL + 'editoon/v1/saveEditoonDetail', canvasForms, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-        .then (res => {
-          commit
-          console.log(res.data)
-        })
-        .catch ( err => {
-          console.log(err)
-        })
-    }
 
   },
   modules: {

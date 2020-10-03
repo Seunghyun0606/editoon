@@ -19,7 +19,7 @@
         
         />
 
-        <MyPageFavortoon v-if="listNumber == 0" :books="books"/>
+        <MyPageFavortoon v-if="listNumber == 0" />
         <MyPageMytoon v-else-if="listNumber == 1" :books="books"/>
 
       </v-col>
@@ -96,6 +96,9 @@ export default {
   created() {
     this.isIndex()
     this.isNotEditor()
+  },
+  mounted() {
+    this.$store.dispatch('getUserEditoonThumbnails')
   }
 
 
