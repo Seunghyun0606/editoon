@@ -24,6 +24,7 @@
     >
       <v-tab v-if='isLogin' router-link to='/mypage'>
         <v-avatar color="black" size="40">
+          <!-- <img :src="userInfo.image" alt=""> -->
           <v-icon color="white">mdi-account-circle</v-icon>
         </v-avatar>
 
@@ -52,7 +53,7 @@ export default {
     SignUpModal,
   },
   computed: {
-    ...mapState(['isLogin'])
+    ...mapState(['isLogin', 'userInfo'])
   },
   data() {
     return {
