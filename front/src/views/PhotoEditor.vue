@@ -352,6 +352,27 @@
                           ></v-text-field>
                         </template>
                       </v-slider>
+                      <div>
+                        borderRadius
+                      </div>
+                      <v-slider
+                        @mousedown.stop
+                        v-model="image.bubbleOption.main.borderRadius"
+                        dark
+                        :max="70"
+                        :min="0"
+                      >
+                        <template v-slot:append>
+                          <v-text-field
+                            dark
+                            v-model="image.bubbleOption.main.borderRadius"
+                            class="mt-0 pt-0"
+                            hide-details
+                            single-line
+                            style="width: 60px"
+                          ></v-text-field>
+                        </template>
+                      </v-slider>
                     </v-col>
                   </v-row>
                   <v-row class="">
@@ -620,7 +641,7 @@ export default {
             imageStyle.position = image.bubbleOption.main.position
             imageStyle.backgroundColor = image.bubbleOption.main.backgroundColor
             imageStyle.border = image.bubbleOption.main.border
-            imageStyle.borderRadius = image.bubbleOption.main.borderRadius + 'em'
+            imageStyle.borderRadius = image.bubbleOption.main.borderRadius + '%'
             imageStyle.borderColor = image.bubbleOption.main.borderColor
             imageStyle.borderWidth = image.bubbleOption.main.borderWidth + 'px'
         }
@@ -827,7 +848,7 @@ export default {
           main: {
             position: 'absolute',
             backgroundColor: '#fff',
-            borderRadius: 1,
+            borderRadius: 10,
             border: '1px solid',
             borderColor: 'black',
             borderWidth: 1
