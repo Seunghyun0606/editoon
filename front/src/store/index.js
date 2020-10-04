@@ -119,7 +119,7 @@ export default new Vuex.Store({
       axios.post( SERVER_URL + 'nonmember/email/authCheck', signUpData)
         .then( res => {
           console.log(res.data)
-          console.log('코드 보내기 성공')
+          console.log('코드 보내기 성공') 
           commit('signUpCodeValidation', true)
         })
         .catch( err => {
