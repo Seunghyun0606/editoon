@@ -25,7 +25,7 @@ export default new Vuex.Store({
     // 나중에 새로고침에 대비해서 쿠키에 넣어야할수도있음 생각해두자.
     userNumber: '',
     userEditoonImages: [],
-    userThumbnails: [],
+    userEditoonThumbnails: [],
     // _id, subject, thumbnail, createDate로 온다.
 
     userEmail: '',
@@ -88,7 +88,7 @@ export default new Vuex.Store({
       state.userEditoonImages = images
     },
     setUserEditoonThumbnails(state, info) {
-      state.getUserEditoonThumbnails = info
+      state.userEditoonThumbnails = info
     }
 
 
