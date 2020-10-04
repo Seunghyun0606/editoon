@@ -88,7 +88,7 @@ export default {
   methods: {
     changePassword() {
       let changeInfo = {}
-      changeInfo['email'] = this.$state.userEmail
+      changeInfo['email'] = this.$store.state.userInfo.email
       Object.assign(changeInfo, this.passwordSet)
       this.$store.dispatch('changePassword', changeInfo)
     },

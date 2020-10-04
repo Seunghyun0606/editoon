@@ -30,7 +30,7 @@ import com.nokk.editoon.util.MapperUtil;
 public class EditoonServiceImpl implements IEditoonService{
 	private static final String IMAGE_FOLDER = "/resource/image/editoonImg";
 	
-//	private static final String IMAGE_FOLDER = "c:/image";
+	// private static final String IMAGE_FOLDER = "c:/image";
 	
 	@Autowired
 	private AccountRepo accountRepo;
