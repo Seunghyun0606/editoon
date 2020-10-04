@@ -84,10 +84,18 @@
 
             <div v-if="image.isBubble" :style="[bubbleArrowStyleSub(idx)]">
             </div>
+            <!-- 옵션창 -->
             <div v-show="image.isActive" style="position: absolute; top: -35px; right: 0; z-index: 999">
               <v-btn
                 icon
-                color='black'
+                color='#0D47A1'
+                style="cursor: default;"
+              >
+                {{ image.zIndex }}
+              </v-btn>
+              <v-btn
+                icon
+                color='#0D47A1'
                 @click="btnUpZindex(idx)"
               >
                 <v-icon
@@ -97,7 +105,7 @@
               </v-btn>
               <v-btn
                 icon
-                color='black'
+                color='#0D47A1'
                 @click="btnDownZindex(idx)">
                 <v-icon
                 >
@@ -108,7 +116,7 @@
               </v-btn>
               <v-btn
                 icon
-                color="black"              
+                color="#0D47A1"              
                 @click="btnOption(idx)">
                 <v-icon
                 >
