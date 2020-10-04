@@ -68,8 +68,8 @@
             :isActive="image.isActive"
             :parentH="webtoonCanvasHeight"
             :parentW="webtoonCanvasWidth"
-            :w="200"
-            :h="200"
+            :w="image.w"
+            :h="image.h"
             :x="image.x"
             :y="image.y"
             :z="image.isActive ? 999 : image.zIndex"
@@ -79,6 +79,8 @@
             @deactivated="canvasImageOffActivated(idx)"
             :style="[objectStyle(idx)]"
             class="d-flex"
+            @dragstop="dragstop($event, idx)"
+            @resizestop="resizestop($event, idx)"
           >
             <img v-if="!image.isBubble && !image.isBackground" :src="image.image" style="position: absolute; height: 100%; width: 100%;" alt="">
 
@@ -111,8 +113,15 @@
                 >
                   mdi-arrow-down-circle
                 </v-icon>
-
-
+              </v-btn>
+              <v-btn
+                icon
+                color='#0D47A1'
+                @click="btnDelete(idx)">
+                <v-icon
+                >
+                  mdi-delete
+                </v-icon>
               </v-btn>
               <v-btn
                 icon
@@ -518,6 +527,8 @@ export default {
         {
           x: 0,
           y: 0,
+          w: 200,
+          h: 200,
           image: require(`@/assets/account_signup.png`),  // 맨처음 테스트용으로 넣은것
           isActive: false,  // 나중에 중복 선택 제거를 위함.
           isBackground: false, // 배경인지 확인하기위함.
@@ -676,6 +687,17 @@ export default {
     // img :src="'data:image/png;base64,' + `${test123}`" 나중에 이미지 base64파일 형식으로 넣어주면된다.
   },
   methods: {
+    dragstop(payload, idx) {
+      this.images[idx].x = payload.left
+      this.images[idx].y = payload.top
+    },
+    resizestop(payload, idx) {
+      this.images[idx].w = payload.width
+      this.images[idx].h = payload.height
+    },
+    btnDelete(idx) {
+      this.images.splice(idx, 1)
+    },
     getCurrentScrollPlace() {
       const checkScrollPlace = document.documentElement.scrollTop
       if ( checkScrollPlace >= 200 ) {
@@ -740,6 +762,8 @@ export default {
       const imageData = {
         x: this.objectCount * 10,
         y: this.currentScrollPlace,
+        w: 200,
+        h: 200,
         image: dataURL,
         isActive: false,
         isBackground: false,
@@ -760,6 +784,8 @@ export default {
       const addBubble = {
         x: this.objectCount * 10,
         y: this.currentScrollPlace,
+        w: 200,
+        h: 200,
         image: "",
         isActive: false,
         isBackground: false,
@@ -807,6 +833,8 @@ export default {
       const addBackground = {
         x: this.objectCount * 10,
         y: this.currentScrollPlace,
+        w: 200,
+        h: 200,
         image: "",
         isActive: false,
         isBackground: true,
@@ -829,7 +857,7 @@ export default {
       this.$store.commit("isNotEditor", false);
     },
     btnUpZindex(idx) {
-      console.log(idx)
+      // console.log(idx)
       this.images[idx].zIndex += 1
     },
     btnDownZindex(idx) {
