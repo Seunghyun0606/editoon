@@ -93,12 +93,13 @@ export default {
     },
 
   },
-  created() {
+  async created() {
     this.isIndex()
     this.isNotEditor()
+    await this.$store.dispatch('getUserEditoonThumbnails')
+
   },
   mounted() {
-    this.$store.dispatch('getUserEditoonThumbnails')
   }
 
 

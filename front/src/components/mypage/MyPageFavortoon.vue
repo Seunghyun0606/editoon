@@ -1,13 +1,14 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs12 sm6 md4 lg3 v-for="( thumnail, id ) in userEditoonThumbnails" :key="id">
-      <v-card hover class="ma-3" min-height="300" @click="reviewBook(thumnail._id)">
+    <v-flex xs12 sm6 md4 lg3 v-for="( thumbnail, idx ) in userEditoonThumbnails" :key="idx">
+      <v-card hover class="ma-3" min-height="300" @click="reviewBook(thumbnail._id)">
         <v-layout column align-center fill-height class="text-center">
-          <v-img :src="'https://j3b308.p.ssafy.io/image/editoon/' + `${thumnail._id}/` + `${thumnail.thumbnail}`"></v-img>
+          <v-img :src="'https://j3b308.p.ssafy.io/image/editoon/' + `${thumbnail._id}/` + `${thumbnail.thumbnail}`"></v-img>
+          {{ thumbnail }}
           <!-- <v-img src="https://j3b308.p.ssafy.io/image/profileImg/200927_c1cb4f6611.JPG"></v-img> -->
           <!-- <v-img :src="book.thumbnail"></v-img> -->
           
-          <v-card-title class="font-weight-light">{{ thumnail.subject }} | {{ thumnail.createDate }} </v-card-title>
+          <v-card-title class="font-weight-light">{{ thumbnail.subject }} | {{ thumbnail.createDate }} </v-card-title>
         </v-layout>
       </v-card>
     </v-flex>
