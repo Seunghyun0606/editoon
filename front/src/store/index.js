@@ -98,7 +98,7 @@ export default new Vuex.Store({
     // 이메일보내기
     signUpSendValidationEmail({ commit }, email) {
       console.log(commit, email)
-      axios.get( SERVER_URL + `nonmember/email/authSend` + email)
+      axios.get( SERVER_URL + `nonmember/email/authSend/` + email)
         .then( res => {
           if ( res.data.result === 'fail' ) {
             alert('이미 가입된 이메일입니다.')
