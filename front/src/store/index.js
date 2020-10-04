@@ -16,6 +16,7 @@ export default new Vuex.Store({
     loginDialog: false,
     signUpDialog: false,
     saveCanvasDialog: false,
+    showMytoonDialog: false,
     changePasswordDialog: false,
     
     isLogin: false,
@@ -68,6 +69,9 @@ export default new Vuex.Store({
     },
     saveCanvasDialogInit(state, check) {
       state.saveCanvasDialog = check
+    },
+    showMytoonDialogInit(state, check) {
+      state.showMytoonDialog = check
     },
     setLoginStatus(state, check) {
       state.isLogin = check
@@ -271,6 +275,7 @@ export default new Vuex.Store({
       })
         .then( res => {
           console.log(res.data)
+          commit('showMytoonDialogInit', true)
           commit('setUserEditoonImages', res.data)
         })
         .catch( err => {
