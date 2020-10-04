@@ -182,7 +182,7 @@ export default new Vuex.Store({
         .then( res => {
           alert('유저정보 가져오기 성공')
           console.log(res.data)
-          commit('setUserInfo', res.data)
+          commit('setUserInfo', res.data.map.loginInfoDTO)
         })
         .catch( err => {
           console.log(err)
@@ -263,7 +263,7 @@ export default new Vuex.Store({
         .then( res => {
           console.log(res.data)
           console.log('check')
-          commit('setUserEditoonThumbnails', res.data)
+          commit('setUserEditoonThumbnails', res.data.map)
           alert('썸네일 받기 성공')
         })
         .catch( err => {
@@ -283,7 +283,7 @@ export default new Vuex.Store({
         .then( res => {
           console.log(res.data)
           commit('showMytoonDialogInit', true)
-          commit('setUserEditoonImages', res.data)
+          commit('setUserEditoonImages', res.data.map)
         })
         .catch( err => {
           console.log(err)
