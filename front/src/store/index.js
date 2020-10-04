@@ -166,6 +166,7 @@ export default new Vuex.Store({
         .then( res => {
           console.log(res.data)
           alert('logout 성공')
+          this.commit('setLoginStatus', false)
           // 쿠키에 이름이 어떻게 저장되는지 보고, 나중에 다 삭제해줘야함.
           // 무조건 success로 옴
         })
@@ -179,6 +180,7 @@ export default new Vuex.Store({
     getUserInfo({ commit }) {
       axios.post( SERVER_URL + 'account/getLoginInfo' )
         .then( res => {
+          alert('유저정보 가져오기 성공')
           console.log(res.data)
           commit('setUserInfo', res.data)
         })
@@ -252,6 +254,7 @@ export default new Vuex.Store({
     },
     // 유저가 저장한 editoon image 목록(썸네일) 보여주기
     getUserEditoonThumbnails({ state, commit }) {
+      console.log(state.userInfo.email)
       axios.get( SERVER_URL + 'editoon/v1/getEditoonThumbnails/' + `${state.userInfo.email}`, state.userInfo.email, {
         headers: {
           email: state.userInfo.email
@@ -261,8 +264,10 @@ export default new Vuex.Store({
           console.log(res.data)
           console.log('check')
           commit('setUserEditoonThumbnails', res.data)
+          alert('썸네일 받기 성공')
         })
         .catch( err => {
+          alert('썸네일 받기 실패')
           console.log(err)
         })
     },
