@@ -95,7 +95,7 @@ export default new Vuex.Store({
   },
   actions: {
     // 회원가입 인증절차
-    // 이메일보내기
+    // 이메일보내기aaa
     signUpSendValidationEmail({ commit }, email) {
       console.log(commit, email)
       axios.get( SERVER_URL + `nonmember/email/authSend/` + email)
