@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs12 sm6 md4 lg3 v-for="thumnail in userEditoonThumbnails" :key="thumnail.id">
+    <v-flex xs12 sm6 md4 lg3 v-for="( thumnail, id ) in userEditoonThumbnails" :key="id">
       <v-card hover class="ma-3" min-height="300" @click="reviewBook(thumnail._id)">
         <v-layout column align-center fill-height class="text-center">
           <v-img :src="'https://j3b308.p.ssafy.io/image/editoon/' + `${thumnail._id}/` + `${thumnail.thumbnail}`"></v-img>
