@@ -22,6 +22,10 @@ export default new Vuex.Store({
     
     isLogin: false,
 
+    checkLoading: {
+      isSaveOnlineLoading: false,
+    },
+
     // 나중에 새로고침에 대비해서 쿠키에 넣어야할수도있음 생각해두자.
     userNumber: '',
     userEditoonImages: [],
@@ -88,7 +92,7 @@ export default new Vuex.Store({
       state.userEditoonImages = images
     },
     setUserEditoonThumbnails(state, info) {
-      console.log(2, info)
+      // console.log(2, info)
       state.userEditoonThumbnails = info
     }
 
@@ -295,25 +299,25 @@ export default new Vuex.Store({
         })
     },
     // 성공메시지만 온다. 다른건 없음.
-    canvasImageToSpring({ state }, canvasForms) {
-      state
+    canvasImageToSpring({ state, commit }, canvasForms) {
       axios.post( SERVER_URL + 'editoon/v1/saveEditoonDetail', canvasForms, {
         headers: {
           // 'Content-Type': 'multipart/form-data',
           email: state.userInfo.email
-
           // email: 'limseung10@gmail.com'
         }
       })
         .then (res => {
           console.log(res.data)
           if ( res.data.result === 'noImage' ) {
-            alert('이미지없음')
+            alert('이미지가 없습니다.')
           }
           else if (res.data.result === 'noThumbnail') {
-            alert('썸네일이 없음')
+            alert('썸네일이 없습니다.')
           }
           else {
+            commit('saveCanvasDialogInit', false)
+            state.checkLoading.isSaveOnlineLoading = false
             alert('성공적으로 저장되었습니다.')
           }
 

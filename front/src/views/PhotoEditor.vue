@@ -970,6 +970,8 @@ export default {
     async canvasImageToSpring(thumbnail, subject) {
       const ctxTest = document.querySelector("#webtoonCanvas")
       const offsetY = ctxTest.offsetTop + 64
+      this.$store.state.checkLoading.isSaveOnlineLoading = true
+
 
       let canvasFormData = new FormData()
       //let canvasFormArray = new Array()
