@@ -1007,7 +1007,7 @@ export default {
           //   this.$store.dispatch('canvasImageToSpring', canvasFormData)
           // })
       }
-      canvasFormData.append('no', this.userInfo.number)
+      canvasFormData.append('no', this.userInfo.no)
       canvasFormData.append('subject', subject)
       canvasFormData.append('thumbnail', thumbnail) // 여기에 섬네일 파일 넣어주면 됨.
       // canvasFormData.append('createDate', 'check')

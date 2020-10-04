@@ -30,10 +30,10 @@ export default new Vuex.Store({
 
     userEmail: '',
     userInfo: {
-      number: '',
-      email: '',
-      name: '',
-      image: '',  // 유저 아이콘
+      no: 33,
+      email: 'limseung10@gmail.com',
+      name: 'asdf',
+      image: 'default.jpg',  // 유저 아이콘
     },
 
     signUpValidation: {
@@ -283,7 +283,8 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    canvasImageToSpring({ state, commit }, canvasForms) {
+    // 성공메시지만 온다. 다른건 없음.
+    canvasImageToSpring({ state }, canvasForms) {
       axios.post( SERVER_URL + 'editoon/v1/saveEditoonDetail', canvasForms, {
         headers: {
           // 'Content-Type': 'multipart/form-data'
@@ -291,8 +292,17 @@ export default new Vuex.Store({
         }
       })
         .then (res => {
-          commit
           console.log(res.data)
+          if ( res.data.result === 'noImage' ) {
+            alert('이미지없음')
+          }
+          else if (res.data.result === 'noThumbnail') {
+            alert('썸네일이 없음')
+          }
+          else {
+            alert('성공적으로 저장되었습니다.')
+          }
+
         })
         .catch ( err => {
           console.log(err)
