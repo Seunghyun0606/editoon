@@ -23,6 +23,18 @@
 
         </v-col>
         <v-col cols="6" class="mr-5" :style="{ position: 'relative', top: `${currentScrollPlace}` + 'px' }">
+          <v-btn @click="isShowWebtoonImages = !isShowWebtoonImages" class="" color="" dark>
+            <v-icon class="pr-2">
+              mdi-image-multiple-outline
+            </v-icon>
+            Images
+            <v-row class="showConvertedImage" v-show="isShowWebtoonImages">
+              <v-col v-for="(convertedImage, idx) in convertedImages" :key="idx">
+                <img style="width: 100px; height: 100px;" :src="'data:image/png;base64,' + `${convertedImage}`" alt="transformed image">
+              </v-col>
+            </v-row>
+          </v-btn>
+
           <v-btn @click="btnAddBubble1" dark>
             <v-icon class="pr-2">
               mdi-chat-plus-outline
@@ -46,17 +58,6 @@
               mdi-send
             </v-icon>
             paint image
-          </v-btn>
-          <v-btn @click="isShowWebtoonImages = !isShowWebtoonImages" class="" color="" dark>
-            <v-icon class="pr-2">
-              mdi-image-multiple-outline
-            </v-icon>
-            Images
-            <v-row class="showConvertedImage" v-show="isShowWebtoonImages">
-              <v-col v-for="(convertedImage, idx) in convertedImages" :key="idx">
-                <img style="width: 100px; height: 100px;" :src="'data:image/png;base64,' + `${convertedImage}`" alt="transformed image">
-              </v-col>
-            </v-row>
           </v-btn>
         </v-col>
       </v-row>
