@@ -254,8 +254,12 @@ export default new Vuex.Store({
     },
     // 유저가 저장한 editoon image 목록(썸네일) 보여주기
     getUserEditoonThumbnails({ state, commit }) {
-      console.log(state.userInfo.email)
-      axios.get( SERVER_URL + 'editoon/v1/getEditoonThumbnails/' + `${state.userInfo.email}`, state.userInfo.email, {
+      console.log(1, state.userInfo.email)
+      // axios.get( SERVER_URL + 'editoon/v1/getEditoonThumbnails/' + 'limseung10@gmail.com', { email: 'limseung10@gmail.com' }, {
+      //   headers: {
+      //     email: 'limseung10@gmail.com'
+      //   }
+      axios.get( SERVER_URL + 'editoon/v1/getEditoonThumbnails/' + `${state.userInfo.email}`, { email: state.userInfo.email }, {
         headers: {
           email: state.userInfo.email
         }
@@ -291,10 +295,13 @@ export default new Vuex.Store({
     },
     // 성공메시지만 온다. 다른건 없음.
     canvasImageToSpring({ state }, canvasForms) {
+      state
       axios.post( SERVER_URL + 'editoon/v1/saveEditoonDetail', canvasForms, {
         headers: {
-          // 'Content-Type': 'multipart/form-data'
+          // 'Content-Type': 'multipart/form-data',
           email: state.userInfo.email
+
+          // email: 'limseung10@gmail.com'
         }
       })
         .then (res => {
