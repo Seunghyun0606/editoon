@@ -132,7 +132,7 @@ export default {
         return this.$store.state.signUpDialog;
       },
       set(val) {
-        console.log(val)
+        // console.log(val)
         this.$store.commit('signUpInit', val)
         this.resetValidation()
       },

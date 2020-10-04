@@ -15,6 +15,7 @@ export default new Vuex.Store({
     isNotEditor: true,
     loginDialog: false,
     signUpDialog: false,
+    saveCanvasDialog: false,
     changePasswordDialog: false,
     
     isLogin: false,
@@ -64,6 +65,9 @@ export default new Vuex.Store({
     },
     signUpStatus(state, check) {
       state.signUpValidation.signUpstatus = check
+    },
+    saveCanvasDialogInit(state, check) {
+      state.saveCanvasDialog = check
     },
     setLoginStatus(state, check) {
       state.isLogin = check
@@ -273,10 +277,11 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    canvasImageToSpring({ commit }, canvasForms) {
+    canvasImageToSpring({ state, commit }, canvasForms) {
       axios.post( SERVER_URL + 'editoon/v1/saveEditoonDetail', canvasForms, {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          // 'Content-Type': 'multipart/form-data'
+          email: state.userInfo.email
         }
       })
         .then (res => {

@@ -2,7 +2,7 @@
     <v-container fluid style="height: 100%; background-color: rgba(0, 0,0, 0.88)">
       <v-row style="justify-content: space-between; top: 20px; position: relative; z-index: 999;">
         <v-col cols="5" class="mx-auto" style="text-align: end;">
-          <v-btn @click="canvasImageToSpring" dark>
+          <v-btn @click="$store.state.saveCanvasDialog = true" dark>
             <v-icon class="pr-2">
               mdi-cloud-download-outline
             </v-icon>
@@ -134,7 +134,7 @@
             </div>
             <!-- 말풍선의 경우 -->
             <div @mousedown="onOptionPreventDrag(idx)" @mouseup="onOptionAllowDrag(idx)" v-if="image.isClickOption && image.isBubble" :style="{ height: 'fit-content', backgroundColor: 'rgba(0,0,20,0.9)', position: 'relative', bottom: image.bubbleOption.main.borderWidth + 'px', left: 'calc(100% + 50px + ' + `${image.bubbleOption.main.borderWidth}` + 'px )' }">
-              <v-container  class="mx-auto my-8 obejct-option" id="optionSlider" >
+              <v-container  class="mx-auto my-8 object-option" id="optionSlider" >
                 <div class="mb-6">
                   <v-btn dark color="#0D47A1" class="mr-5" @click.stop="clickBubbleOptionText">Text</v-btn>
                   <v-btn dark color="#0D47A1" @click.stop="clickBubbleOption">Speech Bubble</v-btn>
@@ -373,7 +373,7 @@
             <!-- 이미지의 경우 -->
             <div @mousedown="onOptionPreventDrag(idx)" @mouseup="onOptionAllowDrag(idx)" v-if="image.isClickOption && !image.isBubble && !image.isBackground"
               :style="{ height: 'fit-content', backgroundColor: 'rgba(0,0,20,0.9)', position: 'relative', bottom: image.imageOption.borderSlider + 'px', left: 'calc(100% + 50px + ' + `${image.imageOption.borderSlider}` + 'px )' }">
-              <v-container fluid class="mx-auto my-8 obejct-option" id="optionSlider">
+              <v-container fluid class="mx-auto my-8 object-option" id="optionSlider">
                   <div>
                     Border Size
                   </div>
@@ -458,42 +458,11 @@
                 <div class="subtitle">...or click to select a file from your computer</div>
               </div>
             </vue2Dropzone>
-            <v-row id='editorBtnSet'>
-              <!-- <v-btn @click="btnAddBubble1" dark class="mt-2">
-                <v-icon class="pr-2">
-                  mdi-chat-plus-outline
-                </v-icon>
-                Add Chat
-              </v-btn>
-              <v-btn @click="btnAddBackground" dark class="mx-2 mt-2">
-                <v-icon class="pr-2">
-                  mdi-card-plus
-                </v-icon>
-                Add Background
-              </v-btn>
-              <v-btn @click="btnAddCanvasHeight" dark class="mt-2">
-                <v-icon class="pr-2">
-                  mdi-table-column-plus-after
-                </v-icon>
-                Add Page
-              </v-btn>
-              <v-btn @click="btnEditorImageToCanvas" class="mt-2 mx-2" dark>
-                <v-icon class="pr-2">
-                  mdi-send
-                </v-icon>
-                Send
-              </v-btn>
-              <v-btn @click="btnEditorImageToCanvas" class="mt-2" color="" dark>
-                <v-icon class="pr-2">
-                  mdi-image-multiple-outline
-                </v-icon>
-                Images
-              </v-btn> -->
-            </v-row>
 
           </v-row>
         </v-col>
       </v-row>
+      <SaveOnlineModal @thumbnailAndSubject="canvasImageToSpring"/>
     </v-container>
 
 </template>
@@ -512,12 +481,14 @@ import 'tui-image-editor/dist/svg/icon-d.svg'
 import 'tui-image-editor/dist/tui-image-editor.css'
 import { mapState } from 'vuex'
 
+import SaveOnlineModal from '@/components/photoeditor/SaveOnlineModal'
 
 export default {
   components: {
     'tui-image-editor': ImageEditor,
     VueDragResize,
     vue2Dropzone,
+    SaveOnlineModal,
   },
   watch: {
     objectCount(newVal) {
@@ -528,6 +499,7 @@ export default {
   },
   data() {
     return {
+      saveDialog: false,
       isShowWebtoonImages: false,
       currentScrollPlace: 0,
       isClickBubbleOptionText: true,
@@ -913,7 +885,7 @@ export default {
 
     },
     // 스프링으로 이미지 전달.
-    async canvasImageToSpring() {
+    async canvasImageToSpring(thumbnail, subject) {
       const ctxTest = document.querySelector("#webtoonCanvas")
       const offsetY = ctxTest.offsetTop + 64
 
@@ -954,13 +926,11 @@ export default {
           // })
       }
       canvasFormData.append('no', this.userInfo.number)
-      canvasFormData.append('subject', 'check')
-      // canvasFormData.append('thumbnail', null) // 여기에 섬네일 파일 넣어주면 됨.
+      canvasFormData.append('subject', subject)
+      canvasFormData.append('thumbnail', thumbnail) // 여기에 섬네일 파일 넣어주면 됨.
       // canvasFormData.append('createDate', 'check')
       // canvasFormData.append('image', canvasFormArray)
       this.$store.dispatch('canvasImageToSpring', canvasFormData)
-
-
     },
 
 
@@ -1038,10 +1008,6 @@ export default {
     this.isNotEditor()
   },
   mounted() {
-    // 버튼위치 변경
-    const editorHeader = document.querySelector('.tui-image-editor-header')
-    const editorBtnSet = document.querySelector('#editorBtnSet')
-    editorHeader.appendChild(editorBtnSet)
 
     // scroll 추적기 붙이기
     window.addEventListener("scroll", this.getCurrentScrollPlace)
@@ -1086,7 +1052,7 @@ export default {
   width: 0px;height: 0px;
 }
 
-.obejct-option {
+.object-option {
   width: 500px;
   color: white;
   padding-left: 40px;
