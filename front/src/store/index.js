@@ -25,6 +25,7 @@ export default new Vuex.Store({
     checkLoading: {
       isSaveOnlineLoading: false,
       isConvertedLoading: false,
+      isMoveImageToCanvasLoading: false,
     },
 
     // 나중에 새로고침에 대비해서 쿠키에 넣어야할수도있음 생각해두자.

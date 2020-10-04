@@ -23,7 +23,7 @@
 
         </v-col>
         <v-col cols="6" class="mr-5" :style="{ position: 'relative', top: `${currentScrollPlace}` + 'px' }">
-          <v-btn @click="isShowWebtoonImages = !isShowWebtoonImages" class="" color="" dark>
+          <v-btn @click="isShowWebtoonImages = !isShowWebtoonImages" class="mr-2" color="" dark>
             <v-icon class="pr-2">
               mdi-image-multiple-outline
             </v-icon>
@@ -536,6 +536,9 @@
         </v-col>
       </v-row>
       <SaveOnlineModal @thumbnailAndSubject="canvasImageToSpring"/>
+      <v-overlay :value="checkLoading.isMoveImageToCanvasLoading" style="z-index: 999;">
+        <v-progress-circular indeterminate size="64"></v-progress-circular>
+      </v-overlay>
     </v-container>
 
 </template>
@@ -818,6 +821,12 @@ export default {
     },
     // 에디터 이미지를 캔버스로 이동
     btnEditorImageToCanvas() {
+      // 그냥 base64 string이 너무길어서 오래걸리는 것, 그래서 로딩도 못걸어준다. ( 변환중에 애초에 다른 작업 수행이안됨. )
+      // this.$store.state.checkLoading.isMoveImageToCanvasLoading = true
+      // setTimeout(() => {
+        // this.$store.state.checkLoading.isMoveImageToCanvasLoading = false
+      // }, 10000);
+
       const dataURL = this.$refs.imageEditor.invoke('toDataURL')  // base64 data
       const imageData = {
         x: this.objectCount * 10,
@@ -839,6 +848,7 @@ export default {
       }
       this.images.push(imageData)
       this.objectCount++
+
     },
     // 말풍선 추가
     btnAddBubble1() {
