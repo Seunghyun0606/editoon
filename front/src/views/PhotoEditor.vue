@@ -78,12 +78,12 @@
             :parentLimitation="true"
             @activated="canvasImageOnActivated(idx)"
             @deactivated="canvasImageOffActivated(idx)"
-            :style="[objectStyle(idx)]"
+            :style="[ !image.isBubble && !image.isBackground ? '' : objectStyle(idx) ]"
             class="d-flex"
             @dragstop="dragstop($event, idx)"
             @resizestop="resizestop($event, idx)"
           >
-            <img v-if="!image.isBubble && !image.isBackground" :src="image.image" style="position: absolute; height: 100%; width: 100%;" alt="">
+            <img v-if="!image.isBubble && !image.isBackground" :src="image.image" :style="[objectStyle(idx)]" style="position: absolute; height: 100%; width: 100%;" alt="">
 
             <div v-if="image.isBubble" :style="[bubbleArrowStyleSub(idx)]">
             </div>
@@ -413,6 +413,27 @@
                       ></v-text-field>
                     </template>
                   </v-slider>
+                  <div>
+                    Border Radius
+                  </div>
+                  <v-slider
+                    @mousedown.stop
+                    v-model="image.imageOption.borderRadius"
+                    dark
+                    :max="70"
+                    :min="0"
+                  >
+                    <template v-slot:append>
+                      <v-text-field
+                        dark
+                        v-model="image.imageOption.borderRadius"
+                        class="mt-0 pt-0"
+                        hide-details
+                        single-line
+                        style="width: 60px"
+                      ></v-text-field>
+                    </template>
+                  </v-slider>
 
                   <div>
                     Border Color
@@ -422,9 +443,7 @@
                     hide-mode-switch
                     class="my-2"
                     mode="hexa"
-
                   >
-
                   </v-color-picker>
 
               </v-container>
@@ -539,6 +558,7 @@ export default {
           isDraggable: true,
           imageOption: {
             borderSlider: 5,
+            borderRadius: 0,
             borderColor: '#000',
           },
           backgroundOption: {
@@ -607,6 +627,7 @@ export default {
         else {
           imageStyle.border = image.imageOption.borderSlider + 'px' + " solid"
           imageStyle.borderColor = image.imageOption.borderColor
+          imageStyle.borderRadius = image.imageOption.borderRadius + '%'
           // imageStyle.backgroundImage = 'url(' + `${image.image}` + ')'
           // imageStyle.backgroundRepeat= 'round'
         }
@@ -775,6 +796,7 @@ export default {
         imageOption: {
           borderSlider: 5,
           borderColor: '#000',
+          borderRadius: 0,
         },
       }
       this.images.push(imageData)
