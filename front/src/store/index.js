@@ -252,7 +252,7 @@ export default new Vuex.Store({
     },
     // 유저가 저장한 editoon image 목록(썸네일) 보여주기
     getUserEditoonThumbnails({ state, commit }) {
-      axios.get( SERVER_URL + 'v1/getEditoonThumbnails', state.userInfo.email, {
+      axios.get( SERVER_URL + 'editoon/v1/getEditoonThumbnails', state.userInfo.email, {
         headers: {
           email: state.userInfo.email
         }
@@ -270,7 +270,7 @@ export default new Vuex.Store({
 
     // 유저가 저장한 editton image 보여주기
     getUserEditoonImages({ state, commit }, book_id) {
-      axios.get( SERVER_URL + 'v1/getEditoonDetail', { email: state.userInfo.email, _id: book_id }, {
+      axios.get( SERVER_URL + 'editoon/v1/getEditoonDetail', { email: state.userInfo.email, _id: book_id }, {
         headers: {
           email: state.userInfo.email
         }
