@@ -1,5 +1,5 @@
 <template>
-    <div class="v-spinner ma-10" v-show="loading">
+    <div class="v-spinner" v-show="loading">
         <div class="v-moon v-moon1" v-bind:style="spinnerStyle">
             <div class="v-moon v-moon2" v-bind:style="[spinnerMoonStyle,animationStyle2]"></div>
             <div class="v-moon v-moon3" v-bind:style="[spinnerStyle,animationStyle3]"></div>
@@ -68,7 +68,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
 .v-moon {
   margin: auto;

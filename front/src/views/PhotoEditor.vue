@@ -28,10 +28,25 @@
               mdi-image-multiple-outline
             </v-icon>
             Images
-            <v-row class="showConvertedImage" v-show="isShowWebtoonImages">
+            <Loading
+              :loading="checkLoading.isConvertedLoading"
+              :color="'white'"
+              :size="'35px'"
+              class="ml-2"
+            />
+            <v-row class="showConvertedImage pa-10" style="z-index: 999;" v-show="isShowWebtoonImages">
               <v-col v-for="(convertedImage, idx) in convertedImages" :key="idx">
                 <img style="width: 100px; height: 100px;" :src="'data:image/png;base64,' + `${convertedImage}`" alt="transformed image">
               </v-col>
+              <div style="align-self: center;">
+                <Loading
+                  :loading="checkLoading.isConvertedLoading"
+                  :color="'white'"
+                  :size="'50px'"
+                />
+
+              </div>
+
             </v-row>
           </v-btn>
 
@@ -540,6 +555,7 @@ import 'tui-image-editor/dist/tui-image-editor.css'
 import { mapState } from 'vuex'
 
 import SaveOnlineModal from '@/components/photoeditor/SaveOnlineModal'
+import Loading from '@/components/Loading'
 
 export default {
   components: {
@@ -547,6 +563,7 @@ export default {
     VueDragResize,
     vue2Dropzone,
     SaveOnlineModal,
+    Loading,
   },
   watch: {
     objectCount(newVal) {
@@ -726,7 +743,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['convertedImages', 'userInfo'])
+    ...mapState(['convertedImages', 'userInfo', 'checkLoading'])
     // img :src="'data:image/png;base64,' + `${test123}`" 나중에 이미지 base64파일 형식으로 넣어주면된다.
   },
   methods: {
@@ -1014,7 +1031,8 @@ export default {
       canvasFormData.append('thumbnail', thumbnail) // 여기에 섬네일 파일 넣어주면 됨.
       // canvasFormData.append('createDate', 'check')
       // canvasFormData.append('image', canvasFormArray)
-      this.$store.dispatch('canvasImageToSpring', canvasFormData)
+      await this.$store.dispatch('canvasImageToSpring', canvasFormData)
+      this.$store.state.checkLoading.isSaveOnlineLoading = false
     },
 
 
@@ -1043,15 +1061,18 @@ export default {
     },
 
     // django로 이미지 보내기.
-    dropZoneImageToDjango(file_list) {
+    async dropZoneImageToDjango(file_list) {
 
+      this.$store.state.checkLoading.isConvertedLoading = true
       const djangoImageForm = new FormData()
       
       for ( let file of file_list ) {
         djangoImageForm.append(file.name ,file)
       }
 
-      this.$store.dispatch("dropZoneImageToDjango", djangoImageForm)
+      await this.$store.dispatch("dropZoneImageToDjango", djangoImageForm)
+      this.$store.state.checkLoading.isConvertedLoading = false
+
     },
 
     // 캔버스의 이미지가 눌러졌을때, 다른 이미지는 활성화 취소
@@ -1112,7 +1133,7 @@ export default {
   top: 60px;
   position: absolute;
   width: 400px;
-  height: 200px;
+  height: 300px;
   background-color: rgba(0,0,20,0.9);
   border-radius: 10px;
 }

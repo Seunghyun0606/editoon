@@ -24,6 +24,7 @@ export default new Vuex.Store({
 
     checkLoading: {
       isSaveOnlineLoading: false,
+      isConvertedLoading: false,
     },
 
     // 나중에 새로고침에 대비해서 쿠키에 넣어야할수도있음 생각해두자.
@@ -300,7 +301,7 @@ export default new Vuex.Store({
     },
     // 성공메시지만 온다. 다른건 없음.
     canvasImageToSpring({ state, commit }, canvasForms) {
-      axios.post( SERVER_URL + 'editoon/v1/saveEditoonDetail', canvasForms, {
+      return axios.post( SERVER_URL + 'editoon/v1/saveEditoonDetail', canvasForms, {
         headers: {
           // 'Content-Type': 'multipart/form-data',
           email: state.userInfo.email
@@ -317,7 +318,6 @@ export default new Vuex.Store({
           }
           else {
             commit('saveCanvasDialogInit', false)
-            state.checkLoading.isSaveOnlineLoading = false
             alert('성공적으로 저장되었습니다.')
           }
 
@@ -328,7 +328,7 @@ export default new Vuex.Store({
     },
     dropZoneImageToDjango({ commit }, djangoImageForm) {
 
-      axios.post( Django_SERVER_URL, djangoImageForm, {
+      return axios.post( Django_SERVER_URL, djangoImageForm, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

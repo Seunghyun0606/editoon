@@ -44,7 +44,6 @@
         v-show="checkLoading.isSaveOnlineLoading"  
       >
       <Loading
-        :loading="checkLoading.isSaveOnlineLoading"
         :color="'white'"
         :size="'100px'"
       />
