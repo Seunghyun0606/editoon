@@ -5,7 +5,8 @@ import axios from 'axios'
 Vue.use(Vuex)
 
 
-const SERVER_URL = 'http://localhost:8080/editoon/'
+// const SERVER_URL = 'http://localhost:8080/editoon/'
+const SERVER_URL = 'https://j3b308.p.ssafy.io/editoon/'
 const Django_SERVER_URL = 'http://localhost:8000/ai/ImgtoAnime/'
 // const DJANGO_URL = ''
 
