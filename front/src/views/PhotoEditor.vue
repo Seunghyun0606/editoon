@@ -830,10 +830,12 @@ export default {
     },
     // background 추가.
     btnAddBackground() {
+      const backgroundWidth = document.querySelector("#webtoonCanvas").offsetWidth
+      console.log(backgroundWidth)
       const addBackground = {
-        x: this.objectCount * 10,
+        x: 0,
         y: this.currentScrollPlace,
-        w: 200,
+        w: backgroundWidth,
         h: 200,
         image: "",
         isActive: false,
