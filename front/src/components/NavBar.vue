@@ -15,21 +15,22 @@
     </v-tabs>
 
     <!-- <v-spacer></v-spacer> -->
+    <!-- v-tab--active 효과대매 color 는 그냥 rgba 박아넣음. signup이랑 login은 클릭했을대 변하길 원치않음. -->
     <v-tabs
       right
       hide-slider
       optional
       color="rgba(0, 0, 0, 0.54)"
     >
-    <!-- v-tab--active 효과대매 color 는 그냥 rgba 박아넣음. signup이랑 login은 클릭했을대 변하길 원치않음. -->
-      <v-tab router-link to='/mypage'>
+      <v-tab v-if='isLogin' router-link to='/mypage'>
         <v-avatar color="black" size="40">
           <v-icon color="white">mdi-account-circle</v-icon>
         </v-avatar>
 
       </v-tab>
-      <v-tab @click="clickSingUp()">Sign Up</v-tab>
-      <v-tab @click="clickLogin()">Log in</v-tab>
+      <v-tab v-if="!isLogin" @click="clickSingUp()">Sign Up</v-tab>
+      <v-tab v-if="!isLogin" @click="clickLogin()">Log in</v-tab>
+      <v-tab v-if='isLogin' @click="clickLogout()">Log out</v-tab>
 
     </v-tabs>
 
@@ -42,7 +43,7 @@
 <script>
 import LoginModal from '@/components/login/LoginModal'
 import SignUpModal from '@/components/login/SignUpModal'
-
+import { mapState } from 'vuex'
 
 export default {
   name: 'NavBar',
@@ -51,6 +52,7 @@ export default {
     SignUpModal,
   },
   computed: {
+    ...mapState(['isLogin'])
   },
   data() {
     return {
@@ -63,7 +65,10 @@ export default {
     },
     clickSingUp() {
       this.$store.state.signUpDialog = true
-    }
+    },
+    clickLogout() {
+      this.$store.dispatch('logout')
+    },
   }
 
 }

@@ -692,7 +692,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['convertedImages'])
+    ...mapState(['convertedImages', 'userInfo'])
     // img :src="'data:image/png;base64,' + `${test123}`" 나중에 이미지 base64파일 형식으로 넣어주면된다.
   },
   methods: {
@@ -953,7 +953,7 @@ export default {
           //   this.$store.dispatch('canvasImageToSpring', canvasFormData)
           // })
       }
-      canvasFormData.append('no', 24)
+      canvasFormData.append('no', this.userInfo.number)
       canvasFormData.append('subject', 'check')
       // canvasFormData.append('thumbnail', null) // 여기에 섬네일 파일 넣어주면 됨.
       // canvasFormData.append('createDate', 'check')

@@ -156,11 +156,13 @@ export default new Vuex.Store({
       axios.post( SERVER_URL + 'account/logout' )
         .then( res => {
           console.log(res.data)
+          alert('logout 성공')
           // 쿠키에 이름이 어떻게 저장되는지 보고, 나중에 다 삭제해줘야함.
           // 무조건 success로 옴
         })
         .catch( err => {
           console.log(err)
+          alert('logout 실패')
           // 에러가 뜨면 서버에러임
         })
     },
