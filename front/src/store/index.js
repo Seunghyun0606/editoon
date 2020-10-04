@@ -268,7 +268,7 @@ export default new Vuex.Store({
         .then( res => {
           console.log(res.data)
           console.log('check')
-          commit('setUserEditoonThumbnails', res.data.map)
+          commit('setUserEditoonThumbnails', res.data.map.editoonDetailList)
           alert('썸네일 받기 성공')
         })
         .catch( err => {
@@ -284,11 +284,11 @@ export default new Vuex.Store({
         headers: {
           email: state.userInfo.email
         }
-      })
+      })  
         .then( res => {
           console.log(res.data)
           commit('showMytoonDialogInit', true)
-          commit('setUserEditoonImages', res.data.map)
+          commit('setUserEditoonImages', res.data.map.editoonDetailList)
         })
         .catch( err => {
           console.log(err)
