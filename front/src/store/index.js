@@ -30,10 +30,10 @@ export default new Vuex.Store({
 
     userEmail: '',
     userInfo: {
-      no: 33,
-      email: 'limseung10@gmail.com',
-      name: 'asdf',
-      image: 'default.jpg',  // 유저 아이콘
+      no: '',
+      email: '',
+      name: '',
+      image: '',  // 유저 아이콘
     },
 
     signUpValidation: {
@@ -259,6 +259,7 @@ export default new Vuex.Store({
         })
         .then( res => {
           console.log(res.data)
+          console.log('check')
           commit('setUserEditoonThumbnails', res.data)
         })
         .catch( err => {
