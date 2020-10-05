@@ -2,7 +2,7 @@
     <v-container fluid style="height: 100%; background-color: rgba(0, 0,0, 0.88)">
       <v-row style="justify-content: space-between; top: 20px; position: relative; z-index: 999;">
         <v-col cols="5" class="mx-auto" style="text-align: end;">
-          <v-btn @click="canvasImageToSpring" dark>
+          <v-btn @click="$store.state.saveCanvasDialog = true" dark>
             <v-icon class="pr-2">
               mdi-cloud-download-outline
             </v-icon>
@@ -23,6 +23,18 @@
 
         </v-col>
         <v-col cols="6" class="mr-5" :style="{ position: 'relative', top: `${currentScrollPlace}` + 'px' }">
+          <v-btn @click="isShowWebtoonImages = !isShowWebtoonImages" class="" color="" dark>
+            <v-icon class="pr-2">
+              mdi-image-multiple-outline
+            </v-icon>
+            Images
+            <v-row class="showConvertedImage" v-show="isShowWebtoonImages">
+              <v-col v-for="(convertedImage, idx) in convertedImages" :key="idx">
+                <img style="width: 100px; height: 100px;" :src="'data:image/png;base64,' + `${convertedImage}`" alt="transformed image">
+              </v-col>
+            </v-row>
+          </v-btn>
+
           <v-btn @click="btnAddBubble1" dark>
             <v-icon class="pr-2">
               mdi-chat-plus-outline
@@ -47,17 +59,6 @@
             </v-icon>
             paint image
           </v-btn>
-          <v-btn @click="isShowWebtoonImages = !isShowWebtoonImages" class="" color="" dark>
-            <v-icon class="pr-2">
-              mdi-image-multiple-outline
-            </v-icon>
-            Images
-            <v-row class="showConvertedImage" v-show="isShowWebtoonImages">
-              <v-col v-for="(convertedImage, idx) in convertedImages" :key="idx">
-                <img style="width: 100px; height: 100px;" :src="'data:image/png;base64,' + `${convertedImage}`" alt="transformed image">
-              </v-col>
-            </v-row>
-          </v-btn>
         </v-col>
       </v-row>
       <v-row style="justify-content: space-between;">
@@ -68,8 +69,8 @@
             :isActive="image.isActive"
             :parentH="webtoonCanvasHeight"
             :parentW="webtoonCanvasWidth"
-            :w="200"
-            :h="200"
+            :w="image.w"
+            :h="image.h"
             :x="image.x"
             :y="image.y"
             :z="image.isActive ? 999 : image.zIndex"
@@ -77,17 +78,27 @@
             :parentLimitation="true"
             @activated="canvasImageOnActivated(idx)"
             @deactivated="canvasImageOffActivated(idx)"
-            :style="[objectStyle(idx)]"
+            :style="[ !image.isBubble && !image.isBackground ? '' : objectStyle(idx) ]"
             class="d-flex"
+            @dragstop="dragstop($event, idx)"
+            @resizestop="resizestop($event, idx)"
           >
-            <img v-if="!image.isBubble && !image.isBackground" :src="image.image" style="position: absolute; height: 100%; width: 100%;" alt="">
+            <img v-if="!image.isBubble && !image.isBackground" :src="image.image" :style="[objectStyle(idx)]" style="position: absolute; height: 100%; width: 100%;" alt="">
 
             <div v-if="image.isBubble" :style="[bubbleArrowStyleSub(idx)]">
             </div>
+            <!-- 옵션창 -->
             <div v-show="image.isActive" style="position: absolute; top: -35px; right: 0; z-index: 999">
               <v-btn
                 icon
-                color='black'
+                color='#0D47A1'
+                style="cursor: default;"
+              >
+                {{ image.zIndex }}
+              </v-btn>
+              <v-btn
+                icon
+                color='#0D47A1'
                 @click="btnUpZindex(idx)"
               >
                 <v-icon
@@ -97,18 +108,25 @@
               </v-btn>
               <v-btn
                 icon
-                color='black'
+                color='#0D47A1'
                 @click="btnDownZindex(idx)">
                 <v-icon
                 >
                   mdi-arrow-down-circle
                 </v-icon>
-
-
               </v-btn>
               <v-btn
                 icon
-                color="black"              
+                color='#0D47A1'
+                @click="btnDelete(idx)">
+                <v-icon
+                >
+                  mdi-delete
+                </v-icon>
+              </v-btn>
+              <v-btn
+                icon
+                color="#0D47A1"              
                 @click="btnOption(idx)">
                 <v-icon
                 >
@@ -134,7 +152,7 @@
             </div>
             <!-- 말풍선의 경우 -->
             <div @mousedown="onOptionPreventDrag(idx)" @mouseup="onOptionAllowDrag(idx)" v-if="image.isClickOption && image.isBubble" :style="{ height: 'fit-content', backgroundColor: 'rgba(0,0,20,0.9)', position: 'relative', bottom: image.bubbleOption.main.borderWidth + 'px', left: 'calc(100% + 50px + ' + `${image.bubbleOption.main.borderWidth}` + 'px )' }">
-              <v-container  class="mx-auto my-8 obejct-option" id="optionSlider" >
+              <v-container  class="mx-auto my-8 object-option" id="optionSlider" >
                 <div class="mb-6">
                   <v-btn dark color="#0D47A1" class="mr-5" @click.stop="clickBubbleOptionText">Text</v-btn>
                   <v-btn dark color="#0D47A1" @click.stop="clickBubbleOption">Speech Bubble</v-btn>
@@ -334,6 +352,27 @@
                           ></v-text-field>
                         </template>
                       </v-slider>
+                      <div>
+                        borderRadius
+                      </div>
+                      <v-slider
+                        @mousedown.stop
+                        v-model="image.bubbleOption.main.borderRadius"
+                        dark
+                        :max="70"
+                        :min="0"
+                      >
+                        <template v-slot:append>
+                          <v-text-field
+                            dark
+                            v-model="image.bubbleOption.main.borderRadius"
+                            class="mt-0 pt-0"
+                            hide-details
+                            single-line
+                            style="width: 60px"
+                          ></v-text-field>
+                        </template>
+                      </v-slider>
                     </v-col>
                   </v-row>
                   <v-row class="">
@@ -373,7 +412,7 @@
             <!-- 이미지의 경우 -->
             <div @mousedown="onOptionPreventDrag(idx)" @mouseup="onOptionAllowDrag(idx)" v-if="image.isClickOption && !image.isBubble && !image.isBackground"
               :style="{ height: 'fit-content', backgroundColor: 'rgba(0,0,20,0.9)', position: 'relative', bottom: image.imageOption.borderSlider + 'px', left: 'calc(100% + 50px + ' + `${image.imageOption.borderSlider}` + 'px )' }">
-              <v-container fluid class="mx-auto my-8 obejct-option" id="optionSlider">
+              <v-container fluid class="mx-auto my-8 object-option" id="optionSlider">
                   <div>
                     Border Size
                   </div>
@@ -395,6 +434,27 @@
                       ></v-text-field>
                     </template>
                   </v-slider>
+                  <div>
+                    Border Radius
+                  </div>
+                  <v-slider
+                    @mousedown.stop
+                    v-model="image.imageOption.borderRadius"
+                    dark
+                    :max="70"
+                    :min="0"
+                  >
+                    <template v-slot:append>
+                      <v-text-field
+                        dark
+                        v-model="image.imageOption.borderRadius"
+                        class="mt-0 pt-0"
+                        hide-details
+                        single-line
+                        style="width: 60px"
+                      ></v-text-field>
+                    </template>
+                  </v-slider>
 
                   <div>
                     Border Color
@@ -404,9 +464,7 @@
                     hide-mode-switch
                     class="my-2"
                     mode="hexa"
-
                   >
-
                   </v-color-picker>
 
               </v-container>
@@ -458,42 +516,11 @@
                 <div class="subtitle">...or click to select a file from your computer</div>
               </div>
             </vue2Dropzone>
-            <v-row id='editorBtnSet'>
-              <!-- <v-btn @click="btnAddBubble1" dark class="mt-2">
-                <v-icon class="pr-2">
-                  mdi-chat-plus-outline
-                </v-icon>
-                Add Chat
-              </v-btn>
-              <v-btn @click="btnAddBackground" dark class="mx-2 mt-2">
-                <v-icon class="pr-2">
-                  mdi-card-plus
-                </v-icon>
-                Add Background
-              </v-btn>
-              <v-btn @click="btnAddCanvasHeight" dark class="mt-2">
-                <v-icon class="pr-2">
-                  mdi-table-column-plus-after
-                </v-icon>
-                Add Page
-              </v-btn>
-              <v-btn @click="btnEditorImageToCanvas" class="mt-2 mx-2" dark>
-                <v-icon class="pr-2">
-                  mdi-send
-                </v-icon>
-                Send
-              </v-btn>
-              <v-btn @click="btnEditorImageToCanvas" class="mt-2" color="" dark>
-                <v-icon class="pr-2">
-                  mdi-image-multiple-outline
-                </v-icon>
-                Images
-              </v-btn> -->
-            </v-row>
 
           </v-row>
         </v-col>
       </v-row>
+      <SaveOnlineModal @thumbnailAndSubject="canvasImageToSpring"/>
     </v-container>
 
 </template>
@@ -512,12 +539,14 @@ import 'tui-image-editor/dist/svg/icon-d.svg'
 import 'tui-image-editor/dist/tui-image-editor.css'
 import { mapState } from 'vuex'
 
+import SaveOnlineModal from '@/components/photoeditor/SaveOnlineModal'
 
 export default {
   components: {
     'tui-image-editor': ImageEditor,
     VueDragResize,
     vue2Dropzone,
+    SaveOnlineModal,
   },
   watch: {
     objectCount(newVal) {
@@ -528,6 +557,7 @@ export default {
   },
   data() {
     return {
+      saveDialog: false,
       isShowWebtoonImages: false,
       currentScrollPlace: 0,
       isClickBubbleOptionText: true,
@@ -538,6 +568,8 @@ export default {
         {
           x: 0,
           y: 0,
+          w: 200,
+          h: 200,
           image: require(`@/assets/account_signup.png`),  // 맨처음 테스트용으로 넣은것
           isActive: false,  // 나중에 중복 선택 제거를 위함.
           isBackground: false, // 배경인지 확인하기위함.
@@ -547,6 +579,7 @@ export default {
           isDraggable: true,
           imageOption: {
             borderSlider: 5,
+            borderRadius: 0,
             borderColor: '#000',
           },
           backgroundOption: {
@@ -608,13 +641,14 @@ export default {
             imageStyle.position = image.bubbleOption.main.position
             imageStyle.backgroundColor = image.bubbleOption.main.backgroundColor
             imageStyle.border = image.bubbleOption.main.border
-            imageStyle.borderRadius = image.bubbleOption.main.borderRadius + 'em'
+            imageStyle.borderRadius = image.bubbleOption.main.borderRadius + '%'
             imageStyle.borderColor = image.bubbleOption.main.borderColor
             imageStyle.borderWidth = image.bubbleOption.main.borderWidth + 'px'
         }
         else {
           imageStyle.border = image.imageOption.borderSlider + 'px' + " solid"
           imageStyle.borderColor = image.imageOption.borderColor
+          imageStyle.borderRadius = image.imageOption.borderRadius + '%'
           // imageStyle.backgroundImage = 'url(' + `${image.image}` + ')'
           // imageStyle.backgroundRepeat= 'round'
         }
@@ -692,10 +726,21 @@ export default {
     }
   },
   computed: {
-    ...mapState(['convertedImages'])
+    ...mapState(['convertedImages', 'userInfo'])
     // img :src="'data:image/png;base64,' + `${test123}`" 나중에 이미지 base64파일 형식으로 넣어주면된다.
   },
   methods: {
+    dragstop(payload, idx) {
+      this.images[idx].x = payload.left
+      this.images[idx].y = payload.top
+    },
+    resizestop(payload, idx) {
+      this.images[idx].w = payload.width
+      this.images[idx].h = payload.height
+    },
+    btnDelete(idx) {
+      this.images.splice(idx, 1)
+    },
     getCurrentScrollPlace() {
       const checkScrollPlace = document.documentElement.scrollTop
       if ( checkScrollPlace >= 200 ) {
@@ -760,6 +805,8 @@ export default {
       const imageData = {
         x: this.objectCount * 10,
         y: this.currentScrollPlace,
+        w: 200,
+        h: 200,
         image: dataURL,
         isActive: false,
         isBackground: false,
@@ -770,6 +817,7 @@ export default {
         imageOption: {
           borderSlider: 5,
           borderColor: '#000',
+          borderRadius: 0,
         },
       }
       this.images.push(imageData)
@@ -780,6 +828,8 @@ export default {
       const addBubble = {
         x: this.objectCount * 10,
         y: this.currentScrollPlace,
+        w: 200,
+        h: 200,
         image: "",
         isActive: false,
         isBackground: false,
@@ -798,7 +848,7 @@ export default {
           main: {
             position: 'absolute',
             backgroundColor: '#fff',
-            borderRadius: 1,
+            borderRadius: 10,
             border: '1px solid',
             borderColor: 'black',
             borderWidth: 1
@@ -824,9 +874,13 @@ export default {
     },
     // background 추가.
     btnAddBackground() {
+      const backgroundWidth = document.querySelector("#webtoonCanvas").offsetWidth
+      console.log(backgroundWidth)
       const addBackground = {
-        x: this.objectCount * 10,
+        x: 0,
         y: this.currentScrollPlace,
+        w: backgroundWidth,
+        h: 200,
         image: "",
         isActive: false,
         isBackground: true,
@@ -849,7 +903,7 @@ export default {
       this.$store.commit("isNotEditor", false);
     },
     btnUpZindex(idx) {
-      console.log(idx)
+      // console.log(idx)
       this.images[idx].zIndex += 1
     },
     btnDownZindex(idx) {
@@ -913,7 +967,7 @@ export default {
 
     },
     // 스프링으로 이미지 전달.
-    async canvasImageToSpring() {
+    async canvasImageToSpring(thumbnail, subject) {
       const ctxTest = document.querySelector("#webtoonCanvas")
       const offsetY = ctxTest.offsetTop + 64
 
@@ -953,14 +1007,12 @@ export default {
           //   this.$store.dispatch('canvasImageToSpring', canvasFormData)
           // })
       }
-      canvasFormData.append('no', 24)
-      canvasFormData.append('subject', 'check')
-      // canvasFormData.append('thumbnail', null) // 여기에 섬네일 파일 넣어주면 됨.
+      canvasFormData.append('no', this.userInfo.number)
+      canvasFormData.append('subject', subject)
+      canvasFormData.append('thumbnail', thumbnail) // 여기에 섬네일 파일 넣어주면 됨.
       // canvasFormData.append('createDate', 'check')
       // canvasFormData.append('image', canvasFormArray)
       this.$store.dispatch('canvasImageToSpring', canvasFormData)
-
-
     },
 
 
@@ -1038,10 +1090,6 @@ export default {
     this.isNotEditor()
   },
   mounted() {
-    // 버튼위치 변경
-    const editorHeader = document.querySelector('.tui-image-editor-header')
-    const editorBtnSet = document.querySelector('#editorBtnSet')
-    editorHeader.appendChild(editorBtnSet)
 
     // scroll 추적기 붙이기
     window.addEventListener("scroll", this.getCurrentScrollPlace)
@@ -1086,7 +1134,7 @@ export default {
   width: 0px;height: 0px;
 }
 
-.obejct-option {
+.object-option {
   width: 500px;
   color: white;
   padding-left: 40px;
