@@ -1072,16 +1072,27 @@ export default {
 
     // django로 이미지 보내기.
     async dropZoneImageToDjango(file_list) {
-
       this.$store.state.checkLoading.isConvertedLoading = true
       const djangoImageForm = new FormData()
-      console.log(file_list)
+
+      // function appendImage(name, file) {
+      //   console.log('resolve')
+      //   return new Promise(function (resolve) {
+      //     console.log(name, file)
+      //     djangoImageForm.append(name, file)
+      //     resolve(name)
+      //   })
+      // }
+      // console.log(file_list)
+      let cnt = 1
+
       for ( let file of file_list ) {
-        console.log(file)
-        djangoImageForm.append('img1', file)
+        // var a = await appendImage('img' + `${cnt}`, file)
+        // console.log(a)
+        djangoImageForm.append('img' + `${cnt}`, file)
+        cnt += 1
         await this.$store.dispatch("dropZoneImageToDjango", djangoImageForm)
       }
-      console.log(djangoImageForm)
 
       this.$store.state.checkLoading.isConvertedLoading = false
 
