@@ -111,7 +111,7 @@ export default new Vuex.Store({
     // 회원가입 인증절차
     // 이메일보내기aaa
     signUpSendValidationEmail({ commit }, email) {
-      console.log(commit, email)
+      // console.log(commit, email)
       axios.get( SERVER_URL + `nonmember/email/authSend/` + email)
         .then( res => {
           if ( res.data.result === 'fail' ) {
@@ -122,8 +122,10 @@ export default new Vuex.Store({
             commit('signUpIsEmailSend', true)
           }
         })
-        .catch( err => {
-          console.log(err)
+        .catch( () => {
+          // console.log(err)
+          
+          alert('서버 에러입니다. 다음에 다시 시도해주세요.')
           commit('signUpIsEmailSend', false)
 
         })
@@ -132,18 +134,24 @@ export default new Vuex.Store({
     signUpEmailVerificateCode({ commit }, signUpData ) {
       axios.post( SERVER_URL + 'nonmember/email/authCheck', signUpData)
         .then( res => {
-          console.log(res.data)
-          console.log('코드 보내기 성공') 
-          commit('signUpCodeValidation', true)
+          
+          // console.log(res.data)
+          // console.log('코드 보내기 성공') 
+          if ( res.data.result === 'fail ') {
+            commit('signUpCodeValidation', false)
+          }
+          else {
+            commit('signUpCodeValidation', true)
+          }
         })
-        .catch( err => {
-          commit('signUpCodeValidation', false)
-          console.log(err)
+        .catch( () => {
+          alert('서버에러 입니다. 다음에 다시 시도해주세요.')
+          // console.log(err)
         })
     },
     // 회원가입하기.
     signUp({ commit }, signUpData ) {
-      console.log(signUpData)
+      // console.log(signUpData)
       axios.post( SERVER_URL + 'nonmember/signUp', signUpData)
         .then( res => {
           console.log(res.data)
@@ -153,9 +161,10 @@ export default new Vuex.Store({
           commit('signUpInit', false)
           return true
         })
-        .catch( err => {
-          console.log(err)
-          console.log('회원가입실패')
+        .catch( () => {
+
+          // console.log(err)
+          // console.log('회원가입실패')
           return false
         })
     },
