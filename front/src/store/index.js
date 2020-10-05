@@ -92,6 +92,7 @@ export default new Vuex.Store({
     },
     setUserEditoonImages(state, images) {
       state.userEditoonImages = images
+      console.log(images)
     },
     setUserEditoonThumbnails(state, info) {
       // console.log(2, info)
@@ -290,7 +291,7 @@ export default new Vuex.Store({
         .then( res => {
           console.log(123, res.data)
           commit('showMytoonDialogInit', true)
-          commit('setUserEditoonImages', res.data.map.ditoonDetailDTO)
+          commit('setUserEditoonImages', res.data.map.editoonDetailDTO)
         })
         .catch( err => {
           console.log(err)
