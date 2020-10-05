@@ -1,5 +1,5 @@
-<template>
-  <div class="text-center" style="background-color: white; overflow-x: hidden;">
+<template style="overflow-x: hidden;">
+  <div class="text-center" style="background-color: white;">
     <v-dialog
       v-model="checkDialog"
       width="500"

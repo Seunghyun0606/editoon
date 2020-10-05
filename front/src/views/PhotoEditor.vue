@@ -1075,12 +1075,14 @@ export default {
 
       this.$store.state.checkLoading.isConvertedLoading = true
       const djangoImageForm = new FormData()
-      
+      console.log(file_list)
       for ( let file of file_list ) {
-        djangoImageForm.append(file.name ,file)
+        console.log(file)
+        djangoImageForm.append('img1', file)
+        await this.$store.dispatch("dropZoneImageToDjango", djangoImageForm)
       }
+      console.log(djangoImageForm)
 
-      await this.$store.dispatch("dropZoneImageToDjango", djangoImageForm)
       this.$store.state.checkLoading.isConvertedLoading = false
 
     },
@@ -1143,7 +1145,7 @@ export default {
   top: 60px;
   position: absolute;
   width: 400px;
-  height: 300px;
+  /* height: 300px; */
   background-color: rgba(0,0,20,0.9);
   border-radius: 10px;
 }

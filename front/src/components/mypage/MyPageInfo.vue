@@ -160,7 +160,7 @@ export default {
       // form 입력창 만들어야함.
       let userInfo = {}
       userInfo.email = 'limseung10@gmail.com'
-      userInfo.password = 'Aasdfasdf1!'
+      userInfo.password = 'asdfasdf123'
       this.$store.dispatch('deleteUser', userInfo)
     }
   },

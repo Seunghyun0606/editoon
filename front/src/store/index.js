@@ -7,7 +7,7 @@ Vue.use(Vuex)
 
 // const SERVER_URL = 'http://localhost:8080/editoon/'
 const SERVER_URL = 'https://j3b308.p.ssafy.io/editoon/'
-const Django_SERVER_URL = 'http://localhost:8000/ai/ImgtoAnime/'
+const Django_SERVER_URL = 'https://j3b308.p.ssafy.io/ai/ImgtoAnime/'
 // const DJANGO_URL = ''
 
 export default new Vuex.Store({
@@ -84,7 +84,13 @@ export default new Vuex.Store({
       state.isLogin = check
     },
     imageFromDjango(state, images) {
+
+      if ( state.convertedImages.length  > 17 ) {
+        state.convertedImages.shift()
+      }
+
       state.convertedImages.push(images)
+      // console.log('check', images)
       // 이미지 어떻게 넘어오는지 봐야할듯.
     },
     setUserInfo(state, info) {

@@ -24,7 +24,7 @@
     >
       <v-tab v-if='isLogin' router-link to='/mypage'>
         <v-avatar size="40">
-          <img v-if="!!userInfo.image.length" :src="'https://j3b308.p.ssafy.io/image/profileImg/' + `${userInfo.image}`"/>
+          <img v-if="!!userInfo.image" :src="'https://j3b308.p.ssafy.io/image/profileImg/' + `${userInfo.image}`"/>
           <!-- <v-icon color="white">mdi-account-circle</v-icon> -->
         </v-avatar>
 
