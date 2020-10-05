@@ -10,7 +10,9 @@
       >
 
         <div v-for="(userEditoonImage, id) in userEditoonImages.image" :key="id">
-          <img :src="userEditoonImage.image" alt="">
+          <!-- <img :src="userEditoonImage.image" alt=""> -->
+          <v-img :src="'https://j3b308.p.ssafy.io/image/editoonImg/' + `${userInfo.no}/` + `${userEditoonImage.image}`"></v-img>
+
         </div>
 
       </v-container>
@@ -32,7 +34,7 @@ import { mapState } from 'vuex'
           this.$store.commit("showMytoonDialogInit",  val)
         }
       },
-      ...mapState(['userEditoonImages'])
+      ...mapState(['userEditoonImages', 'userInfo'])
     },
     data () {
       return {
