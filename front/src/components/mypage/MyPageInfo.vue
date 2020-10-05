@@ -120,31 +120,18 @@ export default {
   methods: {
     changeInfo() {
       const avatar = document.querySelector("#putAvatar")
-      let changeInfo = {}
-      console.log(avatar.files)
-      changeInfo.name = this.userInfo.name
-      changeInfo.email = this.userInfo.email
-      changeInfo.image = this.userInfo.image
-      if ( this.userInfo.image === 'default.jpg' ) {
-        if ( avatar.files.length > 0 ) {
-          changeInfo.multipartFile = avatar.files[0]
-          changeInfo.isChange = 'yes'  
-        }
-        else {
-          changeInfo.isChange = 'no'
-        }
+      let changeInfo = new FormData()
+      changeInfo.append('name', this.userInfo.name)
+      changeInfo.append('email', this.userInfo.email) 
+      changeInfo.append('image', this.userInfo.image)
+      if ( avatar.files.length > 0 ) {
+        changeInfo.append('multipartFile', avatar.files[0])
+        changeInfo.append('isChange', 'yes')  
       }
       else {
-        // default 값이 아니면서 아바타를 수정하는 경우
-        if ( avatar.files.length > 0 ) {
-          changeInfo.multipartFile = avatar.files[0]
-          changeInfo.isChange = 'yes'  
-        }
-        else {
-          changeInfo.isChange = 'yes'
-        }
+        // 비어있으면 (변화가 없다)
+        changeInfo.append('isChange', 'no')
       }
-      console.log(4, changeInfo)
       this.$store.dispatch('changeUserInfo', changeInfo)
 
     },
