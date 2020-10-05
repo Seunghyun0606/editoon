@@ -1100,13 +1100,13 @@ export default {
       //   })
       // }
       // console.log(file_list)
-      let cnt = 1
+      // let cnt = 1
 
       for ( let file of file_list ) {
         // var a = await appendImage('img' + `${cnt}`, file)
         // console.log(a)
-        djangoImageForm.append('img' + `${cnt}`, file)
-        cnt += 1
+        djangoImageForm.append('img1', file)
+        // cnt += 1
         await this.$store.dispatch("dropZoneImageToDjango", djangoImageForm)
       }
 
