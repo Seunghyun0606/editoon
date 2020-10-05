@@ -8,7 +8,7 @@
     </v-row>
 
     <v-row class="mt-10">
-      <v-col cols=12 style="text-algin: center;">
+      <v-col cols=12 style="text-align: center;" class="mb-5">
         <v-avatar style="width: 200px; height: 200px;">
           <img
             style="width: 200px; height: 200px;"

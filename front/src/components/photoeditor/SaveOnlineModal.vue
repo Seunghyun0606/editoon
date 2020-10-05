@@ -73,6 +73,7 @@ export default {
       },
       set(val) {
         this.$store.commit("saveCanvasDialogInit",  val)
+        this.reset()
       }
     },
     ...mapState(['checkLoading'])
@@ -86,7 +87,13 @@ export default {
     saveCanvas() {
       const thumbnail = document.querySelector("#thumbnail").files[0]
       this.$emit('thumbnailAndSubject', thumbnail, this.subject)
-    }
+    },
+    reset() {
+      // ie는 고려하지않음.
+      this.subject = ""
+      const thumbnail = document.querySelector('#thumbnail')
+      thumbnail.value = ""
+    },
   },
 }
 </script>
