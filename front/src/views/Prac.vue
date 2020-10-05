@@ -43,7 +43,7 @@ export default {
       formData.append("img2", file.files[1]);
 
       axios
-        .post("http://j3b308.p.ssafy.io/ai/ImgtoAnime/", formData, {
+        .post("https://j3b308.p.ssafy.io/ai/ImgtoAnime/", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
