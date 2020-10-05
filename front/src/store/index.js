@@ -262,10 +262,6 @@ export default new Vuex.Store({
     // 유저가 저장한 editoon image 목록(썸네일) 보여주기
     getUserEditoonThumbnails({ state, commit }) {
       console.log(1, state.userInfo.email)
-      // axios.get( SERVER_URL + 'editoon/v1/getEditoonThumbnails/' + 'limseung10@gmail.com', { email: 'limseung10@gmail.com' }, {
-      //   headers: {
-      //     email: 'limseung10@gmail.com'
-      //   }
       axios.get( SERVER_URL + 'editoon/v1/getEditoonThumbnails/' + `${state.userInfo.email}`, { email: state.userInfo.email }, {
         headers: {
           email: state.userInfo.email
@@ -286,13 +282,13 @@ export default new Vuex.Store({
 
     // 유저가 저장한 editton image 보여주기
     getUserEditoonImages({ state, commit }, book_id) {
-      axios.get( SERVER_URL + 'editoon/v1/getEditoonDetail', { email: state.userInfo.email, _id: book_id }, {
+      axios.get( SERVER_URL + 'editoon/v1/getEditoonDetail/' + `${state.userInfo.email}/` + `${book_id}`, {}, {
         headers: {
           email: state.userInfo.email
         }
-      })  
+      })
         .then( res => {
-          console.log(res.data)
+          console.log(123, res.data)
           commit('showMytoonDialogInit', true)
           commit('setUserEditoonImages', res.data.map.editoonDetailList)
         })
