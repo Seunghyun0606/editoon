@@ -9,7 +9,7 @@
         style="background-color: rgba(0,0,20,0.9)"  
       >
 
-        <div v-for="(userEditoonImage, id) in userEditoonImages" :key="id">
+        <div v-for="(userEditoonImage, id) in userEditoonImages.image" :key="id">
           <img :src="userEditoonImage.image" alt="">
         </div>
 
@@ -22,7 +22,7 @@
 import { mapState } from 'vuex'
 
   export default {
-    name: 'SaveOnlineModal',
+    name: 'MyPageShowMytoon',
     computed: {
       checkDialog: {
         get() {

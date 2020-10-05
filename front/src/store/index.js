@@ -30,7 +30,7 @@ export default new Vuex.Store({
 
     // 나중에 새로고침에 대비해서 쿠키에 넣어야할수도있음 생각해두자.
     userNumber: '',
-    userEditoonImages: [],
+    userEditoonImages: {},
     userEditoonThumbnails: [],
     // _id, subject, thumbnail, createDate로 온다.
 
@@ -290,7 +290,7 @@ export default new Vuex.Store({
         .then( res => {
           console.log(123, res.data)
           commit('showMytoonDialogInit', true)
-          commit('setUserEditoonImages', res.data.map.editoonDetailList)
+          commit('setUserEditoonImages', res.data.map.ditoonDetailDTO)
         })
         .catch( err => {
           console.log(err)

@@ -17,14 +17,19 @@
         </v-layout>
       </v-card>
     </v-flex>
+    <MyPageShowMytoon/>
   </v-layout>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import MyPageShowMytoon from '@/components/mypage/MyPageShowMytoon'
 // _id, subject, thumbnail, createDate
   export default {
     name: "MyPageFavortoon",
+    components: {
+      MyPageShowMytoon,
+    },
     computed: {
       ...mapState(['userEditoonThumbnails', 'userInfo'])
       // 나중에 props로 넘어오는 것 없애고, books 대신에 editoonImages 넣자.
