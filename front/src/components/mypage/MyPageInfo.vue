@@ -84,6 +84,7 @@
 
     </v-form>
     <MyPageChangePassword/>
+    <MyPageDeleteUser/>
   
   </v-container>  
 
@@ -91,13 +92,15 @@
 
 <script>
 import MyPageChangePassword from '@/components/mypage/MyPageChangePassword'
+import MyPageDeleteUser from '@/components/mypage/MyPageDeleteUser'
 import { mapState } from 'vuex'
 
 
 export default {
   name: "MyPageInfo",
   components: {
-    MyPageChangePassword
+    MyPageChangePassword,
+    MyPageDeleteUser,
   },
   computed: {
     ...mapState(['userInfo'])
@@ -157,12 +160,7 @@ export default {
       this.$store.state.changePasswordDialog = true
     },
     deleteUser() {
-      // 나중에 경고창 만들어주자
-      // form 입력창 만들어야함.
-      let userInfo = {}
-      userInfo.email = 'limseung10@gmail.com'
-      userInfo.password = 'asdfasdf123'
-      this.$store.dispatch('deleteUser', userInfo)
+      this.$store.state.deleteUserDialog = true
     }
   },
 

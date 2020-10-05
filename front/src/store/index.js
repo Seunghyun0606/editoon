@@ -19,6 +19,7 @@ export default new Vuex.Store({
     saveCanvasDialog: false,
     showMytoonDialog: false,
     changePasswordDialog: false,
+    deleteUserDialog: false,
     
     isLogin: false,
 
@@ -178,24 +179,23 @@ export default new Vuex.Store({
           dispatch('getUserInfo')
           // 딱히 해줄일이 없다.
         })
-        .catch( err => {
-          alert('로그인 실패')
-          console.log(err)
+        .catch( () => {
+          alert('서버 오류로 인한 로그인 실패입니다. 나중에 다시 시도해주세요.')
+          // console.log(err)
           // 토큰 만료시 , HttpStatus === 406일때 토큰 만료이기 때문에 토큰을 다시 받는 로직 만들어야한다.
         })
     },
     logout() {
       axios.post( SERVER_URL + 'account/logout' )
-        .then( res => {
-          console.log(res.data)
-          alert('logout 성공')
+        .then( () => {
+          alert('logout')
           this.commit('setLoginStatus', false)
           // 쿠키에 이름이 어떻게 저장되는지 보고, 나중에 다 삭제해줘야함.
           // 무조건 success로 옴
         })
         .catch( err => {
           console.log(err)
-          alert('logout 실패')
+          alert('서버에러로 인한 logout 실패입니다. 나중에 다시 시도해주세요.')
           // 에러가 뜨면 서버에러임
         })
     },
@@ -203,13 +203,13 @@ export default new Vuex.Store({
     getUserInfo({ commit }) {
       axios.post( SERVER_URL + 'account/getLoginInfo' )
         .then( res => {
-          alert('유저정보 가져오기 성공')
-          console.log(res.data)
+          // alert('유저정보 가져오기 성공')
+          // console.log(res.data)
           commit('setUserInfo', res.data.map.loginInfoDTO)
         })
-        .catch( err => {
-          console.log(err)
-          alert('유저정보 가져오기 실패')
+        .catch( () => {
+          // console.log(err)
+          alert('서버 오류로 인한 유저정보 가져오기 실패입니다. 나중에 다시 시도해주세요.')
         })
     },
     // 유저정보 변경
@@ -220,17 +220,18 @@ export default new Vuex.Store({
         }
       })
         .then( res => {
-          console.log(res.data)
+          // console.log(res.data)
           commit('setUserInfo', res.data)
           // 체인지한다음에 표시되는 부분이 있는가?
           // 아마도 있다면 로그인하고나서 로그아웃으로 바뀌고 옆에 아이콘뜨게?
           // 그럼 이미지랑 유저네임이 떠야하는가? 일단은 보류하자.
           // 유저 정보를 다시 갱신시켜서 받아야하는데 어디서 받는가?
           dispatch('getUserInfo')
+          alert('변경 완료')
         })
-        .catch( err => {
-          alert('변경 실패')
-          console.log(err)
+        .catch( () => {
+          alert('서버 오류로 인한 변경 실패입니다. 나중에 다시 시도해주세요.')
+          // console.log(err)
         })
     },
     // 비밀번호 변경
@@ -259,24 +260,24 @@ export default new Vuex.Store({
         })
     },
     // 유저정보 삭제
-    // email password
-    deleteUser({ state }, userInfo) {
-      alert('정말?')
+    deleteUser({ state, dispatch }, userInfo) {
       axios.post( SERVER_URL + 'account/v1/delete', userInfo, {
         headers: {
           email: state.userInfo.email
         }
       })
         .then( res => {
-          res
-          // console.log(res.data)
-          alert('삭제가 완료되었습니다.')
+          if ( res.data.result === 'fail') {
+            alert('비밀번호 혹은 이메일을 확인해주세요')
+          }
+          else {
+            alert('삭제가 완료되었습니다.')
+            state.deleteUserDialog = false
+            dispatch('logout')
+          }
         })
-        .catch( err => {
-          err
-          // console.log(err)
-          alert('삭제 실패')
-          // 내가 쿠키를 제거해야하는가? 서버에서 한다..
+        .catch( () => {
+          alert('서버 오류로 삭제에 실패했습니다. 나중에 다시 시도해주세요')
         })
     },
     // 유저가 저장한 editoon image 목록(썸네일) 보여주기

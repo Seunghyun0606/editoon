@@ -51,7 +51,7 @@
               >
                 <strong>비밀번호변경하기</strong>
               </v-btn>
-              <v-btn class='' @click="clickOut()" style="width: 30%;">
+              <v-btn class='' @click="clickOut()" >
                 <strong>돌아가기</strong>
               </v-btn>
             </form>
