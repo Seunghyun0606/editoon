@@ -220,6 +220,7 @@ export default new Vuex.Store({
           dispatch('getUserInfo')
         })
         .catch( err => {
+          alert('변경 실패')
           console.log(err)
         })
     },
@@ -316,7 +317,6 @@ export default new Vuex.Store({
         }
       })
         .then (res => {
-          // console.log(res.data)
           if ( res.data.result === 'noImage' ) {
             alert('이미지가 없습니다.')
           }
@@ -330,7 +330,7 @@ export default new Vuex.Store({
 
         })
         .catch ( err => {
-          alert("에러발생!")
+          alert("서버 에러발생!")
           console.log(err)
         })
     },

@@ -140,6 +140,7 @@ export default {
           changeInfo.isChange = 'yes'
         }
       }
+      console.log(4, changeInfo)
       this.$store.dispatch('changeUserInfo', changeInfo)
 
     },
