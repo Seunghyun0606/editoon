@@ -32,7 +32,7 @@ public class ProfileImageRepo {
 		File dir = new File(rootPath);
 
 		try {
-			File file = new File(rootPath, deleteFileName);
+			File file = new File(rootPath);
 			
 			File[] deleteFolderList = file.listFiles();
 			
