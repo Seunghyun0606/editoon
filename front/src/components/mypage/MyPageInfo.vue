@@ -11,8 +11,8 @@
       <v-col>
         <v-avatar>
           <img
-            :src="userInfo.image"
-            alt=""
+            :src="'https://j3b308.p.ssafy.io/image/profileImg/' + `${userInfo.image}`"
+            alt="프로필사진"
           >
         </v-avatar>
       </v-col>
@@ -106,14 +106,15 @@ export default {
     return {
       valid: true,
       nameRules: [
-        v => !!v || 'Name is required',
-        v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+        v => !!v || '이름이 필요합니다',
+        v => (v && v.length <= 10) || '10글자 미만이어야합니다.',
       ],
       password: '',
-      passwordRules: [
-        v => !!v || 'Password is required',
-        v => (v && v.length <= 10) || 'Password must be less than 10 characters',
-      ],
+      rules: {
+        password: v => !!(v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/) ||
+          '숫자, 영어 대소문자, 특수문자가 포함되어야합니다.',
+        passwordCheck: v => !!( v === this.password ) || '비밀번호가 맞지 않습니다.',
+      },
 
     }
 
