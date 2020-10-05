@@ -86,9 +86,9 @@ def ImgtoAnime(request):
         output = io.BytesIO()
         im.save(output, format='JPEG')
         hex_data = base64.b64encode(output.getvalue())
-        # return HttpResponse(hex_data, content_type="image/jpeg")
+        return HttpResponse(hex_data, content_type="image/jpeg")
 
     # 여러개할때
-       res.append(hex_data) 
-    return HttpResponse(res, content_type="image/jpeg")
+    #    res.append(hex_data) 
+    # return HttpResponse(res, content_type="image/jpeg")
 

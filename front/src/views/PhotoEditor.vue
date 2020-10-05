@@ -36,7 +36,7 @@
             />
             <v-row class="showConvertedImage pa-10" style="z-index: 999;" v-show="isShowWebtoonImages">
               <v-col v-for="(convertedImage, idx) in convertedImages" :key="idx">
-                <img class="my-2" style="width: 100px; height: 100px;" :src="'data:image/png;base64,' + `${convertedImage}`" alt="transformed image">
+                <img @click="moveConvertedImage(convertedImage)" class="my-2" style="width: 100px; height: 100px;" :src="'data:image/png;base64,' + `${convertedImage}`" alt="transformed image">
               </v-col>
               <div style="align-self: center;">
                 <Loading
@@ -1045,7 +1045,22 @@ export default {
       await this.$store.dispatch('canvasImageToSpring', canvasFormData)
       this.$store.state.checkLoading.isSaveOnlineLoading = false
     },
+    // 업로드된 파일 클릭시 preview생성
+    moveConvertedImage(baseData) {
+      let formData = new FormData()
 
+      let blobBin = atob(baseData)
+      let array = [];
+      for (var i = 0; i < blobBin.length; i++) {
+        array.push(blobBin.charCodeAt(i));
+      }
+
+      let file = new Blob([new Uint8Array(array)], {type: 'image/png'});	// Blob 생성
+
+      formData.append('file', file, 'file1')
+      this.$refs.imageEditor.invoke('loadImageFromFile', formData.get('file'))
+
+    },
 
     // 파일 업로드시, preview만 클릭하면 올라갈 수 있도록 만듬.
     dropZoneImageMoveToEditor(file_list) {
