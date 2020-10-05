@@ -109,12 +109,6 @@ export default {
         v => !!v || '이름이 필요합니다',
         v => (v && v.length <= 10) || '10글자 미만이어야합니다.',
       ],
-      password: '',
-      rules: {
-        password: v => !!(v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/) ||
-          '숫자, 영어 대소문자, 특수문자가 포함되어야합니다.',
-        passwordCheck: v => !!( v === this.password ) || '비밀번호가 맞지 않습니다.',
-      },
 
     }
 

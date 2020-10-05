@@ -15,7 +15,7 @@
                 v-model="passwordSet.password"
                 label="Password"
                 type="password"
-                :rules="passwordRules"
+                :rules="passwordRules.password"
                 required
                 clearable
                 dark
@@ -26,7 +26,7 @@
                 v-model="passwordSet.newPassword"
                 label="Password 확인"
                 type="password"
-                :rules="passwordRules"
+                :rules="passwordRules.passwordCheck"
                 required
                 clearable
                 dark
@@ -77,11 +77,10 @@ export default {
         password: "",
         newPassword: "",
       },
-      passwordRules: [
-        v => !!v || 'Password is required',
-        v => (v && v.length <= 10) || 'Password must be less than 10 characters',
-      ],
-
+      passwordRules: {
+        password: v => !!(v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/) || '숫자, 영어 대소문자, 특수문자가 포함되어야합니다.',
+        passwordCheck: v => !!( v === this.password ) || '비밀번호가 맞지 않습니다.',
+      },
 
     }
   },
