@@ -281,20 +281,16 @@ export default new Vuex.Store({
     },
     // 유저가 저장한 editoon image 목록(썸네일) 보여주기
     getUserEditoonThumbnails({ state, commit }) {
-      console.log(1, state.userInfo.email)
       axios.get( SERVER_URL + 'editoon/v1/getEditoonThumbnails/' + `${state.userInfo.email}`, { email: state.userInfo.email }, {
         headers: {
           email: state.userInfo.email
         }
         })
         .then( res => {
-          // console.log(res.data)
-          // console.log('check')
           commit('setUserEditoonThumbnails', res.data.map.editoonDetailList)
-          alert('썸네일 받기 성공')
         })
         .catch( err => {
-          alert('썸네일 받기 실패')
+          alert('서버 오류로 썸네일을 불러오지 못했습니다. 다음에 다시 시도해주세요.')
           console.log(err)
         })
     },

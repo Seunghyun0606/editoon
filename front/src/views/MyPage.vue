@@ -48,24 +48,6 @@ export default {
   data() {
     return {
       listNumber: 0,
-      books: [
-        {
-          title: 'abc',
-          time: '1234',
-        },
-        {
-          title: 'abc',
-          time: '1234',
-        },
-        {
-          title: 'abc',
-          time: '1234',
-        },
-        {
-          title: 'abc',
-          time: '1234',
-        }
-      ],
       categoryTitle: '카테고리타이틀',
       sortCriteria: '조건',
     }
