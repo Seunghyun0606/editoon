@@ -36,10 +36,11 @@
             />
             <v-row class="showConvertedImage pa-10" style="z-index: 999;" v-show="isShowWebtoonImages">
               <v-col v-for="(convertedImage, idx) in convertedImages" :key="idx">
-                <img style="width: 100px; height: 100px;" :src="'data:image/png;base64,' + `${convertedImage}`" alt="transformed image">
+                <img class="my-2" style="width: 100px; height: 100px;" :src="'data:image/png;base64,' + `${convertedImage}`" alt="transformed image">
               </v-col>
               <div style="align-self: center;">
                 <Loading
+                  class="my-2"
                   :loading="checkLoading.isConvertedLoading"
                   :color="'white'"
                   :size="'50px'"

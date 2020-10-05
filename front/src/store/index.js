@@ -233,7 +233,7 @@ export default new Vuex.Store({
         }
       })
         .then( res => {
-          console.log(res.data)
+          // console.log(res.data)
           if ( res.data.result === 'success' ) {
             alert("비밀번호 변경이 완료되었습니다.")
             state.changePasswordDialog = false
@@ -243,7 +243,8 @@ export default new Vuex.Store({
           }
         })
         .catch( err => {
-          console.log(err)
+          err
+          // console.log(err)
           alert('서버에러')
         })
     },
@@ -257,11 +258,13 @@ export default new Vuex.Store({
         }
       })
         .then( res => {
-          console.log(res.data)
+          res
+          // console.log(res.data)
           alert('삭제가 완료되었습니다.')
         })
         .catch( err => {
-          console.log(err)
+          err
+          // console.log(err)
           alert('삭제 실패')
           // 내가 쿠키를 제거해야하는가? 서버에서 한다..
         })
@@ -275,8 +278,8 @@ export default new Vuex.Store({
         }
         })
         .then( res => {
-          console.log(res.data)
-          console.log('check')
+          // console.log(res.data)
+          // console.log('check')
           commit('setUserEditoonThumbnails', res.data.map.editoonDetailList)
           alert('썸네일 받기 성공')
         })
@@ -295,7 +298,7 @@ export default new Vuex.Store({
         }
       })
         .then( res => {
-          console.log(123, res.data)
+          // console.log(123, res.data)
           commit('showMytoonDialogInit', true)
           commit('setUserEditoonImages', res.data.map.editoonDetailDTO)
         })
@@ -313,7 +316,7 @@ export default new Vuex.Store({
         }
       })
         .then (res => {
-          console.log(res.data)
+          // console.log(res.data)
           if ( res.data.result === 'noImage' ) {
             alert('이미지가 없습니다.')
           }
@@ -327,6 +330,7 @@ export default new Vuex.Store({
 
         })
         .catch ( err => {
+          alert("에러발생!")
           console.log(err)
         })
     },
@@ -339,10 +343,12 @@ export default new Vuex.Store({
       })
         .then (res => {
           commit('imageFromDjango', res.data)
-          console.log(res.data)
+          // console.log(res.data)
         })
         .catch ( err => {
-          console.log(err)
+          alert('에러발생!')
+          err
+          // console.log(err)
         })
 
     },
