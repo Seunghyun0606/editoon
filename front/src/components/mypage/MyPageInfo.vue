@@ -8,15 +8,16 @@
     </v-row>
 
     <v-row class="mt-10">
-      <v-col>
-        <v-avatar>
+      <v-col cols=12 style="text-algin: center;">
+        <v-avatar style="width: 200px; height: 200px;">
           <img
+            style="width: 200px; height: 200px;"
             :src="'https://j3b308.p.ssafy.io/image/profileImg/' + `${userInfo.image}`"
             alt="프로필사진"
           >
         </v-avatar>
       </v-col>
-      <v-col cols=10>
+      <v-col>
         <v-file-input
           id="putAvatar"
           accept="image/png, image/jpeg, image/bmp"

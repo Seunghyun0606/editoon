@@ -154,9 +154,9 @@ export default new Vuex.Store({
     signUp({ commit }, signUpData ) {
       // console.log(signUpData)
       axios.post( SERVER_URL + 'nonmember/signUp', signUpData)
-        .then( res => {
-          console.log(res.data)
-          console.log('회원가입성공')
+        .then( () => {
+          // console.log(res.data)
+          // console.log('회원가입성공')
           alert("회원가입 성공, 로그인해주세요")
           commit('signUpStatus', true)
           commit('signUpInit', false)
