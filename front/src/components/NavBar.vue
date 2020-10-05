@@ -9,7 +9,7 @@
     <v-tabs align-with-title>
       <v-tab router-link to="/">Index</v-tab>
       <v-tab router-link to="/photoeditor">Get started</v-tab>
-      <v-tab router-link to="/webtoonindex">Best arts</v-tab>
+      <!-- <v-tab router-link to="/webtoonindex">Best arts</v-tab> -->
 
 
     </v-tabs>

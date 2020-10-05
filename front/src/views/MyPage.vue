@@ -7,9 +7,9 @@
 
       </v-col>
       <v-col cols=8>
-        <MyPageInfo v-if="listNumber === 2"/>
+        <MyPageInfo v-if="listNumber === 1"/>
 
-        <MyPageFavortoonSort
+        <!-- <MyPageFavortoonSort
           v-if="listNumber !== 2 && listNumber !== undefined"
           :categoryTitle="categoryTitle"
           :sortCriteria="sortCriteria"
@@ -17,10 +17,10 @@
           @someone_book="sortBy('someone_book')"
           @release_date="sortBy('release_date')"
         
-        />
+        /> -->
 
-        <MyPageFavortoon v-if="listNumber == 0" />
-        <MyPageMytoon v-else-if="listNumber == 1" :books="books"/>
+        <MyPageFavortoon v-if="listNumber === 0" />
+        <!-- <MyPageMytoon v-else-if="listNumber == 1" :books="books"/> -->
 
       </v-col>
     </v-row>
@@ -32,8 +32,8 @@
 import MyPageLeftNav from '@/components/mypage/MyPageLeftNav'
 import MyPageInfo from '@/components/mypage/MyPageInfo'
 import MyPageFavortoon from '@/components/mypage/MyPageFavortoon'
-import MyPageMytoon from '@/components/mypage/MyPageMytoon'
-import MyPageFavortoonSort from '@/components/mypage/MyPageFavortoonSort'
+// import MyPageMytoon from '@/components/mypage/MyPageMytoon'
+// import MyPageFavortoonSort from '@/components/mypage/MyPageFavortoonSort'
 
 
 export default {
@@ -42,8 +42,8 @@ export default {
     MyPageLeftNav,
     MyPageInfo,
     MyPageFavortoon,
-    MyPageMytoon,
-    MyPageFavortoonSort,
+    // MyPageMytoon,
+    // MyPageFavortoonSort,
   },
   data() {
     return {
@@ -74,17 +74,17 @@ export default {
     listNum(pay) {
       this.listNumber = pay
     },
-    sortBy(prop) {
-      if (prop === "all_book") {
-        this.sortCriteria = "전체 책";
-      } else if (prop === "someone_book") {
-        this.sortCriteria = "여행 장르";
-      } else if (prop === "release_date") {
-        this.sortCriteria = "시간 순서";
-      }
-      this.sortedBy = prop;
-      this.books.sort((a, b) => (a[prop] > b[prop] ? -1 : 1));
-    },
+    // sortBy(prop) {
+    //   if (prop === "all_book") {
+    //     this.sortCriteria = "전체 책";
+    //   } else if (prop === "someone_book") {
+    //     this.sortCriteria = "여행 장르";
+    //   } else if (prop === "release_date") {
+    //     this.sortCriteria = "시간 순서";
+    //   }
+    //   this.sortedBy = prop;
+    //   this.books.sort((a, b) => (a[prop] > b[prop] ? -1 : 1));
+    // },
     isIndex() {
       this.$store.commit('isIndex', false)
     },

@@ -1,5 +1,12 @@
 <template>
   <v-layout row wrap>
+    <div class="text-h3" style="width: 100%;">
+        내가 쓴 글
+
+    </div>
+    <div class="text-h5 my-10" v-if="!userEditoonThumbnails.length">
+        정보가 없습니다
+    </div>
     <v-flex xs12 sm6 md4 lg3 v-for="( thumbnail, idx ) in userEditoonThumbnails" :key="idx">
       <v-card hover class="ma-3" min-height="300" @click="reviewBook(thumbnail._id)">
         <v-layout column align-center fill-height class="text-center">

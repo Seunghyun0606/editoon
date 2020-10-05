@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import MainIndex from '@/views/MainIndex'
-import WebtoonIndex from '@/views/WebtoonIndex'
+// import WebtoonIndex from '@/views/WebtoonIndex'
 import MyPage from '@/views/MyPage'
 import PhotoEditor from '@/views/PhotoEditor'
 import Prac from '@/views/Prac'
@@ -15,11 +15,11 @@ Vue.use(VueRouter)
     name: 'MainIndex',
     component: MainIndex
   },
-  {
-    path: '/webtoonindex',
-    name: 'WebtoonIndex',
-    component: WebtoonIndex
-  },
+  // {
+  //   path: '/webtoonindex',
+  //   name: 'WebtoonIndex',
+  //   component: WebtoonIndex
+  // },
   {
     path: '/mypage',
     name: 'MyPage',
