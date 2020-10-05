@@ -536,7 +536,8 @@
           </v-row>
         </v-col>
       </v-row>
-      <SaveOnlineModal @thumbnailAndSubject="canvasImageToSpring"/>
+      <PhotoEditorSaveOnlineModal @thumbnailAndSubject="canvasImageToSpring"/>
+      <PhotoEditorHelpDial />
       <v-overlay :value="checkLoading.isMoveImageToCanvasLoading" style="z-index: 999;">
         <v-progress-circular indeterminate size="64"></v-progress-circular>
       </v-overlay>
@@ -558,15 +559,17 @@ import 'tui-image-editor/dist/svg/icon-d.svg'
 import 'tui-image-editor/dist/tui-image-editor.css'
 import { mapState } from 'vuex'
 
-import SaveOnlineModal from '@/components/photoeditor/SaveOnlineModal'
 import Loading from '@/components/Loading'
+import PhotoEditorSaveOnlineModal from '@/components/photoeditor/PhotoEditorSaveOnlineModal'
+import PhotoEditorHelpDial from '@/components/photoeditor/PhotoEditorHelpDial'
 
 export default {
   components: {
     'tui-image-editor': ImageEditor,
     VueDragResize,
     vue2Dropzone,
-    SaveOnlineModal,
+    PhotoEditorSaveOnlineModal,
+    PhotoEditorHelpDial,
     Loading,
   },
   watch: {
