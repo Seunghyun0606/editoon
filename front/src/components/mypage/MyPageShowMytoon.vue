@@ -11,7 +11,7 @@
 
         <div v-for="(userEditoonImage, id) in userEditoonImages.image" :key="id">
           <!-- <img :src="userEditoonImage.image" alt=""> -->
-          <v-img :src="'https://j3b308.p.ssafy.io/image/editoonImg/' + `${userInfo.no}/` + `${userEditoonImage.image}`"></v-img>
+          <v-img :src="'https://j3b308.p.ssafy.io/image/editoonImg/' + `${userInfo.no}/` + `${userEditoonImage}`"></v-img>
 
         </div>
 

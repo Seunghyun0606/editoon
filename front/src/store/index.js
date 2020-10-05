@@ -36,10 +36,10 @@ export default new Vuex.Store({
 
     userEmail: '',
     userInfo: {
-      no: '',
-      email: '',
-      name: '',
-      image: '',  // 유저 아이콘
+      // no: '',
+      // email: '',
+      // name: '',
+      // image: '',  // 유저 아이콘
     },
 
     signUpValidation: {
