@@ -45,16 +45,18 @@
           </v-row> -->
       <!-- </v-col> -->
       <!-- </v-row> -->
-      <div>
+      <div style="
+        width: 500px;
+        height: 500px;
+        background-color: black;
+        z-index: 9999;
+        ">
         test
         <img
           :src="'data:image/png;base64,' + `${test123}`"
           alt=""
           style="
-            width: 100px;
-            height: 100px;
-            background-color: black;
-            z-index: 9999;
+            
           "
         />
       </div>
@@ -329,7 +331,7 @@ export default {
       formData.append("img2", file.files[1]);
 
       axios
-        .post("http://j3b308.p.ssafy.io:8002/ai/ImgtoAnime/", formData, {
+        .post("http://127.0.0.1:8000/ai/ImgtoAnime/", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

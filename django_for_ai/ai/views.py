@@ -57,12 +57,49 @@ class Args:
 def ImgtoAnime(request):    
     test = request.FILES
     files={}
+    ratios = []
     for idx in range(len(test)):
         file_name = 'img'+str((idx+1))
         img = Image.open(test[file_name])
-        img = img.resize((256, 256))
-        img_np = np.array(img)[:,:,:3] 
-        files[str(test[file_name])]=[img_np]
+        img_np = np.array(img)[:,:,:3]
+        
+
+        image = img_np
+        height, width, channel = image.shape
+        longer = max(height, width)
+        ratios.append(height / width)
+        preprocessed_image = np.zeros((longer, longer, channel), np.uint8)
+        # for x in range(longer):
+        #     for y in range(longer):
+        #         preprocessed_image.itemset(x, y, 0, random.random())
+        #         preprocessed_image.itemset(x, y, 1, random.random())
+        #         preprocessed_image.itemset(x, y, 2, random.random())
+        diff = longer - min(height, width)
+        margin = diff // 2
+        if height > width:
+            for x in range(height):
+                for y in range(width):
+                    b = image.item(x, y, 0)
+                    g = image.item(x, y, 1)
+                    r = image.item(x, y, 2)
+                    preprocessed_image.itemset(x, y+margin, 0, b)
+                    preprocessed_image.itemset(x, y+margin, 1, g)
+                    preprocessed_image.itemset(x, y+margin, 2, r)
+        else:
+            for x in range(height):
+                for y in range(width):
+                    b = image.item(x, y, 0)
+                    g = image.item(x, y, 1)
+                    r = image.item(x, y, 2)
+                    preprocessed_image.itemset(x+margin, y, 0, b)
+                    preprocessed_image.itemset(x+margin, y, 1, g)
+                    preprocessed_image.itemset(x+margin, y, 2, r)
+        preprocessed_image = cv2.resize(preprocessed_image, dsize=(256, 256), interpolation=cv2.INTER_AREA)
+
+
+
+
+        files[str(test[file_name])]=[preprocessed_image]
    
     args = Args()
     
@@ -83,12 +120,50 @@ def ImgtoAnime(request):
         img = (img+1.)/2 * 255
         im = Image.fromarray(img[0].astype(np.uint8), 'RGB')
         
+
+
+        image = np.array(im)
+        height, width, channel = image.shape
+        ratio = ratios.pop(0)
+        print(ratio, '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+        if ratio > 1:
+            width = int(256/ratio)
+            diff = 256 - width
+            margin = diff // 2
+            print(width)
+            preprocessed_image = np.zeros((256, width, channel), np.uint8)
+            for x in range(256):
+                for y in range(width):
+                    b = image.item(x, y+margin, 0)
+                    g = image.item(x, y+margin, 1)
+                    r = image.item(x, y+margin, 2)
+                    preprocessed_image.itemset(x, y, 0, b)
+                    preprocessed_image.itemset(x, y, 1, g)
+                    preprocessed_image.itemset(x, y, 2, r)
+            print('11111111111111111111111111111')
+        else:
+            height = int(256*ratio)
+            diff = 256 - height
+            margin = diff // 2
+            preprocessed_image = np.zeros((height, 256, channel), np.uint8)
+            for x in range(height):
+                for y in range(256):
+                    b = image.item(x+margin, y, 0)
+                    g = image.item(x+margin, y, 1)
+                    r = image.item(x+margin, y, 2)
+                    preprocessed_image.itemset(x, y, 0, b)
+                    preprocessed_image.itemset(x, y, 1, g)
+                    preprocessed_image.itemset(x, y, 2, r)
+            print('222222222222222222222222222222')
+        # im = preprocessed_image
+        im = Image.fromarray(preprocessed_image.astype(np.uint8), 'RGB')
+        print(height, width)
+        print(type(im))
         output = io.BytesIO()
         im.save(output, format='JPEG')
         hex_data = base64.b64encode(output.getvalue())
-        return HttpResponse(hex_data, content_type="image/jpeg")
-
-    #여러개할때
-    #    res.append(hex_data) 
-    #return HttpResponse(res, content_type="image/jpeg")
+        # return HttpResponse(hex_data, content_type="image/jpeg")
+        #여러개할때
+        res.append(hex_data) 
+    return HttpResponse(res, content_type="image/jpeg")
 
