@@ -98,7 +98,7 @@ export default new Vuex.Store({
     },
     setUserEditoonImages(state, images) {
       state.userEditoonImages = images
-      console.log(images)
+      // console.log(images)
     },
     setUserEditoonThumbnails(state, info) {
       // console.log(2, info)
