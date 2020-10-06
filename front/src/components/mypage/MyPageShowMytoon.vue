@@ -1,4 +1,4 @@
-<template>
+<template style="overflow-x: hidden;">
   <div class="text-center" style="background-color: white;">
     <v-dialog
       v-model="checkDialog"
@@ -9,8 +9,10 @@
         style="background-color: rgba(0,0,20,0.9)"  
       >
 
-        <div v-for="(userEditoonImage, id) in userEditoonImages" :key="id">
-          <img :src="userEditoonImage.image" alt="">
+        <div v-for="(userEditoonImage, id) in userEditoonImages.image" :key="id">
+          <!-- <img :src="userEditoonImage.image" alt=""> -->
+          <v-img :src="'https://j3b308.p.ssafy.io/image/editoonImg/' + `${userInfo.no}/` + `${userEditoonImage}`"></v-img>
+
         </div>
 
       </v-container>
@@ -22,7 +24,7 @@
 import { mapState } from 'vuex'
 
   export default {
-    name: 'SaveOnlineModal',
+    name: 'MyPageShowMytoon',
     computed: {
       checkDialog: {
         get() {
@@ -32,7 +34,7 @@ import { mapState } from 'vuex'
           this.$store.commit("showMytoonDialogInit",  val)
         }
       },
-      ...mapState(['userEditoonImages'])
+      ...mapState(['userEditoonImages', 'userInfo'])
     },
     data () {
       return {

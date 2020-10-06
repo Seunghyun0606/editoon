@@ -7,7 +7,7 @@ Vue.use(Vuex)
 
 // const SERVER_URL = 'http://localhost:8080/editoon/'
 const SERVER_URL = 'https://j3b308.p.ssafy.io/editoon/'
-const Django_SERVER_URL = 'http://localhost:8000/ai/ImgtoAnime/'
+const Django_SERVER_URL = 'https://j3b308.p.ssafy.io/ai/ImgtoAnime/'
 // const DJANGO_URL = ''
 
 export default new Vuex.Store({
@@ -19,18 +19,23 @@ export default new Vuex.Store({
     saveCanvasDialog: false,
     showMytoonDialog: false,
     changePasswordDialog: false,
+    deleteUserDialog: false,
     
     isLogin: false,
 
+    checkLoading: {
+      isSaveOnlineLoading: false,
+      isConvertedLoading: false,
+      isMoveImageToCanvasLoading: false,
+    },
+
     // 나중에 새로고침에 대비해서 쿠키에 넣어야할수도있음 생각해두자.
-    userNumber: '',
-    userEditoonImages: [],
-    userThumbnails: [],
+    userEditoonImages: {},
+    userEditoonThumbnails: [],
     // _id, subject, thumbnail, createDate로 온다.
 
-    userEmail: '',
     userInfo: {
-      number: '',
+      no: '',
       email: '',
       name: '',
       image: '',  // 유저 아이콘
@@ -78,7 +83,13 @@ export default new Vuex.Store({
       state.isLogin = check
     },
     imageFromDjango(state, images) {
+
+      if ( state.convertedImages.length  > 17 ) {
+        state.convertedImages.shift()
+      }
+
       state.convertedImages.push(images)
+      // console.log('check', images)
       // 이미지 어떻게 넘어오는지 봐야할듯.
     },
     setUserInfo(state, info) {
@@ -86,19 +97,21 @@ export default new Vuex.Store({
     },
     setUserEditoonImages(state, images) {
       state.userEditoonImages = images
+      // console.log(images)
     },
     setUserEditoonThumbnails(state, info) {
-      state.getUserEditoonThumbnails = info
+      // console.log(2, info)
+      state.userEditoonThumbnails = info
     }
 
 
   },
   actions: {
     // 회원가입 인증절차
-    // 이메일보내기
+    // 이메일보내기aaa
     signUpSendValidationEmail({ commit }, email) {
-      console.log(commit, email)
-      axios.get( SERVER_URL + `nonmember/email/authSend` + email)
+      // console.log(commit, email)
+      axios.get( SERVER_URL + `nonmember/email/authSend/` + email)
         .then( res => {
           if ( res.data.result === 'fail' ) {
             alert('이미 가입된 이메일입니다.')
@@ -108,8 +121,10 @@ export default new Vuex.Store({
             commit('signUpIsEmailSend', true)
           }
         })
-        .catch( err => {
-          console.log(err)
+        .catch( () => {
+          // console.log(err)
+          
+          alert('서버 에러입니다. 다음에 다시 시도해주세요.')
           commit('signUpIsEmailSend', false)
 
         })
@@ -118,30 +133,37 @@ export default new Vuex.Store({
     signUpEmailVerificateCode({ commit }, signUpData ) {
       axios.post( SERVER_URL + 'nonmember/email/authCheck', signUpData)
         .then( res => {
-          console.log(res.data)
-          console.log('코드 보내기 성공')
-          commit('signUpCodeValidation', true)
+          
+          // console.log(res.data)
+          // console.log('코드 보내기 성공') 
+          if ( res.data.result === 'fail ') {
+            commit('signUpCodeValidation', false)
+          }
+          else {
+            commit('signUpCodeValidation', true)
+          }
         })
-        .catch( err => {
-          commit('signUpCodeValidation', false)
-          console.log(err)
+        .catch( () => {
+          alert('서버에러 입니다. 다음에 다시 시도해주세요.')
+          // console.log(err)
         })
     },
     // 회원가입하기.
     signUp({ commit }, signUpData ) {
-      console.log(signUpData)
+      // console.log(signUpData)
       axios.post( SERVER_URL + 'nonmember/signUp', signUpData)
-        .then( res => {
-          console.log(res.data)
-          console.log('회원가입성공')
+        .then( () => {
+          // console.log(res.data)
+          // console.log('회원가입성공')
           alert("회원가입 성공, 로그인해주세요")
           commit('signUpStatus', true)
           commit('signUpInit', false)
           return true
         })
-        .catch( err => {
-          console.log(err)
-          console.log('회원가입실패')
+        .catch( () => {
+
+          // console.log(err)
+          // console.log('회원가입실패')
           return false
         })
     },
@@ -155,23 +177,23 @@ export default new Vuex.Store({
           dispatch('getUserInfo')
           // 딱히 해줄일이 없다.
         })
-        .catch( err => {
-          alert('로그인 실패')
-          console.log(err)
+        .catch( () => {
+          alert('서버 오류로 인한 로그인 실패입니다. 나중에 다시 시도해주세요.')
+          // console.log(err)
           // 토큰 만료시 , HttpStatus === 406일때 토큰 만료이기 때문에 토큰을 다시 받는 로직 만들어야한다.
         })
     },
     logout() {
       axios.post( SERVER_URL + 'account/logout' )
-        .then( res => {
-          console.log(res.data)
-          alert('logout 성공')
+        .then( () => {
+          alert('logout')
+          this.commit('setLoginStatus', false)
           // 쿠키에 이름이 어떻게 저장되는지 보고, 나중에 다 삭제해줘야함.
           // 무조건 success로 옴
         })
         .catch( err => {
           console.log(err)
-          alert('logout 실패')
+          alert('서버에러로 인한 logout 실패입니다. 나중에 다시 시도해주세요.')
           // 에러가 뜨면 서버에러임
         })
     },
@@ -179,12 +201,13 @@ export default new Vuex.Store({
     getUserInfo({ commit }) {
       axios.post( SERVER_URL + 'account/getLoginInfo' )
         .then( res => {
-          console.log(res.data)
-          commit('setUserInfo', res.data)
+          // alert('유저정보 가져오기 성공')
+          // console.log(res.data)
+          commit('setUserInfo', res.data.map.loginInfoDTO)
         })
-        .catch( err => {
-          console.log(err)
-          alert('유저정보 가져오기 실패')
+        .catch( () => {
+          // console.log(err)
+          alert('서버 오류로 인한 유저정보 가져오기 실패입니다. 나중에 다시 시도해주세요.')
         })
     },
     // 유저정보 변경
@@ -195,16 +218,18 @@ export default new Vuex.Store({
         }
       })
         .then( res => {
-          console.log(res.data)
+          // console.log(res.data)
           commit('setUserInfo', res.data)
           // 체인지한다음에 표시되는 부분이 있는가?
           // 아마도 있다면 로그인하고나서 로그아웃으로 바뀌고 옆에 아이콘뜨게?
           // 그럼 이미지랑 유저네임이 떠야하는가? 일단은 보류하자.
           // 유저 정보를 다시 갱신시켜서 받아야하는데 어디서 받는가?
           dispatch('getUserInfo')
+          alert('변경 완료')
         })
-        .catch( err => {
-          console.log(err)
+        .catch( () => {
+          alert('서버 오류로 인한 변경 실패입니다. 나중에 다시 시도해주세요.')
+          // console.log(err)
         })
     },
     // 비밀번호 변경
@@ -217,7 +242,7 @@ export default new Vuex.Store({
         }
       })
         .then( res => {
-          console.log(res.data)
+          // console.log(res.data)
           if ( res.data.result === 'success' ) {
             alert("비밀번호 변경이 완료되었습니다.")
             state.changePasswordDialog = false
@@ -227,41 +252,45 @@ export default new Vuex.Store({
           }
         })
         .catch( err => {
-          console.log(err)
+          err
+          // console.log(err)
           alert('서버에러')
         })
     },
     // 유저정보 삭제
-    // email password
-    deleteUser({ state }, userInfo) {
-      alert('정말?')
+    deleteUser({ state, dispatch }, userInfo) {
       axios.post( SERVER_URL + 'account/v1/delete', userInfo, {
         headers: {
           email: state.userInfo.email
         }
       })
         .then( res => {
-          console.log(res.data)
-          alert('삭제가 완료되었습니다.')
+          if ( res.data.result === 'fail') {
+            alert('비밀번호 혹은 이메일을 확인해주세요')
+          }
+          else {
+            alert('삭제가 완료되었습니다.')
+            state.deleteUserDialog = false
+            dispatch('logout')
+            this.$router.push('MainIndex')
+          }
         })
-        .catch( err => {
-          console.log(err)
-          alert('삭제 실패')
-          // 내가 쿠키를 제거해야하는가? 서버에서 한다..
+        .catch( () => {
+          alert('서버 오류로 삭제에 실패했습니다. 나중에 다시 시도해주세요')
         })
     },
     // 유저가 저장한 editoon image 목록(썸네일) 보여주기
     getUserEditoonThumbnails({ state, commit }) {
-      axios.get( SERVER_URL + 'v1/getEditoonThumbnails', state.userInfo.email, {
+      axios.get( SERVER_URL + 'editoon/v1/getEditoonThumbnails/' + `${state.userInfo.email}`, { email: state.userInfo.email }, {
         headers: {
           email: state.userInfo.email
         }
         })
         .then( res => {
-          console.log(res.data)
-          commit('setUserEditoonThumbnails', res.data)
+          commit('setUserEditoonThumbnails', res.data.map.editoonDetailList)
         })
         .catch( err => {
+          alert('서버 오류로 썸네일을 불러오지 못했습니다. 다음에 다시 시도해주세요.')
           console.log(err)
         })
     },
@@ -269,48 +298,62 @@ export default new Vuex.Store({
 
     // 유저가 저장한 editton image 보여주기
     getUserEditoonImages({ state, commit }, book_id) {
-      axios.get( SERVER_URL + 'v1/getEditoonDetail', { email: state.userInfo.email, _id: book_id }, {
+      axios.get( SERVER_URL + 'editoon/v1/getEditoonDetail/' + `${state.userInfo.email}/` + `${book_id}`, {}, {
         headers: {
           email: state.userInfo.email
         }
       })
         .then( res => {
-          console.log(res.data)
+          // console.log(123, res.data)
           commit('showMytoonDialogInit', true)
-          commit('setUserEditoonImages', res.data)
+          commit('setUserEditoonImages', res.data.map.editoonDetailDTO)
         })
         .catch( err => {
           console.log(err)
         })
     },
+    // 성공메시지만 온다. 다른건 없음.
     canvasImageToSpring({ state, commit }, canvasForms) {
-      axios.post( SERVER_URL + 'editoon/v1/saveEditoonDetail', canvasForms, {
+      return axios.post( SERVER_URL + 'editoon/v1/saveEditoonDetail', canvasForms, {
         headers: {
-          // 'Content-Type': 'multipart/form-data'
+          // 'Content-Type': 'multipart/form-data',
           email: state.userInfo.email
+          // email: 'limseung10@gmail.com'
         }
       })
         .then (res => {
-          commit
-          console.log(res.data)
+          if ( res.data.result === 'noImage' ) {
+            alert('이미지가 없습니다.')
+          }
+          else if (res.data.result === 'noThumbnail') {
+            alert('썸네일이 없습니다.')
+          }
+          else {
+            commit('saveCanvasDialogInit', false)
+            alert('성공적으로 저장되었습니다.')
+          }
+
         })
         .catch ( err => {
+          alert("서버 에러발생!")
           console.log(err)
         })
     },
     dropZoneImageToDjango({ commit }, djangoImageForm) {
 
-      axios.post( Django_SERVER_URL, djangoImageForm, {
+      return axios.post( Django_SERVER_URL, djangoImageForm, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       })
         .then (res => {
           commit('imageFromDjango', res.data)
-          console.log(res.data)
+          // console.log(res.data)
         })
         .catch ( err => {
-          console.log(err)
+          alert('에러발생!')
+          err
+          // console.log(err)
         })
 
     },

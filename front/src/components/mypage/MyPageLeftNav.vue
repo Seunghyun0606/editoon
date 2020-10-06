@@ -42,7 +42,6 @@ export default {
     return {
       test: '',
       title: [
-        '내가 좋아하는 툰',
         '내가 쓴 글',
         '내 정보 수정',
       ],

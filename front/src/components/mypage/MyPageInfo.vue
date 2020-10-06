@@ -8,15 +8,16 @@
     </v-row>
 
     <v-row class="mt-10">
-      <v-col>
-        <v-avatar>
+      <v-col cols=12 style="text-align: center;" class="mb-5">
+        <v-avatar style="width: 200px; height: 200px;">
           <img
-            :src="userInfo.image"
-            alt=""
+            style="width: 200px; height: 200px;"
+            :src="'https://j3b308.p.ssafy.io/image/profileImg/' + `${userInfo.image}`"
+            alt="프로필사진"
           >
         </v-avatar>
       </v-col>
-      <v-col cols=10>
+      <v-col>
         <v-file-input
           id="putAvatar"
           accept="image/png, image/jpeg, image/bmp"
@@ -84,6 +85,7 @@
 
     </v-form>
     <MyPageChangePassword/>
+    <MyPageDeleteUser/>
   
   </v-container>  
 
@@ -91,13 +93,15 @@
 
 <script>
 import MyPageChangePassword from '@/components/mypage/MyPageChangePassword'
+import MyPageDeleteUser from '@/components/mypage/MyPageDeleteUser'
 import { mapState } from 'vuex'
 
 
 export default {
   name: "MyPageInfo",
   components: {
-    MyPageChangePassword
+    MyPageChangePassword,
+    MyPageDeleteUser,
   },
   computed: {
     ...mapState(['userInfo'])
@@ -106,13 +110,8 @@ export default {
     return {
       valid: true,
       nameRules: [
-        v => !!v || 'Name is required',
-        v => (v && v.length <= 10) || 'Name must be less than 10 characters',
-      ],
-      password: '',
-      passwordRules: [
-        v => !!v || 'Password is required',
-        v => (v && v.length <= 10) || 'Password must be less than 10 characters',
+        v => !!v || '이름이 필요합니다',
+        v => (v && v.length <= 10) || '10글자 미만이어야합니다.',
       ],
 
     }
@@ -121,29 +120,17 @@ export default {
   methods: {
     changeInfo() {
       const avatar = document.querySelector("#putAvatar")
-      let changeInfo = {}
-      console.log(avatar.files)
-      changeInfo.name = this.userInfo.name
-      changeInfo.email = this.userInfo.email
-      changeInfo.image = this.userInfo.image
-      if ( this.userInfo.image === 'default.jpg' ) {
-        if ( avatar.files.length > 0 ) {
-          changeInfo.multipartFile = avatar.files[0]
-          changeInfo.isChange = 'yes'  
-        }
-        else {
-          changeInfo.isChange = 'no'
-        }
+      let changeInfo = new FormData()
+      changeInfo.append('name', this.userInfo.name)
+      changeInfo.append('email', this.userInfo.email) 
+      changeInfo.append('image', this.userInfo.image)
+      if ( avatar.files.length > 0 ) {
+        changeInfo.append('multipartFile', avatar.files[0])
+        changeInfo.append('isChange', 'yes')  
       }
       else {
-        // default 값이 아니면서 아바타를 수정하는 경우
-        if ( avatar.files.length > 0 ) {
-          changeInfo.multipartFile = avatar.files[0]
-          changeInfo.isChange = 'yes'  
-        }
-        else {
-          changeInfo.isChange = 'yes'
-        }
+        // 비어있으면 (변화가 없다)
+        changeInfo.append('isChange', 'no')
       }
       this.$store.dispatch('changeUserInfo', changeInfo)
 
@@ -161,12 +148,7 @@ export default {
       this.$store.state.changePasswordDialog = true
     },
     deleteUser() {
-      // 나중에 경고창 만들어주자
-      // form 입력창 만들어야함.
-      let userInfo = {}
-      userInfo.email = 'limseung10@gmail.com'
-      userInfo.password = 'Aasdfasdf1!'
-      this.$store.dispatch('deleteUser', userInfo)
+      this.$store.state.deleteUserDialog = true
     }
   },
 

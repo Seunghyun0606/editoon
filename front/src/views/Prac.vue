@@ -41,9 +41,12 @@ export default {
       const file = document.getElementById("imgselector");
       formData.append("img1", file.files[0]);
       formData.append("img2", file.files[1]);
-
       axios
+<<<<<<< HEAD
         .post("http://j3b308.p.ssafy.io/ai/ImgtoAnime/", formData, {
+=======
+        .post("https://j3b308.p.ssafy.io/ai/ImgtoAnime/", formData, {
+>>>>>>> c7a234f1a2f1fd06db106fbbecbb5779b971d207
           headers: {
             "Content-Type": "multipart/form-data",
           },
