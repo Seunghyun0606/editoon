@@ -287,7 +287,8 @@ export default {
       current: 0,
       mainBackgroundImage: {
         one: {
-          backgroundImage: "url('" + require(`@/assets/simple12.gif`) + "')",
+          // backgroundImage: "url('" + require(`@/assets/simple12.gif`) + "')",
+          backgroundImage: "url('" + require(`@/assets/back.gif`) + "')",
         },
         two: {
           backgroundImage: "url('" + require(`@/assets/simple2.jpg`) + "')",
