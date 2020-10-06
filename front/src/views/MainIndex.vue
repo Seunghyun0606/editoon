@@ -22,42 +22,7 @@
           <span>O</span>
           <span>N</span>
         </div>
-
-        <!-- <divvv>
-          <label>사진★:</label>
-          <input type="file" id="imgselector" multiple />
-          <v-btn @click="sendimg">test</v-btn>
-        </div> -->
-
-        <!-- </v-col> -->
       </v-row>
-      <!-- <div>
-        test
-        <img
-          :src="'data:image/png;base64,' + `${test123}`"
-          alt=""
-          style="
-            width: 100px;
-            height: 100px;
-            background-color: black;
-            z-index: 9999;
-          "
-        />
-      </div> -->
-
-      <!-- <v-row>
-            <v-col align="center">
-              <v-btn
-                x-large
-                color="rgb(23, 46, 252)"
-                class="white--text mx-auto "
-                @click="getStated"
-                >Get Started</v-btn
-              >
-            </v-col>
-          </v-row> -->
-      <!-- </v-col> -->
-      <!-- </v-row> -->
       <div
         @click="scrollDown(1)"
         class="mx-auto d-flex justify-center main-scroll-down"
@@ -66,102 +31,88 @@
       </div>
     </v-container>
 
-    <v-container
-      fluid
-      class="px-10 main-background"
-      :style="mainBackgroundImage.two"
-    >
-      <v-row
-        class="align-content-center justify-center d-flex"
-        :class="{
-          'fade-in': activeClass.second,
-          'fade-out': !activeClass.second,
-        }"
-        style="height: 90%; width: 100%"
-      >
-        <v-col md="4" lg="4" cols="10" class="pa-0">
-          <v-row>
-            <v-col class="main-index-txt">사진에서 만화로 빠르고 쉽게!</v-col>
-          </v-row>
+    <!-- 타임라인시작 -->
+    <v-container fluid class="px-10">
+      <h1 class="text-center" style="margin-top: 100px">Wecolme to Editoon!</h1>
 
-          <v-row>
-            <v-col style="font-size: 1.7em">
-              <div>
-                한 번만 클릭하면 몇 초만에 사진에서 만화로 바꿀 수 있습니다.
-                지금 당장, 당신의 셀피를 만화로 만들어 보세요!
-              </div>
-              <div>
-                A single click of our Editoon, you'll go from photo to cartoon
-                in seconds. Make your selfie into a cartoon right now!!
-              </div>
-            </v-col>
-          </v-row>
-        </v-col>
-        <v-col
-          justify-center
-          md="6"
-          cols="10"
-          class="mx-md-10 mx-sm-0 mx-xs-0 mx-lg-5 pa-0"
-          style="height: 60vh"
-        >
-          <!-- <img style="width: 100%;" :src="require('@/assets/main_second.jpg')" alt /> -->
+      <div class="history-tl-container" style="margin-top: 100px">
+        <ul class="tl">
+          <li class="tl-item" ng-repeat="item in retailer_history">
+            <div class="timestamp">
+              <img
+                width="450"
+                style="margin-right: -130px"
+                src="@/assets/step1.png"
+              />
+            </div>
+            <div class="item-title">
+              Step1. <br />
+              사진 찰칵!<br />
+              <small style="font-size: 20px"
+                >일상 속에서 본인의 개성을 <br />드러낼 멋진 사진을
+                찍어보세요</small
+              >
+            </div>
 
-          <VueCompareImage
-            style="height: 100%"
-            :leftImage="require('@/assets/iu.jpg')"
-            :rightImage="require('@/assets/iu_cartoon.jpg')"
-          />
-        </v-col>
-      </v-row>
-      <div
-        @click="scrollDown(2)"
-        class="mx-auto d-flex justify-center main-scroll-down"
-        :class="{
-          'fade-in': activeClass.second,
-          'fade-out': !activeClass.second,
-        }"
-      >
-        <v-icon style="color: white; font-size: 36px">mdi-chevron-down</v-icon>
+            <!-- <div class="timestamp"><img src="@/assets/step1.png" /></div> -->
+          </li>
+          <li class="tl-item" ng-repeat="item in retailer_history">
+            <div class="timestamp">
+              Step2.<br />
+              에디툰으로 편집<br />
+              <small style="font-size: 20px"
+                >몇 번의 클릭만으로 손쉽게 사진을 <br />편집하고 나만의 웹툰을
+                만들어보세요</small
+              >
+            </div>
+            <div class="item-title">
+              <img
+                width="450"
+                style="margin-left: -60px"
+                src="@/assets/step2.png"
+              />
+            </div>
+            <div class="item-title" style="margin-top: 280px">
+              Step3. <br />간단히 완성!<br />
+              <small style="font-size: 20px">
+                가장 빠르고 효과좋은 애니메이션 Tool <br />에디툰을
+                이용해보세요!
+              </small>
+            </div>
+          </li>
+          <li class="tl-item" ng-repeat="item in retailer_history">
+            <div class="timestamp">
+              <img
+                width="450"
+                style="margin-top: -1000px; margin-right: -130px"
+                src="@/assets/step3.png"
+              />
+            </div>
+          </li>
+        </ul>
       </div>
     </v-container>
-
-    <!-- main 3 페이지 -->
-
+    <!-- 타임라인끝 -->
     <v-container
       fluid
       class="px-10 main-background"
       :style="mainBackgroundImage.three"
     >
+      <v-row class="align-content-center justify-center" style="height: 20%">
+        <h1 class="py-10">
+          How to use...
+          <!-- <div style="font-size: 18px">*아래 영상을 천천히 살펴보세요!</div> -->
+        </h1>
+      </v-row>
       <v-row
         class="align-content-center justify-center"
         :class="{
           'fade-in': activeClass.third,
-          'fade-out': !activeClass.third,
         }"
-        style="height: 90%"
+        style="height: 60%"
       >
-        <v-col md="6" cols="10" class="mx-md-10 mx-sm-0 mx-xs-0 pa-0">
+        <v-col md="6" class="mx-md-10 mx-sm-0 mx-xs-0 pa-0">
           <img style="width: 100%" :src="require('@/assets/webtoon.png')" alt />
-        </v-col>
-
-        <v-col md="4" lg="4" cols="10" class="pa-0">
-          <v-row>
-            <v-col class="main-index-txt">사진을 웹툰으로!</v-col>
-          </v-row>
-
-          <v-row>
-            <v-col style="font-size: 1.7rem">
-              <div>
-                빠르고 간단하게, 몇번의 클릭만으로 웹툰을 만들어보세요. 간단한
-                배치와 말풍선을 추가하여 꾸밀수있습니다!
-              </div>
-              <div>
-                Quickly and simply, create a webtoon with just a few clicks. you
-                can decorate it by adding simple arrangements and speech
-                bubbles!
-              </div>
-            </v-col>
-          </v-row>
         </v-col>
       </v-row>
 
@@ -176,6 +127,57 @@
         <v-icon style="color: white; font-size: 36px">mdi-chevron-down</v-icon>
       </div>
     </v-container>
+    <!-- 다음페이지 -->
+    <v-container
+      fluid
+      class="px-10 py-16 main-background"
+      :style="mainBackgroundImage.two"
+    >
+      <v-row class="align-content-center justify-center" style="height: 20%">
+        <h1 class="pb-5">Sample Example</h1>
+      </v-row>
+      <v-row
+        class="align-content-center justify-center d-flex"
+        :class="{
+          'fade-in': activeClass.second,
+        }"
+        style="height: 90%; width: 100%"
+      >
+        <v-col
+          justify-center
+          md="6"
+          class="mx-md-10 mx-sm-0 mx-xs-0 mx-lg-5 pa-0"
+          style="height: 60vh"
+        >
+          <!-- <img style="width: 100%;" :src="require('@/assets/main_second.jpg')" alt /> -->
+
+          <VueCompareImage
+            style="height: 100%"
+            :leftImage="require('@/assets/iu.jpg')"
+            :rightImage="require('@/assets/iu_cartoon.jpg')"
+          />
+        </v-col>
+      </v-row>
+      <v-row>
+        <div>
+          <h1>Are you ready?</h1>
+          <v-btn>Start</v-btn>
+        </div>
+      </v-row>
+
+      <div
+        @click="scrollDown(2)"
+        class="mx-auto d-flex justify-center main-scroll-down"
+        :class="{
+          'fade-in': activeClass.second,
+          'fade-out': !activeClass.second,
+        }"
+      >
+        <v-icon style="color: white; font-size: 36px">mdi-chevron-down</v-icon>
+      </div>
+    </v-container>
+
+    <!-- main 3 페이지 -->
 
     <!-- main 4 페이지 -->
     <!-- <img :src="require('@/assets/1-2.jpg')" class="main-background-last" alt /> -->
@@ -185,6 +187,14 @@
       class="px-10 main-background-last"
       :style="[mainBackgroundImage.four]"
     >
+      <v-row>
+        <div>
+          <h1>Are you ready?</h1>
+          <v-btn>Start</v-btn>
+        </div>
+      </v-row>
+    </v-container>
+    <!-- 
       <v-row style="height: 90%">
         <v-col
           :class="{
@@ -244,7 +254,7 @@
       >
         <v-icon style="color: black; font-size: 36px">mdi-chevron-up</v-icon>
       </div>
-    </v-container>
+    </v-container> -->
     <div v-show="viewPortHeight / 2 <= current" @click="scrollDown(0)">
       <v-icon
         class="main-scroll-up"
@@ -291,13 +301,13 @@ export default {
           backgroundImage: "url('" + require(`@/assets/back.gif`) + "')",
         },
         two: {
-          backgroundImage: "url('" + require(`@/assets/simple2.jpg`) + "')",
+          backgroundImage: "url('" + require(`@/assets/green.jpg`) + "')",
         },
         three: {
-          backgroundImage: "url('" + require(`@/assets/simple2.jpg`) + "')",
+          backgroundImage: "url('" + require(`@/assets/green.jpg`) + "')",
         },
         four: {
-          backgroundImage: "url('" + require(`@/assets/simple11.gif`) + "')",
+          backgroundImage: "url('" + require(`@/assets/green.jpg`) + "')",
         },
       },
       activeClass: {
@@ -679,5 +689,69 @@ p {
       border-radius: 5px 0 0 5px;
     }
   }
+}
+
+.history-tl-container {
+  font-family: "Roboto", sans-serif;
+  width: 0%;
+  margin: auto;
+  display: block;
+  position: relative;
+}
+.history-tl-container ul.tl {
+  margin: 20px 0;
+  padding: 0;
+  display: inline-block;
+}
+.history-tl-container ul.tl li {
+  list-style: none;
+  margin: auto;
+  // margin-left: 200px;
+  min-height: 50px;
+  /*background: rgba(255,255,0,0.1);*/
+  border-left: 3px solid #9faba3;
+  padding: 0 0 50px 30px;
+  position: relative;
+}
+.history-tl-container ul.tl li:last-child {
+  border-left: 0;
+}
+.history-tl-container ul.tl li::before {
+  position: absolute;
+  left: -20px;
+  top: -5px;
+  content: " ";
+  border: 8px solid rgba(255, 255, 255, 0.74);
+  border-radius: 500%;
+  background: #7edec0;
+  // #258cc7
+  height: 40px;
+  width: 40px;
+  transition: all 500ms ease-in-out;
+}
+.history-tl-container ul.tl li:hover::before {
+  border-color: #7edec0;
+  transition: all 1000ms ease-in-out;
+}
+ul.tl li .item-title {
+  position: relative;
+  top: -300px;
+  right: -40%;
+  color: #8d8d8d;
+  // background-color: red;
+  font-size: 35px;
+}
+ul.tl li .item-detail {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 15px;
+}
+ul.tl li .timestamp {
+  color: #8d8d8d;
+  position: relative;
+  width: 100%;
+  left: -150%;
+  text-align: right;
+  font-size: 35px;
+  // background-color: red;
 }
 </style>
