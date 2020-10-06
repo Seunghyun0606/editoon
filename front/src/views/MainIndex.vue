@@ -23,7 +23,7 @@
           <span>N</span>
         </div>
 
-        <!-- <div>
+        <!-- <divvv>
           <label>사진★:</label>
           <input type="file" id="imgselector" multiple />
           <v-btn @click="sendimg">test</v-btn>
