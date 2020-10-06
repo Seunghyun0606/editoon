@@ -301,13 +301,13 @@ export default {
           backgroundImage: "url('" + require(`@/assets/back.gif`) + "')",
         },
         two: {
-          backgroundImage: "url('" + require(`@/assets/green.jpg`) + "')",
+          backgroundImage: "url('" + require(`@/assets/green2.jpg`) + "')",
         },
         three: {
-          backgroundImage: "url('" + require(`@/assets/green.jpg`) + "')",
+          backgroundImage: "url('" + require(`@/assets/green2.jpg`) + "')",
         },
         four: {
-          backgroundImage: "url('" + require(`@/assets/green.jpg`) + "')",
+          backgroundImage: "url('" + require(`@/assets/green2.jpg`) + "')",
         },
       },
       activeClass: {
