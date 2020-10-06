@@ -1,20 +1,32 @@
-<template style="overflow-x: hidden;">
-  <div class="text-center" style="background-color: white;">
+<template style="overflow-x: hidden; background-color: rgba(0,0,20,0.9);">
+  <div class="text-center mask" style="background-color: black">
     <v-dialog
       v-model="checkDialog"
-      width="500"
+      width="25%"
+      style=""  
+      
     >
+    <!-- class="pa-10 object-option" -->
       <v-container 
-        class="pa-10 object-option"
-        style="background-color: rgba(0,0,20,0.9)"  
+        style="background-color: rgba(0,0,20,0.9);"  
+        width="100%"
       >
-
         <div v-for="(userEditoonImage, id) in userEditoonImages.image" :key="id">
           <!-- <img :src="userEditoonImage.image" alt=""> -->
           <v-img :src="'https://j3b308.p.ssafy.io/image/editoonImg/' + `${userInfo.no}/` + `${userEditoonImage}`"></v-img>
 
         </div>
-
+        <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="error"
+              gray
+              large
+              @click="checkDialog = false"
+            >
+            Close My Editoon
+            </v-btn>
+        </v-card-actions>    
       </v-container>
     </v-dialog>
   </div>
@@ -32,7 +44,7 @@ import { mapState } from 'vuex'
         },
         set(val) {
           this.$store.commit("showMytoonDialogInit",  val)
-        }
+        },
       },
       ...mapState(['userEditoonImages', 'userInfo'])
     },
