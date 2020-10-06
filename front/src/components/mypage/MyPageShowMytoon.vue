@@ -2,7 +2,7 @@
   <div class="text-center mask" style="background-color: black">
     <v-dialog
       v-model="checkDialog"
-      width="25%"
+      width="35%"
       style=""  
       
     >
