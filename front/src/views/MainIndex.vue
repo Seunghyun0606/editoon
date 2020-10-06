@@ -22,8 +22,8 @@
           <span>O</span>
           <span>N</span>
         </div>
-<!-- 
-        <div>
+
+        <!-- <div>
           <label>사진★:</label>
           <input type="file" id="imgselector" multiple />
           <v-btn @click="sendimg">test</v-btn>
