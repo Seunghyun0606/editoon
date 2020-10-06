@@ -132,7 +132,7 @@ export default {
         return this.$store.state.signUpDialog;
       },
       set(val) {
-        console.log(val)
+        // console.log(val)
         this.$store.commit('signUpInit', val)
         this.resetValidation()
       },
@@ -161,7 +161,7 @@ export default {
           '숫자, 영어 대소문자, 특수문자가 포함되어야합니다.',
         // required: v => !!v || 'This field is required',
         passwordCheck: v => !!( v === this.signUpData.password ) || '비밀번호가 맞지 않습니다.',
-      },  
+      },
     };
   },
   methods: {

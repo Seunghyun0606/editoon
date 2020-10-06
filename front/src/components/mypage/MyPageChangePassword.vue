@@ -12,10 +12,10 @@
 
             <form action="" style="margin-top: 0.2vh;">
               <v-text-field
-                v-model="changePassword.password"
+                v-model="passwordSet.password"
                 label="Password"
                 type="password"
-                :rules="passwordRules"
+                :rules="[passwordRules.password, passwordRules.lengthCheck(10)]"
                 required
                 clearable
                 dark
@@ -23,20 +23,35 @@
                 class="mx-auto"
               ></v-text-field>
               <v-text-field
-                v-model="changePassword.password2"
+                v-model="passwordCheck"
                 label="Password 확인"
                 type="password"
-                :rules="passwordRules"
+                :rules="[passwordRules.passwordCheck]"
                 required
                 clearable
                 dark
                 style="width: 70%;"
                 class="mx-auto"
               ></v-text-field>
-              <v-btn class='warning mr-4' @click="clickOut()" style="width: 30%;">
+              <v-text-field
+                v-if="canShowNewPassword && passwordCheck === passwordSet.password"
+                v-model="passwordSet.newPassword"
+                label="새 비밀번호 입력"
+                type="password"
+                :rules="[passwordRules.newPasswordCheck]"
+                required
+                clearable
+                dark
+                style="width: 70%;"
+                class="mx-auto"
+              ></v-text-field>
+              <v-btn v-if="canShowNewPassword && passwordCheck === passwordSet.password"
+                class='warning mr-4'
+                @click="changePassword()"
+              >
                 <strong>비밀번호변경하기</strong>
               </v-btn>
-              <v-btn class='' @click="clickOut()" style="width: 30%;">
+              <v-btn class='' @click="clickOut()" >
                 <strong>돌아가기</strong>
               </v-btn>
             </form>
@@ -67,27 +82,45 @@ export default {
       },
       set (val) {
         this.$store.state.changePasswordDialog = val
+        this.resetValidation()
       }
-    }
+    },
+    canShowNewPassword() {
+      return this.passwordSet.password.length > 9 ? true : false
+    },
 
   },
   data() {
     return {
-      changePassword: {
+      passwordSet: {
         password: "",
-        password2: "",
+        newPassword: "",
       },
-      passwordRules: [
-        v => !!v || 'Password is required',
-        v => (v && v.length <= 10) || 'Password must be less than 10 characters',
-      ],
-
+      passwordCheck: "",
+      passwordRules: {
+        password: v => !!(v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/) || '숫자, 영어 대소문자, 특수문자가 포함되어야합니다.',
+        passwordCheck: v => !!( v === this.passwordSet.password ) || '비밀번호가 맞지 않습니다.',
+        newPasswordCheck: v => !!(v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/) || '숫자, 영어 대소문자, 특수문자가 포함되어야합니다.',
+        lengthCheck: len => v => (v || '').length >= len || `${len}자 이상이어야합니다. 현재 ${v.length}자 입니다.`,
+      },
 
     }
   },
   methods: {
+    changePassword() {
+      let changeInfo = {}
+      changeInfo['email'] = this.$store.state.userInfo.email
+      Object.assign(changeInfo, this.passwordSet)
+      this.$store.dispatch('changePassword', changeInfo)
+    },
     clickOut() {
       this.$store.state.changePasswordDialog = false
+      this.resetValidation()
+    },
+    resetValidation() {
+      this.passwordSet.password = ""
+      this.passwordSet.newPassword = ""
+      this.passwordCheck = ""
     }
   },
 }

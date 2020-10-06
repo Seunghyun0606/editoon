@@ -67,6 +67,7 @@ export default {
       },
       set(val) {
         this.$store.state.loginDialog = val;
+        this.reset()
       },
     },
   },
@@ -89,8 +90,13 @@ export default {
     login() {
       // 받아온 값이랑, 데이터 비교해야함.
       this.$store.state.loginDialog = false;
-      // this.$store.dispatch('login', loginData)
+      this.$store.dispatch('login', this.loginData)
+      this.reset()
     },
+    reset() {
+      this.loginData.email = ''
+      this.loginData.password = ''
+    }
   },
 };
 </script>
