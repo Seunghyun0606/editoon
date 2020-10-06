@@ -9,7 +9,7 @@
     <v-tabs align-with-title>
       <v-tab router-link to="/">Index</v-tab>
       <v-tab router-link to="/photoeditor">Get started</v-tab>
-      <v-tab router-link to="/webtoonindex">Best arts</v-tab>
+      <!-- <v-tab router-link to="/webtoonindex">Best arts</v-tab> -->
 
 
     </v-tabs>
@@ -23,9 +23,9 @@
       color="rgba(0, 0, 0, 0.54)"
     >
       <v-tab v-if='isLogin' router-link to='/mypage'>
-        <v-avatar color="black" size="40">
-          <!-- <img :src="userInfo.image" alt=""> -->
-          <v-icon color="white">mdi-account-circle</v-icon>
+        <v-avatar size="40">
+          <img v-if="!!userInfo.image" :src="'https://j3b308.p.ssafy.io/image/profileImg/' + `${userInfo.image}`"/>
+          <!-- <v-icon color="white">mdi-account-circle</v-icon> -->
         </v-avatar>
 
       </v-tab>

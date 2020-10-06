@@ -23,15 +23,31 @@
 
         </v-col>
         <v-col cols="6" class="mr-5" :style="{ position: 'relative', top: `${currentScrollPlace}` + 'px' }">
-          <v-btn @click="isShowWebtoonImages = !isShowWebtoonImages" class="" color="" dark>
+          <v-btn @click="isShowWebtoonImages = !isShowWebtoonImages" class="mr-2" color="" dark>
             <v-icon class="pr-2">
               mdi-image-multiple-outline
             </v-icon>
             Images
-            <v-row class="showConvertedImage" v-show="isShowWebtoonImages">
+            <Loading
+              :loading="checkLoading.isConvertedLoading"
+              :color="'white'"
+              :size="'35px'"
+              class="ml-2"
+            />
+            <v-row class="showConvertedImage pa-10" style="z-index: 999;" v-show="isShowWebtoonImages">
               <v-col v-for="(convertedImage, idx) in convertedImages" :key="idx">
-                <img style="width: 100px; height: 100px;" :src="'data:image/png;base64,' + `${convertedImage}`" alt="transformed image">
+                <img @click="moveConvertedImage(convertedImage)" class="my-2" style="width: 100px; height: 100px;" :src="'data:image/png;base64,' + `${convertedImage}`" alt="transformed image">
               </v-col>
+              <div style="align-self: center;">
+                <Loading
+                  class="my-2"
+                  :loading="checkLoading.isConvertedLoading"
+                  :color="'white'"
+                  :size="'50px'"
+                />
+
+              </div>
+
             </v-row>
           </v-btn>
 
@@ -520,7 +536,11 @@
           </v-row>
         </v-col>
       </v-row>
-      <SaveOnlineModal @thumbnailAndSubject="canvasImageToSpring"/>
+      <PhotoEditorSaveOnlineModal @thumbnailAndSubject="canvasImageToSpring"/>
+      <PhotoEditorHelpDial />
+      <v-overlay :value="checkLoading.isMoveImageToCanvasLoading" style="z-index: 999;">
+        <v-progress-circular indeterminate size="64"></v-progress-circular>
+      </v-overlay>
     </v-container>
 
 </template>
@@ -539,14 +559,18 @@ import 'tui-image-editor/dist/svg/icon-d.svg'
 import 'tui-image-editor/dist/tui-image-editor.css'
 import { mapState } from 'vuex'
 
-import SaveOnlineModal from '@/components/photoeditor/SaveOnlineModal'
+import Loading from '@/components/Loading'
+import PhotoEditorSaveOnlineModal from '@/components/photoeditor/PhotoEditorSaveOnlineModal'
+import PhotoEditorHelpDial from '@/components/photoeditor/PhotoEditorHelpDial'
 
 export default {
   components: {
     'tui-image-editor': ImageEditor,
     VueDragResize,
     vue2Dropzone,
-    SaveOnlineModal,
+    PhotoEditorSaveOnlineModal,
+    PhotoEditorHelpDial,
+    Loading,
   },
   watch: {
     objectCount(newVal) {
@@ -726,7 +750,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['convertedImages', 'userInfo'])
+    ...mapState(['convertedImages', 'userInfo', 'checkLoading'])
     // img :src="'data:image/png;base64,' + `${test123}`" 나중에 이미지 base64파일 형식으로 넣어주면된다.
   },
   methods: {
@@ -801,6 +825,12 @@ export default {
     },
     // 에디터 이미지를 캔버스로 이동
     btnEditorImageToCanvas() {
+      // 그냥 base64 string이 너무길어서 오래걸리는 것, 그래서 로딩도 못걸어준다. ( 변환중에 애초에 다른 작업 수행이안됨. )
+      // this.$store.state.checkLoading.isMoveImageToCanvasLoading = true
+      // setTimeout(() => {
+        // this.$store.state.checkLoading.isMoveImageToCanvasLoading = false
+      // }, 10000);
+
       const dataURL = this.$refs.imageEditor.invoke('toDataURL')  // base64 data
       const imageData = {
         x: this.objectCount * 10,
@@ -822,6 +852,7 @@ export default {
       }
       this.images.push(imageData)
       this.objectCount++
+
     },
     // 말풍선 추가
     btnAddBubble1() {
@@ -970,6 +1001,8 @@ export default {
     async canvasImageToSpring(thumbnail, subject) {
       const ctxTest = document.querySelector("#webtoonCanvas")
       const offsetY = ctxTest.offsetTop + 64
+      this.$store.state.checkLoading.isSaveOnlineLoading = true
+
 
       let canvasFormData = new FormData()
       //let canvasFormArray = new Array()
@@ -1007,14 +1040,30 @@ export default {
           //   this.$store.dispatch('canvasImageToSpring', canvasFormData)
           // })
       }
-      canvasFormData.append('no', this.userInfo.number)
+      canvasFormData.append('no', this.userInfo.no)
       canvasFormData.append('subject', subject)
       canvasFormData.append('thumbnail', thumbnail) // 여기에 섬네일 파일 넣어주면 됨.
       // canvasFormData.append('createDate', 'check')
       // canvasFormData.append('image', canvasFormArray)
-      this.$store.dispatch('canvasImageToSpring', canvasFormData)
+      await this.$store.dispatch('canvasImageToSpring', canvasFormData)
+      this.$store.state.checkLoading.isSaveOnlineLoading = false
     },
+    // 업로드된 파일 클릭시 preview생성
+    moveConvertedImage(baseData) {
+      let formData = new FormData()
 
+      let blobBin = atob(baseData)
+      let array = [];
+      for (var i = 0; i < blobBin.length; i++) {
+        array.push(blobBin.charCodeAt(i));
+      }
+
+      let file = new Blob([new Uint8Array(array)], {type: 'image/png'});	// Blob 생성
+
+      formData.append('file', file, 'file1')
+      this.$refs.imageEditor.invoke('loadImageFromFile', formData.get('file'))
+
+    },
 
     // 파일 업로드시, preview만 클릭하면 올라갈 수 있도록 만듬.
     dropZoneImageMoveToEditor(file_list) {
@@ -1041,15 +1090,31 @@ export default {
     },
 
     // django로 이미지 보내기.
-    dropZoneImageToDjango(file_list) {
-
+    async dropZoneImageToDjango(file_list) {
+      this.$store.state.checkLoading.isConvertedLoading = true
       const djangoImageForm = new FormData()
-      
+
+      // function appendImage(name, file) {
+      //   console.log('resolve')
+      //   return new Promise(function (resolve) {
+      //     console.log(name, file)
+      //     djangoImageForm.append(name, file)
+      //     resolve(name)
+      //   })
+      // }
+      // console.log(file_list)
+      // let cnt = 1
+
       for ( let file of file_list ) {
-        djangoImageForm.append(file.name ,file)
+        // var a = await appendImage('img' + `${cnt}`, file)
+        // console.log(a)
+        djangoImageForm.append('img1', file)
+        // cnt += 1
+        await this.$store.dispatch("dropZoneImageToDjango", djangoImageForm)
       }
 
-      this.$store.dispatch("dropZoneImageToDjango", djangoImageForm)
+      this.$store.state.checkLoading.isConvertedLoading = false
+
     },
 
     // 캔버스의 이미지가 눌러졌을때, 다른 이미지는 활성화 취소
@@ -1110,7 +1175,7 @@ export default {
   top: 60px;
   position: absolute;
   width: 400px;
-  height: 200px;
+  /* height: 300px; */
   background-color: rgba(0,0,20,0.9);
   border-radius: 10px;
 }

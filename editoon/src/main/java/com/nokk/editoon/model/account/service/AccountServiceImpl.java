@@ -120,58 +120,65 @@ public class AccountServiceImpl implements IAccountService {
 
 	@Override
 	public void saveAccountNameAndImage(AccountModifyDTO accountModifyDTO) {
-		try {
-			// image 처리 부분
-			// CASE 1. default -> 사용자 이미지(기존 image 는 default / client에서 넘겨준 MultiFile이 null
-			// 이 아닐경우)
-			// -> 사용자 이미지 UUID 를 생성해서 파일에 저장시키고 account image 에 xxxx.jpg 저장시킴
-			// CASE 2. 사용자 이미지 -> 사용자 이미지
-			// -> 사용자 이미지 값을 받아서 새로운 사용자 이미지 값으로 저장시켜버림.
-			// CASE 3. 사용자 이미지 -> default
-			// -> 사용자 이미지 값을 받아서 삭제시킨다음 account image를 default로 저장시킴
-			// CASE 4. 사용자 이미지는 변경 시키지 않는 경우
-			
+		 try {
+				// image 처리 부분
+				// CASE 1. default -> 사용자 이미지(기존 image 는 default / client에서 넘겨준 MultiFile이 null
+				// 이 아닐경우)
+				// -> 사용자 이미지 UUID 를 생성해서 파일에 저장시키고 account image 에 xxxx.jpg 저장시킴
+				// CASE 2. 사용자 이미지 -> 사용자 이미지
+				// -> 사용자 이미지 값을 받아서 새로운 사용자 이미지 값으로 저장시켜버림.
+				// CASE 3. 사용자 이미지 -> default
+				// -> 사용자 이미지 값을 받아서 삭제시킨다음 account image를 default로 저장시킴
+				// CASE 4. 사용자 이미지는 변경 시키지 않는 경우
+				
 
-			String newImageName = "default.jpg";
-			if(accountModifyDTO.getIsChange().equals("no")) {
-				newImageName = accountModifyDTO.getImage();
-			}else if(accountModifyDTO.getIsChange().equals("yes")) {
-				if (accountModifyDTO.getImage().equals("default.jpg") && accountModifyDTO.getMultipartFile() != null
-						&& !accountModifyDTO.getMultipartFile().isEmpty()) {
-					// CASE 1.
-					String fileExtension = StringUtils
-							.getFilenameExtension(accountModifyDTO.getMultipartFile().getOriginalFilename());
-					
-					if (canUseFileExtension(fileExtension)) {
-						newImageName = createUUID.createUUID(fileExtension);
-					}
-					profileImageRepo.saveFile(accountModifyDTO.getMultipartFile(), IMAGE_FOLDER, newImageName);
-				} else if (!accountModifyDTO.getImage().equals("default.jpg")) {
-					if (accountModifyDTO.getMultipartFile() != null && !accountModifyDTO.getMultipartFile().isEmpty()) {
-						// CASE 2.
-						//if (canUseFileExtension(fileExtension)) 추가하고 boolean 으로 바꿔줘야 함
-						newImageName = accountModifyDTO.getImage(); // 기존에 있던 파일 지우고 그 이름으로 다시 설정
-						profileImageRepo.deleteFile(IMAGE_FOLDER, newImageName);
-						profileImageRepo.saveFile(accountModifyDTO.getMultipartFile(), IMAGE_FOLDER, newImageName);
-					} else if (accountModifyDTO.getMultipartFile() == null
-							|| accountModifyDTO.getMultipartFile().isEmpty()) {
-						// CASE 3.
-						String deleteImageName = accountModifyDTO.getImage();
-						profileImageRepo.deleteFile(IMAGE_FOLDER, deleteImageName);
-					}
+				String newImageName = "default.jpg";
+				if(accountModifyDTO.getIsChange().equals("no")) {
+					 newImageName = accountModifyDTO.getImage();
+				}else if(accountModifyDTO.getIsChange().equals("yes")) {
+					 if (accountModifyDTO.getImage().equals("default.jpg") && accountModifyDTO.getMultipartFile() != null
+								 && !accountModifyDTO.getMultipartFile().isEmpty()) {
+							// CASE 1.
+							String fileExtension = StringUtils
+										.getFilenameExtension(accountModifyDTO.getMultipartFile().getOriginalFilename());
+							
+							if (canUseFileExtension(fileExtension)) {
+								 newImageName = createUUID.createUUID(fileExtension);
+							}
+							profileImageRepo.saveFile(accountModifyDTO.getMultipartFile(), IMAGE_FOLDER, newImageName);
+					 } else if (!accountModifyDTO.getImage().equals("default.jpg")) {
+							if (accountModifyDTO.getMultipartFile() != null && !accountModifyDTO.getMultipartFile().isEmpty()) {
+								 // CASE 2.
+								 //if (canUseFileExtension(fileExtension)) 추가하고 boolean 으로 바꿔줘야 함
+								 // newImageName = accountModifyDTO.getImage(); // 기존에 있던 파일 지우고 그 이름으로 다시 설정
+								 profileImageRepo.deleteFile(IMAGE_FOLDER, accountModifyDTO.getImage);
+								 String fileExtension = StringUtils
+										.getFilenameExtension(accountModifyDTO.getMultipartFile().getOriginalFilename());
+							
+							if (canUseFileExtension(fileExtension)) {
+								 newImageName = createUUID.createUUID(fileExtension);
+							}
+							profileImageRepo.saveFile(accountModifyDTO.getMultipartFile(), IMAGE_FOLDER, newImageName);
+								 profileImageRepo.saveFile(accountModifyDTO.getMultipartFile(), IMAGE_FOLDER, newImageName);
+							} else if (accountModifyDTO.getMultipartFile() == null
+										|| accountModifyDTO.getMultipartFile().isEmpty()) {
+								 // CASE 3.
+								 String deleteImageName = accountModifyDTO.getImage();
+								 profileImageRepo.deleteFile(IMAGE_FOLDER, deleteImageName);
+							}
+					 }
 				}
-			}
 
 
-			// name 변경 부분
-			int ret = -1;
-			ret = accountRepo.updateAccountNameAndImage(accountModifyDTO.getEmail(), accountModifyDTO.getName(),
-					newImageName);
-			if (ret != 1)
-				throw new InternalServerException("saveAccountName \n" + "detail Exception Info : maybe check mariaDB");
-		} catch (Exception e) {
-			throw new InternalServerException("saveAccountName \n" + "detail Exception Info :" + e.getMessage());
-		}
+				// name 변경 부분
+				int ret = -1;
+				ret = accountRepo.updateAccountNameAndImage(accountModifyDTO.getEmail(), accountModifyDTO.getName(),
+							newImageName);
+				if (ret != 1)
+					 throw new InternalServerException("saveAccountName \n" + "detail Exception Info : maybe check mariaDB");
+		 } catch (Exception e) {
+				throw new InternalServerException("saveAccountName \n" + "detail Exception Info :" + e.getMessage());
+		 }
 
 	}
 
