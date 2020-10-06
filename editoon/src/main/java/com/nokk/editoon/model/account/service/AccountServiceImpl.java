@@ -151,7 +151,7 @@ public class AccountServiceImpl implements IAccountService {
 								 // CASE 2.
 								 //if (canUseFileExtension(fileExtension)) 추가하고 boolean 으로 바꿔줘야 함
 								 // newImageName = accountModifyDTO.getImage(); // 기존에 있던 파일 지우고 그 이름으로 다시 설정
-								 profileImageRepo.deleteFile(IMAGE_FOLDER, accountModifyDTO.getImage);
+								 profileImageRepo.deleteFile(IMAGE_FOLDER, accountModifyDTO.getImage());
 								 String fileExtension = StringUtils
 										.getFilenameExtension(accountModifyDTO.getMultipartFile().getOriginalFilename());
 							
