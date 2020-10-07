@@ -292,7 +292,7 @@
                         v-model="image.bubbleOption.sub.width"
                         dark
                         :max="100"
-                        :min="10"
+                        :min="0"
                       >
                         <template v-slot:append>
                           <v-text-field
@@ -312,8 +312,8 @@
                         @mousedown.stop
                         v-model="image.bubbleOption.sub.left"
                         dark
-                        :max="95"
-                        :min="-10"
+                        :max="135"
+                        :min="-30"
                       >
                         <template v-slot:append>
                           <v-text-field
@@ -333,8 +333,8 @@
                         @mousedown.stop
                         v-model="image.bubbleOption.sub.bottom"
                         dark
-                        :max="95"
-                        :min="-10"
+                        :max="135"
+                        :min="-30"
                       >
                         <template v-slot:append>
                           <v-text-field
