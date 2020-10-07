@@ -1,5 +1,5 @@
 <template>
-  <v-layout row wrap>
+  <v-layout row>
     <div class="text-h3" style="width: 100%;">
         내가 쓴 글
 
@@ -10,7 +10,7 @@
     <v-flex xs12 sm6 md4 lg3 v-for="( thumbnail, idx ) in userEditoonThumbnails" :key="idx">
       <v-card hover class="ma-3" min-height="350" max-height="500" @click="reviewBook(thumbnail._id)">
         <!-- <v-layout column align-center fill-height class="text-center"> -->
-          <v-layout column align-center fill-height class="text-center">
+          <v-layout column fill-height class="text-center">
           <v-img height="300" width="100%" style="border-bottom: 1px solid lightgray;" :src="'https://j3b308.p.ssafy.io/image/editoonImg/' + `${userInfo.no}/` + `${thumbnail.thumbnail}`"></v-img>
           <!-- <v-img src="https://j3b308.p.ssafy.io/image/profileImg/200927_c1cb4f6611.JPG"></v-img> -->
           <!-- <v-img :src="book.thumbnail"></v-img> -->
