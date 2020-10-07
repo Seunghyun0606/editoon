@@ -110,7 +110,12 @@ export default new Vuex.Store({
     setUserEditoonThumbnails(state, info) {
       // console.log(2, info)
       state.userEditoonThumbnails = info
-    }
+    },
+    setUserInfoInit(state) {
+      state.userInfo = {}
+      state.userEditoonImages = {}
+      state.userEditoonThumbnails = []
+    },
 
 
   },
@@ -186,7 +191,7 @@ export default new Vuex.Store({
           // 딱히 해줄일이 없다.
         })
         .catch( () => {
-          alert('서버 오류로 인한 로그인 실패입니다. 나중에 다시 시도해주세요.')
+          alert('입력하신 정보가 잘못되었습니다.\n다시 시도해주세요.')
           // console.log(err)
           // 토큰 만료시 , HttpStatus === 406일때 토큰 만료이기 때문에 토큰을 다시 받는 로직 만들어야한다.
         })
@@ -196,6 +201,7 @@ export default new Vuex.Store({
         .then( () => {
           alert('logout')
           this.commit('setLoginStatus', false)
+          this.$router.push('MainIndex')
           // 쿠키에 이름이 어떻게 저장되는지 보고, 나중에 다 삭제해줘야함.
           // 무조건 success로 옴
         })
@@ -266,7 +272,7 @@ export default new Vuex.Store({
         })
     },
     // 유저정보 삭제
-    deleteUser({ state, dispatch }, userInfo) {
+    deleteUser({ state, commit }, userInfo) {
       axios.post( SERVER_URL + 'account/v1/delete', userInfo, {
         headers: {
           email: state.userInfo.email
@@ -279,7 +285,9 @@ export default new Vuex.Store({
           else {
             alert('삭제가 완료되었습니다.')
             state.deleteUserDialog = false
-            dispatch('logout')
+            commit('setUserInfoInit')
+            commit('setLoginStatus', false)
+            // dispatch('logout')
             this.$router.push('MainIndex')
           }
         })
