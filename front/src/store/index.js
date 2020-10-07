@@ -41,6 +41,14 @@ export default new Vuex.Store({
       image: '',  // 유저 아이콘
     },
 
+    // userInfo: {
+    //   no: '43',
+    //   email: 'dkdlrnf0@gmail.com',
+    //   name: 'ss',
+    //   image: 'default.jpg',  // 유저 아이콘
+    // },
+
+
     signUpValidation: {
       isSendEmail: false,
       codeValidate: false,
@@ -183,7 +191,7 @@ export default new Vuex.Store({
           // 딱히 해줄일이 없다.
         })
         .catch( () => {
-          alert('서버 오류로 인한 로그인 실패입니다. 나중에 다시 시도해주세요.')
+          alert('입력하신 정보가 잘못되었습니다.\n다시 시도해주세요.')
           // console.log(err)
           // 토큰 만료시 , HttpStatus === 406일때 토큰 만료이기 때문에 토큰을 다시 받는 로직 만들어야한다.
         })
@@ -192,7 +200,8 @@ export default new Vuex.Store({
       axios.post( SERVER_URL + 'account/logout' )
         .then( () => {
           alert('logout')
-          commit('setLoginStatus', false)
+          this.commit('setLoginStatus', false)
+          this.$router.push('MainIndex')
           // 쿠키에 이름이 어떻게 저장되는지 보고, 나중에 다 삭제해줘야함.
           // 무조건 success로 옴
           commit('setUserInfoInit')
@@ -264,7 +273,7 @@ export default new Vuex.Store({
         })
     },
     // 유저정보 삭제
-    deleteUser({ state, dispatch }, userInfo) {
+    deleteUser({ state, commit }, userInfo) {
       axios.post( SERVER_URL + 'account/v1/delete', userInfo, {
         headers: {
           email: state.userInfo.email
@@ -277,7 +286,9 @@ export default new Vuex.Store({
           else {
             alert('삭제가 완료되었습니다.')
             state.deleteUserDialog = false
-            dispatch('logout')
+            commit('setUserInfoInit')
+            commit('setLoginStatus', false)
+            // dispatch('logout')
             this.$router.push('MainIndex')
           }
         })
@@ -293,7 +304,15 @@ export default new Vuex.Store({
         }
         })
         .then( res => {
-          commit('setUserEditoonThumbnails', res.data.map.editoonDetailList)
+          if(res.data.result === 'success'){
+            res.data.map.editoonDetailList.forEach(function(element){
+              let year = element.createDate.substring(0,2);
+              let month = element.createDate.substring(2,4);
+              let day = element.createDate.substring(4,6);
+              element.createDate = "20" + year + "년 "  + month + "월 " + day + "일";
+            });
+            commit('setUserEditoonThumbnails', res.data.map.editoonDetailList)
+          }
         })
         .catch( err => {
           alert('서버 오류로 썸네일을 불러오지 못했습니다. 다음에 다시 시도해주세요.')
