@@ -285,11 +285,11 @@ export default new Vuex.Store({
           }
           else {
             alert('삭제가 완료되었습니다.')
+            this.$router.push('MainIndex')
             state.deleteUserDialog = false
             commit('setUserInfoInit')
             commit('setLoginStatus', false)
             // dispatch('logout')
-            this.$router.push('MainIndex')
           }
         })
         .catch( () => {
