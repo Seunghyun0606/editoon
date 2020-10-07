@@ -108,7 +108,8 @@ export default new Vuex.Store({
       // 이미지 어떻게 넘어오는지 봐야할듯.
     },
     setUserInfo(state, info) {
-      localStorage.setItem('userInfo', JSON.stringify(state.userInfo) )
+
+      localStorage.setItem('userInfo', JSON.stringify(info) )
       state.userInfo = info
     },
     setUserEditoonImages(state, images) {
@@ -192,7 +193,6 @@ export default new Vuex.Store({
     login({ commit, dispatch }, loginData) {
       axios.post( SERVER_URL + 'login', loginData)
         .then( () => {
-          alert("로그인성공")
           dispatch('getUserInfo')
           commit('setLoginStatus', true)
           // 딱히 해줄일이 없다.
@@ -206,7 +206,6 @@ export default new Vuex.Store({
     logout({ commit }) {
       return axios.post( SERVER_URL + 'account/logout' )
         .then( () => {
-          alert('logout')
           commit('setLoginStatus', false)
           // this.$router.push('MainIndex')
           // 쿠키에 이름이 어떻게 저장되는지 보고, 나중에 다 삭제해줘야함.
