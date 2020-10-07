@@ -302,8 +302,8 @@ export default new Vuex.Store({
               let day = element.createDate.substring(4,6);
               element.createDate = "20" + year + "년 "  + month + "월 " + day + "일";
             });
+            commit('setUserEditoonThumbnails', res.data.map.editoonDetailList)
           }
-          commit('setUserEditoonThumbnails', res.data.map.editoonDetailList)
         })
         .catch( err => {
           alert('서버 오류로 썸네일을 불러오지 못했습니다. 다음에 다시 시도해주세요.')
