@@ -20,13 +20,13 @@ export default new Vuex.Store({
     showMytoonDialog: false,
     changePasswordDialog: false,
     deleteUserDialog: false,
+    photoToolTipDialog: true,
     
     isLogin: false,
 
     checkLoading: {
       isSaveOnlineLoading: false,
       isConvertedLoading: false,
-      isMoveImageToCanvasLoading: false,
     },
 
     // 나중에 새로고침에 대비해서 쿠키에 넣어야할수도있음 생각해두자.
@@ -86,6 +86,9 @@ export default new Vuex.Store({
     },
     showMytoonDialogInit(state, check) {
       state.showMytoonDialog = check
+    },
+    photoToolTipDialogInit(state, check) {
+      state.photoToolTipDialog = check
     },
     setLoginStatus(state, check) {
       state.isLogin = check

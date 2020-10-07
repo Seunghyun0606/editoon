@@ -1,6 +1,6 @@
 <template>
     <v-container fluid style="height: 100%; background-color: rgba(0, 0,0, 0.88)">
-      <v-row style="justify-content: space-between; top: 20px; position: relative; z-index: 999;">
+      <v-row style="justify-content: space-between; top: 20px; position: relative; z-index: 150;">
         <v-col cols="5" class="mx-auto" style="">
           <v-btn @click="$store.state.saveCanvasDialog = true" dark class="mr-3 mt-2">
             <v-icon class="pr-2">
@@ -34,7 +34,7 @@
               :size="'35px'"
               class="ml-2"
             />
-            <v-row class="showConvertedImage pa-10" style="z-index: 999;" v-show="isShowWebtoonImages">
+            <v-row class="showConvertedImage pa-10" style="z-index: 160;" v-show="isShowWebtoonImages">
               <v-col v-for="(convertedImage, idx) in convertedImages" :key="idx">
                 <img @click="moveConvertedImage(convertedImage)" class="my-2" style="width: 100px; height: 100px;" :src="'data:image/png;base64,' + `${convertedImage}`" alt="transformed image">
               </v-col>
@@ -111,7 +111,7 @@
           <!-- 옵션창 -->
           <div
             v-show="image.isActive"
-            style="position: absolute; top: -35px; right: 0; z-index: 999"
+            style="position: absolute; top: -35px; right: 0; z-index: 170"
           >
             <v-btn icon color="#0D47A1" style="cursor: default;">
               {{ image.zIndex }}
@@ -589,13 +589,14 @@
       </v-col>
     </v-row>
     <PhotoEditorSaveOnlineModal @thumbnailAndSubject="canvasImageToSpring" />
-    <PhotoEditorHelpDial />
-    <v-overlay
+    <PhotoEditorToolTipModal />
+    <!-- <PhotoEditorHelpDial /> -->
+    <!-- <v-overlay
       :value="checkLoading.isMoveImageToCanvasLoading"
       style="z-index: 999;"
     >
       <v-progress-circular indeterminate size="64"></v-progress-circular>
-    </v-overlay>
+    </v-overlay> -->
   </v-container>
 </template>
 
@@ -615,7 +616,8 @@ import { mapState } from "vuex";
 
 import Loading from "@/components/Loading";
 import PhotoEditorSaveOnlineModal from "@/components/photoeditor/PhotoEditorSaveOnlineModal";
-import PhotoEditorHelpDial from "@/components/photoeditor/PhotoEditorHelpDial";
+import PhotoEditorToolTipModal from "@/components/photoeditor/PhotoEditorToolTipModal";
+// import PhotoEditorHelpDial from "@/components/photoeditor/PhotoEditorHelpDial";
 
 export default {
   components: {
@@ -623,7 +625,8 @@ export default {
     VueDragResize,
     vue2Dropzone,
     PhotoEditorSaveOnlineModal,
-    PhotoEditorHelpDial,
+    PhotoEditorToolTipModal,
+    // PhotoEditorHelpDial,
     Loading,
   },
   watch: {
@@ -911,7 +914,7 @@ export default {
         isActive: true,
         isBackground: false,
         isBubble: true,
-        zIndex: 100,
+        zIndex: 90,
         isClickOption: true,
         isDraggable: true,
         bubbleOption: {
@@ -962,7 +965,7 @@ export default {
         isActive: true,
         isBackground: true,
         isBubble: false,
-        zIndex: 100,
+        zIndex: 20,
         isClickOption: true,
         isDraggable: true,
         backgroundOption: {
@@ -1193,6 +1196,7 @@ export default {
       this.$store.state.isLogin = true
       this.$store.dispatch('getUserInfo')
     }
+    // this.$store.state.photoToolTipDialog = true
   },
   mounted() {
     // scroll 추적기 붙이기
