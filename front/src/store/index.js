@@ -194,8 +194,8 @@ export default new Vuex.Store({
         .then( res => {
           console.log(res.data)
           alert("로그인성공")
-          commit('setLoginStatus', true)
           dispatch('getUserInfo')
+          commit('setLoginStatus', true)
           // 딱히 해줄일이 없다.
         })
         .catch( () => {
