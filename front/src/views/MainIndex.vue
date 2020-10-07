@@ -99,35 +99,38 @@
       fluid
       class="px-10 main-background"
       :style="mainBackgroundImage.three"
+      @click="scrollDown(5)"
     >
       <v-row
         class="align-content-center justify-center py-10"
         :class="{
-          'fade-in': !activeClass.third,
-          'fade-out': activeClass.third,
+          'fade-in': activeClass.third,
+          'fade-out': !activeClass.third,
         }"
+        style="height: 20%"
       >
         <h1 class="main-index-txt">How to use...</h1>
       </v-row>
       <v-row
-        class="align-content-center justify-center"
+        class="align-content-center justify-center pb-12"
         :class="{
-          'fade-in': !activeClass.third,
-          'fade-out': activeClass.third,
+          'fade-in': activeClass.third,
+          'fade-out': !activeClass.third,
         }"
+        style=""
       >
-        <img style="width: 60%" :src="require('@/assets/webtoon.png')" alt />
+        <img style="width: 40%;" :src="require('@/assets/webtoon.png')" alt />
       </v-row>
-      <div
+      <!-- <div
         @click="scrollDown(5)"
         class="mx-auto d-flex justify-center main-scroll-down"
         :class="{
-          'fade-in': !activeClass.third,
-          'fade-out': activeClass.third,
+          'fade-in': activeClass.third,
+          'fade-out': !activeClass.third,
         }"
       >
         <v-icon style="color: white; font-size: 36px">mdi-chevron-down</v-icon>
-      </div>
+      </div> -->
     </v-container>
 
     <!-- 다음페이지 -->
@@ -136,8 +139,11 @@
       fluid
       class="px-10 main-background"
       :style="[mainBackgroundImage.four]"
+      @click="scrollDown(6)"
     >
-      <v-row style="height: 85%">
+      <v-row
+        style="height:100%;"
+      >
         <v-col
           :class="{
             'fade-in': activeClass.fourth,
@@ -148,28 +154,28 @@
             <v-col class="main-index-txt"> Take a look at sample!</v-col>
           </v-row>
           <v-row class="justify-space-around">
-            <v-col class="mx-2">
+            <v-col class="mx-2" @click.stop>
               <VueCompareImage
                 style="height: 100%; width:100%;"
                 :leftImage="require('@/assets/lee1.jpg')"
                 :rightImage="require('@/assets/lee2.jpg')"
               />
             </v-col>
-            <v-col class="mx-2">
+            <v-col class="mx-2" @click.stop>
               <VueCompareImage
                 style="height: 100%; width:100%;"
                 :leftImage="require('@/assets/seo1.jpg')"
                 :rightImage="require('@/assets/seo2.jpg')"
               />
             </v-col>
-            <v-col class="mx-2">
+            <v-col class="mx-2" @click.stop>
               <VueCompareImage
                 style="height: 100%; width:100%;"
                 :leftImage="require('@/assets/suji1.jpg')"
                 :rightImage="require('@/assets/suji2.jpg')"
               />
             </v-col>
-            <v-col class="mx-2">
+            <v-col class="mx-2" @click.stop>
               <VueCompareImage
                 style="height: 100%; width:100%;"
                 :leftImage="require('@/assets/iu1.jpg')"
@@ -177,7 +183,7 @@
               />
             </v-col>
 
-            <v-col class="mx-2">
+            <v-col class="mx-2" @click.stop>
               <VueCompareImage
                 style="height: 100%; width:100%;"
                 :leftImage="require('@/assets/you1.jpg')"
@@ -187,34 +193,49 @@
           </v-row>
         </v-col>
       </v-row>
-      <div
+    </v-container>
+      <!-- <div
         @click="scrollDown(6)"
         class="mx-auto d-flex justify-center main-scroll-down"
         :class="{
-          'fade-in': !activeClass.third,
-          'fade-out': activeClass.third,
+          'fade-in': activeClass.fourth,
+          'fade-out': !activeClass.fourth,
         }"
       >
         <v-icon style="color: white; font-size: 36px">mdi-chevron-down</v-icon>
-      </div>
+      </div> -->
+    <v-container
+      fluid
+      class="px-10 main-background"
+      :style="[mainBackgroundImage.four]"
+      :class="{
+        'fade-in': activeClass.fourth,
+        'fade-out': !activeClass.fourth,
+      }"
 
-      <v-row class="align-content-center justify-center">
-        <h1 class="main-index-txt">Are you ready?</h1>
-      </v-row>
-      <v-row class="align-content-center justify-center">
-        <h1>지금 바로 에디툰을 시작해보세요!!</h1>
-      </v-row>
-      <v-row
-        class="wrap align-content-center justify-center"
-        style="height:200px"
-      >
-        <button class="buttonn" @click="moveToEditor">Get started!</button>
+    >
+      <v-row style="height: 100%;">
+        <v-col style="align-self: center;">
+          <v-row class="align-content-center justify-center">
+            <h1 class="main-index-txt">Are you ready?</h1>
+          </v-row>
+          <v-row class="align-content-center justify-center">
+            <h1>지금 바로 에디툰을 시작해보세요!!</h1>
+          </v-row>
+          <v-row
+            class="wrap align-content-center justify-center"
+            style="height:200px"
+          >
+            <button class="buttonn" @click="moveToEditor">Get started!</button>
+          </v-row>
+
+        </v-col>
       </v-row>
       <!-- <v-row class="align-content-center justify-center py-10">
         <h1 class="main-index-txt">Are you ready?</h1>
       </v-row>
        -->
-      <div
+      <!-- <div
         @click="scrollDown(0)"
         class="mx-auto main-scroll-down d-flex justify-center"
         :class="{
@@ -223,7 +244,7 @@
         }"
       >
         <v-icon style="color: black; font-size: 36px">mdi-chevron-up</v-icon>
-      </div>
+      </div> -->
     </v-container>
 
     <div
@@ -349,15 +370,15 @@ export default {
     fadeInOut(current) {
       let y = this.viewPortHeight;
       let currentPlace = current + y;
-      if (currentPlace > y + y / 5 && currentPlace < 2 * y + y / 5) {
+      if (currentPlace > y + y / 5 && currentPlace < 4 * y + y / 5) {
         this.activeClass.second = true;
         this.activeClass.third = false;
         this.activeClass.fourth = false;
-      } else if (currentPlace > 2 * y + y / 5 && currentPlace < 3 * y + y / 5) {
+      } else if (currentPlace > 4 * y + y / 5 && currentPlace < 5 * y + y / 5) {
         this.activeClass.second = false;
         this.activeClass.third = true;
         this.activeClass.fourth = false;
-      } else if (currentPlace > 3 * y + y / 5) {
+      } else if (currentPlace > 5 * y + y / 5) {
         this.activeClass.second = false;
         this.activeClass.third = false;
         this.activeClass.fourth = true;
@@ -466,7 +487,7 @@ export default {
 }
 
 .main-background-last {
-  height: 60vh;
+  height: 5vh;
   background-attachment: fixed;
   background-size: cover;
 }
