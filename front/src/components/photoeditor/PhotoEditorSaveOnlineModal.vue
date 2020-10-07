@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     saveCanvas() {
-      if ( localStorage.getitem('isLogin')) {
+      if ( localStorage.getItem('isLogin')) {
         const thumbnail = document.querySelector("#thumbnail").files[0]
         this.$emit('thumbnailAndSubject', thumbnail, this.subject)
       }
