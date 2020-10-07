@@ -85,8 +85,13 @@ export default {
   },
   methods: {
     saveCanvas() {
-      const thumbnail = document.querySelector("#thumbnail").files[0]
-      this.$emit('thumbnailAndSubject', thumbnail, this.subject)
+      if ( localStorage.getItem('isLogin')) {
+        const thumbnail = document.querySelector("#thumbnail").files[0]
+        this.$emit('thumbnailAndSubject', thumbnail, this.subject)
+      }
+      else {
+        alert('로그인해주세요')
+      }
     },
     reset() {
       // ie는 고려하지않음.

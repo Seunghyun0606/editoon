@@ -1,4 +1,5 @@
 <template>
+<<<<<<< front/src/views/PhotoEditor.vue
   <v-container fluid style="height: 100%; background-color: rgba(0, 0,0, 0.88)">
     <v-row
       style="justify-content: space-between; top: 20px; position: relative; z-index: 999;"
@@ -48,6 +49,107 @@
             class="showConvertedImage pa-10"
             style="z-index: 999;"
             v-show="isShowWebtoonImages"
+=======
+    <v-container fluid style="height: 100%; background-color: rgba(0, 0,0, 0.88)">
+      <v-row style="justify-content: space-between; top: 20px; position: relative; z-index: 999;">
+        <v-col cols="5" class="mx-auto" style="">
+          <v-btn @click="$store.state.saveCanvasDialog = true" dark class="mr-3 mt-2">
+            <v-icon class="pr-2">
+              mdi-cloud-download-outline
+            </v-icon>
+            SAVE online
+          </v-btn>
+          <v-btn @click="downloadCanvas" dark class="mr-3 mt-2" >
+            <v-icon class="pr-2">
+              mdi-file-download-outline
+            </v-icon>
+            download canvas
+          </v-btn>
+          <v-btn @click='downloadImage' dark class="mt-2">
+            <v-icon class="pr-2">
+              mdi-download
+            </v-icon>
+            download image
+          </v-btn>
+
+        </v-col>
+        <v-col cols="6" class="mr-5" :style="{ position: 'relative', top: `${currentScrollPlace}` + 'px' }">
+          <v-btn @click="isShowWebtoonImages = !isShowWebtoonImages" class="mr-3 mt-2" dark>
+            <v-icon class="pr-2">
+              mdi-image-multiple-outline
+            </v-icon>
+            Images  
+            <Loading
+              :loading="checkLoading.isConvertedLoading"
+              :color="'white'"
+              :size="'35px'"
+              class="ml-2"
+            />
+            <v-row class="showConvertedImage pa-10" style="z-index: 999;" v-show="isShowWebtoonImages">
+              <v-col v-for="(convertedImage, idx) in convertedImages" :key="idx">
+                <img @click="moveConvertedImage(convertedImage)" class="my-2" style="width: 100px; height: 100px;" :src="'data:image/png;base64,' + `${convertedImage}`" alt="transformed image">
+              </v-col>
+              <div style="align-self: center;">
+                <Loading
+                  class="my-2"
+                  :loading="checkLoading.isConvertedLoading"
+                  :color="'white'"
+                  :size="'50px'"
+                />
+
+              </div>
+
+            </v-row>
+          </v-btn>
+
+          <v-btn @click="btnAddBubble1" dark class="mr-3 mt-2">
+            <v-icon class="pr-2">
+              mdi-chat-plus-outline
+            </v-icon>
+            Chat
+          </v-btn>
+          <v-btn @click="btnAddBackground" dark class="mr-3 mt-2">
+            <v-icon class="pr-2">
+              mdi-card-plus
+            </v-icon>
+            Background
+          </v-btn>
+          <v-btn @click="btnAddCanvasHeight" dark class="mr-3 mt-2">
+            <v-icon class="pr-2">
+              mdi-table-column-plus-after
+            </v-icon>
+            Add Page
+          </v-btn>
+          <v-btn @click="btnEditorImageToCanvas" class="mt-2" dark>
+            <v-icon class="pr-2">
+              mdi-send
+            </v-icon>
+            paint image
+          </v-btn>
+        </v-col>
+      </v-row>
+      <v-row style="justify-content: space-between;">
+        <v-col v-resize="resizeCanvasWidth" cols="5" id="webtoonCanvas" class="mx-auto my-16 webtoon-canvas-css" :style="{ height: webtoonCanvasHeight+'px' }">
+          <VueDragResize
+            v-for="(image, idx) in images"
+            :key="idx"
+            :isActive="image.isActive"
+            :parentH="webtoonCanvasHeight"
+            :parentW="webtoonCanvasWidth"
+            :w="image.w"
+            :h="image.h"
+            :x="image.x"
+            :y="image.y"
+            :z="image.isActive ? 999 : image.zIndex"
+            :isDraggable='image.isDraggable'
+            :parentLimitation="true"
+            @activated="canvasImageOnActivated(idx)"
+            @deactivated="canvasImageOffActivated(idx)"
+            :style="[ !image.isBubble && !image.isBackground ? '' : objectStyle(idx) ]"
+            class="d-flex"
+            @dragstop="dragstop($event, idx)"
+            @resizestop="resizestop($event, idx)"
+>>>>>>> front/src/views/PhotoEditor.vue
           >
             <v-col v-for="(convertedImage, idx) in convertedImages" :key="idx">
               <img
@@ -475,6 +577,7 @@
                     </v-color-picker>
                   </v-col>
                 </v-row>
+<<<<<<< front/src/views/PhotoEditor.vue
               </div>
             </v-container>
           </div>
@@ -512,6 +615,191 @@
                 <template v-slot:append>
                   <v-text-field
                     dark
+=======
+
+                <!-- 말풍선 옵션 -->
+                <div v-show="isClickBubbleOption">
+                  <v-row>
+                    <v-col>
+                      <div class="mb-2">
+                        <div>
+                          Place
+                        </div>
+
+                        <v-btn @click="btnBubbleArrowUp(idx)" dark icon>
+                          <v-icon>
+                            mdi-arrow-up-bold-circle-outline
+                          </v-icon>
+                        </v-btn>
+                        <v-btn @click="btnBubbleArrowDown(idx)" dark icon>
+                          <v-icon>
+                            mdi-arrow-down-bold-circle-outline
+                          </v-icon>
+                        </v-btn>
+                        <v-btn @click="btnBubbleArrowLeft(idx)" dark icon>
+                          <v-icon>
+                            mdi-arrow-left-bold-circle-outline
+                          </v-icon>
+                        </v-btn>
+                        <v-btn @click="btnBubbleArrowRight(idx)" dark icon>
+                          <v-icon>
+                            mdi-arrow-right-bold-circle-outline
+                          </v-icon>
+                        </v-btn>
+                        
+                      </div>
+
+                      <div>
+                        Arrow Size
+                      </div>
+                      <v-slider
+                        @mousedown.stop
+                        v-model="image.bubbleOption.sub.width"
+                        dark
+                        :max="100"
+                        :min="0"
+                      >
+                        <template v-slot:append>
+                          <v-text-field
+                            dark
+                            v-model="image.bubbleOption.sub.width"
+                            class="mt-0 pt-0"
+                            hide-details
+                            single-line
+                            style="width: 60px"
+                          ></v-text-field>
+                        </template>
+                      </v-slider>
+                      <div>
+                        Arrow Horizontal adjust
+                      </div>
+                      <v-slider
+                        @mousedown.stop
+                        v-model="image.bubbleOption.sub.left"
+                        dark
+                        :max="135"
+                        :min="-30"
+                      >
+                        <template v-slot:append>
+                          <v-text-field
+                            dark
+                            v-model="image.bubbleOption.sub.left"
+                            class="mt-0 pt-0"
+                            hide-details
+                            single-line
+                            style="width: 60px"
+                          ></v-text-field>
+                        </template>
+                      </v-slider>
+                      <div>
+                        Arrow Vertical adjust 
+                      </div>
+                      <v-slider
+                        @mousedown.stop
+                        v-model="image.bubbleOption.sub.bottom"
+                        dark
+                        :max="135"
+                        :min="-30"
+                      >
+                        <template v-slot:append>
+                          <v-text-field
+                            dark
+                            v-model="image.bubbleOption.sub.bottom"
+                            class="mt-0 pt-0"
+                            hide-details
+                            single-line
+                            style="width: 60px"
+                          ></v-text-field>
+                        </template>
+                      </v-slider>
+                      <div>
+                        Border Size
+                      </div>
+                      <v-slider
+                        @mousedown.stop
+                        v-model="image.bubbleOption.main.borderWidth"
+                        dark
+                        :max="10"
+                        :min="0"
+                      >
+                        <template v-slot:append>
+                          <v-text-field
+                            dark
+                            v-model="image.bubbleOption.main.borderWidth"
+                            class="mt-0 pt-0"
+                            hide-details
+                            single-line
+                            style="width: 60px"
+                          ></v-text-field>
+                        </template>
+                      </v-slider>
+                      <div>
+                        borderRadius
+                      </div>
+                      <v-slider
+                        @mousedown.stop
+                        v-model="image.bubbleOption.main.borderRadius"
+                        dark
+                        :max="70"
+                        :min="0"
+                      >
+                        <template v-slot:append>
+                          <v-text-field
+                            dark
+                            v-model="image.bubbleOption.main.borderRadius"
+                            class="mt-0 pt-0"
+                            hide-details
+                            single-line
+                            style="width: 60px"
+                          ></v-text-field>
+                        </template>
+                      </v-slider>
+                    </v-col>
+                  </v-row>
+                  <v-row class="">
+                    <v-col class="mr-5">
+                      <div>
+                        Speech bubble Color
+                      </div>
+                      <v-color-picker
+                        hide-mode-switch
+                        v-model="image.bubbleOption.main.backgroundColor"
+                        mode='hexa'
+                        class="my-2"
+                        width="200"
+                      >
+                      </v-color-picker>                      
+                    </v-col>
+                    <v-col>
+                      <div>
+                        Border line Color
+                      </div>
+                      <v-color-picker
+                        @update:color.once="image.bubbleOption.main.borderColor = '#000000F0'"
+                        hide-mode-switch
+                        v-model="image.bubbleOption.main.borderColor"
+                        mode='hexa'
+                        class="my-2"
+                        width="200"
+                      >
+                      </v-color-picker>
+                    </v-col>
+                  </v-row>
+                </div>
+
+
+              </v-container>
+            </div>
+            <!-- 이미지의 경우 -->
+            <div @mousedown="onOptionPreventDrag(idx)" @mouseup="onOptionAllowDrag(idx)" v-if="image.isClickOption && !image.isBubble && !image.isBackground"
+              :style="{ height: 'fit-content', backgroundColor: 'rgba(0,0,20,0.9)', position: 'relative', bottom: image.imageOption.borderSlider + 'px', left: 'calc(100% + 50px + ' + `${image.imageOption.borderSlider}` + 'px )' }">
+              <v-container fluid class="mx-auto my-8 object-option" id="optionSlider">
+                  <div>
+                    Border Size
+                  </div>
+                  <v-slider
+                    @mousedown.stop
+>>>>>>> front/src/views/PhotoEditor.vue
                     v-model="image.imageOption.borderSlider"
                     class="mt-0 pt-0"
                     hide-details
@@ -1213,8 +1501,17 @@ export default {
     },
   },
   created() {
+<<<<<<< front/src/views/PhotoEditor.vue
     this.isIndex();
     this.isNotEditor();
+=======
+    this.isIndex()
+    this.isNotEditor()
+    if ( localStorage.getItem("isLogin") ) {
+      this.$store.state.isLogin = true
+      this.$store.dipatch('getUserInfo')
+    }
+>>>>>>> front/src/views/PhotoEditor.vue
   },
   mounted() {
     // scroll 추적기 붙이기

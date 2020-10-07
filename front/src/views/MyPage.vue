@@ -78,7 +78,15 @@ export default {
   async created() {
     this.isIndex()
     this.isNotEditor()
-    await this.$store.dispatch('getUserEditoonThumbnails')
+    if ( localStorage.getItem("isLogin") ) {
+      this.$store.state.isLogin = true
+      await this.$store.dipatch('getUserInfo')
+      await this.$store.dispatch('getUserEditoonThumbnails')
+    }
+    else {
+      alert('로그인해주세요')
+      this.$router.push('/')
+    }
 
   },
   mounted() {

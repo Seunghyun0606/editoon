@@ -67,8 +67,11 @@ export default {
     clickSingUp() {
       this.$store.state.signUpDialog = true
     },
-    clickLogout() {
-      this.$store.dispatch('logout')
+    async clickLogout() {
+      const check = await this.$store.dispatch('logout')
+      if ( check ) {
+        this.$router.push('/')
+      }
     },
   }
 

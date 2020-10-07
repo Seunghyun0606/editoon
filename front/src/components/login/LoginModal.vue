@@ -16,7 +16,11 @@
             <div style="color: white;">
               로그인
             </div>
-            <form action style="margin-top: 0.2vh;">
+            <v-form
+              action
+              style="margin-top: 0.2vh;"
+              v-model="valid"
+            >
               <v-text-field
                 v-model="loginData.email"
                 label="E-mail"
@@ -39,11 +43,11 @@
                 class="mx-auto"
               ></v-text-field>
               <div>
-                <v-btn class="primary" @click="login()" style="width: 30%;">
+                <v-btn :disabled="!valid" class="primary" @click="login()" style="width: 30%;">
                   <strong>접속하기!</strong>
                 </v-btn>
               </div>
-            </form>
+            </v-form>
           </v-col>
         </v-row>
       </v-container>
@@ -75,6 +79,8 @@ export default {
   },
   data() {
     return {
+      valid: true,
+
       loginData: {
         email: "",
         password: "",

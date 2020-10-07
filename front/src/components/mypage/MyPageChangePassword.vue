@@ -10,7 +10,11 @@
         <v-row style="height: 100%; text-align: center; background-color: rgba(0, 0, 0, 0.8)">
           <v-col class="main-index-txt align-self-center">
 
-            <form action="" style="margin-top: 0.2vh;">
+            <v-form
+              v-model="valid"
+              action=""
+              style="margin-top: 0.2vh;"
+            >
               <v-text-field
                 v-model="passwordSet.password"
                 label="Password"
@@ -51,10 +55,10 @@
               >
                 <strong>비밀번호변경하기</strong>
               </v-btn>
-              <v-btn class='' @click="clickOut()" >
+              <v-btn :disabled="!valid" class='' @click="clickOut()" >
                 <strong>돌아가기</strong>
               </v-btn>
-            </form>
+            </v-form>
           </v-col>
         </v-row>
 
@@ -92,6 +96,7 @@ export default {
   },
   data() {
     return {
+      valid: true,
       passwordSet: {
         password: "",
         newPassword: "",
