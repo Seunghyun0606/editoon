@@ -1,5 +1,5 @@
 <template>
-  <v-layout row>
+  <v-layout row style = 'flex-wrap: wrap'>
     <div class="text-h3" style="width: 100%;">
         내가 쓴 글
 
