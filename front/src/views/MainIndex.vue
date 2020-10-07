@@ -198,7 +198,7 @@
         class="wrap align-content-center justify-center"
         style="height:200px"
       >
-        <button class="button">Get started!</button>
+        <button class="buttonn" @click="getStated">Get started!</button>
       </v-row>
       <!-- <v-row class="align-content-center justify-center py-10">
         <h1 class="main-index-txt">Are you ready?</h1>
@@ -724,7 +724,7 @@ ul.tl li .timestamp {
   justify-content: center;
 }
 
-.button {
+.buttonn {
   min-width: 300px;
   min-height: 60px;
   font-family: "Nunito", sans-serif;
@@ -749,7 +749,7 @@ ul.tl li .timestamp {
   padding: 10px;
 }
 
-button::before {
+buttonn::before {
   content: "";
   border-radius: 1000px;
   min-width: calc(300px + 12px);
@@ -764,18 +764,18 @@ button::before {
   transition: all 0.3s ease-in-out 0s;
 }
 
-.button:hover,
-.button:focus {
+.buttonn:hover,
+.buttonn:focus {
   color: #313133;
   transform: translateY(-6px);
 }
 
-button:hover::before,
-button:focus::before {
+buttonn:hover::before,
+buttonn:focus::before {
   opacity: 1;
 }
 
-button::after {
+buttonn::after {
   content: "";
   width: 30px;
   height: 30px;
@@ -787,24 +787,5 @@ button::after {
   left: 50%;
   transform: translate(-50%, -50%);
   animation: ring 1.5s infinite;
-}
-
-button:hover::after,
-button:focus::after {
-  animation: none;
-  display: none;
-}
-
-@keyframes ring {
-  0% {
-    width: 30px;
-    height: 30px;
-    opacity: 1;
-  }
-  100% {
-    width: 300px;
-    height: 300px;
-    opacity: 0;
-  }
 }
 </style>
