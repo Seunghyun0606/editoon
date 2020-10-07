@@ -3,8 +3,8 @@
     max-width="200"
     outlined
   >
-    <div style="height: 80px; padding-top: 15%; text-align: center;">
-      임의 상자
+    <div style="height: 80px; text-align: center;">
+      <img style="height: 90%;" class="mt-3" :src="require('@/assets/mypagelogo.png')" alt="">
     </div>
     <v-divider class="ma-0"></v-divider>
     <v-list
