@@ -3,8 +3,7 @@
     <v-dialog
       v-model="checkDialog"
       width="35%"
-      style=""  
-      
+      transition="dialog-bottom-transition"
     >
     <!-- class="pa-10 object-option" -->
       <v-container 
