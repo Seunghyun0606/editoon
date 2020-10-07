@@ -200,7 +200,7 @@ export default new Vuex.Store({
       axios.post( SERVER_URL + 'account/logout' )
         .then( () => {
           alert('logout')
-          this.commit('setLoginStatus', false)
+          commit('setLoginStatus', false)
           this.$router.push('MainIndex')
           // 쿠키에 이름이 어떻게 저장되는지 보고, 나중에 다 삭제해줘야함.
           // 무조건 success로 옴
@@ -290,10 +290,6 @@ export default new Vuex.Store({
             this.$router.push('MainIndex')
             commit('setUserInfoInit')
             // dispatch('logout')
-
-            alert('logout')
-          this.commit('setLoginStatus', false)
-          this.$router.push('MainIndex')
           // 쿠키에 이름이 어떻게 저장되는지 보고, 나중에 다 삭제해줘야함.
           // 무조건 success로 옴
           commit('setUserInfoInit')
