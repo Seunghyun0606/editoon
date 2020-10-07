@@ -42,7 +42,7 @@
                 v-model="passwordSet.newPassword"
                 label="새 비밀번호 입력"
                 type="password"
-                :rules="[passwordRules.newPasswordCheck]"
+                :rules="[passwordRules.newPasswordCheck, passwordRules.lengthCheck(10)]"
                 required
                 clearable
                 dark
