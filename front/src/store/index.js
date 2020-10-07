@@ -158,7 +158,7 @@ export default new Vuex.Store({
           
           // console.log(res.data)
           // console.log('코드 보내기 성공') 
-          if ( res.data.result === 'fail ') {
+          if ( res.data.result === 'fail') {
             commit('signUpCodeValidation', false)
           }
           else {
