@@ -208,7 +208,7 @@ export default new Vuex.Store({
       axios.post( SERVER_URL + 'account/logout' )
         .then( () => {
           alert('logout')
-          this.commit('setLoginStatus', false)
+          commit('setLoginStatus', false)
           this.$router.push('MainIndex')
           // 쿠키에 이름이 어떻게 저장되는지 보고, 나중에 다 삭제해줘야함.
           // 무조건 success로 옴
@@ -293,11 +293,14 @@ export default new Vuex.Store({
           }
           else {
             alert('삭제가 완료되었습니다.')
-            state.deleteUserDialog = false
-            commit('setUserInfoInit')
             commit('setLoginStatus', false)
-            // dispatch('logout')
+            state.deleteUserDialog = false
             this.$router.push('MainIndex')
+            commit('setUserInfoInit')
+            // dispatch('logout')
+          // 쿠키에 이름이 어떻게 저장되는지 보고, 나중에 다 삭제해줘야함.
+          // 무조건 success로 옴
+          commit('setUserInfoInit')
           }
         })
         .catch( () => {
