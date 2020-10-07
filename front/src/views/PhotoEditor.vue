@@ -1153,6 +1153,10 @@ export default {
   created() {
     this.isIndex()
     this.isNotEditor()
+    if ( localStorage.getItem("isLogin") ) {
+      this.$store.state.isLogin = true
+      this.$store.dipatch('getUserInfo')
+    }
   },
   mounted() {
 

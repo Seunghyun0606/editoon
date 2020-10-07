@@ -4,7 +4,7 @@ import MainIndex from '@/views/MainIndex'
 // import WebtoonIndex from '@/views/WebtoonIndex'
 import MyPage from '@/views/MyPage'
 import PhotoEditor from '@/views/PhotoEditor'
-import Prac from '@/views/Prac'
+// import Prac from '@/views/Prac'
 
 
 Vue.use(VueRouter)
@@ -30,11 +30,11 @@ Vue.use(VueRouter)
     name: 'PhotoEditor',
     component: PhotoEditor
   },
-  {
-    path: '/prac',
-    name: 'Prac',
-    component: Prac
-  },
+  // {
+  //   path: '/prac',
+  //   name: 'Prac',
+  //   component: Prac
+  // },
   // {
     // path: '/about',
     // name: 'About',

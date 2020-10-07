@@ -364,6 +364,9 @@ export default {
   created() {
     this.isIndex();
     this.isNotEditor();
+    if ( localStorage.getItem("isLogin") ) {
+      this.$store.state.isLogin = true
+    }
   },
   // 계속해서 scroll이 변하는 것을 추적하기 위함.
   mounted() {
