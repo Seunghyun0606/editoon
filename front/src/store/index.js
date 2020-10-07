@@ -196,7 +196,7 @@ export default new Vuex.Store({
           // 토큰 만료시 , HttpStatus === 406일때 토큰 만료이기 때문에 토큰을 다시 받는 로직 만들어야한다.
         })
     },
-    logout() {
+    logout({ commit }) {
       axios.post( SERVER_URL + 'account/logout' )
         .then( () => {
           alert('logout')
@@ -204,6 +204,7 @@ export default new Vuex.Store({
           this.$router.push('MainIndex')
           // 쿠키에 이름이 어떻게 저장되는지 보고, 나중에 다 삭제해줘야함.
           // 무조건 success로 옴
+          commit('setUserInfoInit')
         })
         .catch( err => {
           console.log(err)
