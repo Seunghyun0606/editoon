@@ -91,7 +91,6 @@ export default new Vuex.Store({
       state.isLogin = check
       if ( check ) {
         localStorage.setItem('isLogin', check )
-        localStorage.setItem('userInfo', JSON.stringify(state.userInfo) )
       }
       else {
         localStorage.removeItem('isLogin')
@@ -99,16 +98,17 @@ export default new Vuex.Store({
       }
     },
     imageFromDjango(state, images) {
-
+      
       if ( state.convertedImages.length  > 17 ) {
         state.convertedImages.shift()
       }
-
+      
       state.convertedImages.push(images)
       // console.log('check', images)
       // 이미지 어떻게 넘어오는지 봐야할듯.
     },
     setUserInfo(state, info) {
+      localStorage.setItem('userInfo', JSON.stringify(state.userInfo) )
       state.userInfo = info
     },
     setUserEditoonImages(state, images) {
@@ -191,8 +191,7 @@ export default new Vuex.Store({
     // login check
     login({ commit, dispatch }, loginData) {
       axios.post( SERVER_URL + 'login', loginData)
-        .then( res => {
-          console.log(res.data)
+        .then( () => {
           alert("로그인성공")
           dispatch('getUserInfo')
           commit('setLoginStatus', true)
