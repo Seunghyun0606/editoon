@@ -20,7 +20,7 @@ export default new Vuex.Store({
     showMytoonDialog: false,
     changePasswordDialog: false,
     deleteUserDialog: false,
-    photoToolTipDialog: true,
+    photoToolTipDialog: false,
     
     isLogin: false,
 
