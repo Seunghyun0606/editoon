@@ -885,11 +885,11 @@ export default {
         w: 200,
         h: 200,
         image: dataURL,
-        isActive: false,
+        isActive: true,
         isBackground: false,
         isBubble: false,
         zIndex: 100,
-        isClickOption: false,
+        isClickOption: true,
         isDraggable: true,
         imageOption: {
           borderSlider: 5,
@@ -908,11 +908,11 @@ export default {
         w: 200,
         h: 200,
         image: "",
-        isActive: false,
+        isActive: true,
         isBackground: false,
         isBubble: true,
         zIndex: 100,
-        isClickOption: false,
+        isClickOption: true,
         isDraggable: true,
         bubbleOption: {
           text: {
@@ -959,11 +959,11 @@ export default {
         w: backgroundWidth,
         h: 200,
         image: "",
-        isActive: false,
+        isActive: true,
         isBackground: true,
         isBubble: false,
         zIndex: 100,
-        isClickOption: false,
+        isClickOption: true,
         isDraggable: true,
         backgroundOption: {
           gradientCheck: 0, // 0 없음, 1 upper, 2 lower
