@@ -34,19 +34,19 @@ export default new Vuex.Store({
     userEditoonThumbnails: [],
     // _id, subject, thumbnail, createDate로 온다.
 
-    userInfo: {
-      no: '',
-      email: '',
-      name: '',
-      image: '',  // 유저 아이콘
-    },
-
     // userInfo: {
-    //   no: '43',
-    //   email: 'dkdlrnf0@gmail.com',
-    //   name: 'ss',
-    //   image: 'default.jpg',  // 유저 아이콘
+    //   no: '',
+    //   email: '',
+    //   name: '',
+    //   image: '',  // 유저 아이콘
     // },
+
+    userInfo: {
+      no: '43',
+      email: 'dkdlrnf0@gmail.com',
+      name: 'ss',
+      image: 'default.jpg',  // 유저 아이콘
+    },
 
 
     signUpValidation: {
