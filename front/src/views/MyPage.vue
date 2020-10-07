@@ -80,7 +80,7 @@ export default {
     this.isNotEditor()
     if ( localStorage.getItem("isLogin") ) {
       this.$store.state.isLogin = true
-      await this.$store.dipatch('getUserInfo')
+      await this.$store.dispatch('getUserInfo')
       await this.$store.dispatch('getUserEditoonThumbnails')
     }
     else {
