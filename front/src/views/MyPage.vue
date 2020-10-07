@@ -83,6 +83,10 @@ export default {
       await this.$store.dipatch('getUserInfo')
       await this.$store.dispatch('getUserEditoonThumbnails')
     }
+    else {
+      alert('로그인해주세요')
+      this.$router.push('/')
+    }
 
   },
   mounted() {
