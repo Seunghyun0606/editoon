@@ -221,7 +221,7 @@ export default new Vuex.Store({
     },
     // 유저정보 가져오기
     getUserInfo({ commit }) {
-      axios.post( SERVER_URL + 'account/getLoginInfo' )
+      return axios.post( SERVER_URL + 'account/getLoginInfo' )
         .then( res => {
           // alert('유저정보 가져오기 성공')
           // console.log(res.data)
