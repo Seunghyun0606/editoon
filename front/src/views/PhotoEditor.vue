@@ -2,19 +2,19 @@
     <v-container fluid style="height: 100%; background-color: rgba(0, 0,0, 0.88)">
       <v-row style="justify-content: space-between; top: 20px; position: relative; z-index: 999;">
         <v-col cols="5" class="mx-auto" style="">
-          <v-btn @click="$store.state.saveCanvasDialog = true" dark>
+          <v-btn @click="$store.state.saveCanvasDialog = true" dark class="mr-3 mt-2">
             <v-icon class="pr-2">
               mdi-cloud-download-outline
             </v-icon>
             SAVE online
           </v-btn>
-          <v-btn @click="downloadCanvas" dark class="" >
+          <v-btn @click="downloadCanvas" dark class="mr-3 mt-2" >
             <v-icon class="pr-2">
               mdi-file-download-outline
             </v-icon>
             download canvas
           </v-btn>
-          <v-btn @click='downloadImage' dark >
+          <v-btn @click='downloadImage' dark class="mt-2">
             <v-icon class="pr-2">
               mdi-download
             </v-icon>
@@ -23,7 +23,7 @@
 
         </v-col>
         <v-col cols="6" class="mr-5" :style="{ position: 'relative', top: `${currentScrollPlace}` + 'px' }">
-          <v-btn @click="isShowWebtoonImages = !isShowWebtoonImages" class="" color="" dark>
+          <v-btn @click="isShowWebtoonImages = !isShowWebtoonImages" class="mr-3 mt-2" dark>
             <v-icon class="pr-2">
               mdi-image-multiple-outline
             </v-icon>
@@ -51,25 +51,25 @@
             </v-row>
           </v-btn>
 
-          <v-btn @click="btnAddBubble1" dark>
+          <v-btn @click="btnAddBubble1" dark class="mr-3 mt-2">
             <v-icon class="pr-2">
               mdi-chat-plus-outline
             </v-icon>
             Chat
           </v-btn>
-          <v-btn @click="btnAddBackground" dark class="">
+          <v-btn @click="btnAddBackground" dark class="mr-3 mt-2">
             <v-icon class="pr-2">
               mdi-card-plus
             </v-icon>
             Background
           </v-btn>
-          <v-btn @click="btnAddCanvasHeight" dark class="">
+          <v-btn @click="btnAddCanvasHeight" dark class="mr-3 mt-2">
             <v-icon class="pr-2">
               mdi-table-column-plus-after
             </v-icon>
             Add Page
           </v-btn>
-          <v-btn @click="btnEditorImageToCanvas" class="" dark>
+          <v-btn @click="btnEditorImageToCanvas" class="mt-2" dark>
             <v-icon class="pr-2">
               mdi-send
             </v-icon>
