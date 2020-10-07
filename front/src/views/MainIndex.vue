@@ -14,13 +14,13 @@
           <v-row> -->
         <!-- <v-col class="text-center main-index-txt"> -->
         <div @click="moveToEditor" class="text" style="cursor: pointer">
-          <span>E</span>
-          <span>D</span>
-          <span>I</span>
-          <span>T</span>
-          <span>O</span>
-          <span>O</span>
-          <span>N</span>
+          <span class="main-index-txt">E</span>
+          <span class="main-index-txt">D</span>
+          <span class="main-index-txt">I</span>
+          <span class="main-index-txt">T</span>
+          <span class="main-index-txt">O</span>
+          <span class="main-index-txt">O</span>
+          <span class="main-index-txt">N</span>
         </div>
       </v-row>
       <div
@@ -33,7 +33,9 @@
 
     <!-- 타임라인시작 -->
     <v-container fluid class="px-10">
-      <h1 class="text-center" style="margin-top: 100px">Wecolme to Editoon!</h1>
+      <h1 class="text-center main-index-txt" style="margin-top: 100px">
+        Wecolme to Editoon!
+      </h1>
 
       <div class="history-tl-container" style="margin-top: 100px">
         <ul class="tl">
@@ -98,103 +100,43 @@
       class="px-10 main-background"
       :style="mainBackgroundImage.three"
     >
-      <v-row class="align-content-center justify-center" style="height: 20%">
-        <h1 class="py-10">
-          How to use...
-          <!-- <div style="font-size: 18px">*아래 영상을 천천히 살펴보세요!</div> -->
-        </h1>
+      <v-row
+        class="align-content-center justify-center py-10"
+        :class="{
+          'fade-in': !activeClass.third,
+          'fade-out': activeClass.third,
+        }"
+      >
+        <h1 class="main-index-txt">How to use...</h1>
       </v-row>
       <v-row
         class="align-content-center justify-center"
         :class="{
-          'fade-in': activeClass.third,
+          'fade-in': !activeClass.third,
+          'fade-out': activeClass.third,
         }"
-        style="height: 60%"
       >
-        <v-col md="6" class="mx-md-10 mx-sm-0 mx-xs-0 pa-0">
-          <img style="width: 100%" :src="require('@/assets/webtoon.png')" alt />
-        </v-col>
+        <img style="width: 60%" :src="require('@/assets/webtoon.png')" alt />
       </v-row>
-
       <div
         @click="scrollDown(3)"
         class="mx-auto d-flex justify-center main-scroll-down"
         :class="{
-          'fade-in': activeClass.third,
-          'fade-out': !activeClass.third,
+          'fade-in': !activeClass.third,
+          'fade-out': activeClass.third,
         }"
       >
         <v-icon style="color: white; font-size: 36px">mdi-chevron-down</v-icon>
       </div>
     </v-container>
+
     <!-- 다음페이지 -->
-    <v-container
-      fluid
-      class="px-10 py-16 main-background"
-      :style="mainBackgroundImage.two"
-    >
-      <v-row class="align-content-center justify-center" style="height: 20%">
-        <h1 class="pb-5">Sample Example</h1>
-      </v-row>
-      <v-row
-        class="align-content-center justify-center d-flex"
-        :class="{
-          'fade-in': activeClass.second,
-        }"
-        style="height: 90%; width: 100%"
-      >
-        <v-col
-          justify-center
-          md="6"
-          class="mx-md-10 mx-sm-0 mx-xs-0 mx-lg-5 pa-0"
-          style="height: 60vh"
-        >
-          <!-- <img style="width: 100%;" :src="require('@/assets/main_second.jpg')" alt /> -->
-
-          <VueCompareImage
-            style="height: 100%"
-            :leftImage="require('@/assets/iu.jpg')"
-            :rightImage="require('@/assets/iu_cartoon.jpg')"
-          />
-        </v-col>
-      </v-row>
-      <v-row>
-        <div>
-          <h1>Are you ready?</h1>
-          <v-btn>Start</v-btn>
-        </div>
-      </v-row>
-
-      <div
-        @click="scrollDown(2)"
-        class="mx-auto d-flex justify-center main-scroll-down"
-        :class="{
-          'fade-in': activeClass.second,
-          'fade-out': !activeClass.second,
-        }"
-      >
-        <v-icon style="color: white; font-size: 36px">mdi-chevron-down</v-icon>
-      </div>
-    </v-container>
-
-    <!-- main 3 페이지 -->
-
-    <!-- main 4 페이지 -->
-    <!-- <img :src="require('@/assets/1-2.jpg')" class="main-background-last" alt /> -->
 
     <v-container
       fluid
-      class="px-10 main-background-last"
+      class="px-10 main-background"
       :style="[mainBackgroundImage.four]"
     >
-      <v-row>
-        <div>
-          <h1>Are you ready?</h1>
-          <v-btn>Start</v-btn>
-        </div>
-      </v-row>
-    </v-container>
-    <!-- 
       <v-row style="height: 90%">
         <v-col
           :class="{
@@ -203,47 +145,65 @@
           }"
         >
           <v-row style="height: 30vh; text-align: center" class="align-center">
-            <v-col class="main-index-txt">대표작품들을 감상해보세요</v-col>
+            <v-col class="main-index-txt"> Take a look at sample!</v-col>
           </v-row>
           <v-row class="justify-space-around">
             <v-col class="mx-2">
-              <img
-                style="width: 100%; height: 300px"
-                src="https://picsum.photos/1920/1080?random"
-                alt
+              <VueCompareImage
+                style="height: 100%; width:100%;"
+                :leftImage="require('@/assets/lee1.jpg')"
+                :rightImage="require('@/assets/lee2.jpg')"
               />
             </v-col>
             <v-col class="mx-2">
-              <img
-                style="width: 100%; height: 300px"
-                src="https://picsum.photos/1920/1080?random"
-                alt
+              <VueCompareImage
+                style="height: 100%; width:100%;"
+                :leftImage="require('@/assets/seo1.jpg')"
+                :rightImage="require('@/assets/seo2.jpg')"
               />
             </v-col>
             <v-col class="mx-2">
-              <img
-                style="width: 100%; height: 300px"
-                src="https://picsum.photos/1920/1080?random"
-                alt
+              <VueCompareImage
+                style="height: 100%; width:100%;"
+                :leftImage="require('@/assets/suji1.jpg')"
+                :rightImage="require('@/assets/suji2.jpg')"
               />
             </v-col>
             <v-col class="mx-2">
-              <img
-                style="width: 100%; height: 300px"
-                src="https://picsum.photos/1920/1080?random"
-                alt
+              <VueCompareImage
+                style="height: 100%; width:100%;"
+                :leftImage="require('@/assets/iu1.jpg')"
+                :rightImage="require('@/assets/iu2.jpg')"
               />
             </v-col>
+
             <v-col class="mx-2">
-              <img
-                style="width: 100%; height: 300px"
-                src="https://picsum.photos/1920/1080?random"
-                alt
+              <VueCompareImage
+                style="height: 100%; width:100%;"
+                :leftImage="require('@/assets/you1.jpg')"
+                :rightImage="require('@/assets/you2.jpg')"
               />
             </v-col>
           </v-row>
         </v-col>
       </v-row>
+
+      <v-row class="align-content-center justify-center">
+        <h1 class="main-index-txt">Are you ready?</h1>
+      </v-row>
+      <v-row class="align-content-center justify-center">
+        <h1>지금 바로 에디툰을 시작해보세요!!</h1>
+      </v-row>
+      <v-row
+        class="wrap align-content-center justify-center"
+        style="height:200px"
+      >
+        <button class="button">Get started!</button>
+      </v-row>
+      <!-- <v-row class="align-content-center justify-center py-10">
+        <h1 class="main-index-txt">Are you ready?</h1>
+      </v-row>
+       -->
       <div
         @click="scrollDown(0)"
         class="mx-auto main-scroll-down d-flex justify-center"
@@ -254,7 +214,13 @@
       >
         <v-icon style="color: black; font-size: 36px">mdi-chevron-up</v-icon>
       </div>
-    </v-container> -->
+    </v-container>
+
+    <div
+      fluid
+      class="px-10 main-background-last"
+      :style="[mainBackgroundImage.four]"
+    ></div>
     <div v-show="viewPortHeight / 2 <= current" @click="scrollDown(0)">
       <v-icon
         class="main-scroll-up"
@@ -317,15 +283,6 @@ export default {
       },
     };
   },
-  // watch: {
-  //   current: {
-  //     immediate: true,
-  //     handler() {
-  //       this.current = document.documentElement.scrollTop
-
-  //     }
-  //   }
-  // },
 
   computed: {
     viewPortHeight() {
@@ -498,7 +455,7 @@ export default {
 }
 
 .main-background-last {
-  height: 100vh;
+  height: 60vh;
   background-attachment: fixed;
   background-size: cover;
 }
@@ -753,5 +710,98 @@ ul.tl li .timestamp {
   text-align: right;
   font-size: 35px;
   // background-color: red;
+}
+
+//sdfsdf
+
+.wrap {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  min-width: 300px;
+  min-height: 60px;
+  font-family: "Nunito", sans-serif;
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  font-weight: 700;
+  color: #313133;
+  background: #4fd1c5;
+  background: linear-gradient(
+    90deg,
+    rgba(129, 230, 217, 1) 0%,
+    rgba(79, 209, 197, 1) 100%
+  );
+  border: none;
+  border-radius: 1000px;
+  box-shadow: 12px 12px 24px rgba(79, 209, 197, 0.64);
+  transition: all 0.3s ease-in-out 0s;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  padding: 10px;
+}
+
+button::before {
+  content: "";
+  border-radius: 1000px;
+  min-width: calc(300px + 12px);
+  min-height: calc(60px + 12px);
+  border: 6px solid #00ffcb;
+  box-shadow: 0 0 60px rgba(0, 255, 203, 0.64);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.button:hover,
+.button:focus {
+  color: #313133;
+  transform: translateY(-6px);
+}
+
+button:hover::before,
+button:focus::before {
+  opacity: 1;
+}
+
+button::after {
+  content: "";
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  border: 6px solid #00ffcb;
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: ring 1.5s infinite;
+}
+
+button:hover::after,
+button:focus::after {
+  animation: none;
+  display: none;
+}
+
+@keyframes ring {
+  0% {
+    width: 30px;
+    height: 30px;
+    opacity: 1;
+  }
+  100% {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+  }
 }
 </style>
