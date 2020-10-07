@@ -295,7 +295,7 @@ export default new Vuex.Store({
         }
         })
         .then( res => {
-          if(res.data.map.editoonDetailList != null){
+          if(res.data.result === 'success'){
             res.data.map.editoonDetailList.forEach(function(element){
               let year = element.createDate.substring(0,2);
               let month = element.createDate.substring(2,4);
