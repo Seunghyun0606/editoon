@@ -2,11 +2,13 @@
   <v-row justify="center">
     <v-dialog v-model="loginDialog" max-width="60%">
       <v-container fluid style="height: 80vh;">
-        <v-row style="height: 100%; text-align: center; background-color: rgba(0, 0, 0, 0.8)">
+        <v-row
+          style="height: 100%; text-align: center; background-color: rgba(0, 0, 0, 0.8)"
+        >
           <v-col cols="7">
             <img
               style="height: 100%; width: 100%;"
-              :src="require('@/assets/account_login.png')"
+              :src="require('@/assets/red.gif')"
               alt
             />
           </v-col>
@@ -18,7 +20,7 @@
               <v-text-field
                 v-model="loginData.email"
                 label="E-mail"
-                :rules='[rules.email]'
+                :rules="[rules.email]"
                 required
                 clearable
                 dark
@@ -29,7 +31,7 @@
                 v-model="loginData.password"
                 label="password"
                 type="password"
-                :rules='[rules.password, rules.lengthCheck(10)]'
+                :rules="[rules.password, rules.lengthCheck(10)]"
                 required
                 clearable
                 dark
@@ -67,7 +69,7 @@ export default {
       },
       set(val) {
         this.$store.state.loginDialog = val;
-        this.reset()
+        this.reset();
       },
     },
   },
@@ -78,28 +80,30 @@ export default {
         password: "",
       },
       rules: {
-        email: v => !!(v || '').match(/@/) || '이메일 형식이 아닙니다.',
-        lengthCheck: len => v => (v || '').length >= len || `${len}자 이상이어야합니다. 현재 ${v.length}자 입니다.`,
-        password: v => !!(v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/) ||
-          '숫자, 영어 대소문자, 특수문자가 포함되어야합니다.',
+        email: (v) => !!(v || "").match(/@/) || "이메일 형식이 아닙니다.",
+        lengthCheck: (len) => (v) =>
+          (v || "").length >= len ||
+          `${len}자 이상이어야합니다. 현재 ${v.length}자 입니다.`,
+        password: (v) =>
+          !!(v || "").match(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/
+          ) || "숫자, 영어 대소문자, 특수문자가 포함되어야합니다.",
       },
-
     };
   },
   methods: {
     login() {
       // 받아온 값이랑, 데이터 비교해야함.
       this.$store.state.loginDialog = false;
-      this.$store.dispatch('login', this.loginData)
-      this.reset()
+      this.$store.dispatch("login", this.loginData);
+      this.reset();
     },
     reset() {
-      this.loginData.email = ''
-      this.loginData.password = ''
-    }
+      this.loginData.email = "";
+      this.loginData.password = "";
+    },
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>
