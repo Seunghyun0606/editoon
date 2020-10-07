@@ -134,7 +134,8 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 		// 그럼 쿠키에 담긴 access token 의 expire은 refresh token 과 같이 하는건지?
 
 		Cookie accessCookie = new Cookie("access-token", accessToken);
-		accessCookie.setMaxAge(30 * 60); // 30분
+		// accessCookie.setMaxAge(30 * 60); // 30분
+		accessCookie.setMaxAge(24 * 60 * 60 * 31); // 31일
 		accessCookie.setHttpOnly(true);
 		accessCookie.setDomain("j3b308.p.ssafy.io");
 		// accessCookie.setDomain("localhost");
