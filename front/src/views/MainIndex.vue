@@ -208,7 +208,7 @@
         class="wrap align-content-center justify-center"
         style="height:200px"
       >
-        <button class="buttonn" @click="getStated">Get started!</button>
+        <button class="buttonn" @click="moveToEditor">Get started!</button>
       </v-row>
       <!-- <v-row class="align-content-center justify-center py-10">
         <h1 class="main-index-txt">Are you ready?</h1>
@@ -338,9 +338,6 @@ export default {
     },
     clickLogin() {
       this.dialog = true;
-    },
-    getStated() {
-      this.$router.push("photoeditor");
     },
     scrollDown(page) {
       let y = this.viewPortHeight;
