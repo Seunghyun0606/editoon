@@ -89,6 +89,14 @@ export default new Vuex.Store({
     },
     setLoginStatus(state, check) {
       state.isLogin = check
+      if ( check ) {
+        localStorage.setItem('isLogin', check )
+        localStorage.setItem('userInfo', JSON.stringify(state.userInfo) )
+      }
+      else {
+        localStorage.removeItem('isLogin')
+        localStorage.removeItem('userInfo')
+      }
     },
     imageFromDjango(state, images) {
 
