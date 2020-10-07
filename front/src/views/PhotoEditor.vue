@@ -319,7 +319,7 @@
                       v-model="image.bubbleOption.sub.width"
                       dark
                       :max="100"
-                      :min="10"
+                      :min="0"
                     >
                       <template v-slot:append>
                         <v-text-field
