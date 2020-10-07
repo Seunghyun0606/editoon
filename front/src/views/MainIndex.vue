@@ -39,7 +39,7 @@
 
       <div class="history-tl-container" style="margin-top: 100px">
         <ul class="tl">
-          <li class="tl-item" ng-repeat="item in retailer_history">
+          <li @click="scrollDown(2)" class="tl-item" ng-repeat="item in retailer_history">
             <div class="timestamp">
               <img
                 width="450"
@@ -58,7 +58,7 @@
 
             <!-- <div class="timestamp"><img src="@/assets/step1.png" /></div> -->
           </li>
-          <li class="tl-item" ng-repeat="item in retailer_history">
+          <li @click="scrollDown(3)" class="tl-item" ng-repeat="item in retailer_history">
             <div class="timestamp">
               Step2.<br />
               에디툰으로 편집<br />
@@ -74,7 +74,7 @@
                 src="@/assets/step2.png"
               />
             </div>
-            <div class="item-title" style="margin-top: 280px">
+            <div @click.stop="scrollDown(4)" class="item-title" style="margin-top: 280px">
               Step3. <br />간단히 완성!<br />
               <small style="font-size: 20px">
                 가장 빠르고 효과좋은 애니메이션 Tool <br />에디툰을
@@ -82,7 +82,7 @@
               </small>
             </div>
           </li>
-          <li class="tl-item" ng-repeat="item in retailer_history">
+          <li @click="scrollDown(4)" class="tl-item" ng-repeat="item in retailer_history">
             <div class="timestamp">
               <img
                 width="450"
@@ -119,7 +119,7 @@
         <img style="width: 60%" :src="require('@/assets/webtoon.png')" alt />
       </v-row>
       <div
-        @click="scrollDown(3)"
+        @click="scrollDown(5)"
         class="mx-auto d-flex justify-center main-scroll-down"
         :class="{
           'fade-in': !activeClass.third,
@@ -137,7 +137,7 @@
       class="px-10 main-background"
       :style="[mainBackgroundImage.four]"
     >
-      <v-row style="height: 90%">
+      <v-row style="height: 85%">
         <v-col
           :class="{
             'fade-in': activeClass.fourth,
@@ -187,6 +187,16 @@
           </v-row>
         </v-col>
       </v-row>
+      <div
+        @click="scrollDown(6)"
+        class="mx-auto d-flex justify-center main-scroll-down"
+        :class="{
+          'fade-in': !activeClass.third,
+          'fade-out': activeClass.third,
+        }"
+      >
+        <v-icon style="color: white; font-size: 36px">mdi-chevron-down</v-icon>
+      </div>
 
       <v-row class="align-content-center justify-center">
         <h1 class="main-index-txt">Are you ready?</h1>
