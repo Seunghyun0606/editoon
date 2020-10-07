@@ -85,7 +85,11 @@ export default {
   },
   methods: {
     deleteUser() {
-      this.$store.dispatch('deleteUser', this.userInfo)
+      const check = this.$store.dispatch('deleteUser', this.userInfo)
+      if (check) {
+        this.$router.push('/')
+      }
+
     },
     clickOut() {
       this.$store.state.deleteUserDialog = false

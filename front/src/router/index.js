@@ -23,7 +23,7 @@ Vue.use(VueRouter)
   {
     path: '/mypage',
     name: 'MyPage',
-    component: MyPage
+    component: MyPage,
   },
   {
     path: '/photoeditor',
