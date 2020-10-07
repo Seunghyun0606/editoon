@@ -205,14 +205,15 @@ export default new Vuex.Store({
         })
     },
     logout({ commit }) {
-      axios.post( SERVER_URL + 'account/logout' )
+      return axios.post( SERVER_URL + 'account/logout' )
         .then( () => {
           alert('logout')
           commit('setLoginStatus', false)
-          this.$router.push('MainIndex')
+          // this.$router.push('MainIndex')
           // 쿠키에 이름이 어떻게 저장되는지 보고, 나중에 다 삭제해줘야함.
           // 무조건 success로 옴
           commit('setUserInfoInit')
+          return true
         })
         .catch( err => {
           console.log(err)
