@@ -295,12 +295,14 @@ export default new Vuex.Store({
         }
         })
         .then( res => {
-          res.data.map.editoonDetailList.forEach(function(element){
-            let year = element.createDate.substring(0,2);
-            let month = element.createDate.substring(2,4);
-            let day = element.createDate.substring(4,6);
-            element.createDate = "20" + year + "년 "  + month + "월 " + day + "일";
-          });
+          if(res.data.map.editoonDetailList != null){
+            res.data.map.editoonDetailList.forEach(function(element){
+              let year = element.createDate.substring(0,2);
+              let month = element.createDate.substring(2,4);
+              let day = element.createDate.substring(4,6);
+              element.createDate = "20" + year + "년 "  + month + "월 " + day + "일";
+            });
+          }
           commit('setUserEditoonThumbnails', res.data.map.editoonDetailList)
         })
         .catch( err => {
