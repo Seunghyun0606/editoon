@@ -70,7 +70,7 @@ export default {
     async clickLogout() {
       const check = await this.$store.dispatch('logout')
       if ( check ) {
-        this.$router.push('MainIndex')
+        this.$router.push('')
       }
     },
   }
