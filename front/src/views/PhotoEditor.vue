@@ -589,7 +589,7 @@
       </v-col>
     </v-row>
     <PhotoEditorSaveOnlineModal @thumbnailAndSubject="canvasImageToSpring" />
-    <PhotoEditorToolTipModal />
+    <!-- <PhotoEditorToolTipModal /> -->
     <!-- <PhotoEditorHelpDial /> -->
     <!-- <v-overlay
       :value="checkLoading.isMoveImageToCanvasLoading"
@@ -616,7 +616,7 @@ import { mapState } from "vuex";
 
 import Loading from "@/components/Loading";
 import PhotoEditorSaveOnlineModal from "@/components/photoeditor/PhotoEditorSaveOnlineModal";
-import PhotoEditorToolTipModal from "@/components/photoeditor/PhotoEditorToolTipModal";
+// import PhotoEditorToolTipModal from "@/components/photoeditor/PhotoEditorToolTipModal";
 // import PhotoEditorHelpDial from "@/components/photoeditor/PhotoEditorHelpDial";
 
 export default {
@@ -625,7 +625,7 @@ export default {
     VueDragResize,
     vue2Dropzone,
     PhotoEditorSaveOnlineModal,
-    PhotoEditorToolTipModal,
+    // PhotoEditorToolTipModal,
     // PhotoEditorHelpDial,
     Loading,
   },

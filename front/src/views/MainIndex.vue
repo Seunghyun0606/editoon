@@ -119,7 +119,7 @@
         }"
         style=""
       >
-        <img style="width: 40%;" :src="require('@/assets/webtoon.png')" alt />
+        <img style="width: 60%;" :src="require('@/assets/tooltip.gif')" alt />
       </v-row>
       <!-- <div
         @click="scrollDown(5)"
