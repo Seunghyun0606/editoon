@@ -54,16 +54,16 @@ ex) {"img": "0002.jpg"}
 
 UGATIT 모델을 사용하여 학습을 했는데, 오른쪽으로 갈수록 학습을 많이 진행한 것인데, 과적합되는 모습을 보임
 
-![arrow](README_img\arrow.png)
+![arrow](README_img/arrow.png)
 
 
 
-![pictures](README_img\pictures.png)
+![pictures](README_img/pictures.png)
 
 
 
 ## 기술스택
 
-![stack1](README_img\stack1.png)
+![stack1](README_img/stack1.png)
 
-![stack2](README_img\stack2.png)
+![stack2](README_img/stack2.png)
