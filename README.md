@@ -4,7 +4,7 @@
 
 ### **편하게 웹툰을 만들 수 있는 사이트**
 
-![image-20201008123523593](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20201008123523593.png)
+edit + webtoon 이미지 
 
 ##  :sparkles: 프로젝트 구조
 
@@ -16,11 +16,10 @@ yarn serve
 
 ```
 
-![image-20201008123543931](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20201008123543931.png)
+![step](README_img\step.png)
 
 ## Usage
 
-```python
 Django 이미지 변환(UGATIT)
 
 python 3.8 이상에서는 tensorflow 1.14버전이 안깔리는듯 합니다.
@@ -36,7 +35,6 @@ https://drive.google.com/file/d/19xQK2onIy-3S5W5K-XIh85pAg_RNvBVf/view?usp=shari
 visual code로 django 서버를 실행한다.
 python manage.py runserver
 
-
 이미지변환을 위한 요청URL: (POST방식) http://127.0.0.1:8000/ai/ImgtoAnime/
 필요한 데이터 JSON 타입 {"img": 값}
 ex) {"img": "0002.jpg"}
@@ -47,12 +45,8 @@ ex) {"img": "0002.jpg"}
 \django_for_ai\dataset\selfie2anime 경로 안에 저장해야함.
 
 
-현재는 002.jpg~0005.jpg에 대해서 테스트가능하다.
-
-
 
 변환된 결과는 \django_for_ai\output 폴더에 저장된다.
-```
 
 
 
@@ -60,18 +54,16 @@ ex) {"img": "0002.jpg"}
 
 UGATIT 모델을 사용하여 학습을 했는데, 오른쪽으로 갈수록 학습을 많이 진행한 것인데, 과적합되는 모습을 보임
 
-![image-20201008123004894](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20201008123004894.png)
-
-![image-20201008123009841](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20201008123009841.png)
+![arrow](README_img\arrow.png)
 
 
 
-
+![pictures](README_img\pictures.png)
 
 
 
 ## 기술스택
 
-![image-20201008123025722](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20201008123025722.png)
+![stack1](README_img\stack1.png)
 
-![image-20201008123027342](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20201008123027342.png)
+![stack2](README_img\stack2.png)
