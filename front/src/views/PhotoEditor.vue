@@ -655,7 +655,7 @@ export default {
           isActive: false, // 나중에 중복 선택 제거를 위함.
           isBackground: false, // 배경인지 확인하기위함.
           isBubble: false, // 말풍선인지 확인
-          zIndex: 102,
+          zIndex: 100,
           isClickOption: false,
           isDraggable: true,
           imageOption: {
@@ -914,7 +914,7 @@ export default {
         isActive: true,
         isBackground: false,
         isBubble: true,
-        zIndex: 90,
+        zIndex: 110,
         isClickOption: true,
         isDraggable: true,
         bubbleOption: {
