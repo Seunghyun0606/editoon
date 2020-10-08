@@ -16,7 +16,7 @@ yarn serve
 
 ```
 
-![step](README_img\step.png)
+![step](README_img/step.png)
 
 ## Usage
 
