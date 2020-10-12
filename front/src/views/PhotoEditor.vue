@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid style="height: 100%; background-color: rgba(0, 0,0, 0.88)">
+    <v-container @paste="pasteObject" fluid style="height: 100%; background-color: rgba(0, 0,0, 0.88)">
       <v-row style="justify-content: space-between; top: 20px; position: relative; z-index: 150;">
         <v-col cols="5" class="mx-auto" style="">
           <v-btn @click="$store.state.saveCanvasDialog = true" dark class="mr-3 mt-2">
@@ -98,6 +98,7 @@
             class="d-flex"
             @dragstop="dragstop($event, idx)"
             @resizestop="resizestop($event, idx)"
+            @clicked="checknumber = idx"
           >
           <img
             v-if="!image.isBubble && !image.isBackground"
@@ -645,6 +646,7 @@ export default {
       isClickBubbleOption: false,
       previewCount: 0,
       objectCount: 0,
+      checkIdx: 0,
       images: [
         {
           x: 0,
@@ -798,13 +800,23 @@ export default {
         // addRemoveLinks: true
         // clickable: false,
       },
-    };
+    }
   },
   computed: {
     ...mapState(["convertedImages", "userInfo", "checkLoading"]),
     // img :src="'data:image/png;base64,' + `${test123}`" 나중에 이미지 base64파일 형식으로 넣어주면된다.
   },
   methods: {
+    pasteObject() {
+      const object = this.images[this.checkIdx]
+      let pastedObject = JSON.parse(JSON.stringify(object));
+      object.isActive = false
+      this.checkIdx = this.images.length
+      pastedObject.y += 10
+
+      this.images.push(pastedObject)
+      this.objectCount++
+    },
     dragstop(payload, idx) {
       this.images[idx].x = payload.left;
       this.images[idx].y = payload.top;
@@ -947,15 +959,13 @@ export default {
             transform: "rotate(135deg)",
           },
         },
-      };
-      this.images.push(addBubble);
-      this.objectCount++;
+      }
+      this.images.push(addBubble)
+      this.objectCount++
     },
     // background 추가.
     btnAddBackground() {
-      const backgroundWidth = document.querySelector("#webtoonCanvas")
-        .offsetWidth;
-      console.log(backgroundWidth);
+      const backgroundWidth = document.querySelector("#webtoonCanvas").offsetWidth
       const addBackground = {
         x: 0,
         y: this.currentScrollPlace,
@@ -972,8 +982,8 @@ export default {
           gradientCheck: 0, // 0 없음, 1 upper, 2 lower
         },
       };
-      this.images.push(addBackground);
-      this.objectCount++;
+      this.images.push(addBackground)
+      this.objectCount++
     },
 
     isIndex() {
