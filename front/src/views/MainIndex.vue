@@ -103,22 +103,22 @@
     >
       <v-row
         class="align-content-center justify-center py-10"
-        :class="{
-          'fade-in': activeClass.third,
-          'fade-out': !activeClass.third,
-        }"
         style="height: 20%"
       >
+        <!-- :class="{
+          'fade-in': activeClass.third,
+          'fade-out': !activeClass.third,
+        }" -->
         <h1 class="main-index-txt">How to use...</h1>
       </v-row>
       <v-row
         class="align-content-center justify-center pb-12"
-        :class="{
-          'fade-in': activeClass.third,
-          'fade-out': !activeClass.third,
-        }"
         style=""
       >
+        <!-- :class="{
+          'fade-in': activeClass.third,
+          'fade-out': !activeClass.third,
+        }" -->
         <img style="width: 60%;" :src="require('@/assets/tooltip.gif')" alt />
       </v-row>
       <!-- <div
@@ -145,11 +145,11 @@
         style="height:100%;"
       >
         <v-col
-          :class="{
+        >
+          <!-- :class="{
             'fade-in': activeClass.fourth,
             'fade-out': !activeClass.fourth,
-          }"
-        >
+          }" -->
           <v-row style="height: 30vh; text-align: center" class="align-center">
             <v-col class="main-index-txt"> Take a look at sample!</v-col>
           </v-row>
@@ -208,12 +208,11 @@
       fluid
       class="px-10 main-background"
       :style="[mainBackgroundImage.four]"
-      :class="{
+    >
+      <!-- :class="{
         'fade-in': activeClass.fourth,
         'fade-out': !activeClass.fourth,
-      }"
-
-    >
+      }" -->
       <v-row style="height: 100%;">
         <v-col style="align-self: center;">
           <v-row class="align-content-center justify-center">
