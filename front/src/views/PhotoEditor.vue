@@ -1062,20 +1062,20 @@ export default {
           // blob 생성해서 msSaveOrOpenBlob 사용하면 IE 10+ 에서 다운로드를 지원한다.
           // IE 10+ 를 지원할 생각이없다면 그냥 a 태그의 download쓰면됨.
           if (window.navigator.msSaveOrOpenBlob) {
-            window.navigator.msSaveOrOpenBlob(file, "new_file.png");
+            window.navigator.msSaveOrOpenBlob(file, "new_file.png")
           } else {
-            let a = document.createElement("a");
-            a.style = "display: none";
+            let a = document.createElement("a")
+            a.style = "display: none"
             a.href = base64Data;
-            a.download = "new_file.png";
-            document.body.appendChild(a);
-            a.click();
+            a.download = "new_file.png"
+            document.body.appendChild(a)
+            a.click()
 
             setTimeout(function() {
-              document.body.removeChild(a);
-            }, 100);
+              document.body.removeChild(a)
+            }, 100)
           }
-        });
+        })
     },
     // 스프링으로 이미지 전달.
     async canvasImageToSpring(thumbnail, subject) {
