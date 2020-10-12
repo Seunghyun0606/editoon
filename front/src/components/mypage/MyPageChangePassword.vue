@@ -49,13 +49,13 @@
                 style="width: 70%;"
                 class="mx-auto"
               ></v-text-field>
-              <v-btn v-if="canShowNewPassword && passwordCheck === passwordSet.password"
+              <v-btn :disabled="!valid" v-if="canShowNewPassword && passwordCheck === passwordSet.password"
                 class='warning mr-4'
                 @click="changePassword()"
               >
                 <strong>비밀번호변경하기</strong>
               </v-btn>
-              <v-btn :disabled="!valid" class='' @click="clickOut()" >
+              <v-btn class='' @click="clickOut()" >
                 <strong>돌아가기</strong>
               </v-btn>
             </v-form>

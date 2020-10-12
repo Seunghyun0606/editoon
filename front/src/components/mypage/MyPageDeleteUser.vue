@@ -13,7 +13,11 @@
               ※ 한번 지우면 되돌릴 수 없습니다.
             </div>
 
-            <form action="" style="margin-top: 0.2vh;">
+            <v-form
+              v-model="valid"
+              action=""
+              style="margin-top: 0.2vh;"
+            >
               <v-text-field
                 v-model="userInfo.email"
                 label="Email 입력"
@@ -34,7 +38,8 @@
                 style="width: 70%;"
                 class="mx-auto"
               ></v-text-field>
-              <v-btn 
+              <v-btn
+                :disabled="!valid"
                 class='error mr-4'
                 @click="deleteUser()"
               >
@@ -43,7 +48,7 @@
               <v-btn class='' @click="clickOut()" >
                 <strong>돌아가기</strong>
               </v-btn>
-            </form>
+            </v-form>
           </v-col>
         </v-row>
 
@@ -77,6 +82,7 @@ export default {
   },
   data() {
     return {
+      valid: true,
       userInfo: {
         email: '',
         password: '',
