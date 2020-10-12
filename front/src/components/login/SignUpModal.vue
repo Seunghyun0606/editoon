@@ -200,8 +200,6 @@ export default {
       if (isSignUp) {
         this.$store.commit("signUpInit", !!isSignUp);
         this.resetValidation();
-      } else {
-        console.log(1234);
       }
     },
   },

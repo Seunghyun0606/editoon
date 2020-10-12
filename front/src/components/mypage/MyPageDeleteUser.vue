@@ -22,6 +22,7 @@
                 v-model="userInfo.email"
                 label="Email 입력"
                 type="email"
+                :rules="[rules.email]"
                 required
                 clearable
                 dark
@@ -32,6 +33,7 @@
                 v-model="userInfo.password"
                 label="Password 입력"
                 type="password"
+                :rules="[rules.password, rules.lengthCheck(10)]"
                 required
                 clearable
                 dark
@@ -87,6 +89,16 @@ export default {
         email: '',
         password: '',
       },
+      rules: {
+        email: (v) => !!(v || "").match(/@/) || "이메일 형식이 아닙니다.",
+        lengthCheck: (len) => (v) =>
+          (v || "").length >= len ||
+          `${len}자 이상이어야합니다. 현재 ${v.length}자 입니다.`,
+        password: (v) =>
+          !!(v || "").match(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/
+          ) || "숫자, 영어 대소문자, 특수문자가 포함되어야합니다.",
+      }
     }
   },
   methods: {
