@@ -51,30 +51,53 @@
             </v-row>
           </v-btn>
 
-          <v-btn @click="btnAddBubble1" dark class="mr-3 mt-2">
-            <v-icon class="pr-2">
-              mdi-chat-plus-outline
-            </v-icon>
-            Chat
-          </v-btn>
-          <v-btn @click="btnAddBackground" dark class="mr-3 mt-2">
-            <v-icon class="pr-2">
-              mdi-card-plus
-            </v-icon>
-            Background
-          </v-btn>
-          <v-btn @click="btnAddCanvasHeight" dark class="mr-3 mt-2">
-            <v-icon class="pr-2">
-              mdi-table-column-plus-after
-            </v-icon>
-            Add Page
-          </v-btn>
-          <v-btn @click="btnEditorImageToCanvas" class="mt-2" dark>
-            <v-icon class="pr-2">
-              mdi-send
-            </v-icon>
-            paint image
-          </v-btn>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+
+              <v-btn v-on="on" v-bind='attrs' @click="btnAddBubble1" dark class="mr-3 mt-2">
+                <v-icon class="pr-2">
+                  mdi-chat-plus-outline
+                </v-icon>
+                Chat
+              </v-btn>
+            </template>
+            <span>Alt + c</span>
+          </v-tooltip>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn v-on="on" v-bind='attrs' @click="btnAddBackground" dark class="mr-3 mt-2">
+                <v-icon class="pr-2">
+                  mdi-card-plus
+                </v-icon>
+                Background
+              </v-btn>
+            </template>
+            <span>Alt + b</span>
+          </v-tooltip>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn v-on="on" v-bind='attrs' @click="btnAddCanvasHeight" dark class="mr-3 mt-2">
+                <v-icon class="pr-2">
+                  mdi-table-column-plus-after
+                </v-icon>
+                Add Page
+              </v-btn>
+            </template>
+            <span>Alt + s</span>
+          </v-tooltip>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn v-on="on" v-bind='attrs' @click="btnEditorImageToCanvas" class="mt-2" dark>
+                <v-icon class="pr-2">
+                  mdi-send
+                </v-icon>
+                paint image
+              </v-btn>
+
+            </template>
+            <span>Alt + a</span>
+          </v-tooltip>
+
         </v-col>
       </v-row>
       <v-row style="justify-content: space-between;">
@@ -98,7 +121,7 @@
             class="d-flex"
             @dragstop="dragstop($event, idx)"
             @resizestop="resizestop($event, idx)"
-            @clicked="checknumber = idx"
+            @clicked="checkIdx = idx"
           >
           <img
             v-if="!image.isBubble && !image.isBackground"
@@ -1193,9 +1216,8 @@ export default {
     //캔버스 사이즈 변경시, 캔버스 안의 이미지가 안옮겨지는 버그 수정
     resizeCanvasWidth(e) {
       if (e) {
-        const canvas_width = e.target.document.querySelector("#webtoonCanvas")
-          .clientWidth;
-        this.webtoonCanvasWidth = canvas_width;
+        const canvas_width = e.target.document.querySelector("#webtoonCanvas").clientWidth
+        this.webtoonCanvasWidth = canvas_width
       }
     },
   },
@@ -1210,12 +1232,34 @@ export default {
   },
   mounted() {
     // scroll 추적기 붙이기
-    window.addEventListener("scroll", this.getCurrentScrollPlace);
+    window.addEventListener("scroll", this.getCurrentScrollPlace)
+    this.isShowWebtoonImages = false
 
-    this.isShowWebtoonImages = false;
+    document.onkeydown = (e) => {
+      if (e.which === 66 && e.altKey === true) {
+        this.images[this.images.length - 1].isClickOption = false
+        this.images[this.images.length - 1].isActive = false
+        this.btnAddBackground()
+      }
+      if (e.which === 65 && e.altKey === true) {
+        this.images[this.images.length - 1].isClickOption = false
+        this.images[this.images.length - 1].isActive = false
+        this.btnEditorImageToCanvas()
+      }
+      if (e.which === 67 && e.altKey === true) {
+        this.images[this.images.length - 1].isClickOption = false
+        this.images[this.images.length - 1].isActive = false
+        this.btnAddBubble1()
+      }
+      if (e.which === 83 && e.altKey === true) {
+        this.images[this.images.length - 1].isClickOption = false
+        this.images[this.images.length - 1].isActive = false
+        this.btnAddCanvasHeight()
+      }
+    }
   },
   destroy() {
-    window.removeEventListener("scroll", this.getCurrentScrollPlace);
+    window.removeEventListener("scroll", this.getCurrentScrollPlace)
   },
 };
 </script>
